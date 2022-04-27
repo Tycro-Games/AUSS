@@ -4,47 +4,28 @@
 #include <iostream>
 #include "template.h"
 
+#include "MathFunctions.h"
 namespace Tmpl8
 {
-	static Sprite sniperSprite(new Surface("assets/sniper.tga"), 32);
-	static int frame = 0;
-	const float angleSize = 360 / 32.0f;
-	vec2 dir;
 	void Game::Init()
 	{
+	
+		player = new Player(new Sprite(new Surface("assets/sniper.tga"), 32), vec2(100, 200), 100);
 	}
 	void Game::Shutdown()
 	{
+		delete player;
 	}
-	void Game::SetSprite()
-	{
-		sniperSprite.SetFrame(frame);
-		sniperSprite.Draw(screen, 100, 200);
 
-	}
 
 	void Game::Tick(float deltaTime)
 	{
 		screen->Clear(0);
-		SetSprite();
+		player->Update(screen);
 
 	}
-	void Game::MouseMove(int x, int y)
+	void Game::MouseMove(int x, int y) 
 	{
-		dir.x = x - 100;
-		dir.y = y - 200;
-		dir.normalize();
-
-
-		float angle = atan2(dir.y, dir.x);//return angle in radians
-
-		angle *= (180 / PI);//convert to angles from radians
-		if (angle < 0) //convert to positive angles
-		{
-			angle = 360 - (-angle);
-		}
-		angle += 90;//offset for the image
-		angle = fmod(angle, 360);
-		frame = angle / angleSize;
+		player->Rotate(x, y);
 	}
 };
