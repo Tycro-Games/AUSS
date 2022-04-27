@@ -19,7 +19,7 @@ namespace Tmpl8 {
 		Surface* screen;
 		Player* player;
 
-		
+
 	};
 
 }; // namespace Tmpl8
