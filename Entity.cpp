@@ -10,8 +10,6 @@ Entity::~Entity()
 	delete sprite;
 }
 
-void Entity::Update(Tmpl8::Surface* screen)
-{
-}
+
 
 

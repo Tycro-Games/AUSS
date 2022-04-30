@@ -26,6 +26,7 @@
     <ClInclude Include="Being.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Updateable.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="template code">

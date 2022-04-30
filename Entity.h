@@ -2,7 +2,9 @@
 #include "surface.h"
 #include "template.h"
 
-class Entity
+#include "Updateable.h"
+
+class Entity :public Updateable
 {
 public:
 	Entity(Tmpl8::Sprite* sprite, Tmpl8::vec2 pos);
@@ -11,7 +13,7 @@ protected:
 	int frame = 0;
 	Tmpl8::Sprite* sprite;
 	Tmpl8::vec2 pos;
-	virtual void Update(Tmpl8::Surface* screen);
+
 private:
 
 };
