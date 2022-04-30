@@ -34,17 +34,17 @@ void Moveable::Update(float deltaTime)
 {
 	Tmpl8::vec2 nextPos = { 0 };
 	if (up) {
-		nextPos.y -= speed * deltaTime;
+		nextPos.y -= speed;
 	}
 	if (down) {
-		nextPos.y += speed * deltaTime;
+		nextPos.y += speed;
 	}
 	if (right) {
-		nextPos.x += speed * deltaTime;
+		nextPos.x += speed;
 	}
 
 	if (left) {
-		nextPos.x -= speed * deltaTime;
+		nextPos.x -= speed;
 	}
 	//add collision check
 	(*pos) += nextPos;

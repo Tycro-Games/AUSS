@@ -6,7 +6,7 @@
 class Moveable :public Updateable
 {
 public:
-	Moveable(Tmpl8::vec2* pos, float speed = 50.0f);
+	Moveable(Tmpl8::vec2* pos, float speed = 1.0f);
 	~Moveable();
 	void Update(float deltaTime);
 
