@@ -1,6 +1,6 @@
 #include "Being.h"
 
-Being::Being(Tmpl8::Sprite* sprite, Tmpl8::vec2 pos, int hp)
+Being::Being(Tmpl8::Sprite* sprite, Tmpl8::vec2* pos, int hp)
 	: Entity(sprite, pos),
 	hp(hp)
 {}

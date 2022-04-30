@@ -22,7 +22,8 @@ namespace Tmpl8 {
 	private:
 		Surface* screen;
 		Player* player;
-		std::vector<Updateable*> entities;
+		std::vector<Updateable*> updateables;
+		std::vector<Renderable*> renderables;
 
 	};
 

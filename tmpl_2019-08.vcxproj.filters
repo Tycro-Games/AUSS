@@ -12,6 +12,7 @@
     <ClCompile Include="Being.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="MathFunctions.cpp" />
+    <ClCompile Include="Moveable.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -27,6 +28,8 @@
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Updateable.h" />
+    <ClInclude Include="Moveable.h" />
+    <ClInclude Include="Renderable.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="template code">

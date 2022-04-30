@@ -1,11 +1,9 @@
 #include "Moveable.h"
 #include <iostream>
-Moveable::Moveable(Tmpl8::vec2 pos, float speed) :
+Moveable::Moveable(Tmpl8::vec2* pos, float speed) :
 	pos(pos),
 	speed(speed)
-{
-
-}
+{}
 
 Moveable::~Moveable()
 {
@@ -31,19 +29,25 @@ void Moveable::setLeft(bool val)
 	left = val;
 }
 
-void Moveable::Move()
+
+void Moveable::Update(float deltaTime)
 {
-	Tmpl8::vec2 nextPos = { 0,0 };
+	Tmpl8::vec2 nextPos = { 0 };
 	if (up) {
-		nextPos.y++;
+		nextPos.y -= speed * deltaTime;
 	}
 	if (down) {
-		nextPos.y--;
-	}if (right) {
-		nextPos.x++;
-	}if (left) {
-		nextPos.x--;
+		nextPos.y += speed * deltaTime;
 	}
+	if (right) {
+		nextPos.x += speed * deltaTime;
+	}
+
+	if (left) {
+		nextPos.x -= speed * deltaTime;
+	}
+	//add collision check
+	(*pos) += nextPos;
 }
 
 

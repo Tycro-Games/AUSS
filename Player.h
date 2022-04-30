@@ -5,12 +5,13 @@
 class Player :public Being
 {
 public:
-	Player(Tmpl8::Sprite* sprite, Tmpl8::vec2 pos, int hp);
+	Player(Tmpl8::Sprite* sprite, Tmpl8::vec2* pos, int hp);
 	~Player();
-	void Update(Tmpl8::Surface* screen);
+	void Render(Tmpl8::Surface* screen);
+	void Update(float deltaTime);
+
 	void Rotate(int x, int y);
-	void Move();
-	Moveable mover;
+	Moveable* mover;
 
 
 private:
