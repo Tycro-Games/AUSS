@@ -4,7 +4,8 @@
 
 Player::Player(Tmpl8::Sprite* sprite, Tmpl8::vec2* pos, int hp)
 	:Being(sprite, pos, hp),
-	mover(new Moveable(pos))
+	mover(new Moveable(pos)),
+	col(Tmpl8::vec2(0, 0), Tmpl8::vec2(SPRITE_OFFSET, SPRITE_OFFSET))
 {
 
 }
@@ -18,11 +19,13 @@ void Player::Render(Tmpl8::Surface* screen)
 {
 	sprite->SetFrame(frame);
 	sprite->Draw(screen, pos->x, pos->y);
+	screen->Box(pos->x, pos->y, pos->x + SPRITE_OFFSET, pos->y + SPRITE_OFFSET, 0xffffff);
 }
 
 void Player::Update(float deltaTime)
 {
 	mover->Update(deltaTime);
+
 }
 void Player::Rotate(int x, int y) {
 	//replace with actual pos of player

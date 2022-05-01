@@ -13,6 +13,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="MathFunctions.cpp" />
     <ClCompile Include="Moveable.cpp" />
+    <ClCompile Include="Collider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -30,6 +31,7 @@
     <ClInclude Include="Updateable.h" />
     <ClInclude Include="Moveable.h" />
     <ClInclude Include="Renderable.h" />
+    <ClInclude Include="Collider.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="template code">
