@@ -2,11 +2,12 @@
 #include "template.h"
 
 #include "Updateable.h"
+#include "Collider.h"
 
 class Moveable :public Updateable
 {
 public:
-	Moveable(Tmpl8::vec2* pos, float speed = 1.0f);
+	Moveable(Tmpl8::vec2* pos, Collider* col, float speed = 1.0f);
 	~Moveable();
 	void Update(float deltaTime);
 
@@ -15,13 +16,14 @@ public:
 	void setRight(bool val = false);
 	void setLeft(bool val = false);
 
+
 private:
 	bool up = false;
 	bool down = false;
 	bool right = false;
 	bool left = false;
 	Tmpl8::vec2* pos;
-
+	Collider* col;
 	float speed;
 };
 

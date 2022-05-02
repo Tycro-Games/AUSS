@@ -1,7 +1,7 @@
 #include "Moveable.h"
-#include <iostream>
-Moveable::Moveable(Tmpl8::vec2* pos, float speed) :
+Moveable::Moveable(Tmpl8::vec2* pos, Collider* col, float speed) :
 	pos(pos),
+	col(col),
 	speed(speed)
 {}
 
@@ -32,7 +32,8 @@ void Moveable::setLeft(bool val)
 
 void Moveable::Update(float deltaTime)
 {
-	Tmpl8::vec2 nextPos = { 0 };
+
+	Tmpl8::vec2 nextPos = { 0 }, currentPos = *pos;
 	if (up) {
 		nextPos.y -= speed;
 	}
@@ -47,7 +48,20 @@ void Moveable::Update(float deltaTime)
 		nextPos.x -= speed;
 	}
 	//add collision check
-	(*pos) += nextPos;
+	currentPos += nextPos;
+	//screen check
+	/*if (currentPos.x < 0)
+		currentPos.x = 0;
+	if (currentPos.x > ScreenWidth - 1)
+		currentPos.x = ScreenWidth - 1;
+	if (currentPos.y < 0)
+		currentPos.y = 0;
+	if (currentPos.y > ScreenHeight - 1)
+		currentPos.y = ScreenHeight - 1;*/
+	if (col->InGameScreen(currentPos)) {
+		(*pos) = currentPos;
+	}
+
 }
 
 

@@ -6,7 +6,7 @@ public:
 	Collider(Tmpl8::vec2 min, Tmpl8::vec2 max);
 	~Collider();
 	Tmpl8::vec2 min, max;
-
+	bool InGameScreen(Tmpl8::vec2& pos);
 };
 
 

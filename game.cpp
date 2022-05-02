@@ -9,9 +9,12 @@ namespace Tmpl8
 {
 	void Game::Init()
 	{
-		player = new Player(new Sprite(new Surface("assets/sniper.tga"), 32), new vec2(100, 200), 100);
+		player = new Player(new Sprite(new Surface("assets/sniper.tga"), 32),
+			new vec2(START_POS),
+			new Collider(vec2(COL_MIN), vec2(COL_MAX)),
+			100);
 		updateables.push_back(player);
-		updateables.push_back(player->mover);
+		updateables.push_back(player->GetMoveable());
 		renderables.push_back(player);
 	}
 	void Game::Shutdown()
@@ -39,16 +42,16 @@ namespace Tmpl8
 		switch (key)
 		{
 		case(SDL_SCANCODE_W):
-			player->mover->setUp();
+			player->GetMoveable()->setUp();
 			break;
 		case(SDL_SCANCODE_S):
-			player->mover->setDown();
+			player->GetMoveable()->setDown();
 			break;
 		case(SDL_SCANCODE_D):
-			player->mover->setRight();
+			player->GetMoveable()->setRight();
 			break;
 		case(SDL_SCANCODE_A):
-			player->mover->setLeft();
+			player->GetMoveable()->setLeft();
 			break;
 		default:
 			break;
@@ -59,16 +62,16 @@ namespace Tmpl8
 		switch (key)
 		{
 		case SDL_SCANCODE_W:
-			player->mover->setUp(true);
+			player->GetMoveable()->setUp(true);
 			break;
 		case SDL_SCANCODE_S:
-			player->mover->setDown(true);
+			player->GetMoveable()->setDown(true);
 			break;
 		case SDL_SCANCODE_D:
-			player->mover->setRight(true);
+			player->GetMoveable()->setRight(true);
 			break;
 		case SDL_SCANCODE_A:
-			player->mover->setLeft(true);
+			player->GetMoveable()->setLeft(true);
 			break;
 		default:
 			break;

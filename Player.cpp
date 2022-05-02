@@ -2,16 +2,15 @@
 #include "MathFunctions.h"
 
 
-Player::Player(Tmpl8::Sprite* sprite, Tmpl8::vec2* pos, int hp)
+Player::Player(Tmpl8::Sprite* sprite, Tmpl8::vec2* pos, Collider* col, int hp)
 	:Being(sprite, pos, hp),
-	mover(new Moveable(pos)),
-	col(Tmpl8::vec2(0, 0), Tmpl8::vec2(SPRITE_OFFSET, SPRITE_OFFSET))
-{
-
-}
+	col(col),
+	mover(new Moveable(pos, col))
+{}
 
 Player::~Player()
 {
+	delete col;
 	delete mover;
 }
 
@@ -41,6 +40,11 @@ void Player::Rotate(int x, int y) {
 	angle += OFFSET_SPRITE;
 	angle = fmod(angle, 360);
 	frame = angle / ANGLE_SIZE;
+}
+
+Moveable* Player::GetMoveable()
+{
+	return mover;
 }
 
 

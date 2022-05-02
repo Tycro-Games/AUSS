@@ -25,6 +25,10 @@ namespace Tmpl8 {
 		std::vector<Updateable*> updateables;
 		std::vector<Renderable*> renderables;
 
+		const Tmpl8::vec2 START_POS = Tmpl8::vec2(450, 400);
+		const Tmpl8::vec2 COL_MIN = Tmpl8::vec2(0, 0);
+		const Tmpl8::vec2 COL_MAX = Tmpl8::vec2(26, 26);
+
 	};
 
 }; // namespace Tmpl8
