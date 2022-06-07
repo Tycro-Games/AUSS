@@ -14,8 +14,8 @@ namespace Tmpl8 {
 		void Init();
 		void Shutdown();
 		void Tick(float deltaTime);
-		void MouseUp(int button) { /* implement if you want to detect mouse button presses */ }
-		void MouseDown(int button) { /* implement if you want to detect mouse button presses */ }
+		void MouseUp(int button);
+		void MouseDown(int button);
 		void MouseMove(int x, int y);
 		void KeyUp(SDL_Scancode key);
 		void KeyDown(SDL_Scancode key);
@@ -24,6 +24,8 @@ namespace Tmpl8 {
 		Player* player;
 		std::vector<Updateable*> updateables;
 		std::vector<Renderable*> renderables;
+
+		bool isPressingLeftMouse = false;
 
 		const Tmpl8::vec2 START_POS = Tmpl8::vec2(450, 400);
 		const Tmpl8::vec2 COL_MIN = Tmpl8::vec2(0, 0);

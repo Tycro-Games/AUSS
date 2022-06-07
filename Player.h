@@ -10,7 +10,7 @@ public:
 	~Player();
 	void Render(Tmpl8::Surface* screen);
 	void Update(float deltaTime);
-
+	void Shoot(bool fire);
 	void Rotate(int x, int y);
 	Moveable* GetMoveable();
 

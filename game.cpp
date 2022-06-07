@@ -32,6 +32,17 @@ namespace Tmpl8
 		for (auto i : updateables) {
 			i->Update(deltaTime);
 		}
+		player->Shoot(isPressingLeftMouse);
+	}
+
+
+	void Game::MouseUp(int button)
+	{
+		isPressingLeftMouse = false;
+	}
+	void Game::MouseDown(int button)
+	{
+		isPressingLeftMouse = true;
 	}
 	void Game::MouseMove(int x, int y)
 	{

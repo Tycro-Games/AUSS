@@ -26,6 +26,10 @@ void Player::Update(float deltaTime)
 	mover->Update(deltaTime);
 
 }
+void Player::Shoot(bool fire)
+{
+
+}
 void Player::Rotate(int x, int y) {
 	//replace with actual pos of player
 	dirToFace.x = x - pos->x;
