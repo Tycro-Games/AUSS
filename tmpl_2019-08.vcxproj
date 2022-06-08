@@ -229,6 +229,7 @@
     <ClCompile Include="MathFunctions.cpp" />
     <ClCompile Include="Moveable.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Spawner.cpp" />
     <ClCompile Include="surface.cpp" />
     <ClCompile Include="template.cpp" />
   </ItemGroup>
@@ -242,6 +243,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="Renderable.h" />
+    <ClInclude Include="Spawner.h" />
     <ClInclude Include="surface.h" />
     <ClInclude Include="template.h" />
     <ClInclude Include="Updateable.h" />

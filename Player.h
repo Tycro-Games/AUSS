@@ -3,6 +3,7 @@
 #include "Moveable.h"
 
 #include "template.h"
+#include "Spawner.h"
 class Player :public Being
 {
 public:
@@ -21,7 +22,7 @@ private:
 	Tmpl8::vec2 dirToFace = { 0,0 };
 	Moveable* mover;
 	Collider* col;
-
+	Spawner* spawner;
 };
 
 

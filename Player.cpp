@@ -5,13 +5,15 @@
 Player::Player(Tmpl8::Sprite* sprite, Tmpl8::vec2* pos, Collider* col, int hp)
 	:Being(sprite, pos, hp),
 	col(col),
-	mover(new Moveable(pos, col))
+	mover(new Moveable(pos, col)),
+	spawner(new Spawner(0.5f))
 {}
 
 Player::~Player()
 {
 	delete col;
 	delete mover;
+	delete spawner;
 }
 
 void Player::Render(Tmpl8::Surface* screen)
@@ -24,11 +26,12 @@ void Player::Render(Tmpl8::Surface* screen)
 void Player::Update(float deltaTime)
 {
 	mover->Update(deltaTime);
+	spawner->Update(deltaTime);
 
 }
 void Player::Shoot(bool fire)
 {
-
+	spawner->setFire(fire);
 }
 void Player::Rotate(int x, int y) {
 	//replace with actual pos of player
