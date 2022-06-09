@@ -1,6 +1,7 @@
 #pragma once
 #include "Being.h"
 #include "Moveable.h"
+#include "Projectile.h"
 
 #include "template.h"
 #include "Spawner.h"
@@ -19,7 +20,7 @@ private:
 	const float ANGLE_SIZE = 360 / 32.0f;
 	const float OFFSET_SPRITE = 90.0f;
 	const float SPRITE_OFFSET = 26;
-	Tmpl8::vec2 dirToFace = { 0,0 };
+	Tmpl8::vec2* dirToFace = 0;
 	Moveable* mover;
 	Collider* col;
 	Spawner* spawner;

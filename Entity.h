@@ -8,6 +8,7 @@ class Entity :public Updateable, public Renderable
 {
 public:
 	Entity(Tmpl8::Sprite* sprite, Tmpl8::vec2* pos);
+	Entity();
 	virtual ~Entity();
 protected:
 	int frame = 0;

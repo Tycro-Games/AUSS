@@ -25,7 +25,7 @@ namespace Tmpl8
 
 	void Game::Tick(float deltaTime)
 	{
-		deltaTime /= 1000.0f;
+		deltaTime /= 1000.0f; //make time into seconds
 		screen->Clear(0);
 		for (auto i : renderables) {
 			i->Render(screen);
