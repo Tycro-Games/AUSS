@@ -10,6 +10,7 @@ Projectile::Projectile(Tmpl8::Sprite* sprite, Tmpl8::vec2* pos, Tmpl8::vec2 dir)
 
 Projectile::~Projectile()
 {
+	sprite = nullptr;
 }
 
 

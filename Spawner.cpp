@@ -15,11 +15,11 @@ Spawner::~Spawner()
 
 	delete pos;
 	delete dir;
-
+	delete toSpawn;
 	for (auto p : poolOfObjects)
 		delete p;
 	poolOfObjects.clear();
-	//delete toSpawn;
+
 
 }
 

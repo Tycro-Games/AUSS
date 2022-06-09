@@ -20,7 +20,7 @@ Player::~Player()
 	delete col;
 	delete mover;
 	delete spawner;
-
+	pos = nullptr;
 }
 
 void Player::Render(Tmpl8::Surface* screen)
