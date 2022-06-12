@@ -18,6 +18,8 @@
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Moveable.cpp" />
     <ClCompile Include="MoveToADirection.cpp" />
+    <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="Callable.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -40,6 +42,8 @@
     <ClInclude Include="RotationVar.h" />
     <ClInclude Include="Moveable.h" />
     <ClInclude Include="MoveToADirection.h" />
+    <ClInclude Include="Timer.h" />
+    <ClInclude Include="Callable.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="template code">

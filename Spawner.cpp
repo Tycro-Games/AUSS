@@ -1,5 +1,6 @@
 #include "Spawner.h"
 #include <iostream>
+#include "Projectile.h"
 Spawner::Spawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, float FireRate)
 	:pos(pos),
 	dir(dir)
@@ -23,11 +24,15 @@ Spawner::~Spawner()
 
 }
 
+void Spawner::RemoveLastProjectile()
+{
+	poolOfObjects.pop_front();
+}
+
 void Spawner::Spawn()
 {
-	Projectile* pro = new Projectile(*pos, *dir, toSpawn);
 
-	poolOfObjects.push_back(pro);
+	poolOfObjects.push_back(new Projectile(*pos, *dir, toSpawn, this));
 	std::cout << currentTime << " " << desiredTime << "\n";
 }
 

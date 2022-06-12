@@ -3,9 +3,11 @@
 
 
 
-Projectile::Projectile(Tmpl8::vec2 pos, Tmpl8::vec2 dir, Tmpl8::Sprite* sprite)
-	:Entity(sprite, new Tmpl8::vec2(pos)),
-	dir(dir)
+Projectile::Projectile(Tmpl8::vec2 pos, Tmpl8::vec2 dir, Tmpl8::Sprite* sprite, Spawner* spawn)
+	:Callable(sprite, new Tmpl8::vec2(pos)),
+	dir(dir),
+	timer(new Timer(this, 2.0f)),
+	spawner(spawn)
 {
 
 	mover = new MoveToADirection(this->pos, dir, new Collider(COL_MIN, COL_MAX));
@@ -19,8 +21,15 @@ Projectile::Projectile(Tmpl8::vec2 pos, Tmpl8::vec2 dir, Tmpl8::Sprite* sprite)
 
 Projectile::~Projectile()
 {
+
 	sprite = nullptr;
+	delete timer;
 	delete mover;
+}
+
+void Projectile::Call()
+{
+	spawner->RemoveLastProjectile();
 }
 
 
@@ -28,6 +37,7 @@ Projectile::~Projectile()
 void Projectile::Update(float deltaTime)
 {
 	mover->Update(deltaTime);
+	timer->Update(deltaTime);
 }
 
 void Projectile::Render(Tmpl8::Surface* screen)
