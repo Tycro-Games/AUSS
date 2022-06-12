@@ -228,6 +228,8 @@
     <ClCompile Include="game.cpp" />
     <ClCompile Include="MathFunctions.cpp" />
     <ClCompile Include="Moveable.cpp" />
+    <ClCompile Include="MoveablePlayer.cpp" />
+    <ClCompile Include="MoveToADirection.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Spawner.cpp" />
@@ -241,9 +243,12 @@
     <ClInclude Include="game.h" />
     <ClInclude Include="MathFunctions.h" />
     <ClInclude Include="Moveable.h" />
+    <ClInclude Include="MoveablePlayer.h" />
+    <ClInclude Include="MoveToADirection.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="Renderable.h" />
+    <ClInclude Include="RotationVar.h" />
     <ClInclude Include="Spawner.h" />
     <ClInclude Include="surface.h" />
     <ClInclude Include="template.h" />

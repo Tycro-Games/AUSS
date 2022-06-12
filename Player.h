@@ -1,10 +1,13 @@
 #pragma once
-#include "Being.h"
-#include "Moveable.h"
-#include "Projectile.h"
-
 #include "template.h"
+
+#include "Being.h"
 #include "Spawner.h"
+#include "RotationVar.h"
+#include "MoveablePlayer.h"
+
+
+
 class Player :public Being
 {
 public:
@@ -14,14 +17,12 @@ public:
 	void Update(float deltaTime);
 	void Shoot(bool fire);
 	void Rotate(int x, int y);
-	Moveable* GetMoveable();
+	MoveablePlayer* GetMoveable();
 
 private:
-	const float ANGLE_SIZE = 360 / 32.0f;
-	const float OFFSET_SPRITE = 90.0f;
-	const float SPRITE_OFFSET = 26;
+	RotationVar rVar = RotationVar();
 	Tmpl8::vec2* dirToFace = 0;
-	Moveable* mover;
+	MoveablePlayer* mover;
 	Collider* col;
 	Spawner* spawner;
 };

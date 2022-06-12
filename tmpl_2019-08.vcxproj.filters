@@ -12,10 +12,12 @@
     <ClCompile Include="Being.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="MathFunctions.cpp" />
-    <ClCompile Include="Moveable.cpp" />
+    <ClCompile Include="MoveablePlayer.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Spawner.cpp" />
     <ClCompile Include="Projectile.cpp" />
+    <ClCompile Include="Moveable.cpp" />
+    <ClCompile Include="MoveToADirection.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -31,10 +33,13 @@
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Updateable.h" />
-    <ClInclude Include="Moveable.h" />
+    <ClInclude Include="MoveablePlayer.h" />
     <ClInclude Include="Renderable.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="Spawner.h" />
+    <ClInclude Include="RotationVar.h" />
+    <ClInclude Include="Moveable.h" />
+    <ClInclude Include="MoveToADirection.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="template code">

@@ -8,7 +8,7 @@
 
 class Spawner :public Updateable, public Renderable {
 public:
-	Spawner(Tmpl8::Sprite* toSpawn, Tmpl8::vec2* pos, Tmpl8::vec2* dir, float FireRate = 1.0f);
+	Spawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, float FireRate = 1.0f);
 	~Spawner();
 	void Spawn();
 	void setFlag(bool fire);
