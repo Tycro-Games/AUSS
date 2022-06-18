@@ -47,10 +47,11 @@ void MoveablePlayer::Update(float deltaTime)
 		nextPos.x -= speed;
 	}
 	//add collision check
+
 	currentPos += nextPos;
 	//screen check
 
-	if (col->InGameScreen(currentPos)) {
+	if (col->InGameScreen(currentPos, *col)) {
 		(*pos) = currentPos;
 	}
 

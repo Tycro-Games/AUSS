@@ -3,10 +3,11 @@
 #include <cstdio> //printf
 #include <iostream>
 #include "template.h"
-
+#include "vector.h"
 #include "MathFunctions.h"
 namespace Tmpl8
 {
+	vector<int> v(1);
 	void Game::Init()
 	{
 		player = new Player(new Sprite(new Surface("assets/sniper.tga"), 32),
@@ -16,6 +17,13 @@ namespace Tmpl8
 		updateables.push_back(player);
 		updateables.push_back(player->GetMoveable());
 		renderables.push_back(player);
+		/*std::cout << v.get(0) << '\n';
+		v.push(5);
+		v.push(15);
+		for (int i = 0; i < v.getSize(); i++)
+			std::cout << v.get(i) << '\n';*/
+
+
 	}
 	void Game::Shutdown()
 	{

@@ -257,6 +257,7 @@
     <ClInclude Include="template.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Updateable.h" />
+    <ClInclude Include="vector.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="_readme.txt" />

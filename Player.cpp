@@ -48,7 +48,7 @@ void Player::Rotate(int x, int y) {
 	dirToFace->normalize();
 
 
-	float angle = MathFunctions::GetDirInAngles(*dirToFace);
+	float angle = MathFunctions::GetDirInAnglesPos(*dirToFace);
 
 
 	angle += rVar.OFFSET_SPRITE;

@@ -13,32 +13,36 @@ Spawner::Spawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, float FireRate)
 
 Spawner::~Spawner()
 {
-
 	delete pos;
 	delete dir;
 	delete toSpawn;
 	for (auto p : poolOfObjects)
 		delete p;
 	poolOfObjects.clear();
-
-
 }
 
+//void Spawner::RemoveLastProjectile(Projectile* p)
+//{
+//	poolOfObjects.pop_front();
+//}
 void Spawner::RemoveLastProjectile()
 {
 	poolOfObjects.pop_front();
 }
-
 void Spawner::Spawn()
 {
+	poolOfObjects.push_back(new Projectile(*pos + *dir * OFFSET, *dir, toSpawn, this));
 
-	poolOfObjects.push_back(new Projectile(*pos, *dir, toSpawn, this));
-	std::cout << currentTime << " " << desiredTime << "\n";
 }
 
 void Spawner::setFlag(bool fire)
 {
 	isSpawning = fire;
+}
+
+void Spawner::Call()
+{
+	RemoveLastProjectile();
 }
 
 
@@ -55,9 +59,6 @@ void Spawner::Update(float deltaTime)
 	}
 	else
 		currentTime += deltaTime;
-
-
-
 }
 
 void Spawner::Render(Tmpl8::Surface* screen)

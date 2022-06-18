@@ -8,18 +8,40 @@
     <ClCompile Include="template.cpp">
       <Filter>template code</Filter>
     </ClCompile>
-    <ClCompile Include="Entity.cpp" />
-    <ClCompile Include="Being.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="MathFunctions.cpp" />
-    <ClCompile Include="MoveablePlayer.cpp" />
-    <ClCompile Include="Collider.cpp" />
-    <ClCompile Include="Spawner.cpp" />
-    <ClCompile Include="Projectile.cpp" />
-    <ClCompile Include="Moveable.cpp" />
-    <ClCompile Include="MoveToADirection.cpp" />
-    <ClCompile Include="Timer.cpp" />
-    <ClCompile Include="Callable.cpp" />
+    <ClCompile Include="MoveToADirection.cpp">
+      <Filter>Projectiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>Projectiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="Callable.cpp">
+      <Filter>Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="Being.cpp">
+      <Filter>Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Spawner.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveablePlayer.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Moveable.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="MathFunctions.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -29,25 +51,74 @@
     <ClInclude Include="template.h">
       <Filter>template code</Filter>
     </ClInclude>
-    <ClInclude Include="MathFunctions.h" />
-    <ClInclude Include="Entity.h" />
-    <ClInclude Include="Being.h" />
-    <ClInclude Include="Projectile.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="Updateable.h" />
-    <ClInclude Include="MoveablePlayer.h" />
-    <ClInclude Include="Renderable.h" />
-    <ClInclude Include="Collider.h" />
-    <ClInclude Include="Spawner.h" />
-    <ClInclude Include="RotationVar.h" />
-    <ClInclude Include="Moveable.h" />
-    <ClInclude Include="MoveToADirection.h" />
-    <ClInclude Include="Timer.h" />
-    <ClInclude Include="Callable.h" />
+    <ClInclude Include="vector.h">
+      <Filter>DataStructures</Filter>
+    </ClInclude>
+    <ClInclude Include="Updateable.h">
+      <Filter>Updating</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderable.h">
+      <Filter>Updating</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveToADirection.h">
+      <Filter>Projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
+      <Filter>Projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Callable.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Being.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="RotationVar.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Spawner.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveablePlayer.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Moveable.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="MathFunctions.h">
+      <Filter>Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="template code">
       <UniqueIdentifier>{bf32dd6e-4be7-4889-8ac6-49e7ee163c40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DataStructures">
+      <UniqueIdentifier>{26f6faf1-77b1-44f5-81b3-339a81edacb8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Updating">
+      <UniqueIdentifier>{53ce98c3-c55c-40a4-9950-8e86e39a1615}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Projectiles">
+      <UniqueIdentifier>{5539f935-b0ec-46c3-9ef8-ca643d12bd79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interfaces">
+      <UniqueIdentifier>{094e531c-1007-4fcc-9f94-9681319689a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components">
+      <UniqueIdentifier>{8a2983ce-e8a4-4a2c-823a-b371afc48388}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math">
+      <UniqueIdentifier>{41cf4e31-443e-4079-804b-8c03abb47432}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

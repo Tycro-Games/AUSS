@@ -1,9 +1,8 @@
 #pragma once
-#include "Entity.h"
-class Callable :public Entity
+class Callable
 {
 public:
-	Callable(Tmpl8::Sprite* sprite, Tmpl8::vec2* pos);
+	Callable();
 	virtual void Call() = 0;
 	virtual  ~Callable();
 
