@@ -24,7 +24,7 @@ Tmpl8::vec2 MathFunctions::Reflect(Tmpl8::vec2 dir, Tmpl8::vec2 norm)
 {
 
 	float dn = 2 * dir.dot(norm);
-	std::cout << dir.x << dir.y << '\n';
+
 	return dir - norm * dn;
 
 }

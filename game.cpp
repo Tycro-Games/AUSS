@@ -17,12 +17,16 @@ namespace Tmpl8
 		updateables.push_back(player);
 		updateables.push_back(player->GetMoveable());
 		renderables.push_back(player);
-		/*std::cout << v.get(0) << '\n';
-		v.push(5);
-		v.push(15);
-		for (int i = 0; i < v.getSize(); i++)
-			std::cout << v.get(i) << '\n';*/
 
+		v.push(1);
+		v.push(2);
+		v.push(3);
+		
+		v.insert(0, 3);
+
+		for (int i = 0; i < v.getCount(); i++)
+			std::cout << v.get(i) << ' ';
+		std::cout << " size" << v.getSize() << '\n';
 
 	}
 	void Game::Shutdown()
