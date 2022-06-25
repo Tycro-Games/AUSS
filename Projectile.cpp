@@ -19,7 +19,7 @@ void Projectile::Init(Tmpl8::vec2 pos, Tmpl8::vec2 dir)
 	isRenderable = true;
 	(*this->pos) = pos;
 	this->dir = new Tmpl8::vec2(dir);
-	timer = new Timer(this, 2.0f);
+	timer = new Timer(this, TIME_ALIVE);
 	mover = new MoveToADirection(this->pos, this->dir, col, this, SPEED);
 	RotateToDirection();
 }
@@ -69,8 +69,9 @@ void Projectile::Render(Tmpl8::Surface* screen)
 
 void Projectile::Call()
 {
-	if (timer->isFinished)
+	if (timer->isFinished) {
 		Spawner::AddToPool(this);
+	}
 	else
 		Reflect();
 }

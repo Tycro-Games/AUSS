@@ -19,10 +19,11 @@ void Timer::Update(float deltaTime)
 	if (currentTime < desiredTime)
 		currentTime += deltaTime;
 	else {
-		toCall->Call();
+
 		if (loop)
 			currentTime = 0;
 		else
 			isFinished = true;
+		toCall->Call();
 	}
 }

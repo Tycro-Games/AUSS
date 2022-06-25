@@ -21,8 +21,9 @@ Spawner::Spawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, float FireRate)
 void Spawner::AddToPool(Projectile* const& entity)
 {
 
-	entity->SetRenderable(false);
-	entity->SetUpdateable(false);
+	entity->SetActive(false);
+
+
 	poolOfObjects.push_back(entity);
 }
 
@@ -42,8 +43,9 @@ Spawner::~Spawner()
 void Spawner::Spawn()
 {
 	Projectile* entity = poolOfObjects[poolOfObjects.size() - 1];
-	entity->SetActive();
+	entity->SetActive(true);
 	entity->Init((*pos) + (*dir), *dir);
+
 	poolOfObjects.pop_back();
 
 }
