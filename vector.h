@@ -16,16 +16,25 @@ public:
 		if (count < size)
 			arr[count++] = item;
 		else {
-			DoubleSize();
+			doubleSize();
 			arr[count++] = item;
 		}
 	}
-	void DoubleSize()
+	void doubleSize()
 	{
 		T* aux = new T[size];
 		for (int i = 0; i < count; i++)
 			aux[i] = arr[i];
 		resize(size * 2);
+		for (int i = 0; i < count; i++)
+			arr[i] = aux[i];
+	}
+	void halfSize()
+	{
+		T* aux = new T[size];
+		for (int i = 0; i < count; i++)
+			aux[i] = arr[i];
+		resize(size / 2);
 		for (int i = 0; i < count; i++)
 			arr[i] = aux[i];
 	}
@@ -46,14 +55,25 @@ public:
 		return -1;
 	}
 	int pop() {
+		if (count - 1 == size / 4)
+			halfSize();
+
 		return arr[count--];
+	}
+	int find(const T& item) {
+		for (int i = 0; i < count; i++) {
+			if (arr[i] == item) {
+				return arr[i];
+			}
+		}
+		return -1;
 	}
 	void insert(int index, const T& item) {
 		if (index == count)
 			push(item);
 		else {
 			if (count == size)
-				DoubleSize();
+				doubleSize();
 			count++;
 			T toAdd = arr[index];
 			T lastItem;
@@ -65,6 +85,9 @@ public:
 			arr[index] = item;
 
 		}
+
+	}
+	void remove(const T& item) {
 
 	}
 

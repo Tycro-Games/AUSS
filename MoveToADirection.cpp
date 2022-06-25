@@ -16,12 +16,6 @@ void MoveToADirection::Call()
 
 void MoveToADirection::Update(float deltaTime)
 {
-	//if (!) {
-	//	//reversed = true;
-	//	//timer = new Timer(this, desiredTime);
-	//	call->Call();
-
-	//}
 
 	Tmpl8::vec2 nextPos = { 0 };
 	nextP = *pos;

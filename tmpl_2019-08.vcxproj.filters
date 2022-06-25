@@ -18,9 +18,6 @@
     <ClCompile Include="Entity.cpp">
       <Filter>Interfaces</Filter>
     </ClCompile>
-    <ClCompile Include="Callable.cpp">
-      <Filter>Interfaces</Filter>
-    </ClCompile>
     <ClCompile Include="Being.cpp">
       <Filter>Interfaces</Filter>
     </ClCompile>

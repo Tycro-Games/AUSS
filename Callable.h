@@ -1,10 +1,11 @@
 #pragma once
+
 class Callable
 {
 public:
-	Callable();
+	Callable() {};
 	virtual void Call() = 0;
-	virtual  ~Callable();
+	virtual  ~Callable() {};
 
 private:
 
