@@ -21,7 +21,7 @@ namespace Tmpl8
 		v.push(1);
 		v.push(2);
 		v.push(3);
-		
+
 		v.insert(0, 3);
 
 		for (int i = 0; i < v.getCount(); i++)
@@ -41,7 +41,10 @@ namespace Tmpl8
 		screen->Clear(0);
 		for (auto i : renderables) {
 			i->Render(screen);
+
+
 		}
+
 		for (auto i : updateables) {
 			i->Update(deltaTime);
 		}

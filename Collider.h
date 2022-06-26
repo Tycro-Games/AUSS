@@ -26,11 +26,12 @@ public:
 	}
 	static Tmpl8::vec2 Collider::GetNormalEdgeScreen(const Tmpl8::vec2& pos, const Collider& col)
 	{
+		Tmpl8::vec2 normal;
 		if (pos.x + col.min.x <= 0 || pos.x + col.max.x >= ScreenWidth - 1)
-			return Tmpl8::vec2(1, 0);
+			normal = Tmpl8::vec2(1, 0);
 		else if (pos.y + col.min.y <= 0 || pos.y + col.max.y >= ScreenHeight - 1)
-			return Tmpl8::vec2(0, 1);
-
+			normal = Tmpl8::vec2(0, 1);
+		return normal;
 	}
 };
 

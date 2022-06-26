@@ -1,5 +1,6 @@
 #include "Spawner.h"
 
+#include <string>
 #include <iostream>
 std::vector <Projectile*> Spawner::poolOfObjects;
 Spawner::Spawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, float FireRate)
@@ -8,9 +9,7 @@ Spawner::Spawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, float FireRate)
 {
 	toSpawn = new Tmpl8::Sprite(new Tmpl8::Surface("assets/missile_big.tga"), 32);
 	for (int i = 0; i < MAX_PROJECTILES; i++) {
-		Projectile* entity = new Projectile(*pos + *dir * OFFSET, *dir, toSpawn);
-		updateObjects.push_back(entity);
-		AddToPool(entity);
+		CreateMoreProjectiles();
 	}
 
 	fireRate = FireRate;
@@ -38,10 +37,19 @@ Spawner::~Spawner()
 
 }
 
+void Spawner::CreateMoreProjectiles()
+{
+	Projectile* entity = new Projectile(*pos + *dir * OFFSET, *dir, toSpawn);
+	updateObjects.push_back(entity);
+	AddToPool(entity);
+}
+
 
 
 void Spawner::Spawn()
 {
+	if (poolOfObjects.size() == 0)
+		CreateMoreProjectiles();
 	Projectile* entity = poolOfObjects[poolOfObjects.size() - 1];
 	entity->SetActive(true);
 	entity->Init((*pos) + (*dir), *dir);
@@ -77,6 +85,13 @@ void Spawner::Update(float deltaTime)
 
 void Spawner::Render(Tmpl8::Surface* screen)
 {
+	auto inactive = std::string("Bullets left:" + std::to_string(poolOfObjects.size()));
+
+	screen->Print(inactive.c_str(), 10, 10, 0xffffffff);
+
+	auto active = std::string("Bullets active:" + std::to_string(updateObjects.size() - poolOfObjects.size()));
+
+	screen->Print(active.c_str(), 10, 20, 0xffffffff);
 	for (auto a : updateObjects)
 		a->Render(screen);
 }

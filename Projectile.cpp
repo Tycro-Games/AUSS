@@ -8,9 +8,6 @@ Projectile::Projectile(Tmpl8::vec2 pos, Tmpl8::vec2 dir, Tmpl8::Sprite* sprite)
 	col(new Collider(COL_MIN, COL_MAX))
 {
 	Init(pos, dir);
-
-
-
 }
 
 void Projectile::Init(Tmpl8::vec2 pos, Tmpl8::vec2 dir)

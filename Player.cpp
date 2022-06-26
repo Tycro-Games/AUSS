@@ -32,6 +32,7 @@ void Player::Render(Tmpl8::Surface* screen)
 
 void Player::Update(float deltaTime)
 {
+
 	mover->Update(deltaTime);
 	spawner->Update(deltaTime);
 
