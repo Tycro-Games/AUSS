@@ -1,5 +1,5 @@
 #pragma once
-#include <vector>
+#include "vector.h"
 #include "Projectile.h"
 #include "Entity.h"
 
@@ -8,7 +8,7 @@
 
 class Spawner :public Updateable, public Renderable {
 public:
-	Spawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, float FireRate = 1.0f);
+	Spawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Tmpl8::Sprite* toSpawn, float FireRate = 1.0f);
 	static void AddToPool(Projectile* const& entity);
 	~Spawner();
 	void CreateMoreProjectiles();
@@ -18,10 +18,10 @@ public:
 
 	virtual void Update(float deltaTime) override;
 	virtual void Render(Tmpl8::Surface* screen) override;
-	static std::vector<Projectile*> poolOfObjects;
+	static vector<Projectile*> poolOfObjects;
 private:
 	float fireRate = 1.0f, currentTime, desiredTime;
-	std::vector<Projectile*> updateObjects;
+	vector<Projectile*> updateObjects;
 
 	bool isSpawning = false;
 	Tmpl8::Sprite* toSpawn;

@@ -2,12 +2,13 @@
 
 #include <string>
 #include <iostream>
-std::vector <Projectile*> Spawner::poolOfObjects;
-Spawner::Spawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, float FireRate)
+vector <Projectile*> Spawner::poolOfObjects;
+Spawner::Spawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Tmpl8::Sprite* tospawn, float FireRate)
 	:pos(pos),
-	dir(dir)
+	dir(dir),
+	toSpawn(tospawn)
 {
-	toSpawn = new Tmpl8::Sprite(new Tmpl8::Surface("assets/missile_big.tga"), 32);
+
 	for (int i = 0; i < MAX_PROJECTILES; i++) {
 		CreateMoreProjectiles();
 	}
@@ -28,12 +29,10 @@ void Spawner::AddToPool(Projectile* const& entity)
 
 Spawner::~Spawner()
 {
+	poolOfObjects.removeAll();
+	updateObjects.removeAll();
 	delete pos;
 	delete dir;
-	delete toSpawn;
-	for (auto p : poolOfObjects)
-		delete p;
-	poolOfObjects.clear();
 
 }
 
@@ -48,9 +47,9 @@ void Spawner::CreateMoreProjectiles()
 
 void Spawner::Spawn()
 {
-	if (poolOfObjects.size() == 0)
+	if (poolOfObjects.getCount() == 0)
 		CreateMoreProjectiles();
-	Projectile* entity = poolOfObjects[poolOfObjects.size() - 1];
+	Projectile* entity = poolOfObjects.get(poolOfObjects.getCount() - 1);
 	entity->SetActive(true);
 	entity->Init((*pos) + (*dir), *dir);
 
@@ -70,8 +69,8 @@ void Spawner::setFlag(bool fire)
 
 void Spawner::Update(float deltaTime)
 {
-	for (auto a : updateObjects)
-		a->Update(deltaTime);
+	for (int i = 0; i < updateObjects.getCount(); i++)
+		updateObjects.get(i)->Update(deltaTime);
 
 	if (currentTime >= desiredTime) {
 		if (isSpawning) {
@@ -85,14 +84,14 @@ void Spawner::Update(float deltaTime)
 
 void Spawner::Render(Tmpl8::Surface* screen)
 {
-	auto inactive = std::string("Bullets left:" + std::to_string(poolOfObjects.size()));
+	auto inactive = std::string("Bullets left:" + std::to_string(poolOfObjects.getCount()));
 
 	screen->Print(inactive.c_str(), 10, 10, 0xffffffff);
 
-	auto active = std::string("Bullets active:" + std::to_string(updateObjects.size() - poolOfObjects.size()));
+	auto active = std::string("Bullets active:" + std::to_string(updateObjects.getCount() - poolOfObjects.getCount()));
 
 	screen->Print(active.c_str(), 10, 20, 0xffffffff);
-	for (auto a : updateObjects)
-		a->Render(screen);
+	for (int i = 0; i < updateObjects.getCount(); i++)
+		updateObjects.get(i)->Render(screen);
 }
 

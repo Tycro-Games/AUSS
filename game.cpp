@@ -7,8 +7,7 @@
 #include "MathFunctions.h"
 namespace Tmpl8
 {
-	vector<int> v(17);
-	vector<int> a(16);
+
 	void Game::Init()
 	{
 		player = new Player(new Sprite(new Surface("assets/sniper.tga"), 32),
@@ -18,16 +17,19 @@ namespace Tmpl8
 		updateables.push_back(player);
 		updateables.push_back(player->GetMoveable());
 		renderables.push_back(player);
-
-		v.push(1);
-		v.push(2);
-		v.push(3);
-		a.push(165);
+		/*std::cout << v.get(1) << '\n';
+		v.push_back(1);
+		v.push_back(2);
+		v.push_back(3);
 		v.insert(0, 3);
-
+		v.prepend(69);
 		for (int i = 0; i < v.getCount(); i++)
 			std::cout << v.get(i) << ' ';
-		std::cout << " size" << v.getSize() << '\n';
+		std::cout << " size" << v.getCount() << '\n';
+		v.remove(3);
+		for (int i = 0; i < v.getCount(); i++)
+			std::cout << v.get(i) << ' ';
+		std::cout << " size" << v.getCount() << '\n';*/
 
 	}
 	void Game::Shutdown()
@@ -42,8 +44,6 @@ namespace Tmpl8
 		screen->Clear(0);
 		for (auto i : renderables) {
 			i->Render(screen);
-
-
 		}
 
 		for (auto i : updateables) {

@@ -23,7 +23,6 @@ void Projectile::Init(Tmpl8::vec2 pos, Tmpl8::vec2 dir)
 
 Projectile::~Projectile()
 {
-
 	sprite = nullptr;
 	delete timer;
 	delete mover;

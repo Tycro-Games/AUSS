@@ -45,6 +45,7 @@ void vector<T>::doubleSize()
 	T* aux = new T[count];
 	for (int i = 0; i < count; i++)
 		aux[i] = arr[i];
+	delete[]arr;
 	resize((size_t)(maxSize * 2));
 	for (int i = 0; i < count; i++)
 		arr[i] = aux[i];
@@ -56,6 +57,7 @@ void vector<T>::halfSize()
 	T* aux = new T[count];
 	for (int i = 0; i < count; i++)
 		aux[i] = arr[i];
+	delete[]arr;
 	resize((size_t)(maxSize / 2));
 	for (int i = 0; i < count; i++)
 		arr[i] = aux[i];
