@@ -7,7 +7,8 @@
 #include "MathFunctions.h"
 namespace Tmpl8
 {
-	vector<int> v(1);
+	vector<int> v(17);
+	vector<int> a(16);
 	void Game::Init()
 	{
 		player = new Player(new Sprite(new Surface("assets/sniper.tga"), 32),
@@ -21,7 +22,7 @@ namespace Tmpl8
 		v.push(1);
 		v.push(2);
 		v.push(3);
-
+		a.push(165);
 		v.insert(0, 3);
 
 		for (int i = 0; i < v.getCount(); i++)

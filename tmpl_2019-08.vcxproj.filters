@@ -39,6 +39,9 @@
     <ClCompile Include="MathFunctions.cpp">
       <Filter>Math</Filter>
     </ClCompile>
+    <ClCompile Include="vector.cpp">
+      <Filter>DataStructures</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
