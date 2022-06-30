@@ -1,6 +1,6 @@
 #include "vector.h"
 #include <math.h>
-
+#include "Projectile.h"
 template<class T>
 vector<T>::vector()
 {
@@ -9,6 +9,7 @@ vector<T>::vector()
 template<class T>
 vector<T>::~vector()
 {
+
 	delete[]arr;
 }
 
@@ -21,21 +22,16 @@ vector<T>::vector(size_t size)
 	}
 	else
 		resize(16);
-
-}
-
-template<class T>
-vector<T> vector<T>::operator[](int const index)
-{
-	return arr[index];
 }
 
 
 
+
+
 template<class T>
-void vector<T>::push(const T& item)
+void vector<T>::push_back(const T& item)
 {
-	if (count < size)
+	if (count < maxSize)
 		arr[count++] = item;
 	else {
 		doubleSize();
@@ -49,7 +45,7 @@ void vector<T>::doubleSize()
 	T* aux = new T[count];
 	for (int i = 0; i < count; i++)
 		aux[i] = arr[i];
-	resize(size * 2);
+	resize((size_t)(maxSize * 2));
 	for (int i = 0; i < count; i++)
 		arr[i] = aux[i];
 }
@@ -60,15 +56,15 @@ void vector<T>::halfSize()
 	T* aux = new T[count];
 	for (int i = 0; i < count; i++)
 		aux[i] = arr[i];
-	resize(size / 2);
+	resize((size_t)(maxSize / 2));
 	for (int i = 0; i < count; i++)
 		arr[i] = aux[i];
 }
 
 template<class T>
-int vector<T>::getSize()
+int vector<T>::size()
 {
-	return size;
+	return maxSize;
 }
 
 template<class T>
@@ -78,29 +74,41 @@ int vector<T>::getCount()
 }
 
 template<class T>
-int vector<T>::get(int const i)
+T vector<T>::get(int const& i)
 {
+	T toReturn{};
 	if (i >= 0 && i < count)
-		return arr[i];
+		toReturn = arr[i];
 
-	return -1;
+
+	return toReturn;
 }
 
 template<class T>
-int vector<T>::pop()
+T vector<T>::pop_back()
 {
-	if (count - 1 == size / 4)
+	if (count - 1 == maxSize / 4)
 		halfSize();
 
 	return arr[count--];
 }
 
 template<class T>
+bool vector<T>::is_empty()
+{
+	if (maxSize == 0)
+		return true;
+	return false;
+}
+
+
+
+template<class T>
 int vector<T>::find(const T& item)
 {
 	for (int i = 0; i < count; i++) {
 		if (arr[i] == item) {
-			return arr[i];
+			return i;
 		}
 	}
 	return -1;
@@ -110,9 +118,9 @@ template<class T>
 void vector<T>::insert(int index, const T& item)
 {
 	if (index == count)
-		push(item);
+		push_back(item);
 	else {
-		if (count == size)
+		if (count == maxSize)
 			doubleSize();
 		count++;
 		T toAdd = arr[index];
@@ -128,11 +136,53 @@ void vector<T>::insert(int index, const T& item)
 }
 
 template<class T>
+void vector<T>::prepend(const T& item)
+{
+	insert(0, item);
+}
+
+template<class T>
+void vector<T>::remove(const T& item)
+{
+	T* aux = new T[count];
+	int newCount = 0;
+	int auxIndex = 0;
+	for (int i = 0; i < count; i++) {
+		if (arr[i] != item) {
+			aux[auxIndex++] = arr[i];
+			newCount++;
+		}
+	}
+
+	count = newCount;
+
+	for (int i = 0; i < count; i++) {
+		arr[i] = aux[i];
+	}
+}
+
+template<class T>
+void vector<T>::removeAtIndex(const int& index)
+{
+	count--;
+	for (int i = index; i < count; i++) {
+		arr[i] = arr[i + 1];
+	}
+}
+
+template<class T>
+void vector<T>::removeAll()
+{
+	count = 0;
+}
+
+template<class T>
 void vector<T>::resize(size_t size)
 {
 	{
 		arr = new T[size];
-		this->size = size;
+		this->maxSize = size;
 	}
 }
+template class vector<Projectile*>;
 template class vector<int>;
