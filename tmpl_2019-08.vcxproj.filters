@@ -45,6 +45,9 @@
     <ClCompile Include="FollowCursor.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="ExplosionBullet.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -101,6 +104,12 @@
       <Filter>Math</Filter>
     </ClInclude>
     <ClInclude Include="FollowCursor.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ExplosionBullet.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="PosDir.h">
       <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>

@@ -23,6 +23,7 @@ private:
 	RotationVar rVar = RotationVar();
 	Tmpl8::vec2* dirToFace = 0;
 	Tmpl8::Sprite* projectileSprite;
+	Tmpl8::Sprite* explosionSprite;
 	MoveablePlayer* mover;
 	Collider* col;
 	Spawner* spawner;

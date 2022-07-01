@@ -1,6 +1,7 @@
 #include "vector.h"
 #include <math.h>
 #include "Projectile.h"
+#include "ExplosionBullet.h"
 template<class T>
 vector<T>::vector()
 {
@@ -190,4 +191,6 @@ void vector<T>::resize(size_t size)
 
 }
 template class vector<Projectile*>;
+template class vector<ExplosionBullet*>;
+template class vector<Entity*>;
 template class vector<int>;

@@ -5,15 +5,20 @@
 #include "MoveToADirection.h"
 #include "RotationVar.h"
 #include "Timer.h"
+
+#include "PosDir.h"
 class Projectile :public Callable, public Entity
 {
 public:
-	Projectile(Tmpl8::vec2 pos, Tmpl8::vec2 dir, Tmpl8::Sprite* sprite, Tmpl8::Sprite* explosionSprite);
-	void Init(Tmpl8::vec2 pos, Tmpl8::vec2 dir);
+	Projectile(PosDir posDir, Tmpl8::Sprite* sprite, Tmpl8::Sprite* explosionSprite);
+	Projectile(const Entity* entity);
+
+
 	virtual ~Projectile();
 	void RotateToDirection();
 	void Reflect();
 
+	void Init(PosDir posDir);
 	virtual void Call() override;
 	virtual void Update(float deltaTime) override;
 	virtual void Render(Tmpl8::Surface* screen) override;

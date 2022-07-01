@@ -3,19 +3,28 @@
 #include <iostream>
 #include "Spawner.h"
 
-Projectile::Projectile(Tmpl8::vec2 pos, Tmpl8::vec2 dir, Tmpl8::Sprite* sprite, Tmpl8::Sprite* explosion)
-	:Entity(sprite, new Tmpl8::vec2(pos)),
+Projectile::Projectile(PosDir posDir, Tmpl8::Sprite* sprite, Tmpl8::Sprite* explosion)
+	:Entity(sprite, new Tmpl8::vec2(posDir.pos)),
 	col(new Collider(COL_MIN, COL_MAX))
 {
-	Init(pos, dir);
+	Init(posDir);
 }
 
-void Projectile::Init(Tmpl8::vec2 pos, Tmpl8::vec2 dir)
+Projectile::Projectile(const Entity* entity) :
+	Entity(entity->sprite, entity->pos),
+	col(new Collider(COL_MIN, COL_MAX))
+{
+	Init(PosDir(*(entity->pos), Tmpl8::vec2()));
+}
+
+
+
+void Projectile::Init(PosDir posDir)
 {
 	isUpdateable = true;
 	isRenderable = true;
-	(*this->pos) = pos;
-	this->dir = new Tmpl8::vec2(dir);
+	(*pos) = posDir.pos;
+	dir = new Tmpl8::vec2(posDir.dir);
 	timer = new Timer(this, TIME_ALIVE);
 	mover = new MoveToADirection(this->pos, this->dir, col, this, SPEED);
 	RotateToDirection();
@@ -66,7 +75,7 @@ void Projectile::Render(Tmpl8::Surface* screen)
 void Projectile::Call()
 {
 	if (timer->isFinished) {
-		Spawner::AddToPool(this);
+		Spawner::AddProjectileToPool(this);
 
 	}
 	else
