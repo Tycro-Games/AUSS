@@ -8,7 +8,7 @@
 class Projectile :public Callable, public Entity
 {
 public:
-	Projectile(Tmpl8::vec2 pos, Tmpl8::vec2 dir, Tmpl8::Sprite* sprite);
+	Projectile(Tmpl8::vec2 pos, Tmpl8::vec2 dir, Tmpl8::Sprite* sprite, Tmpl8::Sprite* explosionSprite);
 	void Init(Tmpl8::vec2 pos, Tmpl8::vec2 dir);
 	virtual ~Projectile();
 	void RotateToDirection();

@@ -34,6 +34,7 @@ void vector<T>::push_back(const T& item)
 	if (count < maxSize)
 		arr[count++] = item;
 	else {
+
 		doubleSize();
 		arr[count++] = item;
 	}
@@ -89,7 +90,8 @@ T vector<T>::get(int const& i)
 template<class T>
 T vector<T>::pop_back()
 {
-	if (count - 1 == maxSize / 4)
+	int fourthSize = maxSize / 4;
+	if (count - 1 == fourthSize && fourthSize > 4)
 		halfSize();
 
 	return arr[count--];
@@ -115,6 +117,7 @@ int vector<T>::find(const T& item)
 	}
 	return -1;
 }
+
 
 template<class T>
 void vector<T>::insert(int index, const T& item)
@@ -181,10 +184,10 @@ void vector<T>::removeAll()
 template<class T>
 void vector<T>::resize(size_t size)
 {
-	{
-		arr = new T[size];
-		this->maxSize = size;
-	}
+
+	arr = new T[size];
+	this->maxSize = size;
+
 }
 template class vector<Projectile*>;
 template class vector<int>;

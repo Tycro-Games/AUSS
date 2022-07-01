@@ -2,6 +2,7 @@
 #include <vector>
 #include "Player.h"
 #include "Updateable.h"
+#include "FollowCursor.h"
 #include <SDL_Scancode.h>
 
 namespace Tmpl8 {
@@ -11,7 +12,9 @@ namespace Tmpl8 {
 	{
 	public:
 		void SetTarget(Surface* surface) { screen = surface; }
+
 		void Init();
+		void AddInstancesToUpdates();
 		void Shutdown();
 		void Tick(float deltaTime);
 		void MouseUp(int button);
@@ -22,6 +25,8 @@ namespace Tmpl8 {
 	private:
 		Surface* screen;
 		Player* player;
+		FollowCursor* cursor;
+
 		std::vector<Updateable*> updateables;
 		std::vector<Renderable*> renderables;
 

@@ -8,7 +8,7 @@
 
 class Spawner :public Updateable, public Renderable {
 public:
-	Spawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Tmpl8::Sprite* toSpawn, float FireRate = 1.0f);
+	Spawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Tmpl8::Sprite* toSpawn, Tmpl8::Sprite* explosion, float FireRate = 1.0f);
 	static void AddToPool(Projectile* const& entity);
 	~Spawner();
 	void CreateMoreProjectiles();
@@ -18,13 +18,17 @@ public:
 
 	virtual void Update(float deltaTime) override;
 	virtual void Render(Tmpl8::Surface* screen) override;
-	static vector<Projectile*> poolOfObjects;
+	static vector<Projectile*> poolOfProjectiles;
+	static vector<Projectile*> poolOfExplosions;
 private:
 	float fireRate = 1.0f, currentTime, desiredTime;
 	vector<Projectile*> updateObjects;
 
 	bool isSpawning = false;
+
 	Tmpl8::Sprite* toSpawn;
+	Tmpl8::Sprite* explosionSprite;
+
 	Tmpl8::vec2* dir;
 	Tmpl8::vec2* pos;
 

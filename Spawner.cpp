@@ -2,11 +2,12 @@
 
 #include <string>
 #include <iostream>
-vector <Projectile*> Spawner::poolOfObjects;
-Spawner::Spawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Tmpl8::Sprite* tospawn, float FireRate)
+vector <Projectile*> Spawner::poolOfProjectiles;
+Spawner::Spawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Tmpl8::Sprite* tospawn, Tmpl8::Sprite* explosion, float FireRate)
 	:pos(pos),
 	dir(dir),
-	toSpawn(tospawn)
+	toSpawn(tospawn),
+	explosionSprite(explosion)
 {
 
 	for (int i = 0; i < MAX_PROJECTILES; i++) {
@@ -20,16 +21,14 @@ Spawner::Spawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Tmpl8::Sprite* tospawn, flo
 
 void Spawner::AddToPool(Projectile* const& entity)
 {
-
 	entity->SetActive(false);
 
-
-	poolOfObjects.push_back(entity);
+	poolOfProjectiles.push_back(entity);
 }
 
 Spawner::~Spawner()
 {
-	poolOfObjects.removeAll();
+	poolOfProjectiles.removeAll();
 	updateObjects.removeAll();
 	delete pos;
 	delete dir;
@@ -38,7 +37,7 @@ Spawner::~Spawner()
 
 void Spawner::CreateMoreProjectiles()
 {
-	Projectile* entity = new Projectile(*pos + *dir * OFFSET, *dir, toSpawn);
+	Projectile* entity = new Projectile(*pos + *dir * OFFSET, *dir, toSpawn, explosionSprite);
 	updateObjects.push_back(entity);
 	AddToPool(entity);
 }
@@ -47,13 +46,13 @@ void Spawner::CreateMoreProjectiles()
 
 void Spawner::Spawn()
 {
-	if (poolOfObjects.getCount() == 0)
+	if (poolOfProjectiles.getCount() == 0)
 		CreateMoreProjectiles();
-	Projectile* entity = poolOfObjects.get(poolOfObjects.getCount() - 1);
+	Projectile* entity = poolOfProjectiles.get(poolOfProjectiles.getCount() - 1);
 	entity->SetActive(true);
 	entity->Init((*pos) + (*dir), *dir);
 
-	poolOfObjects.pop_back();
+	poolOfProjectiles.pop_back();
 
 }
 
@@ -84,11 +83,11 @@ void Spawner::Update(float deltaTime)
 
 void Spawner::Render(Tmpl8::Surface* screen)
 {
-	auto inactive = std::string("Bullets left:" + std::to_string(poolOfObjects.getCount()));
+	auto inactive = std::string("Bullets left:" + std::to_string(poolOfProjectiles.getCount()));
 
 	screen->Print(inactive.c_str(), 10, 10, 0xffffffff);
 
-	auto active = std::string("Bullets active:" + std::to_string(updateObjects.getCount() - poolOfObjects.getCount()));
+	auto active = std::string("Bullets active:" + std::to_string(updateObjects.getCount() - poolOfProjectiles.getCount()));
 
 	screen->Print(active.c_str(), 10, 20, 0xffffffff);
 	for (int i = 0; i < updateObjects.getCount(); i++)

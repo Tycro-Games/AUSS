@@ -3,7 +3,7 @@
 #include <iostream>
 #include "Spawner.h"
 
-Projectile::Projectile(Tmpl8::vec2 pos, Tmpl8::vec2 dir, Tmpl8::Sprite* sprite)
+Projectile::Projectile(Tmpl8::vec2 pos, Tmpl8::vec2 dir, Tmpl8::Sprite* sprite, Tmpl8::Sprite* explosion)
 	:Entity(sprite, new Tmpl8::vec2(pos)),
 	col(new Collider(COL_MIN, COL_MAX))
 {
@@ -56,7 +56,7 @@ void Projectile::Update(float deltaTime)
 
 void Projectile::Render(Tmpl8::Surface* screen)
 {
-	if (!isRenderable)
+	if (!isRenderable)//this check should be called in the base class
 		return;
 	sprite->SetFrame(frame);
 	sprite->Draw(screen, pos->x, pos->y);
@@ -67,6 +67,7 @@ void Projectile::Call()
 {
 	if (timer->isFinished) {
 		Spawner::AddToPool(this);
+
 	}
 	else
 		Reflect();

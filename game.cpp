@@ -10,31 +10,26 @@ namespace Tmpl8
 
 	void Game::Init()
 	{
-		player = new Player(new Sprite(new Surface("assets/sniper.tga"), 32),
+		player = (new Player(new Sprite(new Surface("assets/sniper.tga"), 32),
 			new vec2(START_POS),
 			new Collider(vec2(COL_MIN), vec2(COL_MAX)),
-			100);
+			100));
+		cursor = (new FollowCursor(new Sprite(new Surface("assets/target.tga"), 1)));
+
+		AddInstancesToUpdates();
+	}
+	void Game::AddInstancesToUpdates()
+	{
+
+		renderables.push_back(cursor);
 		updateables.push_back(player);
 		updateables.push_back(player->GetMoveable());
 		renderables.push_back(player);
-		/*std::cout << v.get(1) << '\n';
-		v.push_back(1);
-		v.push_back(2);
-		v.push_back(3);
-		v.insert(0, 3);
-		v.prepend(69);
-		for (int i = 0; i < v.getCount(); i++)
-			std::cout << v.get(i) << ' ';
-		std::cout << " size" << v.getCount() << '\n';
-		v.remove(3);
-		for (int i = 0; i < v.getCount(); i++)
-			std::cout << v.get(i) << ' ';
-		std::cout << " size" << v.getCount() << '\n';*/
-
 	}
 	void Game::Shutdown()
 	{
 		delete player;
+		delete cursor;
 	}
 
 
@@ -63,6 +58,7 @@ namespace Tmpl8
 	}
 	void Game::MouseMove(int x, int y)
 	{
+		cursor->ChangePosition(x, y);
 		player->Rotate(x, y);
 	}
 	void Game::KeyUp(SDL_Scancode key)
