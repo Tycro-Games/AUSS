@@ -3,24 +3,20 @@
 
 #include <string>
 #include <iostream>
-vector <Projectile*> Spawner::poolOfProjectiles;
-vector <ExplosionBullet*> Spawner::poolOfExplosions;
-bool Spawner::isInit;
+
 Spawner::Spawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Tmpl8::Sprite* tospawn, Tmpl8::Sprite* explosion, float FireRate)
 	:pos(pos),
 	dir(dir),
 	toSpawn(tospawn),
 	explosionSprite(explosion)
 {
-
-	isInit = false;
 	for (int i = 0; i < MAX_PROJECTILES; i++) {
 		CreateMoreProjectiles();
-
+	}
+	for (int i = 0; i < MAX_EXPLOSIONS; i++) {
+		CreateMoreExplosions();
 	}
 
-
-	isInit = true;
 	fireRate = FireRate;
 	desiredTime = 0;
 	currentTime = 0;
@@ -31,8 +27,6 @@ void Spawner::AddProjectileToPool(Projectile* entity)
 	entity->SetActive(false);
 
 	poolOfProjectiles.push_back(entity);
-	if (isInit)
-		SpawnExplosions(*entity->pos);
 
 }
 void Spawner::AddExplosionToPool(ExplosionBullet* entity)
@@ -54,16 +48,16 @@ Spawner::~Spawner()
 
 void Spawner::CreateMoreProjectiles()
 {
-	Projectile* entity = new Projectile(PosDir(*pos + *dir * OFFSET, *dir), toSpawn, explosionSprite);
+	Projectile* entity = new Projectile(PosDir(*pos + *dir * OFFSET, *dir), toSpawn, this);
 	updateObjects.push_back(entity);
 
 	AddProjectileToPool(entity);
-	if (poolOfProjectiles.getCount() > poolOfExplosions.getCount())
-		CreateMoreExplosions();
+
+
 }
 void Spawner::CreateMoreExplosions()
 {
-	ExplosionBullet* bullet = new ExplosionBullet(explosionSprite);
+	ExplosionBullet* bullet = new ExplosionBullet(explosionSprite, this);
 	updateObjects.push_back(bullet);
 
 	AddExplosionToPool(bullet);
@@ -84,7 +78,8 @@ void Spawner::SpawnProjectiles()
 }
 void Spawner::SpawnExplosions(Tmpl8::vec2 pos)
 {
-
+	if (poolOfExplosions.getCount() == 0)
+		CreateMoreExplosions();
 	ExplosionBullet* bullet = poolOfExplosions.get(poolOfExplosions.getCount() - 1);
 	bullet->SetActive(true);
 	bullet->Init(pos);

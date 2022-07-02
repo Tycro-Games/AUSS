@@ -1,10 +1,12 @@
 #pragma once
 #include "Entity.h"
 #include "Timer.h"
+#include "Spawner.h"
+class Spawner;
 class ExplosionBullet :public Entity, public Callable
 {
 public:
-	ExplosionBullet(Tmpl8::Sprite* sprite, Tmpl8::vec2* pos = new Tmpl8::vec2());
+	ExplosionBullet(Tmpl8::Sprite* sprite, Spawner* spawner, Tmpl8::vec2* pos = new Tmpl8::vec2());
 
 	~ExplosionBullet();
 	void Init(Tmpl8::vec2 pos);
@@ -13,8 +15,12 @@ public:
 	virtual void Render(Tmpl8::Surface* screen) override;
 	virtual void Call() override;
 private:
+	float TotalAnimation;
+	float currenTime = 0;
+	float desiredTime = .005f;//per frame
+	int loops = 7;//how many animations
 	Timer* timer;
-
+	Spawner* spawner;
 
 
 

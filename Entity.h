@@ -18,12 +18,16 @@ public:
 	virtual ~Entity();
 	Tmpl8::Sprite* sprite;
 	Tmpl8::vec2* pos;
+
 protected:
 	int frame = 0;
 
 
 
 private:
+
+
+
 
 };
 

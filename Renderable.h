@@ -6,6 +6,6 @@ public:
 	virtual void Render(Tmpl8::Surface* screen) = 0;
 
 	bool isRenderable = true;
+	inline bool getRenderable() { return isRenderable; }
 
-	void SetRenderable(bool render) { isRenderable = render; }
 };

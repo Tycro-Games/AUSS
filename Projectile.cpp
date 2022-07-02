@@ -3,26 +3,17 @@
 #include <iostream>
 #include "Spawner.h"
 
-Projectile::Projectile(PosDir posDir, Tmpl8::Sprite* sprite, Tmpl8::Sprite* explosion)
+
+Projectile::Projectile(PosDir posDir, Tmpl8::Sprite* sprite, Spawner* spawner)
 	:Entity(sprite, new Tmpl8::vec2(posDir.pos)),
-	col(new Collider(COL_MIN, COL_MAX))
+	col(new Collider(COL_MIN, COL_MAX)),
+	spawner(spawner)
 {
 	Init(posDir);
 }
-
-Projectile::Projectile(const Entity* entity) :
-	Entity(entity->sprite, entity->pos),
-	col(new Collider(COL_MIN, COL_MAX))
-{
-	Init(PosDir(*(entity->pos), Tmpl8::vec2()));
-}
-
-
-
 void Projectile::Init(PosDir posDir)
 {
-	isUpdateable = true;
-	isRenderable = true;
+	SetActive(true);
 	(*pos) = posDir.pos;
 	dir = new Tmpl8::vec2(posDir.dir);
 	timer = new Timer(this, TIME_ALIVE);
@@ -40,7 +31,6 @@ Projectile::~Projectile()
 void Projectile::RotateToDirection()
 {
 	//rotate to the target dir
-
 	frame = fmod(MathFunctions::GetDirInAnglesPos(*dir) + rVar.OFFSET_SPRITE, 360) / rVar.ANGLE_SIZE;
 }
 
@@ -57,7 +47,7 @@ void Projectile::Reflect()
 
 void Projectile::Update(float deltaTime)
 {
-	if (!isUpdateable)
+	if (!getUpdateable())
 		return;
 	mover->Update(deltaTime);
 	timer->Update(deltaTime);
@@ -65,7 +55,8 @@ void Projectile::Update(float deltaTime)
 
 void Projectile::Render(Tmpl8::Surface* screen)
 {
-	if (!isRenderable)//this check should be called in the base class
+
+	if (!getRenderable())
 		return;
 	sprite->SetFrame(frame);
 	sprite->Draw(screen, pos->x, pos->y);
@@ -75,8 +66,9 @@ void Projectile::Render(Tmpl8::Surface* screen)
 void Projectile::Call()
 {
 	if (timer->isFinished) {
-		Spawner::AddProjectileToPool(this);
 
+		spawner->AddProjectileToPool(this);
+		spawner->SpawnExplosions(*pos);
 	}
 	else
 		Reflect();

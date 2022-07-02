@@ -8,30 +8,34 @@
 
 #include "Callable.h"
 
+
+class Projectile;
+class ExplosionBullet;
 class Spawner :public Updateable, public Renderable {
+
 public:
 	Spawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Tmpl8::Sprite* toSpawn, Tmpl8::Sprite* explosion, float FireRate = 1.0f);
-	static void AddProjectileToPool(Projectile* entity);
-	static void AddExplosionToPool(ExplosionBullet* entity);
+	void AddProjectileToPool(Projectile* entity);
+	void AddExplosionToPool(ExplosionBullet* entity);
 
 	~Spawner();
 	void CreateMoreProjectiles();
 	void CreateMoreExplosions();
 	void SpawnProjectiles();
-	static void SpawnExplosions(Tmpl8::vec2 pos);
+	void SpawnExplosions(Tmpl8::vec2 pos);
 
 	void setFlag(bool fire);
 
 	virtual void Update(float deltaTime) override;
 	virtual void Render(Tmpl8::Surface* screen) override;
-	static vector<Projectile*> poolOfProjectiles;
-	static vector<ExplosionBullet*> poolOfExplosions;
+	vector<Projectile*> poolOfProjectiles;
+	vector<ExplosionBullet*> poolOfExplosions;
 private:
 	float fireRate = 1.0f, currentTime, desiredTime;
 	vector<Entity*> updateObjects;
 
 	bool isSpawning = false;
-	static bool isInit;
+
 	Tmpl8::Sprite* toSpawn;
 	Tmpl8::Sprite* explosionSprite;
 
@@ -40,5 +44,5 @@ private:
 
 	const float OFFSET = 20.0f;
 	const int MAX_PROJECTILES = 10;
-	const int MAX_EXPLOSIONS = 10;
+	const int MAX_EXPLOSIONS = 5;
 };

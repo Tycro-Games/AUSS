@@ -7,5 +7,6 @@ public:
 
 
 	bool isUpdateable = true;
-	void SetUpdateable(bool update) { isUpdateable = update; }
+	inline bool getUpdateable() { return isUpdateable; }
+
 };
