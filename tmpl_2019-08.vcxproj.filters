@@ -54,6 +54,9 @@
     <ClCompile Include="QuickSort.cpp">
       <Filter>Algorithms</Filter>
     </ClCompile>
+    <ClCompile Include="MergeSort.cpp">
+      <Filter>Algorithms</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -122,6 +125,9 @@
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="QuickSort.h">
+      <Filter>Algorithms</Filter>
+    </ClInclude>
+    <ClInclude Include="MergeSort.h">
       <Filter>Algorithms</Filter>
     </ClInclude>
   </ItemGroup>

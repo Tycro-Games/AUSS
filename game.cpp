@@ -5,7 +5,7 @@
 #include "template.h"
 #include "vector.h"
 #include "MathFunctions.h"
-#include "QuickSort.h"
+#include "MergeSort.h"
 namespace Tmpl8
 {
 	vector<int> a(19);
@@ -30,9 +30,12 @@ namespace Tmpl8
 		a.push_back(8);
 		a.push_back(9);
 		a.push_back(12);
-		QuickSort q(&a);
-		q.Sort(0, a.getCount() - 1);
+		MergeSort q(&a);
+		a.print();
 		std::cout << "round2\n";
+		q.Sort(0, a.getCount() - 1);
+
+
 		//q.Sort(0, a.getCount() - 1);
 
 		AddInstancesToUpdates();

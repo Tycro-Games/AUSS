@@ -230,6 +230,7 @@
     <ClCompile Include="FollowCursor.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="MathFunctions.cpp" />
+    <ClCompile Include="MergeSort.cpp" />
     <ClCompile Include="Moveable.cpp" />
     <ClCompile Include="MoveablePlayer.cpp" />
     <ClCompile Include="MoveToADirection.cpp" />
@@ -252,6 +253,7 @@
     <ClInclude Include="FollowCursor.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="MathFunctions.h" />
+    <ClInclude Include="MergeSort.h" />
     <ClInclude Include="Moveable.h" />
     <ClInclude Include="MoveablePlayer.h" />
     <ClInclude Include="MoveToADirection.h" />
