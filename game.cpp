@@ -32,7 +32,9 @@ namespace Tmpl8
 		a.push_back(12);
 		QuickSort q(&a);
 		q.Sort(0, a.getCount() - 1);
-		a.print();
+		std::cout << "round2\n";
+		//q.Sort(0, a.getCount() - 1);
+
 		AddInstancesToUpdates();
 	}
 	void Game::AddInstancesToUpdates()
