@@ -52,8 +52,6 @@ void Spawner::CreateMoreProjectiles()
 	updateObjects.push_back(entity);
 
 	AddProjectileToPool(entity);
-
-
 }
 void Spawner::CreateMoreExplosions()
 {
@@ -62,8 +60,6 @@ void Spawner::CreateMoreExplosions()
 
 	AddExplosionToPool(bullet);
 }
-
-
 
 void Spawner::SpawnProjectiles()
 {
@@ -76,6 +72,7 @@ void Spawner::SpawnProjectiles()
 
 	poolOfProjectiles.pop_back();
 }
+
 void Spawner::SpawnExplosions(Tmpl8::vec2 pos)
 {
 	if (poolOfExplosions.getCount() == 0)
@@ -87,14 +84,10 @@ void Spawner::SpawnExplosions(Tmpl8::vec2 pos)
 	poolOfExplosions.pop_back();
 }
 
-
 void Spawner::setFlag(bool fire)
 {
 	isSpawning = fire;
 }
-
-
-
 
 void Spawner::Update(float deltaTime)
 {
@@ -117,7 +110,6 @@ void Spawner::Render(Tmpl8::Surface* screen)
 
 	screen->Print(inactive.c_str(), 10, 10, 0xffffffff);
 
-
 	auto inactiveB = std::string("Explosions left:" + std::to_string(poolOfExplosions.getCount()));
 
 	screen->Print(inactiveB.c_str(), 10, 20, 0xffffffff);
@@ -129,4 +121,3 @@ void Spawner::Render(Tmpl8::Surface* screen)
 		updateObjects.get(i)->Render(screen);
 
 }
-

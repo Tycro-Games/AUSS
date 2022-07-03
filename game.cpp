@@ -5,17 +5,34 @@
 #include "template.h"
 #include "vector.h"
 #include "MathFunctions.h"
+#include "QuickSort.h"
 namespace Tmpl8
 {
-
+	vector<int> a(19);
 	void Game::Init()
 	{
+
 		player = (new Player(new Sprite(new Surface("assets/sniper.tga"), 32),
 			new vec2(START_POS),
 			new Collider(vec2(COL_MIN), vec2(COL_MAX)),
 			100));
 		cursor = (new FollowCursor(new Sprite(new Surface("assets/target.tga"), 1)));
 
+
+		a.push_back(10);
+		a.push_back(2);
+		a.push_back(1);
+		a.push_back(3);
+		a.push_back(11);
+		a.push_back(5);
+		a.push_back(7);
+		a.push_back(7);
+		a.push_back(8);
+		a.push_back(9);
+		a.push_back(12);
+		QuickSort q(&a);
+		q.Sort(0, a.getCount() - 1);
+		a.print();
 		AddInstancesToUpdates();
 	}
 	void Game::AddInstancesToUpdates()

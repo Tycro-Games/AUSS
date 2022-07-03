@@ -2,6 +2,7 @@
 #include <math.h>
 #include "Projectile.h"
 #include "ExplosionBullet.h"
+#include <iostream>
 template<class T>
 vector<T>::vector()
 {
@@ -78,14 +79,22 @@ int vector<T>::getCount()
 }
 
 template<class T>
-T vector<T>::get(int const& i)
+void vector<T>::print()
 {
-	T toReturn{};
+	for (int i = 0; i < count; i++) {
+		std::cout << arr[i] << " ";
+	}
+	std::cout << '\n';
+}
+
+template<class T>
+T& vector<T>::get(int const& i)
+{
+
 	if (i >= 0 && i < count)
-		toReturn = arr[i];
+		return arr[i];
 
 
-	return toReturn;
 }
 
 template<class T>

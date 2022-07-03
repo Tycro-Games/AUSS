@@ -21,6 +21,10 @@ public:
 	void Reflect();
 
 	void Init(PosDir posDir);
+	Collider* getColl() const {
+		return col;
+	}
+
 	virtual void Call() override;
 	virtual void Update(float deltaTime) override;
 	virtual void Render(Tmpl8::Surface* screen) override;

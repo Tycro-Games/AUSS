@@ -24,7 +24,9 @@ public:
 	int size();
 	//give the number of the acutual items that is holding
 	int getCount();
-	T get(int const& i);
+	void print();
+	T& get(int const& i);
+
 
 private:
 	void doubleSize();

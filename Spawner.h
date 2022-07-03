@@ -3,7 +3,7 @@
 #include "Projectile.h"
 #include "Entity.h"
 #include "ExplosionBullet.h"
-
+#include "CollisionDetection.h"
 #include "PosDir.h"
 
 #include "Callable.h"
@@ -33,6 +33,7 @@ public:
 private:
 	float fireRate = 1.0f, currentTime, desiredTime;
 	vector<Entity*> updateObjects;
+
 
 	bool isSpawning = false;
 

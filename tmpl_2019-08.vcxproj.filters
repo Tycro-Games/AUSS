@@ -48,6 +48,12 @@
     <ClCompile Include="ExplosionBullet.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="CollisionDetection.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="QuickSort.cpp">
+      <Filter>Algorithms</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -112,6 +118,12 @@
     <ClInclude Include="PosDir.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="CollisionDetection.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="QuickSort.h">
+      <Filter>Algorithms</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="template code">
@@ -134,6 +146,9 @@
     </Filter>
     <Filter Include="Math">
       <UniqueIdentifier>{41cf4e31-443e-4079-804b-8c03abb47432}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Algorithms">
+      <UniqueIdentifier>{f2ef26c0-b21c-44fd-adae-3d1955c36216}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
