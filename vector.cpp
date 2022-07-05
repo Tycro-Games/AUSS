@@ -93,7 +93,14 @@ void vector<T>::print()
 	}
 	std::cout << '\n';
 }
-
+template< >
+void vector<Projectile*>::print()
+{
+	for (int i = 0; i < count; i++) {
+		std::cout << arr[i]->pos->x << " ";
+	}
+	std::cout << '\n';
+}
 template<class T>
 T& vector<T>::get(int const& i)
 {

@@ -3,11 +3,9 @@
 CollisionDetection::CollisionDetection(int maxX, vector<Projectile*>& collidables) :
 	maxX(maxX),
 	axisToSort(&collidables),
-	axisSorted(),
-	mergeSort(&axisSorted),
+	mergeSort(axisToSort),
 	timer(new Timer(this, 2.0f, true))
 {
-	ConvertToFloat();
 }
 
 CollisionDetection::~CollisionDetection()
@@ -15,21 +13,15 @@ CollisionDetection::~CollisionDetection()
 	delete timer;
 }
 
-void CollisionDetection::ConvertToFloat()
-{
-	axisSorted.removeAll();
 
-	for (int i = 0; i < axisToSort->getCount(); i++)
-		axisSorted.push_back(axisToSort->get(i)->pos->x);
-}
 
 void CollisionDetection::SortOnX()
 {
-	if (axisSorted.getCount() == 0)
+	if (axisToSort->getCount() == 0)
 		return;
 	else {
-		mergeSort.Sort(0, axisSorted.getCount() - 1);
-		axisSorted.print();
+		mergeSort.Sort(0, axisToSort->getCount() - 1);
+		axisToSort->print();
 	}
 
 
@@ -43,7 +35,6 @@ void CollisionDetection::Update(float deltaTime)
 
 void CollisionDetection::Call()
 {
-	ConvertToFloat();
 	SortOnX();
 }
 

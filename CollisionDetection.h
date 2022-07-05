@@ -7,15 +7,13 @@ class CollisionDetection :public Updateable, public Callable
 public:
 	CollisionDetection(int maxX, vector<Projectile*>& collidables);
 	~CollisionDetection();
-	void ConvertToFloat();
 	void SortOnX();
 	virtual void Update(float deltaTime) override;
 	// Inherited via Callable
 	virtual void Call() override;
 private:
 	vector<Projectile*>* axisToSort;
-	vector<float> axisSorted;
-	MergeSort<float> mergeSort;
+	MergeSort<Projectile*> mergeSort;
 	Timer* timer;
 	int maxX;
 
