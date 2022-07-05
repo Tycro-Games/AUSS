@@ -32,8 +32,9 @@ public:
 	vector<ExplosionBullet*> poolOfExplosions;
 private:
 	float fireRate = 1.0f, currentTime, desiredTime;
+	vector<Projectile*> activeProjectiles;
 	vector<Entity*> updateObjects;
-
+	CollisionDetection colDec;
 
 	bool isSpawning = false;
 

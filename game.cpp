@@ -8,7 +8,7 @@
 #include "MergeSort.h"
 namespace Tmpl8
 {
-	vector<int> a(19);
+	vector<float> a(19);
 	void Game::Init()
 	{
 
@@ -26,18 +26,17 @@ namespace Tmpl8
 		a.push_back(11);
 		a.push_back(5);
 		a.push_back(7);
-		a.push_back(7);
+		a.push_back(7.8f);
 		a.push_back(8);
-		a.push_back(9);
+		a.push_back(9.1f);
 		a.push_back(12);
-		MergeSort q(&a);
-		a.print();
-		std::cout << "round2\n";
+		MergeSort<float> q(&a);
+
 		q.Sort(0, a.getCount() - 1);
 
 
-		//q.Sort(0, a.getCount() - 1);
-
+		q.Sort(0, a.getCount() - 1);
+		a.print();
 		AddInstancesToUpdates();
 	}
 	void Game::AddInstancesToUpdates()

@@ -1,11 +1,13 @@
 #pragma once
 #include "vector.h"
+template <class T>
 class MergeSort {
 public:
-	MergeSort(vector<int>* list);
+	MergeSort(vector<T>* list);
+	~MergeSort();
 	void Sort(int l, int h);
 	void Merge(int l, int mid, int h);
 private:
-	vector<int>* list;
-	vector<int> nList;
+	vector<T>* list;
+
 };

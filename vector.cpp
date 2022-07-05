@@ -11,7 +11,6 @@ vector<T>::vector()
 template<class T>
 vector<T>::~vector()
 {
-
 	delete[]arr;
 }
 
@@ -25,6 +24,14 @@ vector<T>::vector(size_t size)
 	else
 		resize(16);
 }
+
+template<class T>
+T& vector<T>::operator[](const int index)
+{
+	if (index < maxSize)
+		return arr[index];
+}
+
 
 
 
@@ -91,7 +98,7 @@ template<class T>
 T& vector<T>::get(int const& i)
 {
 
-	if (i >= 0 && i < count)
+	if (i < count)
 		return arr[i];
 
 
@@ -203,3 +210,4 @@ template class vector<Projectile*>;
 template class vector<ExplosionBullet*>;
 template class vector<Entity*>;
 template class vector<int>;
+template class vector <float>;

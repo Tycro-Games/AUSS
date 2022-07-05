@@ -1,6 +1,4 @@
 #include "Spawner.h"
-
-
 #include <string>
 #include <iostream>
 
@@ -8,7 +6,9 @@ Spawner::Spawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Tmpl8::Sprite* tospawn, Tmp
 	:pos(pos),
 	dir(dir),
 	toSpawn(tospawn),
-	explosionSprite(explosion)
+	explosionSprite(explosion),
+	activeProjectiles(),
+	colDec(ScreenWidth, activeProjectiles)
 {
 	for (int i = 0; i < MAX_PROJECTILES; i++) {
 		CreateMoreProjectiles();
@@ -16,6 +16,7 @@ Spawner::Spawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Tmpl8::Sprite* tospawn, Tmp
 	for (int i = 0; i < MAX_EXPLOSIONS; i++) {
 		CreateMoreExplosions();
 	}
+
 
 	fireRate = FireRate;
 	desiredTime = 0;
@@ -25,7 +26,7 @@ Spawner::Spawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Tmpl8::Sprite* tospawn, Tmp
 void Spawner::AddProjectileToPool(Projectile* entity)
 {
 	entity->SetActive(false);
-
+	activeProjectiles.remove(entity);
 	poolOfProjectiles.push_back(entity);
 
 }
@@ -40,6 +41,7 @@ Spawner::~Spawner()
 {
 	poolOfProjectiles.removeAll();
 	poolOfExplosions.removeAll();
+	//activeProjectiles.removeAll();
 	updateObjects.removeAll();
 	delete pos;
 	delete dir;
@@ -52,6 +54,7 @@ void Spawner::CreateMoreProjectiles()
 	updateObjects.push_back(entity);
 
 	AddProjectileToPool(entity);
+
 }
 void Spawner::CreateMoreExplosions()
 {
@@ -70,6 +73,7 @@ void Spawner::SpawnProjectiles()
 	projectile->SetActive(true);
 	projectile->Init(PosDir{ (*pos) + (*dir), *dir });
 
+	activeProjectiles.push_back(projectile);
 	poolOfProjectiles.pop_back();
 }
 
@@ -92,7 +96,7 @@ void Spawner::setFlag(bool fire)
 void Spawner::Update(float deltaTime)
 {
 	for (int i = 0; i < updateObjects.getCount(); i++)
-		updateObjects.get(i)->Update(deltaTime);
+		updateObjects[i]->Update(deltaTime);
 
 	if (currentTime >= desiredTime) {
 		if (isSpawning) {
@@ -102,6 +106,7 @@ void Spawner::Update(float deltaTime)
 	}
 	else
 		currentTime += deltaTime;
+	colDec.Update(deltaTime);
 }
 
 void Spawner::Render(Tmpl8::Surface* screen)
@@ -118,6 +123,6 @@ void Spawner::Render(Tmpl8::Surface* screen)
 
 	screen->Print(total.c_str(), 10, 30, 0xffffffff);
 	for (int i = 0; i < updateObjects.getCount(); i++)
-		updateObjects.get(i)->Render(screen);
+		updateObjects[i]->Render(screen);
 
 }

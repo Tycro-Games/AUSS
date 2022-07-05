@@ -5,7 +5,7 @@ public:
 	vector();
 	~vector();
 	vector(size_t size);
-
+	T& operator[](int);
 
 	void push_back(const T& item);
 	T pop_back();

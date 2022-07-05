@@ -1,7 +1,8 @@
 #include "QuickSort.h"
 
+template <class T>
 
-void QuickSort::Sort(int l, int h)
+void QuickSort<T>::Sort(int l, int h)
 {
 	if (l < h) {
 		int j = Partition(l, h);
@@ -10,21 +11,23 @@ void QuickSort::Sort(int l, int h)
 	}
 
 }
+template <class T>
 
-QuickSort::QuickSort(vector<int>* list) :
+QuickSort<T>::QuickSort(vector<T>* list) :
 	list(list)
 {
 
 }
+template <class T>
 
-void QuickSort::Swap(int& i, int& j)
+void QuickSort<T>::Swap(T& i, T& j)
 {
-	int aux = i;
+	T aux = i;
 	i = j;
 	j = aux;
 }
-
-int QuickSort::Partition(int l, int h)
+template <class T>
+int QuickSort<T>::Partition(int l, int h)
 {
 	int p = list->get(l);
 	int i = l, j = h;
@@ -44,3 +47,5 @@ int QuickSort::Partition(int l, int h)
 	list->print();
 	return j; //partition position
 }
+template class QuickSort<float>;
+template class QuickSort<int>;

@@ -1,13 +1,16 @@
 #include "MergeSort.h"
-
-MergeSort::MergeSort(vector<int>* list) :
+template<class T>
+MergeSort<T>::MergeSort(vector<T>* list) :
 	list(list)
-
 {
 
 }
-
-void MergeSort::Sort(int l, int h)
+template<class T>
+MergeSort<T>::~MergeSort()
+{
+}
+template<class T>
+void MergeSort<T>::Sort(int l, int h)
 {
 	if (l < h) {
 		int mid = (l + h) / 2;
@@ -17,11 +20,11 @@ void MergeSort::Sort(int l, int h)
 
 	}
 }
-
-void MergeSort::Merge(int l, int mid, int h)
+template<class T>
+void MergeSort<T>::Merge(int l, int mid, int h)
 {
 	int i = l, j = mid + 1;
-	vector<int> A(16);
+	vector<T> A(16);
 	while (i <= mid && j <= h) {
 		if (list->get(i) < list->get(j))
 			A.push_back(list->get(i++));
@@ -43,6 +46,9 @@ void MergeSort::Merge(int l, int mid, int h)
 	{
 		list->get(i) = A.get(k++);
 	}
-	A.print();
-	list->print();
+	/*A.print();
+	list->print();*/
 }
+template class MergeSort<float>;
+template class MergeSort<int>;
+
