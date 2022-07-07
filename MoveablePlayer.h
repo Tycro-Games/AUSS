@@ -6,7 +6,7 @@
 class MoveablePlayer :public Moveable
 {
 public:
-	MoveablePlayer(Tmpl8::vec2* pos, Collider* col, float speed = 1.0f);
+	MoveablePlayer(Tmpl8::vec2* pos, Collider* col, float speed = 20.0f);
 	virtual ~MoveablePlayer();
 	virtual void Update(float deltaTime) override;
 

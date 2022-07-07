@@ -11,7 +11,7 @@
 #endif
 
 //#define FULLSCREEN
-//#define ADVANCEDGL
+#define ADVANCEDGL
 
 #include "game.h"
 
@@ -310,11 +310,11 @@ int main(int argc, char** argv)
 #ifdef FULLSCREEN
 	window = SDL_CreateWindow(TemplateVersion, 100, 100, ScreenWidth, ScreenHeight, SDL_WINDOW_FULLSCREEN | SDL_WINDOW_OPENGL);
 #else
-	window = SDL_CreateWindow(TemplateVersion, 100, 100, ScreenWidth, ScreenHeight, SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
+	window = SDL_CreateWindow(TemplateVersion, 100, 100, ScreenWidth, ScreenHeight, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
 #endif
 	SDL_GLContext glContext = SDL_GL_CreateContext(window);
 	init();
-	ShowCursor(false);
+	ShowCursor(SDL_DISABLE); //invisible cursor, set to SDL_ENABLE to make it visible
 #else
 #ifdef FULLSCREEN
 	window = SDL_CreateWindow(TemplateVersion, 100, 100, ScreenWidth, ScreenHeight, SDL_WINDOW_FULLSCREEN);
@@ -326,6 +326,8 @@ int main(int argc, char** argv)
 	SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	SDL_Texture* frameBuffer = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, ScreenWidth, ScreenHeight);
 #endif
+
+
 	int exitapp = 0;
 	game = new Game();
 	game->SetTarget(surface);

@@ -11,12 +11,21 @@ public:
 	Collider At(const Tmpl8::vec2& offset) const {
 		return Collider(min + offset, max + offset);
 	}
+
 	bool Collides(const Collider& col) {
 		return Collides(*this, col);
 	}
 	static bool Collides(const Collider& a, const Collider& b) {
 		return a.min.x < b.max.x&& a.max.x>b.min.x &&
 			a.min.y < b.max.y&& a.max.y>b.min.y;
+
+	}static bool CollidesY(const Collider& a, const Collider& b) {
+		return a.min.y < b.max.y&& a.max.y>b.min.y;
+
+	}
+	static bool CollidesX(const Collider& a, const Collider& b) {
+
+		return a.min.x < b.max.x&& a.max.x>b.min.x;
 
 	}
 	static bool Collider::InGameScreen(Tmpl8::vec2& pos, Collider& col)

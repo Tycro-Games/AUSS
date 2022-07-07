@@ -41,7 +41,7 @@ Spawner::~Spawner()
 {
 	poolOfProjectiles.removeAll();
 	poolOfExplosions.removeAll();
-	//activeProjectiles.removeAll();
+
 	updateObjects.removeAll();
 	delete pos;
 	delete dir;
@@ -95,8 +95,6 @@ void Spawner::setFlag(bool fire)
 
 void Spawner::Update(float deltaTime)
 {
-	for (int i = 0; i < updateObjects.getCount(); i++)
-		updateObjects[i]->Update(deltaTime);
 
 	if (currentTime >= desiredTime) {
 		if (isSpawning) {
@@ -107,6 +105,9 @@ void Spawner::Update(float deltaTime)
 	else
 		currentTime += deltaTime;
 	colDec.Update(deltaTime);
+	for (int i = 0; i < updateObjects.getCount(); i++)
+		updateObjects[i]->Update(deltaTime);
+
 }
 
 void Spawner::Render(Tmpl8::Surface* screen)

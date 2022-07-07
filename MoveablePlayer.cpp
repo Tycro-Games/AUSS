@@ -34,21 +34,21 @@ void MoveablePlayer::Update(float deltaTime)
 
 	Tmpl8::vec2 nextPos = { 0 }, currentPos = *pos;
 	if (up) {
-		nextPos.y -= speed;
+		nextPos.y--;
 	}
 	if (down) {
-		nextPos.y += speed;
+		nextPos.y++;
 	}
 	if (right) {
-		nextPos.x += speed;
+		nextPos.x++;
 	}
 
 	if (left) {
-		nextPos.x -= speed;
+		nextPos.x--;
 	}
 	//add collision check
-
-	currentPos += nextPos;
+	nextPos.normalize();
+	currentPos += nextPos * speed * deltaTime;
 	//screen check
 
 	if (col->InGameScreen(currentPos, *col)) {

@@ -48,7 +48,19 @@ void vector<T>::push_back(const T& item)
 		arr[count++] = item;
 	}
 }
+template<class T>
+void vector<T>::push_unique(const T& item)
+{
+	if (this->find(item) != -1)
+		return;
+	if (count < maxSize)
+		arr[count++] = item;
+	else {
 
+		doubleSize();
+		arr[count++] = item;
+	}
+}
 template<class T>
 void vector<T>::doubleSize()
 {
@@ -88,15 +100,27 @@ int vector<T>::getCount()
 template<class T>
 void vector<T>::print()
 {
-	for (int i = 0; i < count; i++) {
-		std::cout << arr[i] << " ";
+	if (count > 0) {
+		for (int i = 0; i < count; i++) {
+			std::cout << arr[i] << " ";
+		}
+		std::cout << '\n';
 	}
-	std::cout << '\n';
 }
 template< >
 void vector<Projectile*>::print()
 {
-	for (int i = 0; i < count; i++) {
+	if (count > 0) {
+		for (int i = 0; i < count; i++) {
+			std::cout << arr[i]->pos->x << " ";
+		}
+		std::cout << '\n';
+	}
+}
+template< >
+void vector<Projectile*>::print(int& i, int& j)
+{
+	for (; i <= j; i++) {
 		std::cout << arr[i]->pos->x << " ";
 	}
 	std::cout << '\n';
@@ -193,6 +217,8 @@ void vector<T>::remove(const T& item)
 template<class T>
 void vector<T>::removeAtIndex(const int& index)
 {
+	if (count == 0)
+		return;
 	count--;
 	for (int i = index; i < count; i++) {
 		arr[i] = arr[i + 1];

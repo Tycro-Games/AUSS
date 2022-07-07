@@ -8,6 +8,7 @@ public:
 	T& operator[](int);
 
 	void push_back(const T& item);
+	void push_unique(const T& item);
 	T pop_back();
 	bool is_empty();
 
@@ -22,9 +23,10 @@ public:
 
 	//gives the number of items it can hold
 	int size();
-	//give the number of the acutual items that is holding
+	//give the number of the actual items that is holding
 	int getCount();
 	void print();
+	void print(int& i, int& j);
 	T& get(int const& i);
 
 
