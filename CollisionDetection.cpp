@@ -4,7 +4,7 @@ CollisionDetection::CollisionDetection(int maxX, vector<Projectile*>& collidable
 	maxX(maxX),
 	axisToSort(&collidables),
 	mergeSort(axisToSort),
-	timer(new Timer(this, .08f, true))
+	timer(new Timer(this, .05f, true))
 {
 }
 
@@ -37,7 +37,7 @@ void CollisionDetection::DetectCollisions()
 				if (Collider::CollidesX(a->getColl()->At(*a->pos),
 					b->getColl()->At(*b->pos)))
 				{
-					//check intersection
+					//check if there is a collision
 					if (Collider::CollidesY(a->getColl()->At(*a->pos),
 						b->getColl()->At(*b->pos))) {
 						allPairs.push_back(a);
@@ -45,14 +45,14 @@ void CollisionDetection::DetectCollisions()
 					}
 				}
 				else {
+					//update the interval if no collision
+
 					activeIntervals.removeAtIndex(j);
+
 					j--;
 				}
 			}
 			activeIntervals.push_back(a);
-
-
-
 		}
 		for (int i = 0; i < allPairs.getCount(); i++) {
 			allPairs[i]->ResetBullet();
