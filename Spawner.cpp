@@ -2,7 +2,7 @@
 #include <string>
 #include <iostream>
 
-Spawner::Spawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Tmpl8::Sprite* tospawn, Tmpl8::Sprite* explosion, float FireRate)
+Spawner::Spawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Tmpl8::Sprite* tospawn, Tmpl8::Sprite* explosion)
 	:pos(pos),
 	dir(dir),
 	toSpawn(tospawn),
@@ -18,11 +18,18 @@ Spawner::Spawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Tmpl8::Sprite* tospawn, Tmp
 	}
 
 
-	fireRate = FireRate;
+	fireRate = FIRE_RATE;
 	desiredTime = 0;
 	currentTime = 0;
 }
+void Spawner::ChangeFireSpeed(float speed) {
 
+	fireRate += speed;
+	if (fireRate < MIN_RATE)
+		fireRate = MIN_RATE;
+	if (fireRate > MAX_RATE)
+		fireRate = MAX_RATE;
+}
 void Spawner::AddProjectileToPool(Projectile* entity)
 {
 	entity->SetActive(false);
@@ -123,6 +130,11 @@ void Spawner::Render(Tmpl8::Surface* screen)
 	auto total = std::string("Objects active:" + std::to_string(updateObjects.getCount() - poolOfProjectiles.getCount() - poolOfExplosions.getCount()));
 
 	screen->Print(total.c_str(), 10, 30, 0xffffffff);
+	auto firerate = std::string("Firerate: " + std::to_string(fireRate));
+
+	screen->Print(firerate.c_str(), 10, 60, 0xffffffff);
+
+	screen->Print("Use up arrow and down arrow to adjust the firerate", 10, 70, 0xffffffff);
 	for (int i = 0; i < updateObjects.getCount(); i++)
 		updateObjects[i]->Render(screen);
 

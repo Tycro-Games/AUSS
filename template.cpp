@@ -300,9 +300,12 @@ void swap()
 
 int main(int argc, char** argv)
 {
+
 #ifdef _MSC_VER
+#ifdef _DEBUG
 	if (!redirectIO())
 		return 1;
+#endif
 #endif
 	printf("application started.\n");
 	SDL_Init(SDL_INIT_VIDEO);
@@ -310,7 +313,7 @@ int main(int argc, char** argv)
 #ifdef FULLSCREEN
 	window = SDL_CreateWindow(TemplateVersion, 100, 100, ScreenWidth, ScreenHeight, SDL_WINDOW_FULLSCREEN | SDL_WINDOW_OPENGL);
 #else
-	window = SDL_CreateWindow(TemplateVersion, 100, 100, ScreenWidth, ScreenHeight, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
+	window = SDL_CreateWindow(TemplateVersion, 100, 100, ScreenWidth, ScreenHeight, SDL_WINDOW_OPENGL);
 #endif
 	SDL_GLContext glContext = SDL_GL_CreateContext(window);
 	init();

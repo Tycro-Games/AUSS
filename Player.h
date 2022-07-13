@@ -19,6 +19,8 @@ public:
 	void Rotate(int x, int y);
 	MoveablePlayer* GetMoveable();
 
+	Spawner* GetSpawner();
+
 private:
 	RotationVar rVar = RotationVar();
 	Tmpl8::vec2* dirToFace = 0;

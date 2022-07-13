@@ -98,6 +98,7 @@ namespace Tmpl8
 		case(SDL_SCANCODE_A):
 			player->GetMoveable()->setLeft();
 			break;
+
 		default:
 			break;
 		}
@@ -117,6 +118,13 @@ namespace Tmpl8
 			break;
 		case SDL_SCANCODE_A:
 			player->GetMoveable()->setLeft(true);
+			break;
+			//firerate
+		case SDL_SCANCODE_UP:
+			player->GetSpawner()->ChangeFireSpeed(.10f);
+			break;
+		case SDL_SCANCODE_DOWN:
+			player->GetSpawner()->ChangeFireSpeed(-.10f);
 			break;
 		default:
 			break;

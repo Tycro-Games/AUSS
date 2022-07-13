@@ -14,7 +14,8 @@ class ExplosionBullet;
 class Spawner :public Updateable, public Renderable {
 
 public:
-	Spawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Tmpl8::Sprite* toSpawn, Tmpl8::Sprite* explosion, float FireRate = 1.0f);
+	Spawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Tmpl8::Sprite* toSpawn, Tmpl8::Sprite* explosion);
+	void ChangeFireSpeed(float speed);
 	void AddProjectileToPool(Projectile* entity);
 	void AddExplosionToPool(ExplosionBullet* entity);
 
@@ -44,7 +45,12 @@ private:
 	Tmpl8::vec2* dir;
 	Tmpl8::vec2* pos;
 
+	const float FIRE_RATE = 0.25f;
+	const float MIN_RATE = 0.2f;
+	const float MAX_RATE = 2.0f;
 	const float OFFSET = 20.0f;
+
 	const int MAX_PROJECTILES = 10;
 	const int MAX_EXPLOSIONS = 5;
+
 };
