@@ -224,6 +224,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Being.cpp" />
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="CollisionDetection.cpp" />
     <ClCompile Include="Entity.cpp" />
@@ -246,6 +247,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Being.h" />
+    <ClInclude Include="Button.h" />
     <ClInclude Include="Callable.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="CollisionDetection.h" />

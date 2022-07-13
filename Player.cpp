@@ -7,8 +7,8 @@ Player::Player(Tmpl8::Sprite* sprite, Tmpl8::vec2* pos, Collider* col, int hp)
 	Being(sprite, pos, hp),
 	col(col),
 	mover(new MoveablePlayer(pos, col)),
-	projectileSprite(new Tmpl8::Sprite(new Tmpl8::Surface("assets/missile_big.tga"), 32)),
-	explosionSprite(new Tmpl8::Sprite(new Tmpl8::Surface("assets/smoke.tga"), 10)),
+	projectileSprite(new Tmpl8::Sprite(new Tmpl8::Surface("Build/assets/missile_big.tga"), 32)),
+	explosionSprite(new Tmpl8::Sprite(new Tmpl8::Surface("Build/assets/smoke.tga"), 10)),
 	spawner(new Spawner(pos, dirToFace, projectileSprite, explosionSprite))
 {
 

@@ -12,13 +12,13 @@ namespace Tmpl8
 	void Game::Init()
 	{
 
-		player = (new Player(new Sprite(new Surface("assets/sniper.tga"), 32),
+		player = (new Player(new Sprite(new Surface("Build/assets/sniper.tga"), 32),
 			new vec2(START_POS),
 			new Collider(vec2(COL_MIN), vec2(COL_MAX)),
 			100));
-		cursor = (new FollowCursor(new Sprite(new Surface("assets/target.tga"), 1)));
+		cursor = (new FollowCursor(new Sprite(new Surface("Build/assets/target.tga"), 1)));
 
-
+		playButton = new Button(new Sprite(new Surface("Build/assets/Play_Idle.png"), 1));
 		a.push_back(10);
 		a.push_back(2);
 		a.push_back(1);
@@ -42,13 +42,14 @@ namespace Tmpl8
 	void Game::AddInstancesToUpdates()
 	{
 
-		renderables.push_back(cursor);
+
 		updateables.push_back(player);
 		updateables.push_back(player->GetMoveable());
 		renderables.push_back(player);
 	}
 	void Game::Shutdown()
 	{
+		delete playButton;
 		delete player;
 		delete cursor;
 	}
@@ -58,14 +59,31 @@ namespace Tmpl8
 	{
 		deltaTime /= 1000.0f; //make time into seconds
 		screen->Clear(0);
-		for (auto i : renderables) {
-			i->Render(screen);
-		}
 
-		for (auto i : updateables) {
-			i->Update(deltaTime);
+		switch (state)
+		{
+		case(game):
+			for (auto i : renderables) {
+				i->Render(screen);
+			}
+
+			for (auto i : updateables) {
+				i->Update(deltaTime);
+			}
+			player->Shoot(isPressingLeftMouse);
+			break;
+		case(mainMenu):
+			//update main menu stuff;
+			playButton->Update(deltaTime);
+			playButton->Render(screen);
+			break;
+		case(paused):
+			//pause stuff menu
+			break;
+		default:
+			break;
 		}
-		player->Shoot(isPressingLeftMouse);
+		cursor->Render(screen);
 	}
 
 
@@ -121,10 +139,10 @@ namespace Tmpl8
 			break;
 			//firerate
 		case SDL_SCANCODE_UP:
-			player->GetSpawner()->ChangeFireSpeed(.10f);
+			player->GetSpawner()->ChangeFireSpeed(FIRE_SPEED_CHANGE);
 			break;
 		case SDL_SCANCODE_DOWN:
-			player->GetSpawner()->ChangeFireSpeed(-.10f);
+			player->GetSpawner()->ChangeFireSpeed(-FIRE_SPEED_CHANGE);
 			break;
 		default:
 			break;

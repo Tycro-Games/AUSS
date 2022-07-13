@@ -57,6 +57,9 @@
     <ClCompile Include="MergeSort.cpp">
       <Filter>Algorithms</Filter>
     </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -130,6 +133,9 @@
     <ClInclude Include="MergeSort.h">
       <Filter>Algorithms</Filter>
     </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="template code">
@@ -155,6 +161,9 @@
     </Filter>
     <Filter Include="Algorithms">
       <UniqueIdentifier>{f2ef26c0-b21c-44fd-adae-3d1955c36216}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{0bb0ab6f-2d1b-4e9c-8f95-70ca771625bc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

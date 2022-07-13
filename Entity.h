@@ -14,6 +14,7 @@ public:
 	}
 
 	Entity(Tmpl8::Sprite* sprite);
+	Entity(Tmpl8::Surface* sprite, unsigned int);
 
 	virtual ~Entity();
 	Tmpl8::Sprite* sprite;
