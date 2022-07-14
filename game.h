@@ -24,7 +24,8 @@ namespace Tmpl8 {
 		void MouseMove(int x, int y);
 		void KeyUp(SDL_Scancode key);
 		void KeyDown(SDL_Scancode key);
-	private:
+
+		static bool isPressingLeftMouse;
 		enum GameState
 		{
 
@@ -32,7 +33,11 @@ namespace Tmpl8 {
 			game,
 			paused
 		};
-		GameState state = mainMenu;
+		static void ChangeGameState(GameState state);
+		static GameState currentState;
+	private:
+
+
 		Surface* screen;
 		Player* player;
 		FollowCursor* cursor;
@@ -41,7 +46,7 @@ namespace Tmpl8 {
 		std::vector<Updateable*> updateables;
 		std::vector<Renderable*> renderables;
 
-		bool isPressingLeftMouse = false;
+
 
 		const float FIRE_SPEED_CHANGE = .1f;
 		const Tmpl8::vec2 START_POS = Tmpl8::vec2(450, 400);

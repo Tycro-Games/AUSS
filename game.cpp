@@ -8,17 +8,19 @@
 #include "MergeSort.h"
 namespace Tmpl8
 {
+	bool Game::isPressingLeftMouse;
+	Game::GameState Game::currentState;
 	vector<float> a(19);
 	void Game::Init()
 	{
-
+		currentState = mainMenu;
 		player = (new Player(new Sprite(new Surface("Build/assets/sniper.tga"), 32),
 			new vec2(START_POS),
 			new Collider(vec2(COL_MIN), vec2(COL_MAX)),
 			100));
 		cursor = (new FollowCursor(new Sprite(new Surface("Build/assets/target.tga"), 1)));
 
-		playButton = new Button(new Sprite(new Surface("Build/assets/Play_Idle.png"), 1));
+		playButton = new Button(new Sprite(new Surface("Build/assets/Play_Idle.png"), 1), cursor->GetCollider());
 		a.push_back(10);
 		a.push_back(2);
 		a.push_back(1);
@@ -60,7 +62,7 @@ namespace Tmpl8
 		deltaTime /= 1000.0f; //make time into seconds
 		screen->Clear(0);
 
-		switch (state)
+		switch (currentState)
 		{
 		case(game):
 			for (auto i : renderables) {
@@ -74,8 +76,9 @@ namespace Tmpl8
 			break;
 		case(mainMenu):
 			//update main menu stuff;
-			playButton->Update(deltaTime);
 			playButton->Render(screen);
+			playButton->Update(deltaTime);
+
 			break;
 		case(paused):
 			//pause stuff menu
@@ -147,5 +150,9 @@ namespace Tmpl8
 		default:
 			break;
 		}
+	}
+	void Game::ChangeGameState(GameState state)
+	{
+		currentState = state;
 	}
 };

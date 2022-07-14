@@ -4,10 +4,11 @@ struct Collider
 {
 public:
 	Collider(Tmpl8::vec2 min, Tmpl8::vec2 max);
+	Collider(Tmpl8::vec2 min, Tmpl8::vec2 max, Tmpl8::vec2* pos);
 	Collider();
 	~Collider();
 	Tmpl8::vec2 min, max;
-
+	Tmpl8::vec2* pos;
 	Collider At(const Tmpl8::vec2& offset) const {
 		return Collider(min + offset, max + offset);
 	}
