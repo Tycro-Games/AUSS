@@ -60,6 +60,12 @@
     <ClCompile Include="Button.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="PlayButton.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="ExitButton.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -134,6 +140,12 @@
       <Filter>Algorithms</Filter>
     </ClInclude>
     <ClInclude Include="Button.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayButton.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="ExitButton.h">
       <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>

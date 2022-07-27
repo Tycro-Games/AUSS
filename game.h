@@ -1,12 +1,13 @@
 #pragma once
 
 #include "Player.h"
-#include "Updateable.h"
+
 #include "FollowCursor.h"
-#include "Button.h"
+#include "Playbutton.h"
+#include "Exitbutton.h"
 
 #include <SDL_Scancode.h>
-#include <vector>
+
 namespace Tmpl8 {
 
 	class Surface;
@@ -39,12 +40,17 @@ namespace Tmpl8 {
 
 
 		Surface* screen;
-		Player* player;
-		FollowCursor* cursor;
-		Button* playButton;
 
-		std::vector<Updateable*> updateables;
-		std::vector<Renderable*> renderables;
+		FollowCursor* cursor;
+		//MainMenu
+		Button* playButton;
+		Button* exitButton;
+		vector <Updateable*> updateablesUI;
+		vector <Renderable*> renderablesUI;
+		//actual game
+		Player* player;
+		vector<Updateable*> updateables;
+		vector<Renderable*> renderables;
 
 
 

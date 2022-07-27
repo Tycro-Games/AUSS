@@ -28,9 +28,13 @@ vector<T>::vector(size_t size)
 template<class T>
 T& vector<T>::operator[](const int index)
 {
+
 	if (index < maxSize)
 		return arr[index];
+
 }
+
+
 
 
 
@@ -244,3 +248,5 @@ template class vector<ExplosionBullet*>;
 template class vector<Entity*>;
 template class vector<int>;
 template class vector <float>;
+template class vector <Renderable*>;
+template class vector <Updateable*>;

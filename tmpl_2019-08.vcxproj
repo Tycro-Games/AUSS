@@ -228,6 +228,7 @@
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="CollisionDetection.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="ExitButton.cpp" />
     <ClCompile Include="ExplosionBullet.cpp" />
     <ClCompile Include="FollowCursor.cpp" />
     <ClCompile Include="game.cpp" />
@@ -236,6 +237,7 @@
     <ClCompile Include="Moveable.cpp" />
     <ClCompile Include="MoveablePlayer.cpp" />
     <ClCompile Include="MoveToADirection.cpp" />
+    <ClCompile Include="PlayButton.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="QuickSort.cpp" />
@@ -252,6 +254,7 @@
     <ClInclude Include="Collider.h" />
     <ClInclude Include="CollisionDetection.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="ExitButton.h" />
     <ClInclude Include="ExplosionBullet.h" />
     <ClInclude Include="FollowCursor.h" />
     <ClInclude Include="game.h" />
@@ -260,6 +263,7 @@
     <ClInclude Include="Moveable.h" />
     <ClInclude Include="MoveablePlayer.h" />
     <ClInclude Include="MoveToADirection.h" />
+    <ClInclude Include="PlayButton.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PosDir.h" />
     <ClInclude Include="Projectile.h" />
