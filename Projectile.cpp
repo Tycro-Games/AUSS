@@ -9,15 +9,18 @@ Projectile::Projectile(PosDir posDir, Tmpl8::Sprite* sprite, Spawner* spawner)
 	col(new Collider(COL_MIN, COL_MAX)),
 	spawner(spawner)
 {
+	dir = new Tmpl8::vec2();
+	timer = new Timer();
+	mover = new MoveToADirection(this->pos, this->dir, col, this, SPEED);
 	Init(posDir);
 }
 void Projectile::Init(PosDir posDir)
 {
 	SetActive(true);
 	(*pos) = posDir.pos;
-	dir = new Tmpl8::vec2(posDir.dir);
-	timer = new Timer(this, TIME_ALIVE);
-	mover = new MoveToADirection(this->pos, this->dir, col, this, SPEED);
+	(*dir) = posDir.dir;
+	timer->Init(this, TIME_ALIVE);
+
 	RotateToDirection();
 }
 

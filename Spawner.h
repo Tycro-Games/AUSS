@@ -50,7 +50,7 @@ private:
 	const float MAX_RATE = 2.0f;
 	const float OFFSET = 20.0f;
 
-	const int MAX_PROJECTILES = 10;
+	const int MAX_PROJECTILES = 50;
 	const int MAX_EXPLOSIONS = 5;
 
 };

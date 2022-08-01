@@ -26,12 +26,12 @@ namespace Tmpl8
 		cursor = (new FollowCursor(new Sprite(new Surface("Build/assets/target.tga"), 1)));
 
 
-		playButton = new PlayButton(new Sprite(new Surface("Build/assets/Play_Idle.png"), 1), new Tmpl8::vec2(ScreenWidth / 2, ScreenHeight / 2 - 64),
+		playButton = new PlayButton(new Sprite(new Surface("Build/assets/Play_Idle.png"), 1), new Tmpl8::vec2(ScreenWidth / 2, ScreenHeight / 2),
 			cursor->GetCollider(),
 			new Sprite(new Tmpl8::Surface("Build/assets/Play_Idle.png"), 1),
 			new Sprite(new Tmpl8::Surface("Build/assets/Play_Pushed.png"), 1));
 
-		exitButton = new ExitButton(new Sprite(new Surface("Build/assets/Cross_Idle.png"), 1), new Tmpl8::vec2(ScreenWidth / 2, ScreenHeight / 2),
+		exitButton = new ExitButton(new Sprite(new Surface("Build/assets/Cross_Idle.png"), 1), new Tmpl8::vec2(ScreenWidth / 2, ScreenHeight / 2 + 64),
 			cursor->GetCollider(),
 			new Sprite(new Tmpl8::Surface("Build/assets/Cross_Idle.png"), 1),
 			new Sprite(new Tmpl8::Surface("Build/assets/Cross_Pushed.png"), 1));
@@ -112,6 +112,8 @@ namespace Tmpl8
 	{
 		cursor->ChangePosition(x, y);
 		player->Rotate(x, y);
+		if (currentState == game)
+			return;
 		playButton->ChangeSprite();
 		exitButton->ChangeSprite();
 	}
@@ -121,15 +123,19 @@ namespace Tmpl8
 		{
 		case(SDL_SCANCODE_W):
 			player->GetMoveable()->setUp();
+
 			break;
 		case(SDL_SCANCODE_S):
 			player->GetMoveable()->setDown();
+
 			break;
 		case(SDL_SCANCODE_D):
 			player->GetMoveable()->setRight();
+
 			break;
 		case(SDL_SCANCODE_A):
 			player->GetMoveable()->setLeft();
+
 			break;
 
 		default:
@@ -142,15 +148,19 @@ namespace Tmpl8
 		{
 		case SDL_SCANCODE_W:
 			player->GetMoveable()->setUp(true);
+			player->Rotate(cursor->pos->x, cursor->pos->y);
 			break;
 		case SDL_SCANCODE_S:
 			player->GetMoveable()->setDown(true);
+			player->Rotate(cursor->pos->x, cursor->pos->y);
 			break;
 		case SDL_SCANCODE_D:
 			player->GetMoveable()->setRight(true);
+			player->Rotate(cursor->pos->x, cursor->pos->y);
 			break;
 		case SDL_SCANCODE_A:
 			player->GetMoveable()->setLeft(true);
+			player->Rotate(cursor->pos->x, cursor->pos->y);
 			break;
 			//firerate
 		case SDL_SCANCODE_UP:

@@ -8,8 +8,6 @@ MoveToADirection::MoveToADirection(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Collider*
 
 }
 
-
-
 void MoveToADirection::Update(float deltaTime)
 {
 

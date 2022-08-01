@@ -5,6 +5,8 @@ class Timer :public Updateable {
 	// Inherited via Updateable
 public:
 	Timer(Callable* entity, float DesiredTime, bool loop = false);
+	Timer();
+	void Init(Callable* entity, float DesiredTime, bool loop = false);
 	virtual ~Timer();
 	virtual void Update(float deltaTime) override;
 	bool isFinished = false;

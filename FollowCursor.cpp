@@ -2,7 +2,7 @@
 
 FollowCursor::FollowCursor(Tmpl8::Sprite* sprite, Tmpl8::vec2* pos) :
 	Entity(sprite, pos),
-	col(new Collider(Tmpl8::vec2(0, 0), Tmpl8::vec2(26, 26), pos))
+	col(new Collider(Tmpl8::vec2(12, 12), Tmpl8::vec2(13, 13), pos))
 {
 	AddOffset();
 }
