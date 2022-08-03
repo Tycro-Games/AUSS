@@ -16,7 +16,7 @@ namespace Tmpl8
 		currentState = mainMenu;
 #endif
 #ifdef _DEBUG
-		currentState = mainMenu;
+		currentState = game;
 #endif
 
 		player = (new Player(new Sprite(new Surface("Build/assets/sniper.tga"), 32),

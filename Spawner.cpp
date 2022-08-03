@@ -1,7 +1,10 @@
 #include "Spawner.h"
+
 #include <string>
 #include <iostream>
-
+//random number
+#include <cstdlib>
+#include <ctime>
 Spawner::Spawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Tmpl8::Sprite* tospawn, Tmpl8::Sprite* explosion)
 	:pos(pos),
 	dir(dir),
@@ -10,6 +13,7 @@ Spawner::Spawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Tmpl8::Sprite* tospawn, Tmp
 	activeProjectiles(),
 	colDec(ScreenWidth, activeProjectiles)
 {
+	SetSeed();
 	for (int i = 0; i < MAX_PROJECTILES; i++) {
 		CreateMoreProjectiles();
 	}
@@ -21,6 +25,10 @@ Spawner::Spawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Tmpl8::Sprite* tospawn, Tmp
 	fireRate = FIRE_RATE;
 	desiredTime = 0;
 	currentTime = 0;
+}
+void Spawner::SetSeed()
+{
+	srand(time(0));
 }
 void Spawner::ChangeFireSpeed(float speed) {
 
@@ -77,11 +85,23 @@ void Spawner::SpawnProjectiles()
 		CreateMoreProjectiles();
 
 	Projectile* projectile = poolOfProjectiles.get(poolOfProjectiles.getCount() - 1);
-	projectile->SetActive(true);
-	projectile->Init(PosDir{ (*pos) + (*dir), *dir });
+
+	Tmpl8::vec2 randomDir = GetDirDeviation();
+	projectile->Init(PosDir{ (*pos) + (*dir), (*dir + randomDir).normalized() });
 
 	activeProjectiles.push_back(projectile);
 	poolOfProjectiles.pop_back();
+}
+
+Tmpl8::vec2 Spawner::GetDirDeviation()
+{
+	//random direction
+	float x = MIN_DEVIATION + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (MAX_DEVIATION - MIN_DEVIATION)));
+	float y = MIN_DEVIATION + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (MAX_DEVIATION - MIN_DEVIATION)));
+	//adding multiplier
+	x *= deviationMultiplier;
+	y *= deviationMultiplier;
+	return Tmpl8::vec2(x, y);
 }
 
 void Spawner::SpawnExplosions(Tmpl8::vec2 pos)

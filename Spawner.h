@@ -15,6 +15,7 @@ class Spawner :public Updateable, public Renderable {
 
 public:
 	Spawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Tmpl8::Sprite* toSpawn, Tmpl8::Sprite* explosion);
+	void SetSeed();
 	void ChangeFireSpeed(float speed);
 	void AddProjectileToPool(Projectile* entity);
 	void AddExplosionToPool(ExplosionBullet* entity);
@@ -23,6 +24,7 @@ public:
 	void CreateMoreProjectiles();
 	void CreateMoreExplosions();
 	void SpawnProjectiles();
+	Tmpl8::vec2 GetDirDeviation();
 	void SpawnExplosions(Tmpl8::vec2 pos);
 
 	void setFlag(bool fire);
@@ -49,6 +51,10 @@ private:
 	const float MIN_RATE = 0.2f;
 	const float MAX_RATE = 2.0f;
 	const float OFFSET = 20.0f;
+	//direction random
+	const float MIN_DEVIATION = -.1f;
+	const float MAX_DEVIATION = .1f;
+	int deviationMultiplier = 3;
 
 	const int MAX_PROJECTILES = 50;
 	const int MAX_EXPLOSIONS = 5;
