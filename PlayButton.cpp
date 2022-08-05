@@ -12,14 +12,15 @@ PlayButton::~PlayButton()
 void PlayButton::ChangeSprite()
 {
 	CheckHovering();
-	if (isHovering && Tmpl8::Game::isPressingLeftMouse)
-		ResumeGame();
+	
 
 }
 
 void PlayButton::Update(float deltaTime)
 {
 	Button::Update(deltaTime);
+	if (isHovering && Tmpl8::Game::isPressingLeftMouse)
+		ResumeGame();
 }
 
 void PlayButton::Render(Tmpl8::Surface* screen)
