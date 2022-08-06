@@ -19,22 +19,22 @@ namespace Tmpl8
 		currentState = game;
 #endif
 
-		player = (new Player(new Sprite(new Surface("Build/assets/sniper.tga"), 32),
+		player = (new Player(new Sprite(new Surface("assets/sniper.tga"), 32),
 			new vec2(START_POS),
 			new Collider(vec2(COL_MIN), vec2(COL_MAX)),
 			100));
-		cursor = (new FollowCursor(new Sprite(new Surface("Build/assets/target.tga"), 1)));
+		cursor = (new FollowCursor(new Sprite(new Surface("assets/target.tga"), 1)));
 
 
-		playButton = new PlayButton(new Sprite(new Surface("Build/assets/Play_Idle.png"), 1), new Tmpl8::vec2(ScreenWidth / 2, ScreenHeight / 2),
+		playButton = new PlayButton(new Sprite(new Surface("assets/Play_Idle.png"), 1), new Tmpl8::vec2(ScreenWidth / 2, ScreenHeight / 2),
 			cursor->GetCollider(),
-			new Sprite(new Tmpl8::Surface("Build/assets/Play_Idle.png"), 1),
-			new Sprite(new Tmpl8::Surface("Build/assets/Play_Pushed.png"), 1));
+			new Sprite(new Tmpl8::Surface("assets/Play_Idle.png"), 1),
+			new Sprite(new Tmpl8::Surface("assets/Play_Pushed.png"), 1));
 
-		exitButton = new ExitButton(new Sprite(new Surface("Build/assets/Cross_Idle.png"), 1), new Tmpl8::vec2(ScreenWidth / 2, ScreenHeight / 2 + 64),
+		exitButton = new ExitButton(new Sprite(new Surface("assets/Cross_Idle.png"), 1), new Tmpl8::vec2(ScreenWidth / 2, ScreenHeight / 2 + 64),
 			cursor->GetCollider(),
-			new Sprite(new Tmpl8::Surface("Build/assets/Cross_Idle.png"), 1),
-			new Sprite(new Tmpl8::Surface("Build/assets/Cross_Pushed.png"), 1));
+			new Sprite(new Tmpl8::Surface("assets/Cross_Idle.png"), 1),
+			new Sprite(new Tmpl8::Surface("assets/Cross_Pushed.png"), 1));
 
 
 		AddInstancesToUpdates();
@@ -175,7 +175,7 @@ namespace Tmpl8
 			break;
 		case SDL_SCANCODE_ESCAPE:
 			if (currentState == game)
-				ChangeGameState(paused);
+				ChangeGameState(paused),playButton->Init();
 		default:
 			break;
 		}

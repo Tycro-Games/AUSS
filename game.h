@@ -43,7 +43,7 @@ namespace Tmpl8 {
 
 		FollowCursor* cursor;
 		//MainMenu
-		Button* playButton;
+		PlayButton* playButton;
 		Button* exitButton;
 		vector <Updateable*> updateablesUI;
 		vector <Renderable*> renderablesUI;

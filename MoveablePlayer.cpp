@@ -47,6 +47,7 @@ void MoveablePlayer::startDash()
 
 void MoveablePlayer::Call()
 {
+	//animation dash to add, use maybe a square + 1
 	std::cout << "Stop!\n";
 	timer->ResetVar();
 	timer->isUpdateable = false;

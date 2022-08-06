@@ -2,7 +2,7 @@
 #include "MathFunctions.h"
 #include "game.h"
 Button::Button(Tmpl8::Sprite* sprite, Tmpl8::vec2* pos, Collider* cursor, Tmpl8::Sprite* unpressed, Tmpl8::Sprite* pressed) :
-	//pressedTexture(new Tmpl8::Surface("Build/assets/Play_Pushed.png")),
+	//pressedTexture(new Tmpl8::Surface("assets/Play_Pushed.png")),
 	Entity(sprite, pos),
 	pressedSprite(pressed),
 	unpressedSprite(unpressed),

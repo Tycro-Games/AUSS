@@ -29,7 +29,7 @@ private:
 	MoveablePlayer* mover;
 	Collider* col;
 	Spawner* spawner;
-
+	
 };
 
 

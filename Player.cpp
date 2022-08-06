@@ -7,8 +7,8 @@ Player::Player(Tmpl8::Sprite* sprite, Tmpl8::vec2* pos, Collider* col, int hp)
 	Being(sprite, pos, hp),
 	col(col),
 	mover(new MoveablePlayer(pos, col)),
-	projectileSprite(new Tmpl8::Sprite(new Tmpl8::Surface("Build/assets/missile_big.tga"), 32)),
-	explosionSprite(new Tmpl8::Sprite(new Tmpl8::Surface("Build/assets/smoke.tga"), 10)),
+	projectileSprite(new Tmpl8::Sprite(new Tmpl8::Surface("assets/missile_big.tga"), 32)),
+	explosionSprite(new Tmpl8::Sprite(new Tmpl8::Surface("assets/smoke.tga"), 10)),
 	spawner(new Spawner(pos, dirToFace, projectileSprite, explosionSprite))
 {
 
@@ -34,7 +34,6 @@ void Player::Render(Tmpl8::Surface* screen)
 
 void Player::Update(float deltaTime)
 {
-
 	mover->Update(deltaTime);
 	spawner->Update(deltaTime);
 
@@ -45,6 +44,7 @@ void Player::Shoot(bool fire)
 }
 void Player::Rotate(int x, int y) {
 	//replace with actual pos of player
+	
 	dirToFace->x = x - pos->x;
 	dirToFace->y = y - pos->y;
 
@@ -57,6 +57,7 @@ void Player::Rotate(int x, int y) {
 	angle += rVar.OFFSET_SPRITE;
 	angle = fmod(angle, 360);
 	frame = angle / rVar.ANGLE_SIZE;
+
 }
 
 MoveablePlayer* Player::GetMoveable()
