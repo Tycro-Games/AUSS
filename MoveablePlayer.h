@@ -3,7 +3,8 @@
 
 #include "Collider.h"
 #include "Moveable.h"
-class MoveablePlayer :public Moveable
+#include "Timer.h"
+class MoveablePlayer :public Moveable,public Callable
 {
 public:
 	MoveablePlayer(Tmpl8::vec2* pos, Collider* col, float speed = 20.0f);
@@ -14,13 +15,22 @@ public:
 	void setDown(bool val = false);
 	void setRight(bool val = false);
 	void setLeft(bool val = false);
-
+	void startDash();
 
 private:
+	
 	bool up = false;
 	bool down = false;
 	bool right = false;
 	bool left = false;
+	//dash
+	Timer* timer;
+	float Ispeed;
+	float DASH_DURATION = 2.0f;
+	const float DASH_SPEED = 80.0f;
+
+	// Inherited via Callable
+	virtual void Call() override;
 
 };
 

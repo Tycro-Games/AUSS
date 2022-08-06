@@ -15,11 +15,16 @@ Timer::Timer()
 
 void Timer::Init(Callable* entity, float DesiredTime, bool loop)
 {
-	isFinished = false;
-	currentTime = 0.0f;
+	ResetVar();
 	toCall = entity;
 	desiredTime = DesiredTime;
 	this->loop = loop;
+}
+
+void Timer::ResetVar()
+{
+	isFinished = false;
+	currentTime = 0.0f;
 }
 
 Timer::~Timer()
@@ -28,7 +33,8 @@ Timer::~Timer()
 
 void Timer::Update(float deltaTime)
 {
-	if (isFinished)
+	
+	if (isFinished|| !isUpdateable)
 		return;
 	if (currentTime < desiredTime)
 		currentTime += deltaTime;

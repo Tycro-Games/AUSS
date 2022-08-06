@@ -1,11 +1,19 @@
 #include "MoveablePlayer.h"
+#include <iostream>
 MoveablePlayer::MoveablePlayer(Tmpl8::vec2* pos, Collider* col, float speed) :
-	Moveable(pos, col, speed)
+	Moveable(pos, col, speed),
+	timer(new Timer())
+	
 
-{}
+{
+	timer->Init(this, DASH_DURATION);
+	Ispeed = speed;
+	timer->isUpdateable = false;
+}
 
 MoveablePlayer::~MoveablePlayer()
 {
+	delete timer;
 }
 
 void MoveablePlayer::setUp(bool val)
@@ -28,10 +36,27 @@ void MoveablePlayer::setLeft(bool val)
 	left = val;
 }
 
+void MoveablePlayer::startDash()
+{
+	if (!timer->isUpdateable) {
+		std::cout << "Start!\n";
+		timer->isUpdateable = true;
+		speed = DASH_SPEED;
+	}
+}
+
+void MoveablePlayer::Call()
+{
+	std::cout << "Stop!\n";
+	timer->ResetVar();
+	timer->isUpdateable = false;
+	speed = Ispeed;
+}
+
 
 void MoveablePlayer::Update(float deltaTime)
 {
-
+	timer->Update(deltaTime);
 	Tmpl8::vec2 nextPos = { 0 }, currentPos = *pos;
 	if (up) {
 		nextPos.y--;
@@ -54,7 +79,6 @@ void MoveablePlayer::Update(float deltaTime)
 	if (col->InGameScreen(currentPos, *col)) {
 		(*pos) = currentPos;
 	}
-
 }
 
 

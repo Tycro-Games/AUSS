@@ -79,7 +79,6 @@ void Projectile::Call()
 void Projectile::ResetBullet()
 {
 	timer->isFinished = true;
-	std::cout << "Destroyed at:" << pos << '\n';
 	spawner->AddProjectileToPool(this);
 	spawner->SpawnExplosions(*pos);
 }

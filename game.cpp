@@ -162,6 +162,10 @@ namespace Tmpl8
 			player->GetMoveable()->setLeft(true);
 			player->Rotate(cursor->pos->x, cursor->pos->y);
 			break;
+			//dash
+		case SDL_SCANCODE_F:
+			player->GetMoveable()->startDash();
+			break;
 			//firerate
 		case SDL_SCANCODE_UP:
 			player->GetSpawner()->ChangeFireSpeed(FIRE_SPEED_CHANGE);
