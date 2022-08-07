@@ -11,7 +11,7 @@ public:
 	virtual ~Button();
 	virtual void ChangeSprite() = 0;
 	virtual void Update(float deltaTime) override;
-
+	void Init();
 
 
 

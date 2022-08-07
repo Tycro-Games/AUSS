@@ -114,6 +114,11 @@ namespace Tmpl8
 		player->Rotate(x, y);
 		if (currentState == game)
 			return;
+		//check buttons only if the mouse is moving
+		CheckButtons();
+	}
+	void Game::CheckButtons()
+	{
 		playButton->ChangeSprite();
 		exitButton->ChangeSprite();
 	}
@@ -174,8 +179,15 @@ namespace Tmpl8
 			player->GetSpawner()->ChangeFireSpeed(-FIRE_SPEED_CHANGE);
 			break;
 		case SDL_SCANCODE_ESCAPE:
-			if (currentState == game)
-				ChangeGameState(paused),playButton->Init();
+			if (currentState == game) {
+				ChangeGameState(paused);
+				//reset button sprites
+				playButton->Init();
+				exitButton->Init();
+				//check if the mouse is already hovering over them
+				CheckButtons();
+			}
+			break;
 		default:
 			break;
 		}

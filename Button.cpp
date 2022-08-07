@@ -22,7 +22,10 @@ Button::~Button()
 	sprite = NULL;
 }
 
-
+void Button::Init()
+{
+	*sprite = *unpressedSprite;
+}
 
 void Button::Render(Tmpl8::Surface* screen)
 {

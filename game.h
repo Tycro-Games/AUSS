@@ -23,6 +23,7 @@ namespace Tmpl8 {
 		void MouseUp(int button);
 		void MouseDown(int button);
 		void MouseMove(int x, int y);
+		void CheckButtons();
 		void KeyUp(SDL_Scancode key);
 		void KeyDown(SDL_Scancode key);
 
@@ -43,7 +44,7 @@ namespace Tmpl8 {
 
 		FollowCursor* cursor;
 		//MainMenu
-		PlayButton* playButton;
+		Button* playButton;
 		Button* exitButton;
 		vector <Updateable*> updateablesUI;
 		vector <Renderable*> renderablesUI;

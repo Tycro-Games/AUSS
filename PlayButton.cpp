@@ -9,10 +9,7 @@ PlayButton::~PlayButton()
 {
 }
 
-void PlayButton::Init()
-{
-	*sprite = *unpressedSprite;
-}
+
 
 void PlayButton::ChangeSprite()
 {
