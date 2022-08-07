@@ -17,6 +17,8 @@ public:
 	void setLeft(bool val = false);
 	void startDash();
 
+	void Dashing();
+
 private:
 	
 	bool up = false;
@@ -25,9 +27,11 @@ private:
 	bool left = false;
 	//dash
 	Timer* timer;
+	bool dashing = false;
 	float Ispeed;
-	float DASH_DURATION = 2.0f;
-	const float DASH_SPEED = 80.0f;
+	float timePassed = 0.0f;
+	const float DASH_DURATION = 1.0f;
+	const float DASH_SPEED = 100.0f;
 
 	// Inherited via Callable
 	virtual void Call() override;
