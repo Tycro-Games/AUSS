@@ -29,6 +29,7 @@ public:
 	void ResetBullet();
 	virtual void Update(float deltaTime) override;
 	virtual void Render(Tmpl8::Surface* screen) override;
+	bool toDeactivate = false;
 private:
 	Tmpl8::vec2* dir;
 	const Tmpl8::vec2 COL_MIN = Tmpl8::vec2(0, 0);

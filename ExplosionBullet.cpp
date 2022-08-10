@@ -19,6 +19,7 @@ ExplosionBullet::~ExplosionBullet()
 
 void ExplosionBullet::Init(Tmpl8::vec2 pos)
 {
+	SetActive(true);
 	frame = 0;
 	(*this->pos) = pos;
 	timer = new Timer(this, TotalAnimation);

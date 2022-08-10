@@ -54,6 +54,8 @@ void Projectile::Update(float deltaTime)
 		return;
 	mover->Update(deltaTime);
 	timer->Update(deltaTime);
+	if (toDeactivate)
+		ResetBullet();
 }
 
 void Projectile::Render(Tmpl8::Surface* screen)
@@ -78,6 +80,9 @@ void Projectile::Call()
 
 void Projectile::ResetBullet()
 {
+	/*if (!isUpdateable)
+		return;*/
+	toDeactivate = false;
 	timer->isFinished = true;
 	spawner->AddProjectileToPool(this);
 	spawner->SpawnExplosions(*pos);

@@ -55,7 +55,8 @@ void CollisionDetection::DetectCollisions()
 			activeIntervals.push_back(a);
 		}
 		for (int i = 0; i < allPairs.getCount(); i++) {
-			allPairs[i]->ResetBullet();
+			allPairs[i]->toDeactivate = true;
+			std::cout << allPairs[i]->pos << '\n';
 		}
 	}
 }

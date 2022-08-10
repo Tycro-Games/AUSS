@@ -109,7 +109,7 @@ void Spawner::SpawnExplosions(Tmpl8::vec2 pos)
 	if (poolOfExplosions.getCount() == 0)
 		CreateMoreExplosions();
 	ExplosionBullet* bullet = poolOfExplosions.get(poolOfExplosions.getCount() - 1);
-	bullet->SetActive(true);
+
 	bullet->Init(pos);
 
 	poolOfExplosions.pop_back();
