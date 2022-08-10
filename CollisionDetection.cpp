@@ -56,7 +56,7 @@ void CollisionDetection::DetectCollisions()
 		}
 		for (int i = 0; i < allPairs.getCount(); i++) {
 			allPairs[i]->toDeactivate = true;
-			std::cout << allPairs[i]->pos << '\n';
+
 		}
 	}
 }

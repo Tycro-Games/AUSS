@@ -48,7 +48,7 @@ private:
 	Tmpl8::vec2* pos;
 
 	const float FIRE_RATE = 0.25f;
-	const float MIN_RATE = 0.01f;
+	const float MIN_RATE = 0.2f;
 	const float MAX_RATE = 2.0f;
 	const float OFFSET = 20.0f;
 	//direction random
