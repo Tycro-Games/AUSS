@@ -1,9 +1,9 @@
-#include "Spawner.h"
+#include "ProjectileSpawner.h"
 
 #include <string>
 #include <iostream>
 
-Spawner::Spawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Tmpl8::Sprite* tospawn, Tmpl8::Sprite* explosion)
+ProjectileSpawner::ProjectileSpawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Tmpl8::Sprite* tospawn, Tmpl8::Sprite* explosion)
 	:pos(pos),
 	dir(dir),
 	toSpawn(tospawn),
@@ -25,7 +25,7 @@ Spawner::Spawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Tmpl8::Sprite* tospawn, Tmp
 	currentTime = 0;
 }
 
-void Spawner::ChangeFireSpeed(float speed) {
+void ProjectileSpawner::ChangeFireSpeed(float speed) {
 
 	fireRate += speed;
 	if (fireRate < MIN_RATE)
@@ -33,21 +33,21 @@ void Spawner::ChangeFireSpeed(float speed) {
 	if (fireRate > MAX_RATE)
 		fireRate = MAX_RATE;
 }
-void Spawner::AddProjectileToPool(Projectile* entity)
+void ProjectileSpawner::AddProjectileToPool(Projectile* entity)
 {
 	entity->SetActive(false);
 	activeProjectiles.remove(entity);
 	poolOfProjectiles.push_back(entity);
 
 }
-void Spawner::AddExplosionToPool(ExplosionBullet* entity)
+void ProjectileSpawner::AddExplosionToPool(ExplosionBullet* entity)
 {
 	entity->SetActive(false);
 
 	poolOfExplosions.push_back(entity);
 }
 
-Spawner::~Spawner()
+ProjectileSpawner::~ProjectileSpawner()
 {
 	poolOfProjectiles.removeAll();
 	poolOfExplosions.removeAll();
@@ -58,7 +58,7 @@ Spawner::~Spawner()
 
 }
 
-void Spawner::CreateMoreProjectiles()
+void ProjectileSpawner::CreateMoreProjectiles()
 {
 	Projectile* entity = new Projectile(PosDir(*pos + *dir * OFFSET, *dir), toSpawn, this);
 	updateObjects.push_back(entity);
@@ -66,7 +66,7 @@ void Spawner::CreateMoreProjectiles()
 	AddProjectileToPool(entity);
 
 }
-void Spawner::CreateMoreExplosions()
+void ProjectileSpawner::CreateMoreExplosions()
 {
 	ExplosionBullet* bullet = new ExplosionBullet(explosionSprite, this);
 	updateObjects.push_back(bullet);
@@ -74,7 +74,7 @@ void Spawner::CreateMoreExplosions()
 	AddExplosionToPool(bullet);
 }
 
-void Spawner::SpawnProjectiles()
+void ProjectileSpawner::SpawnProjectiles()
 {
 	if (poolOfProjectiles.getCount() == 0)
 		CreateMoreProjectiles();
@@ -87,7 +87,7 @@ void Spawner::SpawnProjectiles()
 	poolOfProjectiles.pop_back();
 }
 
-Tmpl8::vec2 Spawner::GetDirDeviation()
+Tmpl8::vec2 ProjectileSpawner::GetDirDeviation()
 {
 	//random direction
 	//static cast is safe
@@ -99,7 +99,7 @@ Tmpl8::vec2 Spawner::GetDirDeviation()
 	return Tmpl8::vec2(x, y);
 }
 
-void Spawner::SpawnExplosions(Tmpl8::vec2 pos)
+void ProjectileSpawner::SpawnExplosions(Tmpl8::vec2 pos)
 {
 	if (poolOfExplosions.getCount() == 0)
 		CreateMoreExplosions();
@@ -110,12 +110,12 @@ void Spawner::SpawnExplosions(Tmpl8::vec2 pos)
 	poolOfExplosions.pop_back();
 }
 
-void Spawner::setFlag(bool fire)
+void ProjectileSpawner::setFlag(bool fire)
 {
 	isSpawning = fire;
 }
 
-void Spawner::Update(float deltaTime)
+void ProjectileSpawner::Update(float deltaTime)
 {
 
 	if (currentTime >= desiredTime) {
@@ -132,7 +132,7 @@ void Spawner::Update(float deltaTime)
 
 }
 
-void Spawner::Render(Tmpl8::Surface* screen)
+void ProjectileSpawner::Render(Tmpl8::Surface* screen)
 {
 	auto inactive = std::string("Bullets left:" + std::to_string(poolOfProjectiles.getCount()));
 
@@ -150,6 +150,7 @@ void Spawner::Render(Tmpl8::Surface* screen)
 	screen->Print(firerate.c_str(), 10, 60, 0xffffffff);
 
 	screen->Print("Use up arrow and down arrow to adjust the firerate", 10, 70, 0xffffffff);
+	screen->Print("Use space bar to dash", 10, 80, 0xffffffff);
 	for (int i = 0; i < updateObjects.getCount(); i++)
 		updateObjects[i]->Render(screen);
 

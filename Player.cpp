@@ -9,7 +9,7 @@ Player::Player(Tmpl8::Sprite* sprite, Tmpl8::vec2* pos, Collider* col, int hp)
 	mover(new MoveablePlayer(pos, col)),
 	projectileSprite(new Tmpl8::Sprite(new Tmpl8::Surface("assets/missile_big.tga"), 32)),
 	explosionSprite(new Tmpl8::Sprite(new Tmpl8::Surface("assets/smoke.tga"), 10)),
-	spawner(new Spawner(pos, dirToFace, projectileSprite, explosionSprite))
+	spawner(new ProjectileSpawner(pos, dirToFace, projectileSprite, explosionSprite))
 {
 
 }
@@ -45,10 +45,7 @@ void Player::Shoot(bool fire)
 void Player::Rotate(float x, float y) {
 	//replace with actual pos of player
 
-	dirToFace->x = x - pos->x;
-	dirToFace->y = y - pos->y;
-
-	dirToFace->normalize();
+	MathFunctions::RotateTo(x, y, pos, dirToFace);
 
 
 	float angle = MathFunctions::GetDirInAnglesPos(*dirToFace);
@@ -64,7 +61,7 @@ MoveablePlayer* Player::GetMoveable()
 {
 	return mover;
 }
-Spawner* Player::GetSpawner()
+ProjectileSpawner* Player::GetSpawner()
 {
 	return spawner;
 }

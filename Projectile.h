@@ -7,12 +7,12 @@
 #include "Timer.h"
 
 #include "PosDir.h"
-class Spawner;
+class ProjectileSpawner;
 class Projectile :public Callable, public Entity
 {
 
 public:
-	Projectile(PosDir posDir, Tmpl8::Sprite* sprite, Spawner* spawner);
+	Projectile(PosDir posDir, Tmpl8::Sprite* sprite, ProjectileSpawner* spawner);
 	//Projectile(const Entity* entity);
 
 
@@ -38,7 +38,7 @@ private:
 	const float TIME_ALIVE = 10.0f;
 	RotationVar rVar = RotationVar(360 / 32.0f, 90.0f, 20.0f);
 
-	Spawner* spawner;
+	ProjectileSpawner* spawner;
 	MoveToADirection* mover;
 	Collider* col;
 	Timer* timer;

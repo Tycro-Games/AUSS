@@ -20,9 +20,9 @@ public:
 	void startDash();
 
 	void Dashing();
-
+	bool IsMoving();
 private:
-
+	bool isMoving = false;
 	bool up = false;
 	bool down = false;
 	bool right = false;

@@ -64,6 +64,11 @@ void MoveablePlayer::Dashing()
 	speed = DASH_SPEED;
 }
 
+bool MoveablePlayer::IsMoving()
+{
+	return isMoving;
+}
+
 void MoveablePlayer::Call()
 {
 
@@ -104,9 +109,12 @@ void MoveablePlayer::Update(float deltaTime)
 	nextPos.normalize();
 	//dashing
 	if ((nextPos.x != 0 || nextPos.y != 0)) {
+		isMoving = true;
 		if (startedDashing)
 			startDash();
 	}
+	else
+		isMoving = false;
 	if (!startedDashing && timer->isUpdateable == false && dashing) {
 		std::cout << "dasg\n";
 		dashing = false;

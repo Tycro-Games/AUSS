@@ -23,7 +23,7 @@
     <ClCompile Include="Timer.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="Spawner.cpp">
+    <ClCompile Include="ProjectileSpawner.cpp">
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="Moveable.cpp">
@@ -110,7 +110,7 @@
     <ClInclude Include="Timer.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="Spawner.h">
+    <ClInclude Include="ProjectileSpawner.h">
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="Moveable.h">

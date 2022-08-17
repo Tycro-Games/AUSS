@@ -75,7 +75,8 @@ namespace Tmpl8
 			for (int i = 0; i < updateables.getCount(); i++)
 				updateables[i]->Update(deltaTime);
 
-
+			if (player->GetMoveable()->IsMoving())
+				player->Rotate(cursor->pos->x, cursor->pos->y);
 			player->Shoot(isPressingLeftMouse);
 			break;
 		case(mainMenu):
@@ -111,11 +112,19 @@ namespace Tmpl8
 	void Game::MouseMove(int x, int y)
 	{
 		cursor->ChangePosition(x, y);
-		player->Rotate(x, y);
-		if (currentState == game)
-			return;
-		//check buttons only if the mouse is moving
-		CheckButtons();
+		switch (currentState)
+		{
+		case game:
+
+			player->Rotate(x, y);
+			break;
+		case paused:
+			//check buttons only if the mouse is moving
+			CheckButtons();
+		case mainMenu:
+			//check buttons only if the mouse is moving
+			CheckButtons();
+		}
 	}
 	void Game::CheckButtons()
 	{
@@ -124,6 +133,7 @@ namespace Tmpl8
 	}
 	void Game::KeyUp(SDL_Scancode key)
 	{
+
 		switch (key)
 		{
 		case(SDL_SCANCODE_W):
@@ -154,27 +164,24 @@ namespace Tmpl8
 	{
 		switch (key)
 		{
-		case SDL_SCANCODE_W:
-			player->GetMoveable()->setUp(true);
-			player->Rotate(cursor->pos->x, cursor->pos->y);
-			break;
-		case SDL_SCANCODE_S:
-			player->GetMoveable()->setDown(true);
-			player->Rotate(cursor->pos->x, cursor->pos->y);
-			break;
-		case SDL_SCANCODE_D:
-			player->GetMoveable()->setRight(true);
-			player->Rotate(cursor->pos->x, cursor->pos->y);
-			break;
-		case SDL_SCANCODE_A:
-			player->GetMoveable()->setLeft(true);
-			player->Rotate(cursor->pos->x, cursor->pos->y);
-			break;
 			//dash
 		case (SDL_SCANCODE_SPACE):
 			player->GetMoveable()->setDash(true);
-			player->Rotate(cursor->pos->x, cursor->pos->y);
 			break;
+
+		case SDL_SCANCODE_W:
+			player->GetMoveable()->setUp(true);
+			break;
+		case SDL_SCANCODE_S:
+			player->GetMoveable()->setDown(true);
+			break;
+		case SDL_SCANCODE_D:
+			player->GetMoveable()->setRight(true);
+			break;
+		case SDL_SCANCODE_A:
+			player->GetMoveable()->setLeft(true);
+			break;
+
 
 			//firerate
 		case SDL_SCANCODE_UP:

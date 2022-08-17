@@ -1,8 +1,8 @@
 #include "ExplosionBullet.h"
 
-#include "Spawner.h"
+#include "ProjectileSpawner.h"
 
-ExplosionBullet::ExplosionBullet(Tmpl8::Sprite* sprite, Spawner* spawner, Tmpl8::vec2* pos) :
+ExplosionBullet::ExplosionBullet(Tmpl8::Sprite* sprite, ProjectileSpawner* spawner, Tmpl8::vec2* pos) :
 	Entity(sprite),
 	spawner(spawner)
 {

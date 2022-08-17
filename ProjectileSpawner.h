@@ -10,15 +10,15 @@
 
 class Projectile;
 class ExplosionBullet;
-class Spawner :public Updateable, public Renderable {
+class ProjectileSpawner :public Updateable, public Renderable {
 
 public:
-	Spawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Tmpl8::Sprite* toSpawn, Tmpl8::Sprite* explosion);
+	ProjectileSpawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Tmpl8::Sprite* toSpawn, Tmpl8::Sprite* explosion);
 	void ChangeFireSpeed(float speed);
 	void AddProjectileToPool(Projectile* entity);
 	void AddExplosionToPool(ExplosionBullet* entity);
 
-	~Spawner();
+	~ProjectileSpawner();
 	void CreateMoreProjectiles();
 	void CreateMoreExplosions();
 	void SpawnProjectiles();

@@ -2,7 +2,7 @@
 #include "template.h"
 
 #include "Being.h"
-#include "Spawner.h"
+#include "ProjectileSpawner.h"
 #include "RotationVar.h"
 #include "MoveablePlayer.h"
 
@@ -19,7 +19,7 @@ public:
 	void Rotate(float x, float y);
 	MoveablePlayer* GetMoveable();
 
-	Spawner* GetSpawner();
+	ProjectileSpawner* GetSpawner();
 
 private:
 	RotationVar rVar = RotationVar();
@@ -28,7 +28,7 @@ private:
 	Tmpl8::Sprite* explosionSprite;
 	MoveablePlayer* mover;
 	Collider* col;
-	Spawner* spawner;
+	ProjectileSpawner* spawner;
 
 };
 

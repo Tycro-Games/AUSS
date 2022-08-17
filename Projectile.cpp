@@ -1,10 +1,10 @@
 #include "Projectile.h"
 #include "MathFunctions.h"
 #include <iostream>
-#include "Spawner.h"
+#include "ProjectileSpawner.h"
 
 
-Projectile::Projectile(PosDir posDir, Tmpl8::Sprite* sprite, Spawner* spawner)
+Projectile::Projectile(PosDir posDir, Tmpl8::Sprite* sprite, ProjectileSpawner* spawner)
 	:Entity(sprite, new Tmpl8::vec2(posDir.pos)),
 	col(new Collider(COL_MIN, COL_MAX)),
 	spawner(spawner)
