@@ -2,9 +2,7 @@
 
 #include <string>
 #include <iostream>
-//random number
-#include <cstdlib>
-#include <ctime>
+
 Spawner::Spawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Tmpl8::Sprite* tospawn, Tmpl8::Sprite* explosion)
 	:pos(pos),
 	dir(dir),
@@ -13,7 +11,7 @@ Spawner::Spawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Tmpl8::Sprite* tospawn, Tmp
 	activeProjectiles(),
 	colDec(ScreenWidth, activeProjectiles)
 {
-	SetSeed();
+
 	for (int i = 0; i < MAX_PROJECTILES; i++) {
 		CreateMoreProjectiles();
 	}
@@ -26,10 +24,7 @@ Spawner::Spawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Tmpl8::Sprite* tospawn, Tmp
 	desiredTime = 0;
 	currentTime = 0;
 }
-void Spawner::SetSeed()
-{
-	srand(time(0));
-}
+
 void Spawner::ChangeFireSpeed(float speed) {
 
 	fireRate += speed;
@@ -88,7 +83,6 @@ void Spawner::SpawnProjectiles()
 
 	Tmpl8::vec2 randomDir = GetDirDeviation();
 	projectile->Init(PosDir{ (*pos) + (*dir), (*dir + randomDir).normalized() });
-
 	activeProjectiles.push_back(projectile);
 	poolOfProjectiles.pop_back();
 }
@@ -96,8 +90,9 @@ void Spawner::SpawnProjectiles()
 Tmpl8::vec2 Spawner::GetDirDeviation()
 {
 	//random direction
-	float x = MIN_DEVIATION + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (MAX_DEVIATION - MIN_DEVIATION)));
-	float y = MIN_DEVIATION + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (MAX_DEVIATION - MIN_DEVIATION)));
+	//static cast is safe
+	float x = randomNumbers.RandomBetweenFloats(MIN_DEVIATION, MAX_DEVIATION);
+	float y = randomNumbers.RandomBetweenFloats(MIN_DEVIATION, MAX_DEVIATION);
 	//adding multiplier
 	x *= deviationMultiplier;
 	y *= deviationMultiplier;

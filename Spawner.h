@@ -5,9 +5,8 @@
 #include "ExplosionBullet.h"
 #include "CollisionDetection.h"
 #include "PosDir.h"
-
 #include "Callable.h"
-
+#include "RandomNumbers.h"
 
 class Projectile;
 class ExplosionBullet;
@@ -15,7 +14,6 @@ class Spawner :public Updateable, public Renderable {
 
 public:
 	Spawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Tmpl8::Sprite* toSpawn, Tmpl8::Sprite* explosion);
-	void SetSeed();
 	void ChangeFireSpeed(float speed);
 	void AddProjectileToPool(Projectile* entity);
 	void AddExplosionToPool(ExplosionBullet* entity);
@@ -39,6 +37,7 @@ private:
 	vector<Entity*> updateObjects;
 	CollisionDetection colDec;
 
+	RandomNumbers randomNumbers;
 	bool isSpawning = false;
 
 	Tmpl8::Sprite* toSpawn;
@@ -54,7 +53,7 @@ private:
 	//direction random
 	const float MIN_DEVIATION = -.1f;
 	const float MAX_DEVIATION = .1f;
-	int deviationMultiplier = 3;
+	float deviationMultiplier = 1.5f;
 
 	const int MAX_PROJECTILES = 50;
 	const int MAX_EXPLOSIONS = 5;

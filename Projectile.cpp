@@ -54,6 +54,8 @@ void Projectile::Update(float deltaTime)
 		return;
 	mover->Update(deltaTime);
 	timer->Update(deltaTime);
+
+	//marked by collision
 	if (toDeactivate)
 		ResetBullet();
 }
@@ -80,8 +82,7 @@ void Projectile::Call()
 
 void Projectile::ResetBullet()
 {
-	/*if (!isUpdateable)
-		return;*/
+
 	toDeactivate = false;
 	timer->isFinished = true;
 	spawner->AddProjectileToPool(this);

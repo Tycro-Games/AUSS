@@ -42,9 +42,9 @@ void Player::Shoot(bool fire)
 {
 	spawner->setFlag(fire);
 }
-void Player::Rotate(int x, int y) {
+void Player::Rotate(float x, float y) {
 	//replace with actual pos of player
-	
+
 	dirToFace->x = x - pos->x;
 	dirToFace->y = y - pos->y;
 

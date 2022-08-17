@@ -8,7 +8,6 @@
     <ClCompile Include="template.cpp">
       <Filter>template code</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp" />
     <ClCompile Include="MoveToADirection.cpp">
       <Filter>Projectiles</Filter>
     </ClCompile>
@@ -25,9 +24,6 @@
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="Spawner.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="MoveablePlayer.cpp">
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="Moveable.cpp">
@@ -66,6 +62,15 @@
     <ClCompile Include="ExitButton.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="RandomNumbers.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveablePlayer.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -75,7 +80,6 @@
     <ClInclude Include="template.h">
       <Filter>template code</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h" />
     <ClInclude Include="vector.h">
       <Filter>DataStructures</Filter>
     </ClInclude>
@@ -107,9 +111,6 @@
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="Spawner.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="MoveablePlayer.h">
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="Moveable.h">
@@ -148,6 +149,15 @@
     <ClInclude Include="ExitButton.h">
       <Filter>UI</Filter>
     </ClInclude>
+    <ClInclude Include="RandomNumbers.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveablePlayer.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="template code">
@@ -176,6 +186,9 @@
     </Filter>
     <Filter Include="UI">
       <UniqueIdentifier>{0bb0ab6f-2d1b-4e9c-8f95-70ca771625bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player">
+      <UniqueIdentifier>{843b6276-2309-40fb-af5c-91dfa039b1bb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
