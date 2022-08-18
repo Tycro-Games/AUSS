@@ -45,7 +45,7 @@ private:
 
 	Tmpl8::vec2* dir;
 	Tmpl8::vec2* pos;
-
+	//consts
 	const float FIRE_RATE = 0.25f;
 	const float MIN_RATE = 0.2f;
 	const float MAX_RATE = 2.0f;

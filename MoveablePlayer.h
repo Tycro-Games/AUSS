@@ -7,7 +7,7 @@
 class MoveablePlayer :public Moveable, public Callable
 {
 public:
-	MoveablePlayer(Tmpl8::vec2* pos, Collider* col, float speed = 20.0f);
+	MoveablePlayer(Tmpl8::vec2* pos, Collider* col, float speed = 40.0f);
 	virtual ~MoveablePlayer();
 	virtual void Update(float deltaTime) override;
 
@@ -33,8 +33,8 @@ private:
 	bool startedDashing = false;
 	float Ispeed;
 	float timePassed = 0.0f;
-	const float DASH_DURATION = 1.0f;
-	const float DASH_SPEED = 100.0f;
+	const float DASH_DURATION = 0.5f;
+	const float DASH_SPEED = 200.0f;
 
 	// Inherited via Callable
 	virtual void Call() override;

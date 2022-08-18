@@ -227,6 +227,7 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="CollisionDetection.cpp" />
+    <ClCompile Include="EnemySpawner.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="ExitButton.cpp" />
     <ClCompile Include="ExplosionBullet.cpp" />
@@ -254,6 +255,7 @@
     <ClInclude Include="Callable.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="CollisionDetection.h" />
+    <ClInclude Include="EnemySpawner.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="ExitButton.h" />
     <ClInclude Include="ExplosionBullet.h" />

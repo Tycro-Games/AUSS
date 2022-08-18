@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Player.h"
-
+#include "EnemySpawner.h"
 #include "FollowCursor.h"
 #include "Playbutton.h"
 #include "Exitbutton.h"
@@ -50,6 +50,7 @@ namespace Tmpl8 {
 		vector <Renderable*> renderablesUI;
 		//actual game
 		Player* player;
+		EnemySpawner* enemySpawner;
 		vector<Updateable*> updateables;
 		vector<Renderable*> renderables;
 

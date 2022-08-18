@@ -41,9 +41,6 @@
     <ClCompile Include="FollowCursor.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="ExplosionBullet.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="CollisionDetection.cpp">
       <Filter>Components</Filter>
     </ClCompile>
@@ -70,6 +67,12 @@
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="ExplosionBullet.cpp">
+      <Filter>Projectiles</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemySpawner.cpp">
+      <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -125,9 +128,6 @@
     <ClInclude Include="FollowCursor.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="ExplosionBullet.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="PosDir.h">
       <Filter>Components</Filter>
     </ClInclude>
@@ -157,6 +157,12 @@
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="ExplosionBullet.h">
+      <Filter>Projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemySpawner.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

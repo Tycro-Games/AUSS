@@ -3,9 +3,10 @@
 CollisionDetection::CollisionDetection(int maxX, vector<Projectile*>& collidables) :
 	maxX(maxX),
 	axisToSort(&collidables),
-	mergeSort(axisToSort),
-	timer(new Timer(this, .05f, true))
+	mergeSort(axisToSort)
+
 {
+	timer = new Timer(this, .05f, true);
 }
 
 CollisionDetection::~CollisionDetection()

@@ -9,7 +9,7 @@ namespace Tmpl8
 {
 	bool Game::isPressingLeftMouse;
 	Game::GameState Game::currentState;
-	//vector<float> a(19);
+
 	void Game::Init()
 	{
 #ifdef _RELEASE
@@ -23,8 +23,10 @@ namespace Tmpl8
 			new vec2(START_POS),
 			new Collider(vec2(COL_MIN), vec2(COL_MAX)),
 			100));
+
 		cursor = (new FollowCursor(new Sprite(new Surface("assets/target.tga"), 1)));
 
+		enemySpawner = new EnemySpawner(new Sprite(new Surface("assets/phaser.tga"), 16), new Tmpl8::vec2(ScreenWidth / 2, ScreenHeight / 2));
 
 		playButton = new PlayButton(new Sprite(new Surface("assets/Play_Idle.png"), 1), new Tmpl8::vec2(ScreenWidth / 2, ScreenHeight / 2),
 			cursor->GetCollider(),
@@ -48,8 +50,12 @@ namespace Tmpl8
 		renderablesUI.push_back(exitButton);
 
 		updateables.push_back(player);
-		updateables.push_back(player->GetMoveable());
 		renderables.push_back(player);
+
+		updateables.push_back(enemySpawner);
+		renderables.push_back(enemySpawner);
+
+
 
 	}
 	void Game::Shutdown()
@@ -58,7 +64,7 @@ namespace Tmpl8
 		delete exitButton;
 		delete player;
 		delete cursor;
-
+		delete enemySpawner;
 	}
 
 
