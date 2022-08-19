@@ -2,10 +2,11 @@
 #include "vector.h"
 #include "MergeSort.h"
 #include "Projectile.h"
+
 class CollisionDetection :public Updateable, public Callable
 {
 public:
-	CollisionDetection(int maxX, vector<Projectile*>& collidables);
+	CollisionDetection(int maxX, vector<Collider*>& collidables);
 	~CollisionDetection();
 	void DetectCollisions();
 
@@ -14,8 +15,8 @@ public:
 	// Inherited via Callable
 	virtual void Call() override;
 private:
-	vector<Projectile*>* axisToSort;
-	MergeSort<Projectile*> mergeSort;
+	vector<Collider*>* axisToSort;
+	MergeSort<Collider*> mergeSort;
 	Timer* timer;
 	int maxX;
 

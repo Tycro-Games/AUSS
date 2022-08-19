@@ -1,11 +1,9 @@
 #pragma once
 
-#include "Callable.h"
 #include "Entity.h"
+
 #include "MoveToADirection.h"
 #include "RotationVar.h"
-#include "Timer.h"
-
 #include "PosDir.h"
 class ProjectileSpawner;
 class Projectile :public Callable, public Entity
@@ -13,8 +11,6 @@ class Projectile :public Callable, public Entity
 
 public:
 	Projectile(PosDir posDir, Tmpl8::Sprite* sprite, ProjectileSpawner* spawner);
-	//Projectile(const Entity* entity);
-
 
 	virtual ~Projectile();
 	void RotateToDirection();
@@ -24,12 +20,11 @@ public:
 	Collider* getColl() const {
 		return col;
 	}
-
 	virtual void Call() override;
 	void ResetBullet();
 	virtual void Update(float deltaTime) override;
 	virtual void Render(Tmpl8::Surface* screen) override;
-	bool toDeactivate = false;
+
 private:
 	Tmpl8::vec2* dir;
 	const Tmpl8::vec2 COL_MIN = Tmpl8::vec2(0, 0);

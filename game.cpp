@@ -26,7 +26,7 @@ namespace Tmpl8
 
 		cursor = (new FollowCursor(new Sprite(new Surface("assets/target.tga"), 1)));
 
-		enemySpawner = new EnemySpawner(new Sprite(new Surface("assets/phaser.tga"), 16), new Tmpl8::vec2(ScreenWidth / 2, ScreenHeight / 2));
+		enemySpawner = new EnemySpawner(new Tmpl8::vec2(ScreenWidth / 2, ScreenHeight / 2), new Sprite(new Surface("assets/phaser.tga"), 16));
 
 		playButton = new PlayButton(new Sprite(new Surface("assets/Play_Idle.png"), 1), new Tmpl8::vec2(ScreenWidth / 2, ScreenHeight / 2),
 			cursor->GetCollider(),

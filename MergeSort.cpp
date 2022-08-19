@@ -55,10 +55,10 @@ void MergeSort<T>::Merge(int l, int mid, int h)
 }
 
 template<>
-void MergeSort<Projectile*>::Merge(int l, int mid, int h)
+void MergeSort<Collider*>::Merge(int l, int mid, int h)
 {
 	int i = l, j = mid + 1;
-	vector<Projectile*> A(16);
+	vector<Collider*> A(16);
 	while (i <= mid && j <= h) {
 		if (list->get(i)->pos->x < list->get(j)->pos->x)
 			A.push_back(list->get(i++));
@@ -86,5 +86,6 @@ void MergeSort<Projectile*>::Merge(int l, int mid, int h)
 
 template class MergeSort<float>;
 template class MergeSort<Projectile*>;
+template class MergeSort<Collider*>;
 template class MergeSort<int>;
 

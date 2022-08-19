@@ -1,8 +1,10 @@
 #include "vector.h"
-#include <math.h>
+
 #include "Projectile.h"
 #include "ExplosionBullet.h"
+
 #include <iostream>
+#include "Enemy.h"
 template<class T>
 vector<T>::vector()
 {
@@ -250,3 +252,5 @@ template class vector<int>;
 template class vector <float>;
 template class vector <Renderable*>;
 template class vector <Updateable*>;
+template class vector <Enemy*>;
+template class vector <Collider*>;

@@ -8,9 +8,6 @@
     <ClCompile Include="template.cpp">
       <Filter>template code</Filter>
     </ClCompile>
-    <ClCompile Include="MoveToADirection.cpp">
-      <Filter>Projectiles</Filter>
-    </ClCompile>
     <ClCompile Include="Projectile.cpp">
       <Filter>Projectiles</Filter>
     </ClCompile>
@@ -21,9 +18,6 @@
       <Filter>Interfaces</Filter>
     </ClCompile>
     <ClCompile Include="Timer.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="ProjectileSpawner.cpp">
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="Moveable.cpp">
@@ -72,7 +66,25 @@
       <Filter>Projectiles</Filter>
     </ClCompile>
     <ClCompile Include="EnemySpawner.cpp">
+      <Filter>Spawner</Filter>
+    </ClCompile>
+    <ClCompile Include="Spawner.cpp">
+      <Filter>Spawner</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectileSpawner.cpp">
+      <Filter>Spawner</Filter>
+    </ClCompile>
+    <ClCompile Include="pool.cpp">
+      <Filter>DataStructures</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveToADirection.cpp">
       <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyHoarder.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Interfaces</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -92,9 +104,6 @@
     <ClInclude Include="Renderable.h">
       <Filter>Updating</Filter>
     </ClInclude>
-    <ClInclude Include="MoveToADirection.h">
-      <Filter>Projectiles</Filter>
-    </ClInclude>
     <ClInclude Include="Projectile.h">
       <Filter>Projectiles</Filter>
     </ClInclude>
@@ -111,9 +120,6 @@
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="Timer.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="ProjectileSpawner.h">
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="Moveable.h">
@@ -162,7 +168,25 @@
       <Filter>Projectiles</Filter>
     </ClInclude>
     <ClInclude Include="EnemySpawner.h">
+      <Filter>Spawner</Filter>
+    </ClInclude>
+    <ClInclude Include="Spawner.h">
+      <Filter>Spawner</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectileSpawner.h">
+      <Filter>Spawner</Filter>
+    </ClInclude>
+    <ClInclude Include="pool.h">
+      <Filter>DataStructures</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveToADirection.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyHoarder.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Interfaces</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -195,6 +219,12 @@
     </Filter>
     <Filter Include="Player">
       <UniqueIdentifier>{843b6276-2309-40fb-af5c-91dfa039b1bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Spawner">
+      <UniqueIdentifier>{8533f5fa-a56b-498e-a16b-d3d979f724e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Enemy">
+      <UniqueIdentifier>{e1378c86-2ab1-4af7-aa88-dc8f7e2301cd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -26,4 +26,5 @@ void MoveToADirection::Update(float deltaTime)
 
 MoveToADirection::~MoveToADirection()
 {
+
 }

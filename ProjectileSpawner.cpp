@@ -4,9 +4,9 @@
 #include <iostream>
 
 ProjectileSpawner::ProjectileSpawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Tmpl8::Sprite* tospawn, Tmpl8::Sprite* explosion)
-	:pos(pos),
+	:Spawner(pos),
 	dir(dir),
-	toSpawn(tospawn),
+	projectileSprite(tospawn),
 	explosionSprite(explosion),
 	activeProjectiles(),
 	colDec(ScreenWidth, activeProjectiles)
@@ -36,23 +36,19 @@ void ProjectileSpawner::ChangeFireSpeed(float speed) {
 void ProjectileSpawner::AddProjectileToPool(Projectile* entity)
 {
 	entity->SetActive(false);
-	activeProjectiles.remove(entity);
-	poolOfProjectiles.push_back(entity);
+	activeProjectiles.remove(entity->getColl());
+	poolOfProjectiles.AddElement(entity);
 
 }
 void ProjectileSpawner::AddExplosionToPool(ExplosionBullet* entity)
 {
 	entity->SetActive(false);
 
-	poolOfExplosions.push_back(entity);
+	poolOfExplosions.AddElement(entity);
 }
 
 ProjectileSpawner::~ProjectileSpawner()
 {
-	poolOfProjectiles.removeAll();
-	poolOfExplosions.removeAll();
-
-	updateObjects.removeAll();
 	delete pos;
 	delete dir;
 
@@ -60,7 +56,7 @@ ProjectileSpawner::~ProjectileSpawner()
 
 void ProjectileSpawner::CreateMoreProjectiles()
 {
-	Projectile* entity = new Projectile(PosDir(*pos + *dir * OFFSET, *dir), toSpawn, this);
+	Projectile* entity = new Projectile(PosDir(*pos + *dir * OFFSET, *dir), projectileSprite, this);
 	updateObjects.push_back(entity);
 
 	AddProjectileToPool(entity);
@@ -79,12 +75,11 @@ void ProjectileSpawner::SpawnProjectiles()
 	if (poolOfProjectiles.getCount() == 0)
 		CreateMoreProjectiles();
 
-	Projectile* projectile = poolOfProjectiles.get(poolOfProjectiles.getCount() - 1);
+	Projectile* projectile = poolOfProjectiles.PopElement();
 
 	Tmpl8::vec2 randomDir = GetDirDeviation();
 	projectile->Init(PosDir{ (*pos) + (*dir), (*dir + randomDir).normalized() });
-	activeProjectiles.push_back(projectile);
-	poolOfProjectiles.pop_back();
+	activeProjectiles.push_back(projectile->getColl());
 }
 
 Tmpl8::vec2 ProjectileSpawner::GetDirDeviation()
@@ -103,11 +98,10 @@ void ProjectileSpawner::SpawnExplosions(Tmpl8::vec2 pos)
 {
 	if (poolOfExplosions.getCount() == 0)
 		CreateMoreExplosions();
-	ExplosionBullet* bullet = poolOfExplosions.get(poolOfExplosions.getCount() - 1);
+	ExplosionBullet* bullet = poolOfExplosions.PopElement();
 
 	bullet->Init(pos);
 
-	poolOfExplosions.pop_back();
 }
 
 void ProjectileSpawner::setFlag(bool fire)

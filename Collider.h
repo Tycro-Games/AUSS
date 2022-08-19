@@ -9,6 +9,7 @@ public:
 	~Collider();
 	Tmpl8::vec2 min, max;
 	Tmpl8::vec2* pos;
+	bool toDeactivate = false;
 	Collider At(const Tmpl8::vec2& offset) const {
 		return Collider(min + offset, max + offset);
 	}

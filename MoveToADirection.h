@@ -14,7 +14,7 @@ public:
 		*dir = MathFunctions::Reflect(*dir, normal);
 
 	}
-	virtual ~MoveToADirection();
+	~MoveToADirection();
 	Tmpl8::vec2 nextP;
 private:
 	bool reversed = false;

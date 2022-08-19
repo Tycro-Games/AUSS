@@ -6,7 +6,7 @@
 
 Projectile::Projectile(PosDir posDir, Tmpl8::Sprite* sprite, ProjectileSpawner* spawner)
 	:Entity(sprite, new Tmpl8::vec2(posDir.pos)),
-	col(new Collider(COL_MIN, COL_MAX)),
+	col(new Collider(COL_MIN, COL_MAX, pos)),
 	spawner(spawner)
 {
 	dir = new Tmpl8::vec2();
@@ -26,15 +26,18 @@ void Projectile::Init(PosDir posDir)
 
 Projectile::~Projectile()
 {
-	sprite = nullptr;
+	delete sprite;
+	sprite = nullptr;//so it does not get deleted twice
 	delete timer;
 	delete mover;
+	delete dir;
+	delete col;
 }
 
 void Projectile::RotateToDirection()
 {
 	//rotate to the target dir
-	frame = fmod(MathFunctions::GetDirInAnglesPos(*dir) + rVar.OFFSET_SPRITE, 360) / rVar.ANGLE_SIZE;
+	frame = MathFunctions::RotateToDirectionFrames(rVar, *dir);
 }
 
 void Projectile::Reflect()
@@ -56,7 +59,7 @@ void Projectile::Update(float deltaTime)
 	timer->Update(deltaTime);
 
 	//marked by collision
-	if (toDeactivate)
+	if (col->toDeactivate)
 		ResetBullet();
 }
 
@@ -83,7 +86,7 @@ void Projectile::Call()
 void Projectile::ResetBullet()
 {
 
-	toDeactivate = false;
+	col->toDeactivate = false;
 	timer->isFinished = true;
 	spawner->AddProjectileToPool(this);
 	spawner->SpawnExplosions(*pos);

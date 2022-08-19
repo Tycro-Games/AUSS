@@ -1,6 +1,6 @@
 #include "CollisionDetection.h"
 
-CollisionDetection::CollisionDetection(int maxX, vector<Projectile*>& collidables) :
+CollisionDetection::CollisionDetection(int maxX, vector<Collider*>& collidables) :
 	maxX(maxX),
 	axisToSort(&collidables),
 	mergeSort(axisToSort)
@@ -22,25 +22,25 @@ void CollisionDetection::DetectCollisions()
 	if (axisToSort->getCount() == 0)
 		return;
 	else {
-		vector <Projectile*> allPairs;
-		vector <Projectile*> activeIntervals;
+		vector <Collider*> allPairs;
+		vector <Collider*> activeIntervals;
 		//sort on x axis
 		mergeSort.Sort(0, axisToSort->getCount() - 1);
 
 		for (int i = 0; i < axisToSort->getCount(); i++)
 		{
-			Projectile* a = axisToSort->get(i);
+			Collider* a = axisToSort->get(i);
 
 			for (int j = 0; j < activeIntervals.getCount(); j++) {
 				//possible collision
-				Projectile* b = activeIntervals.get(j);
+				Collider* b = activeIntervals.get(j);
 
-				if (Collider::CollidesX(a->getColl()->At(*a->pos),
-					b->getColl()->At(*b->pos)))
+				if (Collider::CollidesX(a->At(*a->pos),
+					b->At(*b->pos)))
 				{
 					//check if there is a collision
-					if (Collider::CollidesY(a->getColl()->At(*a->pos),
-						b->getColl()->At(*b->pos))) {
+					if (Collider::CollidesY(a->At(*a->pos),
+						b->At(*b->pos))) {
 						allPairs.push_back(a);
 						allPairs.push_back(b);
 					}

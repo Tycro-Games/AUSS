@@ -1,24 +1,20 @@
 #pragma once
-#include "vector.h"
-#include "Projectile.h"
-#include "Entity.h"
+#include "Spawner.h"
 #include "ExplosionBullet.h"
 #include "CollisionDetection.h"
-#include "PosDir.h"
-#include "Callable.h"
-#include "RandomNumbers.h"
+
 
 class Projectile;
 class ExplosionBullet;
-class ProjectileSpawner :public Updateable, public Renderable {
+class ProjectileSpawner : public Spawner {
 
 public:
 	ProjectileSpawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Tmpl8::Sprite* toSpawn, Tmpl8::Sprite* explosion);
+	~ProjectileSpawner();
+
 	void ChangeFireSpeed(float speed);
 	void AddProjectileToPool(Projectile* entity);
 	void AddExplosionToPool(ExplosionBullet* entity);
-
-	~ProjectileSpawner();
 	void CreateMoreProjectiles();
 	void CreateMoreExplosions();
 	void SpawnProjectiles();
@@ -27,24 +23,29 @@ public:
 
 	void setFlag(bool fire);
 
+
+	// Inherited via Entity
 	virtual void Update(float deltaTime) override;
 	virtual void Render(Tmpl8::Surface* screen) override;
-	vector<Projectile*> poolOfProjectiles;
-	vector<ExplosionBullet*> poolOfExplosions;
+
+
 private:
 	float fireRate = 1.0f, currentTime, desiredTime;
-	vector<Projectile*> activeProjectiles;
-	vector<Entity*> updateObjects;
+	vector<Collider*> activeProjectiles;
+
+	pool<Projectile*> poolOfProjectiles;
+	pool<ExplosionBullet*> poolOfExplosions;
+
+
 	CollisionDetection colDec;
 
-	RandomNumbers randomNumbers;
-	bool isSpawning = false;
 
-	Tmpl8::Sprite* toSpawn;
+	bool isSpawning = false;
+	//assets for projectiles
+	Tmpl8::Sprite* projectileSprite;
 	Tmpl8::Sprite* explosionSprite;
 
 	Tmpl8::vec2* dir;
-	Tmpl8::vec2* pos;
 	//consts
 	const float FIRE_RATE = 0.25f;
 	const float MIN_RATE = 0.2f;

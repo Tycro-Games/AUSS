@@ -2,10 +2,9 @@
 
 
 
-EnemySpawner::EnemySpawner(Tmpl8::Sprite* sprite, Tmpl8::vec2* pos) :
-	Entity(sprite, pos)
-
-	//timer(new Timer(this, timeToSpawn, true)) this will not work, var is not initialized
+EnemySpawner::EnemySpawner(Tmpl8::vec2* pos, Tmpl8::Sprite* toSpawn) :
+	Spawner(pos),
+	enemySprite(toSpawn)
 {
 	timer = new Timer(this, timeToSpawn, true);
 	Call();
@@ -16,15 +15,25 @@ EnemySpawner::~EnemySpawner()
 	delete timer;
 }
 
+void EnemySpawner::AddEnemyToPool(Enemy* enemy)
+{
+	enemy->SetActive(false);
+
+}
+
 void EnemySpawner::Update(float deltaTime)
 {
 	if (timer->isUpdateable)
 		timer->Update(deltaTime);
+
+	for (int i = 0; i < updateObjects.getCount(); i++)
+		updateObjects[i]->Update(deltaTime);
 }
 
 void EnemySpawner::Render(Tmpl8::Surface* screen)
 {
-	sprite->Draw(screen, pos->x, pos->y);
+	for (int i = 0; i < updateObjects.getCount(); i++)
+		updateObjects[i]->Render(screen);
 }
 
 void EnemySpawner::Call()

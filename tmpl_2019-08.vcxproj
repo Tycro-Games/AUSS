@@ -227,6 +227,8 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="CollisionDetection.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyHoarder.cpp" />
     <ClCompile Include="EnemySpawner.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="ExitButton.cpp" />
@@ -240,10 +242,12 @@
     <ClCompile Include="MoveToADirection.cpp" />
     <ClCompile Include="PlayButton.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="pool.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="QuickSort.cpp" />
     <ClCompile Include="RandomNumbers.cpp" />
     <ClCompile Include="ProjectileSpawner.cpp" />
+    <ClCompile Include="Spawner.cpp" />
     <ClCompile Include="surface.cpp" />
     <ClCompile Include="template.cpp" />
     <ClCompile Include="Timer.cpp" />
@@ -255,6 +259,8 @@
     <ClInclude Include="Callable.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="CollisionDetection.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyHoarder.h" />
     <ClInclude Include="EnemySpawner.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="ExitButton.h" />
@@ -268,6 +274,7 @@
     <ClInclude Include="MoveToADirection.h" />
     <ClInclude Include="PlayButton.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="pool.h" />
     <ClInclude Include="PosDir.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="QuickSort.h" />
@@ -275,6 +282,7 @@
     <ClInclude Include="Renderable.h" />
     <ClInclude Include="RotationVar.h" />
     <ClInclude Include="ProjectileSpawner.h" />
+    <ClInclude Include="Spawner.h" />
     <ClInclude Include="surface.h" />
     <ClInclude Include="template.h" />
     <ClInclude Include="Timer.h" />
