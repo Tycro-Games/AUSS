@@ -12,6 +12,8 @@ public:
 	static int  RotateToDirectionFrames(RotationVar, Tmpl8::vec2);
 	//the distance between 2 points
 	static float GetDistance(Tmpl8::vec2 pos1, Tmpl8::vec2 pos2);
+	//the distance between 2 points without taking the square root
+	static float GetDistanceSqr(Tmpl8::vec2 pos1, Tmpl8::vec2 pos2);
 	///should receive a number between 0 and 1
 	static float DashFunction(float);
 	static float Lerp(float a, float b, float f)

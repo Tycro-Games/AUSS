@@ -4,6 +4,7 @@ EnemyHoarder::EnemyHoarder(PosDir posDir, Tmpl8::Sprite* sprite, EnemySpawner* s
 	Enemy(new Tmpl8::vec2(posDir.pos), sprite, spawner),
 	col(new Collider(COL_MIN, COL_MAX, pos))
 {
+	
 	dir = new Tmpl8::vec2();
 	mover = new MoveToADirection(this->pos, this->dir, col, this, SPEED);
 	Init(posDir);
@@ -30,7 +31,7 @@ void EnemyHoarder::Update(float deltaTime)
 	if (!getUpdateable())
 		return;
 	RotateToDirection();
-	float dist = MathFunctions::GetDistance(*pos, spawner->GetPlayerPos());
+	float dist = MathFunctions::GetDistanceSqr(*pos, spawner->GetPlayerPos());
 	if (dist > MAX_DISTANCE_TO_PLAYER)
 		mover->Update(deltaTime);
 

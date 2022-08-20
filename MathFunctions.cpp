@@ -24,6 +24,11 @@ float MathFunctions::GetDistance(Tmpl8::vec2 pos1, Tmpl8::vec2 pos2) {
 	float dy = pos2.y - pos1.y;
 	return sqrtf(dx * dx + dy * dy);
 }
+float MathFunctions::GetDistanceSqr(Tmpl8::vec2 pos1, Tmpl8::vec2 pos2) {
+	float dx = pos2.x - pos1.x;
+	float dy = pos2.y - pos1.y;
+	return dx * dx + dy * dy;
+}
 Tmpl8::vec2 MathFunctions::Reflect(Tmpl8::vec2 dir, Tmpl8::vec2 norm)
 {
 
