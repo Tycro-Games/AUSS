@@ -6,7 +6,7 @@
 class CollisionDetection :public Updateable, public Callable
 {
 public:
-	CollisionDetection(int maxX, vector<Collider*>& collidables);
+	CollisionDetection(vector<Collider*>& collidables);
 	~CollisionDetection();
 	void DetectCollisions();
 
@@ -18,7 +18,6 @@ private:
 	vector<Collider*>* axisToSort;
 	MergeSort<Collider*> mergeSort;
 	Timer* timer;
-	int maxX;
 
 
 

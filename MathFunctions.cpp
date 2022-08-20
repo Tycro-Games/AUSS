@@ -19,7 +19,11 @@ float MathFunctions::GetDirInAnglesNeg(Tmpl8::vec2 dir)
 
 	return angle;
 }
-
+float MathFunctions::GetDistance(Tmpl8::vec2 pos1, Tmpl8::vec2 pos2) {
+	float dx = pos2.x - pos1.x;
+	float dy = pos2.y - pos1.y;
+	return sqrtf(dx * dx + dy * dy);
+}
 Tmpl8::vec2 MathFunctions::Reflect(Tmpl8::vec2 dir, Tmpl8::vec2 norm)
 {
 
@@ -30,11 +34,11 @@ Tmpl8::vec2 MathFunctions::Reflect(Tmpl8::vec2 dir, Tmpl8::vec2 norm)
 }
 
 
-void MathFunctions::RotateTo(float x, float y, Tmpl8::vec2* pos, Tmpl8::vec2*& dir)
+void MathFunctions::RotateTo(float x, float y, Tmpl8::vec2 pos, Tmpl8::vec2*& dir)
 {
 
-	dir->x = x - pos->x;
-	dir->y = y - pos->y;
+	dir->x = x - pos.x;
+	dir->y = y - pos.y;
 
 	dir->normalize();
 

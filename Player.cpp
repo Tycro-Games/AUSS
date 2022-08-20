@@ -16,12 +16,15 @@ Player::Player(Tmpl8::Sprite* sprite, Tmpl8::vec2* pos, Collider* col, int hp)
 
 Player::~Player()
 {
+
 	delete col;
 	delete mover;
 	delete spawner;
+
+	delete dirToFace;
 	delete projectileSprite;
 	delete explosionSprite;
-	pos = nullptr;
+
 }
 
 void Player::Render(Tmpl8::Surface* screen)
@@ -45,7 +48,7 @@ void Player::Shoot(bool fire)
 void Player::Rotate(float x, float y) {
 	//replace with actual pos of player
 
-	MathFunctions::RotateTo(x, y, pos, dirToFace);
+	MathFunctions::RotateTo(x, y, *pos, dirToFace);
 
 
 	float angle = MathFunctions::GetDirInAnglesPos(*dirToFace);

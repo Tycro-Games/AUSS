@@ -1,7 +1,6 @@
 #include "CollisionDetection.h"
 
-CollisionDetection::CollisionDetection(int maxX, vector<Collider*>& collidables) :
-	maxX(maxX),
+CollisionDetection::CollisionDetection(vector<Collider*>& collidables) :
 	axisToSort(&collidables),
 	mergeSort(axisToSort)
 

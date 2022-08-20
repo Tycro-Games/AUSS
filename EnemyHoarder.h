@@ -5,10 +5,11 @@
 
 
 
-class EnemyHoarder :public Enemy, public Callable
+class EnemyHoarder :public Enemy
 {
 public:
 	EnemyHoarder(PosDir posDir, Tmpl8::Sprite* sprite, EnemySpawner* spawner);
+	//EnemyHoarder(const Enemy& enemy);
 	~EnemyHoarder();
 
 	// Inherited via Enemy
@@ -25,10 +26,11 @@ private:
 
 
 	Tmpl8::vec2* dir;
+	//consts
 	const Tmpl8::vec2 COL_MIN = Tmpl8::vec2(0, 0);
 	const Tmpl8::vec2 COL_MAX = Tmpl8::vec2(20, 20);
 	const float SPEED = 50.0f;
-
+	const float MAX_DISTANCE_TO_PLAYER = 10.0f;
 	RotationVar rVar = RotationVar(360 / 16.0f, 90.0f, 20.0f);
 
 

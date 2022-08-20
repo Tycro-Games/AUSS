@@ -4,12 +4,11 @@
 #include <iostream>
 
 ProjectileSpawner::ProjectileSpawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Tmpl8::Sprite* tospawn, Tmpl8::Sprite* explosion)
-	:Spawner(pos),
-	dir(dir),
+	:Spawner(pos, dir),
 	projectileSprite(tospawn),
 	explosionSprite(explosion),
 	activeProjectiles(),
-	colDec(ScreenWidth, activeProjectiles)
+	colDec(activeProjectiles)
 {
 
 	for (int i = 0; i < MAX_PROJECTILES; i++) {
@@ -49,8 +48,7 @@ void ProjectileSpawner::AddExplosionToPool(ExplosionBullet* entity)
 
 ProjectileSpawner::~ProjectileSpawner()
 {
-	delete pos;
-	delete dir;
+
 
 }
 
