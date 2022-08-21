@@ -55,7 +55,7 @@ namespace Tmpl8
 		updateables.push_back(enemySpawner);
 		renderables.push_back(enemySpawner);
 
-
+		projectileDetection = new CollisionDetection(player->GetSpawner()->GetActiveColliders(), enemySpawner->GetActiveColliders());
 
 	}
 	void Game::Shutdown()
@@ -65,6 +65,7 @@ namespace Tmpl8
 		delete player;
 		delete cursor;
 		delete enemySpawner;
+		delete projectileDetection;
 	}
 
 
@@ -76,6 +77,8 @@ namespace Tmpl8
 		switch (currentState)
 		{
 		case(game):
+			projectileDetection->Update(deltaTime);
+
 			for (int i = 0; i < renderables.getCount(); i++)
 				renderables[i]->Render(screen);
 			for (int i = 0; i < updateables.getCount(); i++)
@@ -84,6 +87,7 @@ namespace Tmpl8
 			if (player->GetMoveable()->IsMoving())
 				player->Rotate(cursor->pos->x, cursor->pos->y);
 			player->Shoot(isPressingLeftMouse);
+
 			break;
 		case(mainMenu):
 			//update main menu stuff;

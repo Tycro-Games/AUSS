@@ -3,9 +3,11 @@ template <class T>
 class vector {
 public:
 	vector();
+
 	~vector();
 	vector(size_t size);
 	T& operator[](int);
+
 
 	void push_back(const T& item);
 	void push_unique(const T& item);
@@ -15,6 +17,7 @@ public:
 
 	int find(const T& item);
 	void insert(int index, const T& item);
+
 	void prepend(const T& item);
 	//removes all instances
 	void remove(const T& item);

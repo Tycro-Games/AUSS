@@ -1,16 +1,20 @@
 #include "CollisionDetection.h"
 
-CollisionDetection::CollisionDetection(vector<Collider*>& collidables) :
-	axisToSort(&collidables),
-	mergeSort(axisToSort)
+
+CollisionDetection::CollisionDetection(vector<Collider*>& projectiles, vector<Collider*>& enemies) :
+	Projectiles(&projectiles),
+	Enemies(&enemies)
 
 {
 	timer = new Timer(this, .05f, true);
 }
 
+
+
 CollisionDetection::~CollisionDetection()
 {
 	delete timer;
+
 }
 
 
@@ -18,17 +22,26 @@ CollisionDetection::~CollisionDetection()
 void CollisionDetection::DetectCollisions()
 {
 
-	if (axisToSort->getCount() == 0)
+	if (Projectiles->getCount() == 0)
 		return;
 	else {
 		vector <Collider*> allPairs;
 		vector <Collider*> activeIntervals;
-		//sort on x axis
-		mergeSort.Sort(0, axisToSort->getCount() - 1);
 
-		for (int i = 0; i < axisToSort->getCount(); i++)
+
+		vector<Collider*> cols;
+		//add enemies and projectiles
+		for (int i = 0; i < Projectiles->getCount(); i++)
+			cols.push_back(Projectiles->get(i));
+		for (int i = 0; i < Enemies->getCount(); i++)
+			cols.push_back(Enemies->get(i));
+		//sort on x axis
+		mergeSort.Init(&cols);
+		mergeSort.Sort(0, cols.getCount() - 1);
+
+		for (int i = 0; i < cols.getCount(); i++)
 		{
-			Collider* a = axisToSort->get(i);
+			Collider* a = cols.get(i);
 
 			for (int j = 0; j < activeIntervals.getCount(); j++) {
 				//possible collision
@@ -60,6 +73,8 @@ void CollisionDetection::DetectCollisions()
 		}
 	}
 }
+
+
 
 
 

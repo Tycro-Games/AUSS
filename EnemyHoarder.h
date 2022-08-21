@@ -35,7 +35,7 @@ private:
 
 
 	MoveToADirection* mover;
-	Collider* col;
+
 
 
 

@@ -3,8 +3,9 @@
 template <class T>
 class MergeSort {
 public:
-	MergeSort(vector<T>* list);
+	MergeSort();
 	~MergeSort();
+	void Init(vector<T>* list);
 	void Sort(int l, int h);
 
 	void Merge(int l, int mid, int h);

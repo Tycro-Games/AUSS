@@ -7,6 +7,7 @@
 #include "Exitbutton.h"
 
 #include <SDL_Scancode.h>
+#include "CollisionDetection.h"
 
 namespace Tmpl8 {
 
@@ -51,6 +52,7 @@ namespace Tmpl8 {
 		//actual game
 		Player* player;
 		EnemySpawner* enemySpawner;
+		CollisionDetection* projectileDetection;
 		vector<Updateable*> updateables;
 		vector<Renderable*> renderables;
 

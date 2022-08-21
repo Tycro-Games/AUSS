@@ -12,4 +12,9 @@ Spawner::~Spawner()
 
 }
 
+vector<Collider*>& Spawner::GetActiveColliders()
+{
+	return activeColliders;
+}
+
 

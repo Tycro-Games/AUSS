@@ -16,6 +16,7 @@ vector<T>::~vector()
 	delete[]arr;
 }
 
+
 template<class T>
 vector<T>::vector(size_t size)
 {
@@ -38,11 +39,6 @@ T& vector<T>::operator[](const int index)
 
 
 
-
-
-
-
-
 template<class T>
 void vector<T>::push_back(const T& item)
 {
@@ -54,6 +50,7 @@ void vector<T>::push_back(const T& item)
 		arr[count++] = item;
 	}
 }
+
 template<class T>
 void vector<T>::push_unique(const T& item)
 {
@@ -64,6 +61,7 @@ void vector<T>::push_unique(const T& item)
 	else {
 
 		doubleSize();
+
 		arr[count++] = item;
 	}
 }
@@ -193,6 +191,7 @@ void vector<T>::insert(int index, const T& item)
 
 	}
 }
+
 
 template<class T>
 void vector<T>::prepend(const T& item)

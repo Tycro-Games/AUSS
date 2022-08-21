@@ -1,8 +1,8 @@
 #include "MergeSort.h"
 #include "Projectile.h"
 template<class T>
-MergeSort<T>::MergeSort(vector<T>* list) :
-	list(list)
+MergeSort<T>::MergeSort() :
+	list()
 {
 
 }
@@ -10,7 +10,10 @@ template<class T>
 MergeSort<T>::~MergeSort()
 {
 }
-
+template <class T>
+void MergeSort<T>::Init(vector<T>* lis) {
+	list = lis;
+}
 template<class T>
 void MergeSort<T>::Sort(int l, int h)
 {

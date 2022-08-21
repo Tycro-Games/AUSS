@@ -1,8 +1,7 @@
 #pragma once
 #include "Spawner.h"
 #include "ExplosionBullet.h"
-#include "CollisionDetection.h"
-
+#include "Projectile.h"
 
 class Projectile;
 class ExplosionBullet;
@@ -31,13 +30,13 @@ public:
 
 private:
 	float fireRate = 1.0f, currentTime, desiredTime;
-	vector<Collider*> activeProjectiles;
+
 
 	pool<Projectile*> poolOfProjectiles;
 	pool<ExplosionBullet*> poolOfExplosions;
 
 
-	CollisionDetection colDec;
+
 
 
 	bool isSpawning = false;

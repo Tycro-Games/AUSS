@@ -6,9 +6,7 @@
 ProjectileSpawner::ProjectileSpawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Tmpl8::Sprite* tospawn, Tmpl8::Sprite* explosion)
 	:Spawner(pos, dir),
 	projectileSprite(tospawn),
-	explosionSprite(explosion),
-	activeProjectiles(),
-	colDec(activeProjectiles)
+	explosionSprite(explosion)
 {
 
 	for (int i = 0; i < MAX_PROJECTILES; i++) {
@@ -35,7 +33,7 @@ void ProjectileSpawner::ChangeFireSpeed(float speed) {
 void ProjectileSpawner::AddProjectileToPool(Projectile* entity)
 {
 	entity->SetActive(false);
-	activeProjectiles.remove(entity->getColl());
+	activeColliders.remove(entity->getColl());
 	poolOfProjectiles.AddElement(entity);
 
 }
@@ -77,7 +75,7 @@ void ProjectileSpawner::SpawnProjectiles()
 
 	Tmpl8::vec2 randomDir = GetDirDeviation();
 	projectile->Init(PosDir{ (*pos) + (*dir), (*dir + randomDir).normalized() });
-	activeProjectiles.push_back(projectile->getColl());
+	activeColliders.push_back(projectile->getColl());
 }
 
 Tmpl8::vec2 ProjectileSpawner::GetDirDeviation()
@@ -118,7 +116,7 @@ void ProjectileSpawner::Update(float deltaTime)
 	}
 	else
 		currentTime += deltaTime;
-	colDec.Update(deltaTime);
+
 	for (int i = 0; i < updateObjects.getCount(); i++)
 		updateObjects[i]->Update(deltaTime);
 

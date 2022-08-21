@@ -1,10 +1,10 @@
 #include "EnemyHoarder.h"
 #include "MathFunctions.h"
 EnemyHoarder::EnemyHoarder(PosDir posDir, Tmpl8::Sprite* sprite, EnemySpawner* spawner) :
-	Enemy(new Tmpl8::vec2(posDir.pos), sprite, spawner),
-	col(new Collider(COL_MIN, COL_MAX, pos))
+	Enemy(new Tmpl8::vec2(posDir.pos), sprite, spawner)
+
 {
-	
+	col = (new Collider(COL_MIN, COL_MAX, pos));
 	dir = new Tmpl8::vec2();
 	mover = new MoveToADirection(this->pos, this->dir, col, this, SPEED);
 	Init(posDir);

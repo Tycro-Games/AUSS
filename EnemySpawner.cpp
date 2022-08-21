@@ -19,6 +19,7 @@ EnemySpawner::~EnemySpawner()
 void EnemySpawner::AddEnemyToPool(Enemy* enemy)
 {
 	enemy->SetActive(false);
+	activeColliders.remove(enemy->getColl());
 	poolOfEnemies.AddElement(enemy);
 
 }
@@ -33,8 +34,8 @@ void EnemySpawner::CreateMoreEnemies()
 
 void EnemySpawner::Update(float deltaTime)
 {
-	//if (timer->isUpdateable)
-	//	timer->Update(deltaTime);
+	if (timer->isUpdateable)
+		timer->Update(deltaTime);
 
 	for (int i = 0; i < updateObjects.getCount(); i++)
 		updateObjects[i]->Update(deltaTime);
@@ -57,5 +58,6 @@ void EnemySpawner::Call()
 		CreateMoreEnemies();
 	Enemy* enemy = poolOfEnemies.PopElement();
 	enemy->Init(PosDir(*pos, *dir));
+	activeColliders.push_back(enemy->getColl());
 	std::cout << "Spawn Enemy\n";
 }
