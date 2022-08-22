@@ -16,6 +16,8 @@ public:
 
 
 	int find(const T& item);
+
+	bool contains(const T& item);
 	void insert(int index, const T& item);
 
 	void prepend(const T& item);

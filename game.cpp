@@ -115,10 +115,12 @@ namespace Tmpl8
 
 	void Game::MouseUp(int button)
 	{
+
 		isPressingLeftMouse = false;
 	}
 	void Game::MouseDown(int button)
 	{
+
 		isPressingLeftMouse = true;
 	}
 	void Game::MouseMove(int x, int y)

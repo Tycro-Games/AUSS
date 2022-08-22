@@ -67,17 +67,7 @@ void ProjectileSpawner::SpawnProjectiles()
 	activeColliders.push_back(projectile->getColl());
 }
 
-Tmpl8::vec2 ProjectileSpawner::GetDirDeviation()
-{
-	//random direction
-	//static cast is safe
-	float x = randomNumbers.RandomBetweenFloats(MIN_DEVIATION, MAX_DEVIATION);
-	float y = randomNumbers.RandomBetweenFloats(MIN_DEVIATION, MAX_DEVIATION);
-	//adding multiplier
-	x *= deviationMultiplier;
-	y *= deviationMultiplier;
-	return Tmpl8::vec2(x, y);
-}
+
 
 
 

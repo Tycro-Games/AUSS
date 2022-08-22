@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "MathFunctions.h"
+#include <string>
 
 
 Player::Player(Tmpl8::Sprite* sprite, Tmpl8::vec2* pos, Collider* col, int hp)
@@ -11,12 +12,12 @@ Player::Player(Tmpl8::Sprite* sprite, Tmpl8::vec2* pos, Collider* col, int hp)
 	explosionSprite(new Tmpl8::Sprite(new Tmpl8::Surface("assets/smoke.tga"), 10)),
 	spawner(new ProjectileSpawner(pos, dirToFace, projectileSprite, explosionSprite))
 {
-
+	timer = (new Timer(this, TIME_TO_HIT));
 }
 
 Player::~Player()
 {
-
+	delete timer;
 	delete col;
 	delete mover;
 	delete spawner;
@@ -33,12 +34,22 @@ void Player::Render(Tmpl8::Surface* screen)
 	sprite->Draw(screen, pos->x, pos->y);
 	screen->Box(pos->x, pos->y, pos->x + rVar.SPRITE_OFFSET, pos->y + rVar.SPRITE_OFFSET, 0xffffff);
 	spawner->Render(screen);
+	auto inactive = std::string("HP: " + std::to_string(hp));
+
+	screen->Print(inactive.c_str(), 10, 40, 0xffffffff);
 }
 
 void Player::Update(float deltaTime)
 {
 	mover->Update(deltaTime);
 	spawner->Update(deltaTime);
+	timer->Update(deltaTime);
+}
+void Player::TakeDamage(int dg) {
+	if (timer->isFinished) {
+		Being::TakeDamage(dg);
+		timer->ResetVar();
+	}
 
 }
 void Player::Shoot(bool fire)
@@ -71,5 +82,6 @@ ProjectileSpawner* Player::GetSpawner()
 
 void Player::Die()
 {
+	std::cout << "RESET GAME";
 }
 

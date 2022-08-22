@@ -13,7 +13,7 @@ ExitButton::~ExitButton()
 void ExitButton::ChangeSprite()
 {
 	CheckHovering();
-	
+
 
 }
 

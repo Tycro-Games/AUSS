@@ -30,6 +30,7 @@ void PlayButton::Render(Tmpl8::Surface* screen)
 
 void PlayButton::ResumeGame()
 {
+	Tmpl8::Game::isPressingLeftMouse = false;
 	Tmpl8::Game::currentState = Tmpl8::Game::game;
 
 }

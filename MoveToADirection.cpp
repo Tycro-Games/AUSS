@@ -16,7 +16,9 @@ void MoveToADirection::Update(float deltaTime)
 	nextPos = (*dir) * speed * deltaTime;
 
 	//add collision check
+
 	nextP += nextPos;
+
 	if (col->InGameScreen(nextP, *col))
 		(*pos) = nextP;
 	else {

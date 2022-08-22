@@ -17,7 +17,6 @@ public:
 	~MoveToADirection();
 	Tmpl8::vec2 nextP;
 private:
-	bool reversed = false;
 	const float desiredTime = 1.5f;
 	Tmpl8::vec2* dir;
 

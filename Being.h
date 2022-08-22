@@ -4,7 +4,7 @@ class Being : public Entity {
 public:
 	Being(Tmpl8::Sprite* sprite, Tmpl8::vec2* pos, int hp = 100);
 	virtual ~Being();
-	void TakeDamage(int dg);
+	virtual void TakeDamage(int dg);
 protected:
 	int hp;
 	virtual void Die() = 0;

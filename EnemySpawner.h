@@ -10,18 +10,22 @@ class Enemy;
 class EnemySpawner :public Spawner, public Callable
 {
 public:
-	EnemySpawner(Tmpl8::vec2*, Tmpl8::vec2*, Being*, Tmpl8::Sprite*, Tmpl8::Sprite*);
 	~EnemySpawner();
 
-	void AddEnemyToPool(Enemy* enemy);
+	EnemySpawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Being* player, Tmpl8::Sprite* toSpawn, Tmpl8::Sprite* explosion);
 
+	void AddEnemyToPool(Enemy* enemy);
 	void CreateMoreEnemies();
-	virtual void Update(float deltaTime) override;
+
+	void PlayerTakesDamage(Enemy* enemy);
+
 	Tmpl8::vec2 GetPlayerPos();
+	bool IsEnemy(Collider*);
+	virtual void Update(float deltaTime) override;
 	virtual void Render(Tmpl8::Surface* screen) override;
 private:
 	Timer* timer;
-	float timeToSpawn = 5.0f;
+	float timeToSpawn = 1.0f;
 	Being* player;
 	pool<Enemy*> poolOfEnemies;
 	//assets for enemies

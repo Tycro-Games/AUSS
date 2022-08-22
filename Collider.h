@@ -1,5 +1,6 @@
 #pragma once
 #include "template.h"
+
 struct Collider
 {
 public:
@@ -9,13 +10,14 @@ public:
 	~Collider();
 	Tmpl8::vec2 min, max;
 	Tmpl8::vec2* pos;
+	Collider* collision;
 	bool toDeactivate = false;
 	Collider At(const Tmpl8::vec2& offset) const {
 		return Collider(min + offset, max + offset);
 	}
 
 	bool Collides(const Collider& col) {
-		return Collides(*this, col);
+		return Collides(this->At(*pos), col);
 	}
 	static bool Collides(const Collider& a, const Collider& b) {
 		return a.min.x < b.max.x&& a.max.x>b.min.x &&

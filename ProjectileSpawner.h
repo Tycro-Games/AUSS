@@ -17,9 +17,6 @@ public:
 	void CreateMoreProjectiles();
 
 	void SpawnProjectiles();
-	Tmpl8::vec2 GetDirDeviation();
-
-
 	void setFlag(bool fire);
 
 
@@ -46,9 +43,7 @@ private:
 	const float MAX_RATE = 2.0f;
 
 	//direction random
-	const float MIN_DEVIATION = -.1f;
-	const float MAX_DEVIATION = .1f;
-	float deviationMultiplier = 1.5f;
+
 
 	const int MAX_PROJECTILES = 50;
 	const int MAX_EXPLOSIONS = 5;

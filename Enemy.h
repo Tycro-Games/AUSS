@@ -17,11 +17,14 @@ public:
 	Collider* getColl() const {
 		return col;
 	}
-
+	int getDg() {
+		return dg;
+	}
 protected:
 	EnemySpawner* spawner;
 	Collider* col;
-
+	Tmpl8::vec2 offset;
+	int dg;
 
 };
 

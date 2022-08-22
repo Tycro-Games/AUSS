@@ -45,11 +45,19 @@ Tmpl8::vec2 EnemySpawner::GetPlayerPos()
 {
 	return *(player->pos);
 }
+bool EnemySpawner::IsEnemy(Collider* col)
+{
 
+	return activeColliders.contains(col);
+}
 void EnemySpawner::Render(Tmpl8::Surface* screen)
 {
 	for (int i = 0; i < updateObjects.getCount(); i++)
 		updateObjects[i]->Render(screen);
+}
+void EnemySpawner::PlayerTakesDamage(Enemy* enemy)
+{
+	player->TakeDamage(enemy->getDg());
 }
 
 void EnemySpawner::Call()
@@ -57,7 +65,7 @@ void EnemySpawner::Call()
 	if (poolOfEnemies.getCount() == 0)
 		CreateMoreEnemies();
 	Enemy* enemy = poolOfEnemies.PopElement();
-	enemy->Init(PosDir(*pos, *dir));
+	Tmpl8::vec2 randomDir = GetDirDeviation();
+	enemy->Init(PosDir(*pos, randomDir));
 	activeColliders.push_back(enemy->getColl());
-	std::cout << "Spawn Enemy\n";
 }

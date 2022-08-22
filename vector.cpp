@@ -121,6 +121,8 @@ void vector<Projectile*>::print()
 		std::cout << '\n';
 	}
 }
+
+
 template< >
 void vector<Projectile*>::print(int& i, int& j)
 {
@@ -169,6 +171,18 @@ int vector<T>::find(const T& item)
 	}
 	return -1;
 }
+
+template<class T>
+bool vector<T>::contains(const T& item)
+{
+	for (int i = 0; i < count; i++) {
+		if (arr[i] == item) {
+			return true;
+		}
+	}
+	return false;
+}
+
 
 
 template<class T>

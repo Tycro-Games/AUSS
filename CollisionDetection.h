@@ -1,4 +1,5 @@
 #pragma once
+
 #include "MergeSort.h"
 #include "Projectile.h"
 
@@ -11,8 +12,6 @@ public:
 	~CollisionDetection();
 	void DetectCollisions();
 
-
-
 	virtual void Update(float deltaTime) override;
 	// Inherited via Callable
 	virtual void Call() override;
@@ -22,10 +21,6 @@ private:
 
 	MergeSort<Collider*> mergeSort;
 	Timer* timer;
-
-
-
-
 
 };
 

@@ -247,6 +247,7 @@
     <ClCompile Include="QuickSort.cpp" />
     <ClCompile Include="RandomNumbers.cpp" />
     <ClCompile Include="ProjectileSpawner.cpp" />
+    <ClCompile Include="Rotator.cpp" />
     <ClCompile Include="Spawner.cpp" />
     <ClCompile Include="surface.cpp" />
     <ClCompile Include="template.cpp" />
@@ -282,6 +283,7 @@
     <ClInclude Include="Renderable.h" />
     <ClInclude Include="RotationVar.h" />
     <ClInclude Include="ProjectileSpawner.h" />
+    <ClInclude Include="Rotator.h" />
     <ClInclude Include="Spawner.h" />
     <ClInclude Include="surface.h" />
     <ClInclude Include="template.h" />
