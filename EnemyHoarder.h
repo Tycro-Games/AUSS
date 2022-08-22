@@ -5,7 +5,7 @@
 
 
 
-class EnemyHoarder :public Enemy
+class EnemyHoarder :public Enemy, public Callable
 {
 public:
 	EnemyHoarder(PosDir posDir, Tmpl8::Sprite* sprite, EnemySpawner* spawner);
@@ -19,7 +19,7 @@ public:
 	void RotateToDirection();
 	void Init(PosDir posDir);
 	void ResetEnemy();
-	bool toDeactivate = false;
+
 	virtual void Call() override;
 
 private:
@@ -40,6 +40,10 @@ private:
 
 
 
+
+
+	// Inherited via Enemy
+	virtual void Die() override;
 
 };
 

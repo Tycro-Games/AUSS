@@ -2,7 +2,7 @@
 
 
 Enemy::Enemy(Tmpl8::vec2* pos, Tmpl8::Sprite* sprite, EnemySpawner* spawner) :
-	Entity(sprite, pos),
+	Being(sprite, pos),
 	spawner(spawner),
 	col()
 {

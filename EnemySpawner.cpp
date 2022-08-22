@@ -2,8 +2,8 @@
 #include "EnemyHoarder.h"
 
 
-EnemySpawner::EnemySpawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Being* player, Tmpl8::Sprite* toSpawn) :
-	Spawner(pos, dir),
+EnemySpawner::EnemySpawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Being* player, Tmpl8::Sprite* toSpawn, Tmpl8::Sprite* explosion) :
+	Spawner(pos, dir, explosion),
 	player(player),
 	enemySprite(toSpawn)
 {

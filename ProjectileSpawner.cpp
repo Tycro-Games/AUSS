@@ -4,9 +4,9 @@
 #include <iostream>
 
 ProjectileSpawner::ProjectileSpawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Tmpl8::Sprite* tospawn, Tmpl8::Sprite* explosion)
-	:Spawner(pos, dir),
-	projectileSprite(tospawn),
-	explosionSprite(explosion)
+	:Spawner(pos, dir, explosion),
+	projectileSprite(tospawn)
+
 {
 
 	for (int i = 0; i < MAX_PROJECTILES; i++) {
@@ -37,12 +37,7 @@ void ProjectileSpawner::AddProjectileToPool(Projectile* entity)
 	poolOfProjectiles.AddElement(entity);
 
 }
-void ProjectileSpawner::AddExplosionToPool(ExplosionBullet* entity)
-{
-	entity->SetActive(false);
 
-	poolOfExplosions.AddElement(entity);
-}
 
 ProjectileSpawner::~ProjectileSpawner()
 {
@@ -58,13 +53,7 @@ void ProjectileSpawner::CreateMoreProjectiles()
 	AddProjectileToPool(entity);
 
 }
-void ProjectileSpawner::CreateMoreExplosions()
-{
-	ExplosionBullet* bullet = new ExplosionBullet(explosionSprite, this);
-	updateObjects.push_back(bullet);
 
-	AddExplosionToPool(bullet);
-}
 
 void ProjectileSpawner::SpawnProjectiles()
 {
@@ -90,15 +79,7 @@ Tmpl8::vec2 ProjectileSpawner::GetDirDeviation()
 	return Tmpl8::vec2(x, y);
 }
 
-void ProjectileSpawner::SpawnExplosions(Tmpl8::vec2 pos)
-{
-	if (poolOfExplosions.getCount() == 0)
-		CreateMoreExplosions();
-	ExplosionBullet* bullet = poolOfExplosions.PopElement();
 
-	bullet->Init(pos);
-
-}
 
 void ProjectileSpawner::setFlag(bool fire)
 {

@@ -1,10 +1,10 @@
 #pragma once
 #include "Spawner.h"
-#include "ExplosionBullet.h"
+
 #include "Projectile.h"
 
 class Projectile;
-class ExplosionBullet;
+
 class ProjectileSpawner : public Spawner {
 
 public:
@@ -13,12 +13,12 @@ public:
 
 	void ChangeFireSpeed(float speed);
 	void AddProjectileToPool(Projectile* entity);
-	void AddExplosionToPool(ExplosionBullet* entity);
+
 	void CreateMoreProjectiles();
-	void CreateMoreExplosions();
+
 	void SpawnProjectiles();
 	Tmpl8::vec2 GetDirDeviation();
-	void SpawnExplosions(Tmpl8::vec2 pos);
+
 
 	void setFlag(bool fire);
 
@@ -33,16 +33,11 @@ private:
 
 
 	pool<Projectile*> poolOfProjectiles;
-	pool<ExplosionBullet*> poolOfExplosions;
-
-
-
 
 
 	bool isSpawning = false;
 	//assets for projectiles
 	Tmpl8::Sprite* projectileSprite;
-	Tmpl8::Sprite* explosionSprite;
 
 
 	//consts

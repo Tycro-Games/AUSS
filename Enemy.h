@@ -1,5 +1,5 @@
 #pragma once
-#include "Entity.h"
+#include "Being.h"
 
 
 #include "MoveToADirection.h"
@@ -7,7 +7,7 @@
 #include "PosDir.h"
 
 class EnemySpawner;
-class Enemy : public Entity, public Callable
+class Enemy : public Being
 {
 public:
 

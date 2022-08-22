@@ -2,14 +2,14 @@
 #include "Entity.h"
 class Being : public Entity {
 public:
-	Being(Tmpl8::Sprite* sprite, Tmpl8::vec2* pos, int hp);
+	Being(Tmpl8::Sprite* sprite, Tmpl8::vec2* pos, int hp = 100);
 	virtual ~Being();
 	void TakeDamage(int dg);
 protected:
 	int hp;
-	void Die() {
+	virtual void Die() = 0;
 
-	}
+
 
 private:
 };

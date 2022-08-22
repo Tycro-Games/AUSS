@@ -30,6 +30,9 @@ private:
 	Collider* col;
 	ProjectileSpawner* spawner;
 
+
+	virtual void Die() override;
+
 };
 
 

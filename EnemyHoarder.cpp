@@ -9,20 +9,12 @@ EnemyHoarder::EnemyHoarder(PosDir posDir, Tmpl8::Sprite* sprite, EnemySpawner* s
 	mover = new MoveToADirection(this->pos, this->dir, col, this, SPEED);
 	Init(posDir);
 }
-//EnemyHoarder::EnemyHoarder(const Enemy& enemy) :
-//	Enemy(enemy),
-//	col(new Collider(COL_MIN, COL_MAX, pos))
-//{
-//	dir = new Tmpl8::vec2();
-//	mover = new MoveToADirection(this->pos, this->dir, col, this, SPEED);
-//
-//}
 
 
 
 EnemyHoarder::~EnemyHoarder()
 {
-
+	delete dir;
 	delete mover;
 }
 
@@ -34,10 +26,15 @@ void EnemyHoarder::Update(float deltaTime)
 	float dist = MathFunctions::GetDistanceSqr(*pos, spawner->GetPlayerPos());
 	if (dist > MAX_DISTANCE_TO_PLAYER)
 		mover->Update(deltaTime);
+	else {
 
+	}
 	//marked by collision
-	if (toDeactivate)
-		ResetEnemy();
+	if (col->toDeactivate) {
+		col->toDeactivate = false;
+		TakeDamage(25);
+
+	}
 }
 
 void EnemyHoarder::Render(Tmpl8::Surface* screen)
@@ -65,18 +62,24 @@ void EnemyHoarder::Init(PosDir posDir)
 	SetActive(true);
 	*pos = posDir.pos;
 	*dir = posDir.dir;
-
+	hp = 100;
 }
 
 
 
 void EnemyHoarder::ResetEnemy()
 {
-	toDeactivate = false;
+
 	spawner->AddEnemyToPool(this);
+	spawner->SpawnExplosions(*pos);
 }
 
 void EnemyHoarder::Call()
 {
 	std::cout << "Got to the player";
+}
+
+void EnemyHoarder::Die()
+{
+	ResetEnemy();
 }

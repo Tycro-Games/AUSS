@@ -69,3 +69,7 @@ ProjectileSpawner* Player::GetSpawner()
 	return spawner;
 }
 
+void Player::Die()
+{
+}
+

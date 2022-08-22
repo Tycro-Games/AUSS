@@ -10,7 +10,7 @@ class Enemy;
 class EnemySpawner :public Spawner, public Callable
 {
 public:
-	EnemySpawner(Tmpl8::vec2*, Tmpl8::vec2*, Being*, Tmpl8::Sprite*);
+	EnemySpawner(Tmpl8::vec2*, Tmpl8::vec2*, Being*, Tmpl8::Sprite*, Tmpl8::Sprite*);
 	~EnemySpawner();
 
 	void AddEnemyToPool(Enemy* enemy);
