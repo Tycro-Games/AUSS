@@ -75,6 +75,7 @@ void vector<T>::doubleSize()
 	resize((size_t)(maxSize * 2));
 	for (int i = 0; i < count; i++)
 		arr[i] = aux[i];
+	delete []aux;
 }
 
 template<class T>
@@ -87,6 +88,7 @@ void vector<T>::halfSize()
 	resize((size_t)(maxSize / 2));
 	for (int i = 0; i < count; i++)
 		arr[i] = aux[i];
+	delete []aux;
 }
 
 template<class T>
@@ -249,6 +251,7 @@ void vector<T>::remove(const T& item)
 	for (int i = 0; i < count; i++) {
 		arr[i] = aux[i];
 	}
+	delete[]aux;
 }
 
 template<class T>

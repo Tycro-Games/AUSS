@@ -9,8 +9,10 @@ Player::Player(Tmpl8::Sprite* sprite, Tmpl8::vec2* pos, Collider* col, int hp)
 	col(col),
 	mover(new MoveablePlayer(pos, col)),
 	projectileSprite(new Tmpl8::Sprite(new Tmpl8::Surface("assets/missile_big.tga"), 32)),
-	explosionSprite(new Tmpl8::Sprite(new Tmpl8::Surface("assets/smoke.tga"), 10)),
-	spawner(new ProjectileSpawner(pos, dirToFace, projectileSprite, explosionSprite))
+	spawner(new ProjectileSpawner(pos,
+		dirToFace,
+		projectileSprite,
+		new Tmpl8::Sprite(new Tmpl8::Surface("assets/smoke.tga"), 10)))
 {
 	timer = (new Timer(this, TIME_TO_HIT));
 }
@@ -21,7 +23,6 @@ Player::~Player()
 	delete col;
 	delete mover;
 	delete spawner;
-
 	delete dirToFace;
 	delete projectileSprite;
 

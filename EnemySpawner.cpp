@@ -9,13 +9,17 @@ EnemySpawner::EnemySpawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Being* player, Tm
 	enemySprite(toSpawn)
 {
 	timer = new Timer(this, timeToSpawn, true);
-	Call();
+	for (int i = 0; i < MAX_ENEMIES; i++)
+		CreateMoreEnemies();
+	
 }
 
 EnemySpawner::~EnemySpawner()
 {
 	delete enemySprite;
 	delete timer;
+	delete dir;
+	delete pos;
 }
 
 void EnemySpawner::AddEnemyToPool(Enemy* enemy)

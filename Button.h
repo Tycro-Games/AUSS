@@ -24,6 +24,7 @@ protected:
 	Tmpl8::vec2 offset;
 	Tmpl8::Sprite* pressedSprite;
 	Tmpl8::Sprite* unpressedSprite;
+	//Tmpl8::Sprite* extraAdress;
 	Collider* cursor;
 	Collider* col;
 	bool isHovering = false;

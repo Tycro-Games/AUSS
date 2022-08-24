@@ -1,7 +1,7 @@
 #include "CollisionDetection.h"
 #include "game.h"
 
-CollisionDetection::CollisionDetection() 
+CollisionDetection::CollisionDetection()
 {
 	timer = new Timer(this, .05f, true);
 }
@@ -23,18 +23,18 @@ void CollisionDetection::DetectCollisions()
 	vector <Collider*> activeIntervals;
 
 
-	vector<Collider*>& cols=Tmpl8::Game::cols;
+	;
 	//add enemies and projectiles
-	
-	//sort on x axis
-	if (cols.getCount() == 0)
-		return;
-	mergeSort.Init(&cols);
-	mergeSort.Sort(0, cols.getCount() - 1);
 
-	for (int i = 0; i < cols.getCount(); i++)
+	//sort on x axis
+	if (Tmpl8::Game::cols.getCount() == 0)
+		return;
+	mergeSort.Init(&Tmpl8::Game::cols);
+	mergeSort.Sort(0, Tmpl8::Game::cols.getCount() - 1);
+
+	for (int i = 0; i < Tmpl8::Game::cols.getCount(); i++)
 	{
-		Collider* a = cols.get(i);
+		Collider* a = Tmpl8::Game::cols.get(i);
 
 		for (int j = 0; j < activeIntervals.getCount(); j++) {
 			//possible collision

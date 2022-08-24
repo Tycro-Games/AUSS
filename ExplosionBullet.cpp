@@ -4,9 +4,11 @@
 
 ExplosionBullet::ExplosionBullet(Tmpl8::Sprite* sprite, Spawner* spawner, Tmpl8::vec2* pos) :
 	Entity(sprite),
-	spawner(spawner)
+	spawner(spawner),
+	timer ( new Timer())
 {
 	TotalAnimation = loops * desiredTime * sprite->Frames();
+
 	Init(*pos);
 }
 
@@ -22,7 +24,7 @@ void ExplosionBullet::Init(Tmpl8::vec2 pos)
 	SetActive(true);
 	frame = 0;
 	(*this->pos) = pos;
-	timer = new Timer(this, TotalAnimation);
+	timer->Init(this, TotalAnimation);
 }
 
 void ExplosionBullet::Update(float deltaTime)

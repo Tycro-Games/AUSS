@@ -18,7 +18,7 @@ namespace Tmpl8
 #ifdef _DEBUG
 		currentState = game;
 #endif
-		
+
 		AllocateMemory();
 
 
@@ -26,10 +26,10 @@ namespace Tmpl8
 	}
 	void Game::AllocateMemory()
 	{
-		player = (new Player(new Sprite(new Surface("assets/sniper.tga"), 32),
+		player = new Player(new Sprite(new Surface("assets/sniper.tga"), 32),
 			new vec2(START_POS),
 			new Collider(vec2(COL_MIN), vec2(COL_MAX)),
-			100));
+			10);
 
 		cursor = (new FollowCursor(new Sprite(new Surface("assets/target.tga"), 1)));
 
@@ -49,8 +49,8 @@ namespace Tmpl8
 	}
 	void Game::ResetGame()
 	{
-		
-		Shutdown(); 
+
+		Shutdown();
 		RemoveAllUpdateables();
 		AllocateMemory();
 		AddInstancesToUpdates();
@@ -58,7 +58,7 @@ namespace Tmpl8
 	}
 	void Game::RemoveAllUpdateables()
 	{
-		
+
 		cols.removeAll();
 		updateables.removeAll();
 		renderables.removeAll();
@@ -86,10 +86,12 @@ namespace Tmpl8
 	{
 		delete playButton;
 		delete exitButton;
+
 		delete enemySpawner;
 		delete player;
 		delete cursor;
 		delete projectileDetection;
+
 	}
 
 

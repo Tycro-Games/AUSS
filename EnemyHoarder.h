@@ -2,7 +2,7 @@
 #include "Enemy.h"
 #include "RotationVar.h"
 #include "Rotator.h"
-#include "MoveToADirectionEnemy.h"
+
 
 
 class EnemyHoarder :public Enemy, public Callable
@@ -16,7 +16,7 @@ public:
 	virtual void Update(float deltaTime) override;
 
 	virtual void Render(Tmpl8::Surface* screen) override;
-	
+
 	void Init(PosDir posDir);
 	void ResetEnemy();
 

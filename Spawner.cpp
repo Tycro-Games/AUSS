@@ -14,7 +14,6 @@ Spawner::~Spawner()
 		updateObjects[i]->sprite = nullptr;//the sprite is only a pointer that is cleaned up by sub spawners
 		delete updateObjects[i];
 	}
-	updateObjects.removeAll();
 	delete explosionSprite;
 }
 Tmpl8::vec2 Spawner::GetDirDeviation()

@@ -30,7 +30,6 @@ private:
 	Tmpl8::vec2* dirToFace = 0;
 	//assets
 	Tmpl8::Sprite* projectileSprite;
-	Tmpl8::Sprite* explosionSprite;
 	//components
 	MoveablePlayer* mover;
 	Collider* col;

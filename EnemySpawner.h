@@ -32,7 +32,8 @@ private:
 
 	//assets for enemies
 	Tmpl8::Sprite* enemySprite;
-
+	//consts
+	const int MAX_ENEMIES = 10;
 
 	// Inherited via Callable
 	virtual void Call() override;

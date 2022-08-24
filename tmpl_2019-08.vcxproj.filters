@@ -89,9 +89,6 @@
     <ClCompile Include="Rotator.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="MoveToADirectionEnemy.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -195,9 +192,6 @@
       <Filter>Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="Rotator.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="MoveToADirectionEnemy.h">
       <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
