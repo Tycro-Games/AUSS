@@ -30,11 +30,18 @@ void EnemyHoarder::Update(float deltaTime)
 {
 	if (!getUpdateable())
 		return;
+	/*if (ToMove) {
+		mover->SetSpeed(mover->GetSpeed() * 100);
+		mover->Update(deltaTime);
+		mover->SetSpeed(mover->GetSpeed() / 100);
+		ToMove = false;
+	}*/
 	rotate->Update(deltaTime);
 	//marked by collision
 	if (col->toDeactivate) {
 		if (!spawner->IsEnemy(col->collision)) {
 			TakeDamage(25);
+			//projectile damage
 		}
 		else {
 			//interacting with enemy 
@@ -48,8 +55,10 @@ void EnemyHoarder::Update(float deltaTime)
 	}
 	else {
 		 dist = MathFunctions::GetDistanceSqr(*pos, spawner->GetPlayerPos());
+		 mover->Update(deltaTime);
 		if (dist > MAX_DISTANCE_TO_PLAYER) {
-			mover->Update(deltaTime);
+			//not in range
+			InRangeToAtack = false;
 		}
 		else if (dist < MAX_DISTANCE_TO_ATTACK) {
 			//in range to atack player
@@ -103,6 +112,8 @@ void EnemyHoarder::Call()
 	if (attack->FinishedLoop()&&InRangeToAtack) {
 		spawner->PlayerTakesDamage(this);
 		attack->ResetVar();
+		//moves a bit after atacking
+		ToMove = true;
 	}
 	else {
 		rot->Reflect();

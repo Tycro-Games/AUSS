@@ -9,6 +9,9 @@ Moveable::Moveable(Tmpl8::vec2* pos, Collider* col, float speed)
 void Moveable::SetSpeed(float s) {
 	speed = s;
 }
+const float Moveable::GetSpeed() {
+	return speed;
+}
 Moveable::~Moveable()
 {
 }

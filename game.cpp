@@ -49,6 +49,7 @@ namespace Tmpl8
 	}
 	void Game::ResetGame()
 	{
+		
 		Shutdown(); 
 		RemoveAllUpdateables();
 		AllocateMemory();
@@ -57,6 +58,7 @@ namespace Tmpl8
 	}
 	void Game::RemoveAllUpdateables()
 	{
+		
 		cols.removeAll();
 		updateables.removeAll();
 		renderables.removeAll();
@@ -84,9 +86,9 @@ namespace Tmpl8
 	{
 		delete playButton;
 		delete exitButton;
+		delete enemySpawner;
 		delete player;
 		delete cursor;
-		delete enemySpawner;
 		delete projectileDetection;
 	}
 

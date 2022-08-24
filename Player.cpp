@@ -24,7 +24,6 @@ Player::~Player()
 
 	delete dirToFace;
 	delete projectileSprite;
-	delete explosionSprite;
 
 }
 

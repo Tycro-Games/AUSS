@@ -34,7 +34,7 @@ private:
 
 	bool isSpawning = false;
 	//assets for projectiles
-	Tmpl8::Sprite* projectileSprite;
+	Tmpl8::Sprite* projectileSprite;//deleted by player
 
 
 	//consts

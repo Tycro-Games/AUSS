@@ -10,6 +10,7 @@ public:
 	virtual~Moveable();
 	virtual void Update(float deltaTime) = 0;
 	void SetSpeed(float);
+	const float GetSpeed();
 	 Collider* getColl() const {
 		return col;
 	}

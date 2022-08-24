@@ -26,7 +26,7 @@ void Projectile::Init(PosDir posDir)
 
 Projectile::~Projectile()
 {
-	sprite = nullptr;//so it does not get deleted twice
+	sprite = nullptr;//so it does not get deleted twice by entity
 	delete timer;
 	delete mover;
 	delete dir;

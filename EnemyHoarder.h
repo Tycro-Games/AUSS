@@ -23,7 +23,7 @@ public:
 	virtual void Call() override;
 
 private:
-
+	bool ToMove = false;
 	bool InRangeToAtack = false;
 	float dist;
 	Tmpl8::vec2* dir;

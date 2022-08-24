@@ -10,7 +10,12 @@ Spawner::Spawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Tmpl8::Sprite* explosion) :
 
 Spawner::~Spawner()
 {
-
+	for (int i = 0; i < updateObjects.getCount() - 1; i++) {
+		updateObjects[i]->sprite = nullptr;//the sprite is only a pointer that is cleaned up by sub spawners
+		delete updateObjects[i];
+	}
+	updateObjects.removeAll();
+	delete explosionSprite;
 }
 Tmpl8::vec2 Spawner::GetDirDeviation()
 {

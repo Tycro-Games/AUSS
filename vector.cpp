@@ -121,6 +121,17 @@ void vector<Projectile*>::print()
 		std::cout << '\n';
 	}
 }
+template< >
+void vector<Collider*>::print()
+{
+	if (count > 0) {
+		for (int i = 0; i < count; i++) {
+			std::cout << arr[i]->pos->x << " ";
+		}
+		std::cout << '\n';
+	}
+}
+
 
 
 template< >
