@@ -45,7 +45,7 @@ void ExplosionBullet::Render(Tmpl8::Surface* screen)
 		return;
 
 	sprite->SetFrame(frame);
-	sprite->Draw(screen, pos->x, pos->y);
+	sprite->Draw(screen, static_cast<int>(pos->x), static_cast<int>(pos->y));
 
 
 }

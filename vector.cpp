@@ -21,7 +21,7 @@ template<class T>
 vector<T>::vector(size_t size)
 {
 	if (size > 16) {
-		auto nextPowerOfTwo = pow(2, ceil(log2(size)));
+		size_t nextPowerOfTwo =static_cast<size_t>( pow(2, ceil(log2(size))));
 		resize(nextPowerOfTwo);
 	}
 	else
@@ -133,7 +133,14 @@ void vector<Collider*>::print()
 }
 
 
-
+template<class T>
+void vector<T>::print(int& i, int& j)
+{
+	for (; i <= j; i++) {
+		std::cout << arr[i]<< " ";
+	}
+	std::cout << '\n';
+}
 template< >
 void vector<Projectile*>::print(int& i, int& j)
 {

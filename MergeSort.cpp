@@ -49,7 +49,7 @@ void MergeSort<T>::Merge(int l, int mid, int h)
 	}
 	//copy to the list
 	int k = 0;
-	for (size_t i = l; i <= h; i++)
+	for (int i = l; i <= h; i++)
 	{
 		list->get(i) = A.get(k++);
 	}
@@ -79,7 +79,7 @@ void MergeSort<Collider*>::Merge(int l, int mid, int h)
 	}
 	//copy to the list
 	int k = 0;
-	for (size_t i = l; i <= h; i++)
+	for (int i = l; i <= h; i++)
 	{
 		list->get(i) = A.get(k++);
 	}

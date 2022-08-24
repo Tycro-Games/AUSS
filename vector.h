@@ -40,7 +40,7 @@ private:
 	void halfSize();
 	void resize(size_t size);
 	T* arr;
-	int maxSize = 0, count = 0;
+	size_t maxSize = 0, count = 0;
 
 };
 

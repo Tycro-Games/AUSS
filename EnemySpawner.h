@@ -25,7 +25,7 @@ public:
 	virtual void Render(Tmpl8::Surface* screen) override;
 private:
 	Timer* timer;
-	float timeToSpawn = 1.0f;
+	float timeToSpawn = 5.0f;
 	Being* player;
 	pool<Enemy*> poolOfEnemies;
 	vector<Collider*> activeColliders;

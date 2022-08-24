@@ -30,8 +30,8 @@ Player::~Player()
 void Player::Render(Tmpl8::Surface* screen)
 {
 	sprite->SetFrame(frame);
-	sprite->Draw(screen, pos->x, pos->y);
-	screen->Box(pos->x, pos->y, pos->x + rVar.SPRITE_OFFSET, pos->y + rVar.SPRITE_OFFSET, 0xffffff);
+	sprite->Draw(screen, static_cast<int>(pos->x), static_cast<int>(pos->y));
+	//screen->Box(pos->x, pos->y, pos->x + rVar.SPRITE_OFFSET, pos->y + rVar.SPRITE_OFFSET, 0xffffff);
 	spawner->Render(screen);
 	auto inactive = std::string("HP: " + std::to_string(hp));
 
@@ -55,7 +55,7 @@ void Player::Shoot(bool fire)
 {
 	spawner->setFlag(fire);
 }
-void Player::Rotate(float x, float y) {
+void Player::Rotate(int x, int y) {
 	//replace with actual pos of player
 
 	MathFunctions::RotateTo(x, y, *pos, dirToFace);
@@ -65,8 +65,8 @@ void Player::Rotate(float x, float y) {
 
 
 	angle += rVar.OFFSET_SPRITE;
-	angle = fmod(angle, 360);
-	frame = angle / rVar.ANGLE_SIZE;
+	angle = static_cast<float>(fmod(angle, 360));
+	frame = static_cast<int>(angle / rVar.ANGLE_SIZE);
 
 }
 

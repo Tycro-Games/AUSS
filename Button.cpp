@@ -30,8 +30,8 @@ void Button::Init()
 void Button::Render(Tmpl8::Surface* screen)
 {
 	sprite->SetFrame(frame);
-	screen->Box(pos->x + col->min.x - offset.x, pos->y + col->min.y - offset.x, pos->x + col->max.x - offset.x, pos->y + col->max.y - offset.y, 0xffffff);
-	sprite->Draw(screen, pos->x - offset.x, pos->y - offset.y);
+	//screen->Box(pos->x + col->min.x - offset.x, pos->y + col->min.y - offset.x, pos->x + col->max.x - offset.x, pos->y + col->max.y - offset.y, 0xffffff);
+	sprite->Draw(screen, static_cast<int>(pos->x - offset.x), static_cast<int>(pos->y - offset.y));
 }
 
 void Button::CheckHovering()

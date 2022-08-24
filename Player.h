@@ -16,7 +16,7 @@ public:
 	void Render(Tmpl8::Surface* screen);
 	void Update(float deltaTime);
 	void Shoot(bool fire);
-	void Rotate(float x, float y);
+	void Rotate(int x, int y);
 	virtual void Call()override {};
 	virtual void TakeDamage(int) override;
 	virtual void Die() override;
