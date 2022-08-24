@@ -18,6 +18,9 @@ namespace Tmpl8 {
 		void SetTarget(Surface* surface) { screen = surface; }
 
 		void Init();
+		void AllocateMemory();
+		void ResetGame();
+		void RemoveAllUpdateables();
 		void AddInstancesToUpdates();
 		void Shutdown();
 		void Tick(float deltaTime);
@@ -34,7 +37,8 @@ namespace Tmpl8 {
 
 			mainMenu,
 			game,
-			paused
+			paused,
+			reset
 		};
 		static void ChangeGameState(GameState state);
 		static GameState currentState;

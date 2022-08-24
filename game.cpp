@@ -19,6 +19,13 @@ namespace Tmpl8
 		currentState = game;
 #endif
 
+		AllocateMemory();
+
+
+		AddInstancesToUpdates();
+	}
+	void Game::AllocateMemory()
+	{
 		player = (new Player(new Sprite(new Surface("assets/sniper.tga"), 32),
 			new vec2(START_POS),
 			new Collider(vec2(COL_MIN), vec2(COL_MAX)),
@@ -39,9 +46,22 @@ namespace Tmpl8
 			cursor->GetCollider(),
 			new Sprite(new Tmpl8::Surface("assets/Cross_Idle.png"), 1),
 			new Sprite(new Tmpl8::Surface("assets/Cross_Pushed.png"), 1));
-
-
+	}
+	void Game::ResetGame()
+	{
+		Shutdown(); 
+		RemoveAllUpdateables();
+		AllocateMemory();
 		AddInstancesToUpdates();
+		ChangeGameState(mainMenu);
+	}
+	void Game::RemoveAllUpdateables()
+	{
+
+		updateables.removeAll();
+		renderables.removeAll();
+		updateablesUI.removeAll();
+		renderablesUI.removeAll();
 	}
 	void Game::AddInstancesToUpdates()
 	{
@@ -105,6 +125,9 @@ namespace Tmpl8
 				renderablesUI[i]->Render(screen);
 			for (int i = 0; i < updateablesUI.getCount(); i++)
 				updateablesUI[i]->Update(deltaTime);
+			break;
+		case(reset):
+			ResetGame();
 			break;
 		default:
 			break;

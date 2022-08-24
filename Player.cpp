@@ -1,7 +1,7 @@
 #include "Player.h"
 #include "MathFunctions.h"
 #include <string>
-
+#include"game.h"
 
 Player::Player(Tmpl8::Sprite* sprite, Tmpl8::vec2* pos, Collider* col, int hp)
 	:dirToFace(new Tmpl8::vec2()),
@@ -83,5 +83,7 @@ ProjectileSpawner* Player::GetSpawner()
 void Player::Die()
 {
 	std::cout << "RESET GAME";
+	
+	Tmpl8::Game::ChangeGameState(Tmpl8::Game::GameState::reset);
 }
 

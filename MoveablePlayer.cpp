@@ -51,7 +51,7 @@ void MoveablePlayer::startDash()
 {
 	if (!timer->isUpdateable && !dashing) {
 
-		std::cout << "Start!\n";
+		
 		timer->isUpdateable = true;
 		Dashing();
 	}
@@ -74,8 +74,8 @@ void MoveablePlayer::Call()
 
 
 	//animation dash to add, use maybe a square + 1
-	//dashing = false;
-	std::cout << "Stop!\n";
+	
+	
 	timer->ResetVar();
 	timer->isUpdateable = false;
 	speed = Ispeed;
@@ -116,7 +116,7 @@ void MoveablePlayer::Update(float deltaTime)
 	else
 		isMoving = false;
 	if (!startedDashing && timer->isUpdateable == false && dashing) {
-		std::cout << "dasg\n";
+		
 		dashing = false;
 
 	}

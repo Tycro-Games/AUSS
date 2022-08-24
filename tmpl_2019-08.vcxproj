@@ -240,6 +240,7 @@
     <ClCompile Include="Moveable.cpp" />
     <ClCompile Include="MoveablePlayer.cpp" />
     <ClCompile Include="MoveToADirection.cpp" />
+    <ClCompile Include="MoveToADirectionEnemy.cpp" />
     <ClCompile Include="PlayButton.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="pool.cpp" />
@@ -273,6 +274,7 @@
     <ClInclude Include="Moveable.h" />
     <ClInclude Include="MoveablePlayer.h" />
     <ClInclude Include="MoveToADirection.h" />
+    <ClInclude Include="MoveToADirectionEnemy.h" />
     <ClInclude Include="PlayButton.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="pool.h" />

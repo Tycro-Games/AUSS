@@ -17,7 +17,7 @@ public:
 	void Reflect();
 
 	void Init(PosDir posDir);
-	Collider* getColl() const {
+	 Collider* getColl() const {
 		return col;
 	}
 	virtual void Call() override;

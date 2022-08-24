@@ -1,8 +1,8 @@
 #pragma once
 #include "Enemy.h"
-#include "MoveToADirection.h"
 #include "RotationVar.h"
 #include "Rotator.h"
+#include "MoveToADirectionEnemy.h"
 
 
 class EnemyHoarder :public Enemy, public Callable
@@ -16,7 +16,7 @@ public:
 	virtual void Update(float deltaTime) override;
 
 	virtual void Render(Tmpl8::Surface* screen) override;
-	void RotateToDirection(Tmpl8::vec2);
+	
 	void Init(PosDir posDir);
 	void ResetEnemy();
 
@@ -24,7 +24,8 @@ public:
 
 private:
 
-
+	bool InRangeToAtack = false;
+	float dist;
 	Tmpl8::vec2* dir;
 	float timeToRotate = 0.1f;
 	//consts

@@ -10,6 +10,9 @@ public:
 	virtual~Moveable();
 	virtual void Update(float deltaTime) = 0;
 	void SetSpeed(float);
+	 Collider* getColl() const {
+		return col;
+	}
 protected:
 	Tmpl8::vec2* pos;
 	Collider* col;

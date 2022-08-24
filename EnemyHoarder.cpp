@@ -10,8 +10,8 @@ EnemyHoarder::EnemyHoarder(PosDir posDir, Tmpl8::Sprite* sprite, EnemySpawner* s
 	mover = new MoveToADirection(this->pos, this->dir, col, this, SPEED);
 	attack = new Timer(this, TIME_TO_ATTACK, true);
 	rotate = new Timer();
-	rot = new Rotator(pos, dir, rVar, frame, spawner);
-
+	rot = new Rotator(pos, dir, rVar, frame,mover, spawner);
+	
 	Init(posDir);
 }
 
@@ -47,14 +47,20 @@ void EnemyHoarder::Update(float deltaTime)
 		//add projectile damage
 	}
 	else {
-		float dist = MathFunctions::GetDistanceSqr(*pos, spawner->GetPlayerPos());
+		 dist = MathFunctions::GetDistanceSqr(*pos, spawner->GetPlayerPos());
 		if (dist > MAX_DISTANCE_TO_PLAYER) {
 			mover->Update(deltaTime);
 		}
 		else if (dist < MAX_DISTANCE_TO_ATTACK) {
 			//in range to atack player
 			attack->Update(deltaTime);
+			InRangeToAtack = true;
 		}
+		else
+		{
+			InRangeToAtack = false;
+		}
+		
 	}
 
 
@@ -94,12 +100,14 @@ void EnemyHoarder::ResetEnemy()
 
 void EnemyHoarder::Call()
 {
-	if (attack->FinishedLoop()) {
-		std::cout << "Got to the player\n";
+	if (attack->FinishedLoop()&&InRangeToAtack) {
 		spawner->PlayerTakesDamage(this);
 		attack->ResetVar();
 	}
-
+	else {
+		rot->Reflect();
+	}
+	
 }
 
 void EnemyHoarder::Die()
