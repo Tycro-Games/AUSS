@@ -13,7 +13,6 @@ class Spawner : public Updateable, public Renderable
 public:
 	Spawner(Tmpl8::vec2*, Tmpl8::vec2*, Tmpl8::Sprite* explosion);
 	virtual ~Spawner();
-	vector<Collider*>& GetActiveColliders();
 	void AddExplosionToPool(ExplosionBullet* entity);
 	void CreateMoreExplosions();
 	void SpawnExplosions(Tmpl8::vec2 pos);
@@ -26,7 +25,6 @@ protected:
 	//to update
 	vector<Entity*> updateObjects;
 	pool<ExplosionBullet*> poolOfExplosions;
-	vector<Collider*> activeColliders;
 	//assets 
 	Tmpl8::Sprite* explosionSprite;
 

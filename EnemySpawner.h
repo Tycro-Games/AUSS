@@ -28,6 +28,8 @@ private:
 	float timeToSpawn = 1.0f;
 	Being* player;
 	pool<Enemy*> poolOfEnemies;
+	vector<Collider*> activeColliders;
+
 	//assets for enemies
 	Tmpl8::Sprite* enemySprite;
 

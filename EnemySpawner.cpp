@@ -1,5 +1,6 @@
 #include "EnemySpawner.h"
 #include "EnemyHoarder.h"
+#include "game.h"
 
 
 EnemySpawner::EnemySpawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Being* player, Tmpl8::Sprite* toSpawn, Tmpl8::Sprite* explosion) :
@@ -21,7 +22,7 @@ void EnemySpawner::AddEnemyToPool(Enemy* enemy)
 	enemy->SetActive(false);
 	activeColliders.remove(enemy->getColl());
 	poolOfEnemies.AddElement(enemy);
-
+	Tmpl8::Game::RemoveElement(enemy->getColl());
 }
 
 void EnemySpawner::CreateMoreEnemies()
@@ -68,4 +69,6 @@ void EnemySpawner::Call()
 	Tmpl8::vec2 randomDir = GetDirDeviation();
 	enemy->Init(PosDir(*pos, randomDir));
 	activeColliders.push_back(enemy->getColl());
+	Tmpl8::Game::AddElement(enemy->getColl());
+
 }

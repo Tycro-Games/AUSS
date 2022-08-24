@@ -9,7 +9,7 @@ namespace Tmpl8
 {
 	bool Game::isPressingLeftMouse;
 	Game::GameState Game::currentState;
-
+	vector<Collider*> Game::cols;
 	void Game::Init()
 	{
 #ifdef _RELEASE
@@ -18,7 +18,7 @@ namespace Tmpl8
 #ifdef _DEBUG
 		currentState = game;
 #endif
-
+		
 		AllocateMemory();
 
 
@@ -57,7 +57,7 @@ namespace Tmpl8
 	}
 	void Game::RemoveAllUpdateables()
 	{
-
+		cols.removeAll();
 		updateables.removeAll();
 		renderables.removeAll();
 		updateablesUI.removeAll();
@@ -77,7 +77,7 @@ namespace Tmpl8
 		updateables.push_back(enemySpawner);
 		renderables.push_back(enemySpawner);
 
-		projectileDetection = new CollisionDetection(player->GetSpawner()->GetActiveColliders(), enemySpawner->GetActiveColliders());
+		projectileDetection = new CollisionDetection();
 
 	}
 	void Game::Shutdown()
@@ -244,5 +244,13 @@ namespace Tmpl8
 	void Game::ChangeGameState(GameState state)
 	{
 		currentState = state;
+	}
+	void Game::AddElement(Collider* col)
+	{
+		cols.push_back(col);
+	}
+	void Game::RemoveElement(Collider* col)
+	{
+		cols.remove(col);
 	}
 };

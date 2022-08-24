@@ -1,10 +1,7 @@
 #include "CollisionDetection.h"
+#include "game.h"
 
-
-CollisionDetection::CollisionDetection(vector<Collider*>& projectiles, vector<Collider*>& enemies) :
-	Projectiles(&projectiles),
-	Enemies(&enemies)
-
+CollisionDetection::CollisionDetection() 
 {
 	timer = new Timer(this, .05f, true);
 }
@@ -26,12 +23,9 @@ void CollisionDetection::DetectCollisions()
 	vector <Collider*> activeIntervals;
 
 
-	vector<Collider*> cols;
+	vector<Collider*>& cols=Tmpl8::Game::cols;
 	//add enemies and projectiles
-	for (int i = 0; i < Projectiles->getCount(); i++)
-		cols.push_back(Projectiles->get(i));
-	for (int i = 0; i < Enemies->getCount(); i++)
-		cols.push_back(Enemies->get(i));
+	
 	//sort on x axis
 	if (cols.getCount() == 0)
 		return;

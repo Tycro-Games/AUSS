@@ -42,6 +42,9 @@ namespace Tmpl8 {
 		};
 		static void ChangeGameState(GameState state);
 		static GameState currentState;
+		static vector<Collider*> cols;
+		static void AddElement(Collider* col);
+		static void RemoveElement(Collider* col);
 	private:
 
 

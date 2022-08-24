@@ -3,6 +3,7 @@
 #include <string>
 #include <iostream>
 
+#include "game.h"
 ProjectileSpawner::ProjectileSpawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Tmpl8::Sprite* tospawn, Tmpl8::Sprite* explosion)
 	:Spawner(pos, dir, explosion),
 	projectileSprite(tospawn)
@@ -33,7 +34,7 @@ void ProjectileSpawner::ChangeFireSpeed(float speed) {
 void ProjectileSpawner::AddProjectileToPool(Projectile* entity)
 {
 	entity->SetActive(false);
-	activeColliders.remove(entity->getColl());
+	Tmpl8::Game::RemoveElement(entity->getColl());
 	poolOfProjectiles.AddElement(entity);
 
 }
@@ -64,7 +65,7 @@ void ProjectileSpawner::SpawnProjectiles()
 
 	Tmpl8::vec2 randomDir = GetDirDeviation();
 	projectile->Init(PosDir{ (*pos) + (*dir), (*dir + randomDir).normalized() });
-	activeColliders.push_back(projectile->getColl());
+	Tmpl8::Game::AddElement(projectile->getColl());
 }
 
 

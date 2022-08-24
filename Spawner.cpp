@@ -23,10 +23,7 @@ Tmpl8::vec2 Spawner::GetDirDeviation()
 	y *= deviationMultiplier;
 	return Tmpl8::vec2(x, y);
 }
-vector<Collider*>& Spawner::GetActiveColliders()
-{
-	return activeColliders;
-}
+
 
 void Spawner::AddExplosionToPool(ExplosionBullet* entity)
 {
