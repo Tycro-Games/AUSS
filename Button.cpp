@@ -1,8 +1,7 @@
 #include "Button.h"
 #include "MathFunctions.h"
 #include "game.h"
-Button::Button(Tmpl8::Sprite* sprite, Tmpl8::vec2* pos, Collider* cursor, Tmpl8::Sprite* unpressed, Tmpl8::Sprite* pressed) :
-	//pressedTexture(new Tmpl8::Surface("assets/Play_Pushed.png")),
+Button::Button(Tmpl8::Sprite* sprite, Tmpl8::vec2 pos, Collider* cursor, Tmpl8::Sprite* unpressed, Tmpl8::Sprite* pressed) :
 	Entity(sprite, pos),
 	pressedSprite(pressed),
 	unpressedSprite(unpressed),
@@ -31,12 +30,12 @@ void Button::Render(Tmpl8::Surface* screen)
 {
 	sprite->SetFrame(frame);
 	//screen->Box(pos->x + col->min.x - offset.x, pos->y + col->min.y - offset.x, pos->x + col->max.x - offset.x, pos->y + col->max.y - offset.y, 0xffffff);
-	sprite->Draw(screen, static_cast<int>(pos->x - offset.x), static_cast<int>(pos->y - offset.y));
+	sprite->Draw(screen, static_cast<int>(pos.x - offset.x), static_cast<int>(pos.y - offset.y));
 }
 
 void Button::CheckHovering()
 {
-	isHovering = Collider::Collides(col->At(*pos - offset), cursor->At(*cursor->pos));
+	isHovering = Collider::Collides(col->At(pos - offset), cursor->At(*cursor->pos));
 
 
 	if (isHovering) {

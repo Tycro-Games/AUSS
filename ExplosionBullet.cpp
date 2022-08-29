@@ -23,7 +23,7 @@ void ExplosionBullet::Init(Tmpl8::vec2 pos)
 {
 	SetActive(true);
 	frame = 0;
-	(*this->pos) = pos;
+	this->pos = pos;
 	timer->Init(this, TotalAnimation);
 }
 
@@ -47,7 +47,7 @@ void ExplosionBullet::Render(Tmpl8::Surface* screen)
 		return;
 
 	sprite->SetFrame(frame);
-	sprite->Draw(screen, static_cast<int>(pos->x), static_cast<int>(pos->y));
+	sprite->Draw(screen, static_cast<int>(pos.x), static_cast<int>(pos.y));
 
 
 }

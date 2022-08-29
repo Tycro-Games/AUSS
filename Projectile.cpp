@@ -5,19 +5,19 @@
 
 
 Projectile::Projectile(PosDir posDir, Tmpl8::Sprite* sprite, ProjectileSpawner* spawner)
-	:Entity(sprite, new Tmpl8::vec2(posDir.pos)),
-	col(new Collider(COL_MIN, COL_MAX, pos)),
+	:Entity(sprite,  posDir.pos),
+	col(new Collider(COL_MIN, COL_MAX, &pos)),
 	spawner(spawner)
 {
 	dir = new Tmpl8::vec2();
 	timer = new Timer();
-	mover = new MoveToADirection(this->pos, this->dir, col, this, SPEED);
+	mover = new MoveToADirection(&pos, dir, col, this, SPEED);
 	Init(posDir);
 }
 void Projectile::Init(PosDir posDir)
 {
 	SetActive(true);
-	(*pos) = posDir.pos;
+	pos = posDir.pos;
 	(*dir) = posDir.dir;
 	timer->Init(this, TIME_ALIVE);
 
@@ -68,8 +68,8 @@ void Projectile::Render(Tmpl8::Surface* screen)
 	if (!getRenderable())
 		return;
 	sprite->SetFrame(frame);
-	sprite->Draw(screen, pos->x, pos->y);
-	screen->Box(pos->x, pos->y, pos->x + rVar.SPRITE_OFFSET, pos->y + rVar.SPRITE_OFFSET, 0xffffff);
+	sprite->Draw(screen, pos.x, pos.y);
+	screen->Box(pos.x, pos.y, pos.x + rVar.SPRITE_OFFSET, pos.y + rVar.SPRITE_OFFSET, 0xffffff);
 }
 
 void Projectile::Call()
@@ -88,5 +88,5 @@ void Projectile::ResetBullet()
 	col->toDeactivate = false;
 	timer->isFinished = true;
 	spawner->AddProjectileToPool(this);
-	spawner->SpawnExplosions(*pos);
+	spawner->SpawnExplosions(pos);
 }

@@ -11,7 +11,7 @@
 class Player :public Being, public Callable
 {
 public:
-	Player(Tmpl8::Sprite* sprite, Tmpl8::vec2* pos, Collider* col, int hp);
+	Player(Tmpl8::Sprite* sprite, Tmpl8::vec2 pos, Collider* col, int hp);
 	~Player();
 	void Render(Tmpl8::Surface* screen);
 	void Update(float deltaTime);

@@ -4,7 +4,7 @@
 class FollowCursor :public Entity
 {
 public:
-	FollowCursor(Tmpl8::Sprite* sprite, Tmpl8::vec2* pos = new Tmpl8::vec2());
+	FollowCursor(Tmpl8::Sprite* sprite, Tmpl8::vec2 pos = Tmpl8::vec2(0));
 	void AddOffset();
 	~FollowCursor();
 	virtual void Update(float deltaTime) override;

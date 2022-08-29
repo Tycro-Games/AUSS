@@ -7,7 +7,7 @@
 class Button :public Entity
 {
 public:
-	Button(Tmpl8::Sprite*, Tmpl8::vec2*, Collider*, Tmpl8::Sprite*, Tmpl8::Sprite*);
+	Button(Tmpl8::Sprite*, Tmpl8::vec2, Collider*, Tmpl8::Sprite*, Tmpl8::Sprite*);
 	virtual ~Button();
 	virtual void ChangeSprite() = 0;
 	virtual void Update(float deltaTime) override;

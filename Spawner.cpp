@@ -44,13 +44,13 @@ void Spawner::CreateMoreExplosions()
 	AddExplosionToPool(bullet);
 }
 
-void Spawner::SpawnExplosions(Tmpl8::vec2 pos)
+void Spawner::SpawnExplosions(Tmpl8::vec2 p)
 {
 	if (poolOfExplosions.getCount() == 0)
 		CreateMoreExplosions();
 	ExplosionBullet* bullet = poolOfExplosions.PopElement();
 
-	bullet->Init(pos);
+	bullet->Init(p);
 }
 
 

@@ -118,7 +118,7 @@ void vector<Projectile*>::print()
 {
 	if (count > 0) {
 		for (int i = 0; i < count; i++) {
-			std::cout << arr[i]->pos->x << " ";
+			std::cout << arr[i]->pos.x << " ";
 		}
 		std::cout << '\n';
 	}
@@ -147,7 +147,7 @@ template< >
 void vector<Projectile*>::print(int& i, int& j)
 {
 	for (; i <= j; i++) {
-		std::cout << arr[i]->pos->x << " ";
+		std::cout << arr[i]->pos.x << " ";
 	}
 	std::cout << '\n';
 }

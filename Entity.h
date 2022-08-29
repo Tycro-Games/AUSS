@@ -7,7 +7,7 @@
 class Entity :public Updateable, public Renderable
 {
 public:
-	Entity(Tmpl8::Sprite* sprite, Tmpl8::vec2* pos);
+	Entity(Tmpl8::Sprite* sprite, Tmpl8::vec2 pos);
 	void SetActive(bool active) {
 		isUpdateable = active;
 		isRenderable = active;
@@ -18,7 +18,7 @@ public:
 
 	virtual ~Entity();
 	Tmpl8::Sprite* sprite;
-	Tmpl8::vec2* pos;
+	Tmpl8::vec2 pos;
 
 protected:
 	int frame = 0;

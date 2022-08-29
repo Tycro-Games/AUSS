@@ -19,7 +19,7 @@ EnemySpawner::~EnemySpawner()
 	delete enemySprite;
 	delete timer;
 	delete dir;
-	delete pos;
+	
 }
 
 void EnemySpawner::AddEnemyToPool(Enemy* enemy)
@@ -49,7 +49,7 @@ void EnemySpawner::Update(float deltaTime)
 
 Tmpl8::vec2 EnemySpawner::GetPlayerPos()
 {
-	return *(player->pos);
+	return player->pos;
 }
 bool EnemySpawner::IsEnemy(Collider* col)
 {
