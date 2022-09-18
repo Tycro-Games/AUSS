@@ -1,4 +1,5 @@
 #pragma once
+//based on this template https://github.com/jwasham/coding-interview-university#data-structures
 template <class T>
 class vector {
 public:

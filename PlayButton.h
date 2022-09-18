@@ -3,7 +3,7 @@
 class PlayButton :public Button
 {
 public:
-	PlayButton(Tmpl8::Sprite*, Tmpl8::vec2, Collider*, Tmpl8::Sprite*, Tmpl8::Sprite*);
+	PlayButton(Tmpl8::Sprite*, Tmpl8::vec2, Collider*, Tmpl8::Sprite*);
 	~PlayButton();
 
 	virtual void ChangeSprite() override;

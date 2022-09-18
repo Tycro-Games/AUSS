@@ -1,7 +1,7 @@
 #include "PlayButton.h"
 #include "game.h"
-PlayButton::PlayButton(Tmpl8::Sprite* sprite, Tmpl8::vec2 pos, Collider* cursor, Tmpl8::Sprite* unpressed, Tmpl8::Sprite* pressed) :
-	Button(sprite, pos, cursor, unpressed, pressed)
+PlayButton::PlayButton(Tmpl8::Sprite* sprite, Tmpl8::vec2 pos, Collider* cursor, Tmpl8::Sprite* pressed) :
+	Button(sprite, pos, cursor, pressed)
 {
 }
 

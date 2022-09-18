@@ -1,8 +1,8 @@
 #include "ExitButton.h"
 #include "game.h"
 #include "SDL.h"
-ExitButton::ExitButton(Tmpl8::Sprite* sprite, Tmpl8::vec2 pos, Collider* cursor, Tmpl8::Sprite* unpressed, Tmpl8::Sprite* pressed) :
-	Button(sprite, pos, cursor, unpressed, pressed)
+ExitButton::ExitButton(Tmpl8::Sprite* sprite, Tmpl8::vec2 pos, Collider* cursor,  Tmpl8::Sprite* pressed) :
+	Button(sprite, pos, cursor, pressed)
 {
 }
 

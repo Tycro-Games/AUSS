@@ -22,6 +22,8 @@ namespace Tmpl8 {
 		void ResetGame();
 		void RemoveAllUpdateables();
 		void AddInstancesToUpdates();
+
+		//SDL functions
 		void Shutdown();
 		void Tick(float deltaTime);
 		void MouseUp(int button);
@@ -32,6 +34,7 @@ namespace Tmpl8 {
 		void KeyDown(SDL_Scancode key);
 
 		static bool isPressingLeftMouse;
+		//switching between game states
 		enum GameState
 		{
 
@@ -42,16 +45,16 @@ namespace Tmpl8 {
 		};
 		static void ChangeGameState(GameState state);
 		static GameState currentState;
+
+		//collision detection
 		static vector<Collider*> cols;
 		static void AddElement(Collider* col);
 		static void RemoveElement(Collider* col);
 	private:
-
-
 		Surface* screen;
 
-		FollowCursor* cursor;
 		//MainMenu
+		FollowCursor* cursor;
 		Button* playButton;
 		Button* exitButton;
 		vector <Updateable*> updateablesUI;
@@ -60,11 +63,12 @@ namespace Tmpl8 {
 		Player* player;
 		EnemySpawner* enemySpawner;
 		CollisionDetection* projectileDetection;
+		//update components
 		vector<Updateable*> updateables;
 		vector<Renderable*> renderables;
 
 
-
+		//consts
 		const float FIRE_SPEED_CHANGE = .1f;
 		const Tmpl8::vec2 START_POS = Tmpl8::vec2(450, 400);
 		const Tmpl8::vec2 COL_MIN = Tmpl8::vec2(0, 0);

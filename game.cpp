@@ -39,12 +39,10 @@ namespace Tmpl8
 
 		playButton = new PlayButton(new Sprite(new Surface("assets/Play_Idle.png"), 1),  Tmpl8::vec2(ScreenWidth / 2, ScreenHeight / 2),
 			cursor->GetCollider(),
-			new Sprite(new Tmpl8::Surface("assets/Play_Idle.png"), 1),
 			new Sprite(new Tmpl8::Surface("assets/Play_Pushed.png"), 1));
 
 		exitButton = new ExitButton(new Sprite(new Surface("assets/Cross_Idle.png"), 1),  Tmpl8::vec2(ScreenWidth / 2, ScreenHeight / 2 + 64),
 			cursor->GetCollider(),
-			new Sprite(new Tmpl8::Surface("assets/Cross_Idle.png"), 1),
 			new Sprite(new Tmpl8::Surface("assets/Cross_Pushed.png"), 1));
 	}
 	void Game::ResetGame()
