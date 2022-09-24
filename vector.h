@@ -28,7 +28,7 @@ public:
 	void removeAll();
 
 	//gives the number of items it can hold
-	int size();
+	size_t size();
 	//give the number of the actual items that is holding
 	int getCount();
 	void print();

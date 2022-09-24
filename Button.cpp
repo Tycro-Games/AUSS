@@ -37,13 +37,9 @@ void Button::CheckHovering()
 	isHovering = Collider::Collides(col->At(pos - offset), cursor->At(*cursor->pos));
 }
 
-
-
-
-
 void Button::Update(float deltaTime)
 {
-	//maybe some animation?
+	    //maybe some animation?
 }
 
 

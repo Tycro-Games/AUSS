@@ -92,7 +92,7 @@ void vector<T>::halfSize()
 }
 
 template<class T>
-int vector<T>::size()
+size_t vector<T>::size()
 {
 	return maxSize;
 }
@@ -164,7 +164,7 @@ T& vector<T>::get(int const& i)
 template<class T>
 T vector<T>::pop_back()
 {
-	int fourthSize = maxSize / 4;
+	size_t fourthSize = maxSize / 4;
 	if (count - 1 == fourthSize && fourthSize > 4)
 		halfSize();
 

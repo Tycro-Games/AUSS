@@ -52,7 +52,7 @@ void MathFunctions::RotateTo(float x, float y, Tmpl8::vec2 pos, Tmpl8::vec2*& di
 int MathFunctions::RotateToDirectionFrames(RotationVar rVar, Tmpl8::vec2 dir)
 {
 	//rotate to the target dir and return the corresponding frame
-	return fmod(MathFunctions::GetDirInAnglesPos(dir) + rVar.OFFSET_SPRITE, 360) / rVar.ANGLE_SIZE;
+	return static_cast<int>(fmod(MathFunctions::GetDirInAnglesPos(dir) + rVar.OFFSET_SPRITE, 360) / rVar.ANGLE_SIZE);
 }
 
 float MathFunctions::DashFunction(float x)

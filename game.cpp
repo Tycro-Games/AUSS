@@ -109,7 +109,7 @@ namespace Tmpl8
 				updateables[i]->Update(deltaTime);
 
 			if (player->GetMoveable()->IsMoving())
-				player->Rotate(cursor->pos.x, cursor->pos.y);
+				player->Rotate(static_cast<int>(cursor->pos.x), static_cast<int>(cursor->pos.y));
 			player->Shoot(isPressingLeftMouse);
 
 			break;

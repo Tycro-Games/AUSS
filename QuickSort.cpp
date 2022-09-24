@@ -29,7 +29,7 @@ void QuickSort<T>::Swap(T& i, T& j)
 template <class T>
 int QuickSort<T>::Partition(int l, int h)
 {
-	int p = list->get(l);
+	int p = static_cast<int>(list->get(l));
 	int i = l, j = h;
 	while (i < j) { //compare elements and change them accordingly
 		do

@@ -24,13 +24,13 @@ void FollowCursor::Update(float deltaTime)
 
 void FollowCursor::ChangePosition(int x, int y)
 {
-	pos.x = x;
-	pos.y = y;
+	pos.x = static_cast<float>(x);
+	pos.y = static_cast<float>(y);
 	AddOffset();
 }
 
 void FollowCursor::Render(Tmpl8::Surface* screen)
 {
-	screen->Box(pos.x + col->min.x, pos.y + col->min.y, pos.x + col->max.x, pos.y + col->max.y, 0xffffff);
-	sprite->Draw(screen, pos.x, pos.y);
+	//screen->Box(pos.x + col->min.x, pos.y + col->min.y, pos.x + col->max.x, pos.y + col->max.y, 0xffffff);
+	sprite->Draw(screen, static_cast<int>(pos.x), static_cast<int>(pos.y));
 }

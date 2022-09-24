@@ -2,7 +2,7 @@
 
 void RandomNumbers::SetSeed()
 {
-	srand(time(0));
+	srand(static_cast<unsigned int>(time(0)));
 }
 
 void RandomNumbers::SetSeed(int seed)

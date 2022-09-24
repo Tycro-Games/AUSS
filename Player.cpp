@@ -59,7 +59,7 @@ void Player::Shoot(bool fire)
 void Player::Rotate(int x, int y) {
 	//replace with actual pos of player
 
-	MathFunctions::RotateTo(x, y, pos, dirToFace);
+	MathFunctions::RotateTo(static_cast<float>(x), static_cast<float>(y), pos, dirToFace);
 
 
 	float angle = MathFunctions::GetDirInAnglesPos(*dirToFace);
