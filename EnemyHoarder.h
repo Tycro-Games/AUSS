@@ -23,14 +23,16 @@ public:
 	virtual void Call() override;
 
 private:
+	//movement
 	bool ToMove = false;
 	bool InRangeToAtack = false;
 	float dist;
 	Tmpl8::vec2* dir;
 	float timeToRotate = 0.1f;
-	//consts
 
-	const int DG = 10;
+	//consts
+	const int DG = 25;
+	const int DG_TO_TAKE = 25;
 	const Tmpl8::vec2 COL_MIN = Tmpl8::vec2(0, 0);
 	const Tmpl8::vec2 COL_MAX = Tmpl8::vec2(20, 20);
 	const float TIME_TO_ATTACK = 1;
@@ -45,11 +47,6 @@ private:
 	Timer* rotate;
 	MoveToADirection* mover;
 	RandomNumbers randomNumbers;
-
-
-
-
-
 
 	// Inherited via Enemy
 	virtual void Die() override;

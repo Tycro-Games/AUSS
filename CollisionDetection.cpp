@@ -21,9 +21,6 @@ void CollisionDetection::DetectCollisions()
 
 	vector <Collider*> allPairs;
 	vector <Collider*> activeIntervals;
-
-
-	;
 	//add enemies and projectiles
 
 	//sort on x axis
@@ -62,6 +59,7 @@ void CollisionDetection::DetectCollisions()
 	}
 
 	for (int i = 0; i < allPairs.getCount(); i += 2) {
+		//trigger the collision flags for the colliders
 		allPairs[i]->toDeactivate = true;
 		allPairs[i]->collision = allPairs[i + 1];
 		allPairs[i + 1]->toDeactivate = true;

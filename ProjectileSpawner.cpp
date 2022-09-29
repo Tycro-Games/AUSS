@@ -43,7 +43,6 @@ void ProjectileSpawner::AddProjectileToPool(Projectile* entity)
 ProjectileSpawner::~ProjectileSpawner()
 {
 
-
 }
 
 void ProjectileSpawner::CreateMoreProjectiles()

@@ -17,7 +17,7 @@ public:
 	void Reflect();
 
 	void Init(PosDir posDir);
-	 Collider* getColl() const {
+	Collider* getColl() const {
 		return col;
 	}
 	virtual void Call() override;
@@ -27,6 +27,7 @@ public:
 
 private:
 	Tmpl8::vec2* dir;
+	const int DG = 10;
 	const Tmpl8::vec2 COL_MIN = Tmpl8::vec2(0, 0);
 	const Tmpl8::vec2 COL_MAX = Tmpl8::vec2(20, 20);
 	const float SPEED = 250.0f;

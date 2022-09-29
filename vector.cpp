@@ -34,7 +34,7 @@ T& vector<T>::operator[](const int index)
 
 	if (index < maxSize)
 		return arr[index];
-
+	throw std::invalid_argument("out of range");
 }
 
 
@@ -100,7 +100,7 @@ size_t vector<T>::size()
 template<class T>
 int vector<T>::getCount()
 {
-	return count;
+	return static_cast<int>(count);
 }
 
 template<class T>
@@ -158,6 +158,7 @@ T& vector<T>::get(int const& i)
 	if (i < count)
 		return arr[i];
 
+	throw std::invalid_argument("out of range");
 
 }
 

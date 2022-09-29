@@ -1,7 +1,6 @@
 #pragma once
 #include "Being.h"
 
-
 #include "MoveToADirection.h"
 #include "EnemySpawner.h"
 #include "PosDir.h"

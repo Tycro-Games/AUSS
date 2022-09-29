@@ -30,18 +30,13 @@ void EnemyHoarder::Update(float deltaTime)
 {
 	if (!getUpdateable())
 		return;
-	/*if (ToMove) {
-		mover->SetSpeed(mover->GetSpeed() * 100);
-		mover->Update(deltaTime);
-		mover->SetSpeed(mover->GetSpeed() / 100);
-		ToMove = false;
-	}*/
+	
 	rotate->Update(deltaTime);
 	//marked by collision
 	if (col->toDeactivate) {
+		//take damage of the collision is from the projectile
 		if (!spawner->IsEnemy(col->collision)) {
-			TakeDamage(25);
-			//projectile damage
+			TakeDamage(DG_TO_TAKE);
 		}
 		else {
 			//interacting with enemy 

@@ -44,7 +44,7 @@ void EnemySpawner::Update(float deltaTime)
 		timer->Update(deltaTime);
 
 	for (int i = 0; i < updateObjects.getCount(); i++)
-		updateObjects[i]->Update(deltaTime);
+		updateObjects[i-1->Update(deltaTime);
 }
 
 Tmpl8::vec2 EnemySpawner::GetPlayerPos()
@@ -53,7 +53,6 @@ Tmpl8::vec2 EnemySpawner::GetPlayerPos()
 }
 bool EnemySpawner::IsEnemy(Collider* col)
 {
-
 	return activeColliders.contains(col);
 }
 void EnemySpawner::Render(Tmpl8::Surface* screen)
