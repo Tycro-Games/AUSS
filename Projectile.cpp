@@ -74,11 +74,12 @@ void Projectile::Render(Tmpl8::Surface* screen)
 
 void Projectile::Call()
 {
+	//delete if timer is done
 	if (timer->isFinished) {
 
 		ResetBullet();
 	}
-	else
+	else //collides with screen
 		Reflect();
 }
 
