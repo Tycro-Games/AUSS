@@ -21,7 +21,7 @@ template<class T>
 vector<T>::vector(size_t size)
 {
 	if (size > 16) {
-		size_t nextPowerOfTwo =static_cast<size_t>( pow(2, ceil(log2(size))));
+		size_t nextPowerOfTwo = static_cast<size_t>(pow(2, ceil(log2(size))));
 		resize(nextPowerOfTwo);
 	}
 	else
@@ -31,10 +31,16 @@ vector<T>::vector(size_t size)
 template<class T>
 T& vector<T>::operator[](const int index)
 {
-
 	if (index < maxSize)
 		return arr[index];
-	throw std::invalid_argument("out of range");
+	try {
+		throw std::out_of_range("out of range\n");
+	}
+	catch (std::out_of_range& e) {
+		std::cout << e.what();
+		return arr[0];
+	}
+
 }
 
 
@@ -75,7 +81,7 @@ void vector<T>::doubleSize()
 	resize((size_t)(maxSize * 2));
 	for (int i = 0; i < count; i++)
 		arr[i] = aux[i];
-	delete []aux;
+	delete[]aux;
 }
 
 template<class T>
@@ -88,7 +94,7 @@ void vector<T>::halfSize()
 	resize((size_t)(maxSize / 2));
 	for (int i = 0; i < count; i++)
 		arr[i] = aux[i];
-	delete []aux;
+	delete[]aux;
 }
 
 template<class T>
@@ -139,7 +145,7 @@ template<class T>
 void vector<T>::print(int& i, int& j)
 {
 	for (; i <= j; i++) {
-		std::cout << arr[i]<< " ";
+		std::cout << arr[i] << " ";
 	}
 	std::cout << '\n';
 }
@@ -154,11 +160,14 @@ void vector<Projectile*>::print(int& i, int& j)
 template<class T>
 T& vector<T>::get(int const& i)
 {
-
 	if (i < count)
 		return arr[i];
-
-	throw std::invalid_argument("out of range");
+	try {
+		throw std::out_of_range("out of range\n");
+	}
+	catch (std::out_of_range& e) {
+		std::cout << e.what();
+	}
 
 }
 

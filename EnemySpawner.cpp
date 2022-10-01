@@ -44,7 +44,7 @@ void EnemySpawner::Update(float deltaTime)
 		timer->Update(deltaTime);
 
 	for (int i = 0; i < updateObjects.getCount(); i++)
-		updateObjects[i-1->Update(deltaTime);
+		updateObjects[i]->Update(deltaTime);
 }
 
 Tmpl8::vec2 EnemySpawner::GetPlayerPos()

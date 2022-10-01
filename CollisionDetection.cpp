@@ -11,7 +11,6 @@ CollisionDetection::CollisionDetection()
 CollisionDetection::~CollisionDetection()
 {
 	delete timer;
-
 }
 
 
