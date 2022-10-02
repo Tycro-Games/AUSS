@@ -44,10 +44,11 @@ private:
 	Tmpl8::Surface tileSurface;
 
 	vector<Tile> tiles;
-	const Tile SNOW_TILE = { false, 0,0,128,128 };
+	const Tile SNOW_TILE = { false, 0, 0, 64,64 };
+	const Tile SNOW_TILE2 = { false, 64,0,64,64 };
 	//consts
-	const int TILE_SIZE = 128;
-	const int TILEMAP_SIZE = 640;
+	const int TILE_SIZE = 128 / 2;
+	const int TILEMAP_SIZE = 640 / 2;
 
 
 };
