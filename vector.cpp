@@ -5,6 +5,7 @@
 
 #include <iostream>
 #include "Enemy.h"
+#include "Tilemap.h"
 template<class T>
 vector<T>::vector()
 {
@@ -118,7 +119,18 @@ void vector<T>::print()
 		}
 		std::cout << '\n';
 	}
+}template<>
+void vector<Tile>::print()
+{
+	if (count > 0) {
+		for (int i = 0; i < count; i++) {
+			std::cout << arr[i].x << " ";
+			std::cout << arr[i].y << " ";
+		}
+		std::cout << '\n';
+	}
 }
+
 template< >
 void vector<Projectile*>::print()
 {
@@ -148,6 +160,14 @@ void vector<T>::print(int& i, int& j)
 		std::cout << arr[i] << " ";
 	}
 	std::cout << '\n';
+}template<>
+void vector<Tile>::print(int& i, int& j)
+{
+	for (; i <= j; i++) {
+		std::cout << arr[i].x << " ";
+		std::cout << arr[i].y << " ";
+	}
+	std::cout << '\n';
 }
 template< >
 void vector<Projectile*>::print(int& i, int& j)
@@ -167,6 +187,7 @@ T& vector<T>::get(int const& i)
 	}
 	catch (std::out_of_range& e) {
 		std::cout << e.what();
+		return arr[0];
 	}
 
 }
@@ -201,12 +222,32 @@ int vector<T>::find(const T& item)
 	}
 	return -1;
 }
+template<>
+int vector<Tile>::find(const Tile& item)
+{
+	for (int i = 0; i < count; i++) {
+		if (arr[i].x == item.x&& arr[i].y == item.y) {
+			return i;
+		}
+	}
+	return -1;
+}
 
 template<class T>
 bool vector<T>::contains(const T& item)
 {
 	for (int i = 0; i < count; i++) {
 		if (arr[i] == item) {
+			return true;
+		}
+	}
+	return false;
+}
+template<>
+bool vector<Tile>::contains(const Tile& item)
+{
+	for (int i = 0; i < count; i++) {
+		if (arr[i].x == item.x && arr[i].y == item.y) {
 			return true;
 		}
 	}
@@ -263,6 +304,26 @@ void vector<T>::remove(const T& item)
 	}
 	delete[]aux;
 }
+template<>
+void vector<Tile>::remove(const Tile& item)
+{
+	Tile* aux = new Tile[count];
+	int newCount = 0;
+	int auxIndex = 0;
+	for (int i = 0; i < count; i++) {
+		if (arr[i].x == item.x && arr[i].y == item.y) {
+			aux[auxIndex++] = arr[i];
+			newCount++;
+		}
+	}
+
+	count = newCount;
+
+	for (int i = 0; i < count; i++) {
+		arr[i] = aux[i];
+	}
+	delete[]aux;
+}
 
 template<class T>
 void vector<T>::removeAtIndex(const int& index)
@@ -298,3 +359,4 @@ template class vector <Renderable*>;
 template class vector <Updateable*>;
 template class vector <Enemy*>;
 template class vector <Collider*>;
+template class vector <Tile>;

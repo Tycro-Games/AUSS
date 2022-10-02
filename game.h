@@ -8,6 +8,7 @@
 
 #include <SDL_Scancode.h>
 #include "CollisionDetection.h"
+#include "Tilemap.h"
 
 namespace Tmpl8 {
 
@@ -61,6 +62,7 @@ namespace Tmpl8 {
 		vector <Renderable*> renderablesUI;
 		//actual game
 		Player* player;
+		Tilemap* tileMap;
 		EnemySpawner* enemySpawner;
 		CollisionDetection* projectileDetection;
 		//update components

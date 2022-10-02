@@ -26,6 +26,8 @@ namespace Tmpl8
 	}
 	void Game::AllocateMemory()
 	{
+		tileMap = new Tilemap();
+
 		player = new Player(new Sprite(new Surface("assets/sniper.tga"), 32),
 			vec2(START_POS),
 			new Collider(vec2(COL_MIN), vec2(COL_MAX)),
@@ -71,8 +73,12 @@ namespace Tmpl8
 		updateablesUI.push_back(exitButton);
 		renderablesUI.push_back(exitButton);
 
+		updateables.push_back(tileMap);
+		renderables.push_back(tileMap);
+
 		updateables.push_back(player);
 		renderables.push_back(player);
+		
 
 		updateables.push_back(enemySpawner);
 		renderables.push_back(enemySpawner);

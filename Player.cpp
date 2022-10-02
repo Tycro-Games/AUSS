@@ -36,7 +36,7 @@ void Player::Render(Tmpl8::Surface* screen)
 	spawner->Render(screen);
 	auto inactive = std::string("HP: " + std::to_string(hp));
 
-	screen->Print(inactive.c_str(), 10, 40, 0xffffffff);
+	screen->Print(inactive.c_str(), 10, 40, 0x00000000);
 }
 
 void Player::Update(float deltaTime)

@@ -89,6 +89,9 @@
     <ClCompile Include="Rotator.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="Tilemap.cpp">
+      <Filter>Tilemap</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -194,6 +197,9 @@
     <ClInclude Include="Rotator.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="Tilemap.h">
+      <Filter>Tilemap</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="template code">
@@ -231,6 +237,9 @@
     </Filter>
     <Filter Include="Enemy">
       <UniqueIdentifier>{e1378c86-2ab1-4af7-aa88-dc8f7e2301cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tilemap">
+      <UniqueIdentifier>{7ec9d464-a7f3-49b3-840d-19c386c938a3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
