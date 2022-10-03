@@ -1,32 +1,39 @@
 #include "Tilemap.h"
 
 Tilemap::Tilemap() :
-	tileSurface("assets/Holiday/RTSpack_tilesheet.png"),
+	tileSurface("assets/Holiday/RTSpack_tilesheet@2.png"),
 	pos(new Tmpl8::vec2(ScreenWidth / 2, ScreenHeight / 2))
 
 {
+	//bounds checking
 	col = new Collider(
 		Tmpl8::vec2(
-			 - offsetX,
-			 - offsetY),
+			static_cast<float>(-offsetX),
+			static_cast<float>(-offsetY)),
 		Tmpl8::vec2(
-			offsetX,
-			 offsetY),
+			static_cast<float>(offsetX),
+			static_cast<float>(offsetY)),
 		pos);
 
 	//tiles adding
-	tiles.push_back(SNOW_TILE);
-	tiles.push_back(SNOW_TILE);
-	tiles.push_back(SNOW_TILE);
-	tiles.push_back(SNOW_TILE);
-	tiles.push_back(SNOW_TILE);
-	tiles.push_back(SNOW_TILE);
-	tiles.push_back(SNOW_TILE2);
-	tiles.push_back(SNOW_TILE2);
-	tiles.push_back(SNOW_TILE2);
-	tiles.push_back(SNOW_TILE2);
-	tiles.push_back(SNOW_TILE2);
-	tiles.push_back(SNOW_TILE2);
+	//line 1
+	tiles.push_back(SNOW_TILE); tiles.push_back(SNOW_TILE); tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);
+	//line 2
+	tiles.push_back(SNOW_TILE); tiles.push_back(SNOW_TILE); tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);
+	//line 3
+	tiles.push_back(SNOW_TILE); tiles.push_back(SNOW_TILE); tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);
+	//line 4
+	tiles.push_back(SNOW_TILE); tiles.push_back(SNOW_TILE); tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);
+	//line 5
+	tiles.push_back(SNOW_TILE); tiles.push_back(SNOW_TILE); tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);
+	//line 6
+	tiles.push_back(SNOW_TILE); tiles.push_back(SNOW_TILE); tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);
+	//line 7
+	tiles.push_back(SNOW_TILE); tiles.push_back(SNOW_TILE); tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);
+	//line 8
+	tiles.push_back(SNOW_TILE); tiles.push_back(SNOW_TILE); tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);
+
+
 
 
 }
@@ -39,18 +46,20 @@ Tilemap::~Tilemap()
 
 void Tilemap::Render(Tmpl8::Surface* screen)
 {
-
-	for (int y = 0; y < 3; y++)
-		for (int x = 0; x < 4; x++)
+	//13x8 tiles
+	for (int y = 0; y < Y_TILES; y++)
+		for (int x = 0; x < X_TILES; x++)
 		{
-			int index = x + y * 4;
+			
+			int index = x + y * X_TILES;
 			int tx = tiles[index].x;
 			int ty = tiles[index].y;
-
+			//uses some offset to center the tilemap
 			DrawTile(screen, tx, ty,
 				x * tiles[index].xd + static_cast<int>(pos->x) - offsetX,
 				y * tiles[index].yd + static_cast<int>(pos->y) - offsetY);
 		}
+	//debug
 	screen->Box(static_cast<int>(pos->x) - offsetX, static_cast<int>(pos->y) - offsetY,
 		static_cast<int>(pos->x) + offsetX, static_cast<int>(pos->y) + offsetY, 0xFF0000);
 }

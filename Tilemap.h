@@ -56,13 +56,17 @@ private:
 	Collider* col;
 
 	vector<Tile> tiles;
-	const Tile SNOW_TILE = { false, 0, 0, 64,64 };
-	const Tile SNOW_TILE2 = { false, 64,0,64,64 };
 	//consts
-	const int TILE_SIZE = 128 / 2;
-	const int TILEMAP_SIZE = 640 / 2;
-	const int offsetX = TILE_SIZE * 4 / 2;
-	const int offsetY = TILE_SIZE * 3 / 2;
+	const Tile SNOW_TILE = { false, 0, 0, 128,128 };
+	const Tile SNOW_TILE2 = { false, 64,0,128,128 };
+
+	const int X_TILES = 13;
+	const int Y_TILES = 8;
+	const int TILE_SIZE = 128 ;
+	const int TILEMAP_SIZE = 640 ;
+
+	const int offsetX = TILE_SIZE * X_TILES / 2;
+	const int offsetY = TILE_SIZE * Y_TILES / 2;
 
 
 };
