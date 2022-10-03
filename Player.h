@@ -6,12 +6,13 @@
 #include "RotationVar.h"
 #include "MoveablePlayer.h"
 
+#include "Tilemap.h"
 
 
 class Player :public Being, public Callable
 {
 public:
-	Player(Tmpl8::Sprite* sprite, Tmpl8::vec2 pos, Collider* col, int hp);
+	Player(Tmpl8::Sprite* sprite, Tmpl8::vec2 pos, Collider* col, Tilemap* , int hp);
 	~Player();
 	void Render(Tmpl8::Surface* screen);
 	void Update(float deltaTime);
@@ -35,6 +36,7 @@ private:
 	Collider* col;
 	ProjectileSpawner* spawner;
 	Timer* timer;
+	Tilemap* map;
 	//consts
 	const float TIME_TO_HIT = 2.0f;
 

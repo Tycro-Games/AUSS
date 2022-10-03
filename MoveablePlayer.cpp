@@ -51,7 +51,7 @@ void MoveablePlayer::startDash()
 {
 	if (!timer->isUpdateable && !dashing) {
 
-		
+
 		timer->isUpdateable = true;
 		Dashing();
 	}
@@ -74,8 +74,8 @@ void MoveablePlayer::Call()
 
 
 	//animation dash to add, use maybe a square + 1
-	
-	
+
+
 	timer->ResetVar();
 	timer->isUpdateable = false;
 	speed = Ispeed;
@@ -106,7 +106,8 @@ void MoveablePlayer::Update(float deltaTime)
 		nextPos.x--;
 	}
 	//add collision check
-	nextPos.normalize();
+	if (nextPos.length() > 0)
+		nextPos.normalize();
 	//dashing
 	if ((nextPos.x != 0 || nextPos.y != 0)) {
 		isMoving = true;
@@ -116,7 +117,7 @@ void MoveablePlayer::Update(float deltaTime)
 	else
 		isMoving = false;
 	if (!startedDashing && timer->isUpdateable == false && dashing) {
-		
+
 		dashing = false;
 
 	}
@@ -134,7 +135,7 @@ void MoveablePlayer::Update(float deltaTime)
 	currentPos += nextPos * speed * deltaTime;
 	//screen check
 
-	if (col->InGameScreen(currentPos, *col)) {
+	if (Collider::InGameScreen(currentPos, *col)) {
 		(*pos) = currentPos;
 	}
 

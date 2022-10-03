@@ -31,7 +31,8 @@ namespace Tmpl8
 		player = new Player(new Sprite(new Surface("assets/sniper.tga"), 32),
 			vec2(START_POS),
 			new Collider(vec2(COL_MIN), vec2(COL_MAX)),
-			10);
+			tileMap,
+			100);
 
 		cursor = (new FollowCursor(new Sprite(new Surface("assets/target.tga"), 1)));
 
@@ -39,11 +40,11 @@ namespace Tmpl8
 			new Sprite(new Surface("assets/phaser.tga"), 16),
 			new Sprite(new Surface("assets/smoke.tga"), 10));
 
-		playButton = new PlayButton(new Sprite(new Surface("assets/Play_Idle.png"), 1),  Tmpl8::vec2(ScreenWidth / 2, ScreenHeight / 2),
+		playButton = new PlayButton(new Sprite(new Surface("assets/Play_Idle.png"), 1), Tmpl8::vec2(ScreenWidth / 2, ScreenHeight / 2),
 			cursor->GetCollider(),
 			new Sprite(new Tmpl8::Surface("assets/Play_Pushed.png"), 1));
 
-		exitButton = new ExitButton(new Sprite(new Surface("assets/Cross_Idle.png"), 1),  Tmpl8::vec2(ScreenWidth / 2, ScreenHeight / 2 + 64),
+		exitButton = new ExitButton(new Sprite(new Surface("assets/Cross_Idle.png"), 1), Tmpl8::vec2(ScreenWidth / 2, ScreenHeight / 2 + 64),
 			cursor->GetCollider(),
 			new Sprite(new Tmpl8::Surface("assets/Cross_Pushed.png"), 1));
 	}
@@ -78,9 +79,9 @@ namespace Tmpl8
 
 		updateables.push_back(player);
 		renderables.push_back(player);
-		
 
-		updateables.push_back(enemySpawner);
+
+		//updateables.push_back(enemySpawner);
 		renderables.push_back(enemySpawner);
 
 		projectileDetection = new CollisionDetection();
@@ -93,6 +94,7 @@ namespace Tmpl8
 
 		delete enemySpawner;
 		delete player;
+		delete tileMap;
 		delete cursor;
 		delete projectileDetection;
 

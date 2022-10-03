@@ -3,11 +3,12 @@
 #include <string>
 #include"game.h"
 
-Player::Player(Tmpl8::Sprite* sprite, Tmpl8::vec2 pos, Collider* col, int hp)
+Player::Player(Tmpl8::Sprite* sprite, Tmpl8::vec2 pos, Collider* col, Tilemap* map, int hp)
 	:dirToFace(new Tmpl8::vec2()),
 	Being(sprite, pos, hp),
 	col(col),
-	mover(new MoveablePlayer(&this->pos, col)),
+	map(map),
+	mover(new MoveablePlayer(map->GetPos(), map->GetCol())),
 	projectileSprite(new Tmpl8::Sprite(new Tmpl8::Surface("assets/missile_big.tga"), 32)),
 	spawner(new ProjectileSpawner(&this->pos,
 		dirToFace,
@@ -83,7 +84,7 @@ ProjectileSpawner* Player::GetSpawner()
 void Player::Die()
 {
 	std::cout << "RESET GAME";
-	
+
 	Tmpl8::Game::ChangeGameState(Tmpl8::Game::GameState::reset);
 }
 
