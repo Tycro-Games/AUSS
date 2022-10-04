@@ -52,22 +52,23 @@ public:
 private:
 	void DrawTile(Tmpl8::Surface* screen, int tx, int ty, int x, int y);
 	Tmpl8::vec2* pos;
+	Tmpl8::vec2 startingPos;
 	Tmpl8::Surface tileSurface;
-	Collider* col;
 
-	vector<Tile> tiles;
 	//consts
 	const Tile SNOW_TILE = { false, 0, 0, 128,128 };
-	const Tile SNOW_TILE2 = { false, 64,0,128,128 };
+	const Tile SNOW_TILE2 = { false, 128,0,128,128 };
 
 	const int X_TILES = 13;
 	const int Y_TILES = 8;
 	const int TILE_SIZE = 128 ;
 	const int TILEMAP_SIZE = 640 ;
+	//center the tilemap
+	const int OFFSET_X = TILE_SIZE * X_TILES / 2;
+	const int OFFSET_Y = TILE_SIZE * Y_TILES / 2;
 
-	const int offsetX = TILE_SIZE * X_TILES / 2;
-	const int offsetY = TILE_SIZE * Y_TILES / 2;
-
+	Collider* col;
+	vector<Tile> tiles;
 
 };
 

@@ -1,14 +1,15 @@
 #include "MoveablePlayer.h"
 #include "MathFunctions.h"
 #include <iostream>
-MoveablePlayer::MoveablePlayer(Tmpl8::vec2* pos, Collider* col, float speed) :
+MoveablePlayer::MoveablePlayer(Tmpl8::vec2* pos, Collider* col, float speed, float DashSpeed) :
 	Moveable(pos, col, speed),
 	timer(new Timer())
 
 
 {
 	timer->Init(this, DASH_DURATION);
-	Ispeed = speed;
+	initSpeed = speed;
+	dashSpeed = DashSpeed;
 	timer->isUpdateable = false;
 }
 
@@ -16,7 +17,13 @@ MoveablePlayer::~MoveablePlayer()
 {
 	delete timer;
 }
-
+void MoveablePlayer::copyInput(MoveablePlayer& p) {
+	p.setDash(startedDashing);
+	p.setDown(down);
+	p.setLeft(left);
+	p.setRight(right);
+	p.setUp(up);
+}
 void MoveablePlayer::setUp(bool val)
 {
 	up = val;
@@ -39,10 +46,7 @@ void MoveablePlayer::setLeft(bool val)
 
 void MoveablePlayer::setDash(bool val)
 {
-
 	startedDashing = val;
-
-
 }
 
 
@@ -61,7 +65,7 @@ void MoveablePlayer::Dashing()
 {
 	dashing = true;
 	timePassed = 0;
-	speed = DASH_SPEED;
+	speed = dashSpeed;
 }
 
 bool MoveablePlayer::IsMoving()
@@ -74,11 +78,9 @@ void MoveablePlayer::Call()
 
 
 	//animation dash to add, use maybe a square + 1
-
-
 	timer->ResetVar();
 	timer->isUpdateable = false;
-	speed = Ispeed;
+	speed = initSpeed;
 
 
 }
@@ -89,7 +91,7 @@ void MoveablePlayer::Update(float deltaTime)
 
 	timer->Update(deltaTime);
 	Tmpl8::vec2 nextPos = { 0 }, currentPos = *pos;
-
+	hasChangedPos = false;
 
 
 	if (up) {
@@ -129,14 +131,12 @@ void MoveablePlayer::Update(float deltaTime)
 
 	}
 
-
-
-
 	currentPos += nextPos * speed * deltaTime;
 	//screen check
 
 	if (Collider::InGameScreen(currentPos, *col)) {
 		(*pos) = currentPos;
+		hasChangedPos = true;
 	}
 
 

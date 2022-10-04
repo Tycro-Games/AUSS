@@ -7,10 +7,10 @@
 class MoveablePlayer :public Moveable, public Callable
 {
 public:
-	MoveablePlayer(Tmpl8::vec2* pos, Collider* col, float speed = 40.0f);
+	MoveablePlayer(Tmpl8::vec2* pos, Collider* col, float speed = 40.0f, float dashSpeed = 200);
 	virtual ~MoveablePlayer();
 	virtual void Update(float deltaTime) override;
-
+	void copyInput(MoveablePlayer& p);
 	void setUp(bool val = false);
 	void setDown(bool val = false);
 	void setRight(bool val = false);
@@ -21,7 +21,11 @@ public:
 
 	void Dashing();
 	bool IsMoving();
+	bool ChangedPos() {
+		return hasChangedPos;
+	};
 private:
+	bool hasChangedPos = false;
 	bool isMoving = false;
 	bool up = false;
 	bool down = false;
@@ -31,10 +35,10 @@ private:
 	Timer* timer;
 	bool dashing = false;
 	bool startedDashing = false;
-	float Ispeed;
+	float initSpeed;
+	float dashSpeed;
 	float timePassed = 0.0f;
 	const float DASH_DURATION = 0.5f;
-	const float DASH_SPEED = 200.0f;
 
 	// Inherited via Callable
 	virtual void Call() override;

@@ -23,17 +23,21 @@ public:
 	virtual void Die() override;
 
 	MoveablePlayer* GetMoveable();
+	
 
 	ProjectileSpawner* GetSpawner();
 
 private:
+	
 	RotationVar rVar = RotationVar();
 	Tmpl8::vec2* dirToFace = 0;
 	//assets
 	Tmpl8::Sprite* projectileSprite;
 	//components
-	MoveablePlayer* mover;
+	MoveablePlayer* tileMapMover;
+	MoveablePlayer* playerMover;
 	Collider* col;
+	Collider colMover;
 	ProjectileSpawner* spawner;
 	Timer* timer;
 	Tilemap* map;

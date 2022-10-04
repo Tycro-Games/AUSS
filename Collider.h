@@ -7,6 +7,12 @@ public:
 	Collider(Tmpl8::vec2 min, Tmpl8::vec2 max);
 	Collider(Tmpl8::vec2 min, Tmpl8::vec2 max, Tmpl8::vec2* pos);
 	Collider();
+	Collider operator*(const float multiplier) {
+		min *= multiplier;
+		max *= multiplier;
+		return Collider(min, max);
+	}
+
 	~Collider();
 	Tmpl8::vec2 min, max;
 	Tmpl8::vec2* pos;
@@ -37,6 +43,12 @@ public:
 
 		return pos.x + col.min.x > 0 && pos.y + col.min.y > 0
 			&& pos.x + col.max.x < ScreenWidth - 1 && pos.y + col.max.y < ScreenHeight - 1;
+	}
+	static bool Collider::InGameScreen(Tmpl8::vec2& pos, Tmpl8::vec2& offset, Collider& col)
+	{
+
+		return pos.x + col.min.x > 0 + offset.x && pos.y + col.min.y > 0 + offset.y
+			&& pos.x + col.max.x < ScreenWidth - 1 - offset.x && pos.y + col.max.y < ScreenHeight - 1 - offset.y;
 	}
 	static Tmpl8::vec2 Collider::GetNormalEdgeScreen(const Tmpl8::vec2& pos, const Collider& col)
 	{

@@ -8,13 +8,15 @@ Player::Player(Tmpl8::Sprite* sprite, Tmpl8::vec2 pos, Collider* col, Tilemap* m
 	Being(sprite, pos, hp),
 	col(col),
 	map(map),
-	mover(new MoveablePlayer(map->GetPos(), map->GetCol())),
+	tileMapMover(new MoveablePlayer(map->GetPos(), map->GetCol(), -40.0f, -200.0f)),
 	projectileSprite(new Tmpl8::Sprite(new Tmpl8::Surface("assets/missile_big.tga"), 32)),
 	spawner(new ProjectileSpawner(&this->pos,
 		dirToFace,
 		projectileSprite,
 		new Tmpl8::Sprite(new Tmpl8::Surface("assets/smoke.tga"), 10)))
 {
+	colMover = (*col) * 4;
+	playerMover = new MoveablePlayer(&this->pos, &colMover);
 	timer = (new Timer(this, TIME_TO_HIT));
 }
 
@@ -22,7 +24,8 @@ Player::~Player()
 {
 	delete timer;
 	delete col;
-	delete mover;
+	delete tileMapMover;
+	delete playerMover;
 	delete spawner;
 	delete dirToFace;
 	delete projectileSprite;
@@ -32,8 +35,12 @@ Player::~Player()
 void Player::Render(Tmpl8::Surface* screen)
 {
 	sprite->SetFrame(frame);
-	sprite->Draw(screen, static_cast<int>(pos.x), static_cast<int>(pos.y));
-	//screen->Box(pos->x, pos->y, pos->x + rVar.SPRITE_OFFSET, pos->y + rVar.SPRITE_OFFSET, 0xffffff);
+	sprite->Draw(screen, static_cast<int>(pos.x - rVar.SPRITE_OFFSET / 2), static_cast<int>(pos.y - rVar.SPRITE_OFFSET / 2));
+	//debug for player's collider	
+	screen->Box(static_cast<int>(pos.x - rVar.SPRITE_OFFSET / 2), static_cast<int>(pos.y - rVar.SPRITE_OFFSET / 2), static_cast<int>(pos.x + rVar.SPRITE_OFFSET / 2), static_cast<int>(pos.y + rVar.SPRITE_OFFSET / 2), 0xffffff);
+	//debug for collision with screen borders
+	screen->Box(static_cast<int>(pos.x + colMover.min.x), static_cast<int>(pos.y + colMover.min.y), static_cast<int>(pos.x + colMover.max.x), static_cast<int>(pos.y + colMover.max.y), 0xffffff);
+
 	spawner->Render(screen);
 	auto inactive = std::string("HP: " + std::to_string(hp));
 
@@ -42,7 +49,17 @@ void Player::Render(Tmpl8::Surface* screen)
 
 void Player::Update(float deltaTime)
 {
-	mover->Update(deltaTime);
+	//copy the input from the player mover
+	playerMover->copyInput(*tileMapMover);
+	tileMapMover->Update(deltaTime);
+
+	if (!tileMapMover->ChangedPos()) {
+		//tilemap is trying to go past the limits
+		//move player instead
+		playerMover->Update(deltaTime);
+
+	}
+
 	spawner->Update(deltaTime);
 	timer->Update(deltaTime);
 }
@@ -74,7 +91,7 @@ void Player::Rotate(int x, int y) {
 
 MoveablePlayer* Player::GetMoveable()
 {
-	return mover;
+	return playerMover;
 }
 ProjectileSpawner* Player::GetSpawner()
 {

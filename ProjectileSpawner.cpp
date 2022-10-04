@@ -93,21 +93,21 @@ void ProjectileSpawner::Render(Tmpl8::Surface* screen)
 {
 	auto inactive = std::string("Bullets left:" + std::to_string(poolOfProjectiles.getCount()));
 
-	screen->Print(inactive.c_str(), 10, 10, 0x00000000);
+	screen->Print(inactive.c_str(), 10, 10, 0x00FF0000);
 
 	auto inactiveB = std::string("Explosions left:" + std::to_string(poolOfExplosions.getCount()));
 
-	screen->Print(inactiveB.c_str(), 10, 20, 0x00000000);
+	screen->Print(inactiveB.c_str(), 10, 20, 0x00FF0000);
 
 	auto total = std::string("Objects active:" + std::to_string(updateObjects.getCount() - poolOfProjectiles.getCount() - poolOfExplosions.getCount()));
 
-	screen->Print(total.c_str(), 10, 30, 0x00000000);
+	screen->Print(total.c_str(), 10, 30, 0x00FF0000);
 	auto firerate = std::string("Firerate: " + std::to_string(fireRate));
 
-	screen->Print(firerate.c_str(), 10, 60, 0x00000000);
+	screen->Print(firerate.c_str(), 10, 60, 0x00FF0000);
 
-	screen->Print("Use up arrow and down arrow to adjust the firerate", 10, 70, 0x00000000);
-	screen->Print("Use space bar to dash", 10, 80, 0x00000000);
+	screen->Print("Use up arrow and down arrow to adjust the firerate", 10, 70, 0x00FF0000);
+	screen->Print("Use space bar to dash", 10, 80, 0x00FF0000);
 	for (int i = 0; i < updateObjects.getCount(); i++)
 		updateObjects[i]->Render(screen);
 
