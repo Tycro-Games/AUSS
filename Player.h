@@ -12,7 +12,7 @@
 class Player :public Being, public Callable
 {
 public:
-	Player(Tmpl8::Sprite* sprite, Tmpl8::vec2 pos, Collider* col, Tilemap* , int hp);
+	Player(Tmpl8::Sprite* sprite, Tmpl8::vec2 pos, Collider* col, Tilemap* map, int hp);
 	~Player();
 	void Render(Tmpl8::Surface* screen);
 	void Update(float deltaTime);
@@ -23,13 +23,13 @@ public:
 	virtual void Die() override;
 
 	MoveablePlayer* GetMoveable();
-	
+
 
 	ProjectileSpawner* GetSpawner();
 
 private:
-	
-	RotationVar rVar = RotationVar();
+
+	RotationVar rVar ;
 	Tmpl8::vec2* dirToFace = 0;
 	//assets
 	Tmpl8::Sprite* projectileSprite;

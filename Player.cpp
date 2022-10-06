@@ -9,12 +9,13 @@ Player::Player(Tmpl8::Sprite* sprite, Tmpl8::vec2 pos, Collider* col, Tilemap* m
 	col(col),
 	map(map),
 	tileMapMover(new MoveablePlayer(map->GetPos(), map->GetCol(), -40.0f, -200.0f)),
-	projectileSprite(new Tmpl8::Sprite(new Tmpl8::Surface("assets/missile_big.tga"), 32)),
-	spawner(new ProjectileSpawner(&this->pos,
+	projectileSprite(new Tmpl8::Sprite(new Tmpl8::Surface("assets/missile_big.tga"), 32))
+
+{
+	spawner = new ProjectileSpawner(&this->pos, -Tmpl8::vec2(rVar.SPRITE_OFFSET / 2, rVar.SPRITE_OFFSET / 2),
 		dirToFace,
 		projectileSprite,
-		new Tmpl8::Sprite(new Tmpl8::Surface("assets/smoke.tga"), 10)))
-{
+		new Tmpl8::Sprite(new Tmpl8::Surface("assets/smoke.tga"), 10));
 	colMover = (*col) * 4;
 	playerMover = new MoveablePlayer(&this->pos, &colMover);
 	timer = (new Timer(this, TIME_TO_HIT));
@@ -49,7 +50,7 @@ void Player::Render(Tmpl8::Surface* screen)
 
 void Player::Update(float deltaTime)
 {
-	//copy the input from the player mover
+	//copy the input from the player to the tilemap mover
 	playerMover->copyInput(*tileMapMover);
 	tileMapMover->Update(deltaTime);
 

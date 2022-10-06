@@ -8,7 +8,7 @@ class Projectile;
 class ProjectileSpawner : public Spawner {
 
 public:
-	ProjectileSpawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Tmpl8::Sprite* toSpawn, Tmpl8::Sprite* explosion);
+	ProjectileSpawner(Tmpl8::vec2* pos, Tmpl8::vec2 offset, Tmpl8::vec2* dir, Tmpl8::Sprite* toSpawn, Tmpl8::Sprite* explosion);
 	~ProjectileSpawner();
 
 	void ChangeFireSpeed(float speed);
@@ -28,6 +28,7 @@ public:
 private:
 	float fireRate = 1.0f, currentTime, desiredTime;
 
+	Tmpl8::vec2 offset;
 
 	pool<Projectile*> poolOfProjectiles;
 

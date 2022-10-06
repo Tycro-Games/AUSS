@@ -4,9 +4,10 @@
 #include <iostream>
 
 #include "game.h"
-ProjectileSpawner::ProjectileSpawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Tmpl8::Sprite* tospawn, Tmpl8::Sprite* explosion)
+ProjectileSpawner::ProjectileSpawner(Tmpl8::vec2* pos, Tmpl8::vec2 offset, Tmpl8::vec2* dir, Tmpl8::Sprite* tospawn, Tmpl8::Sprite* explosion)
 	:Spawner(pos, dir, explosion),
-	projectileSprite(tospawn)
+	projectileSprite(tospawn),
+	offset(offset)
 
 {
 
@@ -63,7 +64,7 @@ void ProjectileSpawner::SpawnProjectiles()
 	Projectile* projectile = poolOfProjectiles.PopElement();
 
 	Tmpl8::vec2 randomDir = GetDirDeviation();
-	projectile->Init(PosDir{ (*pos) + (*dir + randomDir).normalized() * OFFSET_MULTIPLIER, (*dir + randomDir).normalized()});
+	projectile->Init(PosDir{ offset + (*pos) + (*dir + randomDir).normalized() * OFFSET_MULTIPLIER, (*dir + randomDir).normalized() });
 	Tmpl8::Game::AddElement(projectile->getColl());
 }
 

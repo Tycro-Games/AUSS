@@ -61,8 +61,8 @@ private:
 
 	const int X_TILES = 13;
 	const int Y_TILES = 8;
-	const int TILE_SIZE = 128 ;
-	const int TILEMAP_SIZE = 640 ;
+	const int TILE_SIZE = 128;
+	const int TILEMAP_SIZE = 640;
 	//center the tilemap
 	const int OFFSET_X = TILE_SIZE * X_TILES / 2;
 	const int OFFSET_Y = TILE_SIZE * Y_TILES / 2;
