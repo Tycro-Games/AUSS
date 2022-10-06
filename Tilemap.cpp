@@ -1,6 +1,8 @@
 #include "Tilemap.h"
+
 #include <iostream>
 #include <string>
+#include <algorithm>
 Tilemap::Tilemap() :
 	tileSurface("assets/Holiday/RTSpack_tilesheet@2.png"),
 	pos(new Tmpl8::vec2(ScreenWidth / 2, ScreenHeight / 2)),
@@ -77,18 +79,41 @@ void Tilemap::Update(float deltaTime)
 
 void Tilemap::DrawTile(Tmpl8::Surface* screen, int tx, int ty, int x, int y)
 {
+	int maxX = x + TILE_SIZE;
+	int maxY = y + TILE_SIZE;
 	//determine if the tile is offscreen
-	int xd = x + TILE_SIZE;
-	int yd = y + TILE_SIZE;
-	if (!Collider::InGameScreen(Tmpl8::vec2(static_cast<float>(x), static_cast<float>(y)), Collider(Tmpl8::vec2(0),
-		Tmpl8::vec2(static_cast<float>(TILE_SIZE), static_cast<float>(TILE_SIZE)))))
+	if (maxX < 0 || x >= ScreenWidth || maxY < 0 || y >= ScreenHeight)
 		return;
+	//determine the clipping amount
+	int cx = std::max(0, x);
+	int maxCX = std::min(ScreenWidth - 1, maxX);
+	int cy = std::max(0, y);
+	int maxCY = std::min(ScreenHeight - 1, maxY);
 
+	//difference of the clipped amount and the actual amount
+	int addOffsetMinX = abs(cx - x);
+
+	int addOffsetMaxX = abs(maxCX - maxX);
+
+	int addOffsetMinY = abs(cy - y);
+
+	int addOffsetMaxY = abs(maxCY - maxY);
+	//add offset to the origin
+	tx += addOffsetMinX;
+	x += addOffsetMinX;
+	ty += addOffsetMinY;
+	y += addOffsetMinY;
+	//add offset to the last pixel
+	int height = TILE_SIZE - addOffsetMaxY;
+	int width = TILE_SIZE - addOffsetMaxX;
 	Tmpl8::Pixel* src = tileSurface.GetBuffer() + tx + ty * tileSurface.GetPitch();
 	//determine where to place it on screen
 	Tmpl8::Pixel* dst = screen->GetBuffer() + x + y * screen->GetPitch();
 	//draw tile
-	for (int i = 0; i < TILE_SIZE; i++, src += tileSurface.GetPitch(), dst += screen->GetPitch())//go to the next line
-		for (int j = 0; j < TILE_SIZE; j++)//tile size
-			dst[j] = src[j];
+	for (int i = 0; i < height; i++)
+	{
+		memcpy(dst, src, sizeof(Tmpl8::Pixel) * width);
+		src += tileSurface.GetPitch();
+		dst += screen->GetPitch();
+	}
 }
