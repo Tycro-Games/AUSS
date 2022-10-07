@@ -3,12 +3,13 @@
 #include <string>
 #include"game.h"
 
-Player::Player(Tmpl8::Sprite* sprite, Tmpl8::vec2 pos, Collider* col, Tilemap* map, int hp)
+Player::Player(Tmpl8::Sprite* sprite, Tmpl8::vec2 pos, Collider* col, MoveablePlayer* movements, int hp)
 	:dirToFace(new Tmpl8::vec2()),
 	Being(sprite, pos, hp),
+	startingPos(pos),
 	col(col),
 	map(map),
-	tileMapMover(new MoveablePlayer(map->GetPos(), map->GetCol(), -40.0f, -200.0f)),
+	otherMovements(movements),
 	projectileSprite(new Tmpl8::Sprite(new Tmpl8::Surface("assets/missile_big.tga"), 32))
 
 {
@@ -25,7 +26,7 @@ Player::~Player()
 {
 	delete timer;
 	delete col;
-	delete tileMapMover;
+	delete otherMovements;
 	delete playerMover;
 	delete spawner;
 	delete dirToFace;
@@ -51,10 +52,10 @@ void Player::Render(Tmpl8::Surface* screen)
 void Player::Update(float deltaTime)
 {
 	//copy the input from the player to the tilemap mover
-	playerMover->copyInput(*tileMapMover);
-	tileMapMover->Update(deltaTime);
+	playerMover->copyInput(*otherMovements);
+	otherMovements->Update(deltaTime);
 
-	if (!tileMapMover->ChangedPos()) {
+	if (!otherMovements->ChangedPos()) {
 		//tilemap is trying to go past the limits
 		//move player instead
 		playerMover->Update(deltaTime);

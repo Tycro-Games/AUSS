@@ -28,6 +28,7 @@ private:
 	bool InRangeToAtack = false;
 	float dist;
 	Tmpl8::vec2* dir;
+	Tmpl8::vec2 currentPos = { 0 };
 	float timeToRotate = 0.1f;
 
 	//consts
@@ -40,14 +41,15 @@ private:
 	const float SPEED = 50.0f;
 	const float MAX_DISTANCE_TO_ATTACK = 400.0f;
 	const float MAX_DISTANCE_TO_PLAYER = 100.0f;//this is squared so it is more efficient when comparing
-	RotationVar rVar = RotationVar(360 / 16.0f, 90.0f, 20.0f);
-	Rotator* rot;
 	Timer* attack;
 
 	Timer* rotate;
 	MoveToADirection* mover;
 	RandomNumbers randomNumbers;
 
+	RotationVar rVar = RotationVar(360 / 16.0f, 90.0f, 20.0f);
+
+	Rotator* rot;
 	// Inherited via Enemy
 	virtual void Die() override;
 

@@ -1,13 +1,13 @@
 #include "Rotator.h"
 #include "MathFunctions.h"
 
-Rotator::Rotator(Tmpl8::vec2* pos, Tmpl8::vec2* dir, RotationVar rVar, int& frame,MoveToADirection* mover, EnemySpawner* spawner) :
+Rotator::Rotator(Tmpl8::vec2* pos, Tmpl8::vec2* dir, RotationVar rVar, int* frame, MoveToADirection* mover, EnemySpawner* spawner) :
 	pos(pos),
 	dir(dir),
 	rVar(rVar),
-	frame(&frame),
 	spawner(spawner),
-	mover(mover)
+	mover(mover),
+	frame(frame)
 
 {
 
@@ -30,8 +30,8 @@ void Rotator::RotateToDirection(Tmpl8::vec2 Pos)
 
 void Rotator::Reflect()
 {
-	Tmpl8::vec2 normal = Collider::GetNormalEdgeScreen(mover->nextP,*mover->getColl());
+	Tmpl8::vec2 normal = Collider::GetNormalEdgeScreen(mover->nextP, *mover->getColl());
 
 	mover->OppositeDirection(normal);
-	RotateToDirection(*pos+*dir);
+	RotateToDirection(*pos + *dir);
 }

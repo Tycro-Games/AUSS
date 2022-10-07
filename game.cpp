@@ -10,6 +10,7 @@ namespace Tmpl8
 	bool Game::isPressingLeftMouse;
 	Game::GameState Game::currentState;
 	vector<Collider*> Game::cols;
+	vector<Moveable*> Game::moveables;
 	void Game::Init()
 	{
 #ifdef _RELEASE
@@ -28,15 +29,17 @@ namespace Tmpl8
 	{
 		tileMap = new Tilemap();
 
+		movements = new MoveablePlayer(tileMap->GetPos(), tileMap->GetCol(), -40.0f, -200.0f);
+
 		player = new Player(new Sprite(new Surface("assets/sniper.tga"), 32),
 			vec2(START_POS),
 			new Collider(vec2(COL_MIN), vec2(COL_MAX)),
-			tileMap,
+			movements,
 			100);
 
 		cursor = (new FollowCursor(new Sprite(new Surface("assets/target.tga"), 1)));
-
-		enemySpawner = new EnemySpawner(new Tmpl8::vec2(ScreenWidth / 2, ScreenHeight / 2), new Tmpl8::vec2(), player,
+		//static spawner
+		enemySpawner = new EnemySpawner(tileMap->GetPos(), new Tmpl8::vec2(), player,
 			new Sprite(new Surface("assets/phaser.tga"), 16),
 			new Sprite(new Surface("assets/smoke.tga"), 10));
 
@@ -77,12 +80,12 @@ namespace Tmpl8
 		updateables.push_back(tileMap);
 		renderables.push_back(tileMap);
 
+
+		updateables.push_back(enemySpawner);
+		renderables.push_back(enemySpawner);
+
 		updateables.push_back(player);
 		renderables.push_back(player);
-
-
-		//updateables.push_back(enemySpawner);
-		renderables.push_back(enemySpawner);
 
 		projectileDetection = new CollisionDetection();
 
@@ -111,10 +114,15 @@ namespace Tmpl8
 		case(game):
 			projectileDetection->Update(deltaTime);
 
-			for (int i = 0; i < renderables.getCount(); i++)
-				renderables[i]->Render(screen);
+			//movement offset
+			for (int i = 0; i < moveables.getCount(); i++) {
+				moveables[i]->Translation(tileMap->GetPosFromStart());
+			}
 			for (int i = 0; i < updateables.getCount(); i++)
 				updateables[i]->Update(deltaTime);
+
+			for (int i = 0; i < renderables.getCount(); i++)
+				renderables[i]->Render(screen);
 
 			if (player->GetMoveable()->IsMoving())
 				player->Rotate(static_cast<int>(cursor->pos.x), static_cast<int>(cursor->pos.y));
@@ -125,6 +133,7 @@ namespace Tmpl8
 			//update main menu stuff;
 			for (int i = 0; i < renderablesUI.getCount(); i++)
 				renderablesUI[i]->Render(screen);
+
 			for (int i = 0; i < updateablesUI.getCount(); i++)
 				updateablesUI[i]->Update(deltaTime);
 
@@ -255,11 +264,17 @@ namespace Tmpl8
 	{
 		currentState = state;
 	}
-	void Game::AddElement(Collider* col)
+	void Game::AddCollider(Collider* col)
 	{
 		cols.push_back(col);
+	}void Game::AddMoveable(Moveable* col)
+	{
+		moveables.push_back(col);
 	}
-	void Game::RemoveElement(Collider* col)
+	void Game::RemoveMoveable(Moveable* col)
+	{
+		moveables.remove(col);
+	}void Game::RemoveCollider(Collider* col)
 	{
 		cols.remove(col);
 	}

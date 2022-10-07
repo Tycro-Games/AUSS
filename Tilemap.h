@@ -42,22 +42,26 @@ public:
 	// Inherited via Updateable
 	virtual void Update(float deltaTime) override;
 	Tmpl8::vec2* GetPos() {
-		return pos;
+		return &pos;
+	}Tmpl8::vec2 GetPosFromStart() {
+		return  pos;
+	} Tmpl8::vec2 GetPosStart() {
+		return startingPos;
 	} Collider* GetCol() {
 		return col;
 	}
 	void SetPos(const Tmpl8::vec2 p) {
-		*pos = p;
+		pos = p;
 	}
 private:
 	void DrawTile(Tmpl8::Surface* screen, int tx, int ty, int x, int y);
-	Tmpl8::vec2* pos;
+	Tmpl8::vec2 pos;
 	Tmpl8::vec2 startingPos;
 	Tmpl8::Surface tileSurface;
 
 	//consts
 	const Tile SNOW_TILE = { false, 0, 0, 128,128 };
-	const Tile SNOW_TILE2 = { false, 128,0,128,128 };
+	const Tile SNOW_TILE2 = { false, 128,128,128,128 };
 
 	const int X_TILES = 13;
 	const int Y_TILES = 8;
@@ -71,4 +75,3 @@ private:
 	vector<Tile> tiles;
 
 };
-

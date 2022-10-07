@@ -6,7 +6,7 @@
 class Rotator : public Callable
 {
 public:
-	Rotator(Tmpl8::vec2* pos, Tmpl8::vec2* dir, RotationVar rVar, int& frame,MoveToADirection* , EnemySpawner*);
+	Rotator(Tmpl8::vec2* pos, Tmpl8::vec2* dir, RotationVar rVar, int* frame, MoveToADirection*, EnemySpawner*);
 
 	void RotateToDirection(Tmpl8::vec2);
 	void Reflect();

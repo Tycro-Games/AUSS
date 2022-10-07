@@ -47,10 +47,13 @@ namespace Tmpl8 {
 		static void ChangeGameState(GameState state);
 		static GameState currentState;
 
+		static vector<Moveable*> moveables;
 		//collision detection
 		static vector<Collider*> cols;
-		static void AddElement(Collider* col);
-		static void RemoveElement(Collider* col);
+		static void AddCollider(Collider* col);
+		static void AddMoveable(Moveable* col);
+		static void RemoveCollider(Collider* col);
+		static void RemoveMoveable(Moveable* col);
 	private:
 		Surface* screen;
 
@@ -65,10 +68,10 @@ namespace Tmpl8 {
 		Tilemap* tileMap;
 		EnemySpawner* enemySpawner;
 		CollisionDetection* projectileDetection;
+		MoveablePlayer* movements;
 		//update components
 		vector<Updateable*> updateables;
 		vector<Renderable*> renderables;
-
 
 		//consts
 		const float FIRE_SPEED_CHANGE = .1f;

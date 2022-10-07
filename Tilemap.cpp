@@ -5,8 +5,8 @@
 #include <algorithm>
 Tilemap::Tilemap() :
 	tileSurface("assets/Holiday/RTSpack_tilesheet@2.png"),
-	pos(new Tmpl8::vec2(ScreenWidth / 2, ScreenHeight / 2)),
-	startingPos(*pos),
+	pos(Tmpl8::vec2(ScreenWidth / 2, ScreenHeight / 2)),
+	startingPos(pos),
 	col(new Collider(
 		Tmpl8::vec2(
 			0,
@@ -14,7 +14,7 @@ Tilemap::Tilemap() :
 		Tmpl8::vec2(
 			1,
 			1),
-		pos))
+		&pos))
 
 {
 
@@ -61,20 +61,21 @@ void Tilemap::Render(Tmpl8::Surface* screen)
 			int ty = tiles[index].y;
 			//uses some offset to center the tilemap
 			DrawTile(screen, tx, ty,
-				x * tiles[index].xd + static_cast<int>(pos->x) - OFFSET_X,
-				y * tiles[index].yd + static_cast<int>(pos->y) - OFFSET_Y);
+				x * tiles[index].xd + static_cast<int>(pos.x) - OFFSET_X,
+				y * tiles[index].yd + static_cast<int>(pos.y) - OFFSET_Y);
 		}
 	//debug
-	screen->Box(static_cast<int>(pos->x) - OFFSET_X, static_cast<int>(pos->y) - OFFSET_Y,
-		static_cast<int>(pos->x) + OFFSET_X, static_cast<int>(pos->y) + OFFSET_Y, 0xFF0000);
+	screen->Box(static_cast<int>(pos.x) - OFFSET_X, static_cast<int>(pos.y) - OFFSET_Y,
+		static_cast<int>(pos.x) + OFFSET_X, static_cast<int>(pos.y) + OFFSET_Y, 0xFF0000);
 
-	auto posText = std::string(std::to_string(pos->x) + " " + std::to_string(pos->y));
+	auto posText = std::string(std::to_string(pos.x) + " " + std::to_string(pos.y));
 	screen->Print(posText.c_str(), 200, 10, 0xFF0000);
 }
 
 
 void Tilemap::Update(float deltaTime)
 {
+
 }
 
 void Tilemap::DrawTile(Tmpl8::Surface* screen, int tx, int ty, int x, int y)

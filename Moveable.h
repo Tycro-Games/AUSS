@@ -11,11 +11,13 @@ public:
 	virtual void Update(float deltaTime) = 0;
 	void SetSpeed(float);
 	const float GetSpeed();
+	void Translation(const Tmpl8::vec2);
 	 Collider* getColl() const {
 		return col;
 	}
 protected:
 	Tmpl8::vec2* pos;
+	Tmpl8::vec2 offset;
 	Collider* col;
 	float speed;
 

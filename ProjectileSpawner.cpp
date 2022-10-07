@@ -35,7 +35,7 @@ void ProjectileSpawner::ChangeFireSpeed(float speed) {
 void ProjectileSpawner::AddProjectileToPool(Projectile* entity)
 {
 	entity->SetActive(false);
-	Tmpl8::Game::RemoveElement(entity->getColl());
+	Tmpl8::Game::RemoveCollider(entity->getColl());
 	poolOfProjectiles.AddElement(entity);
 
 }
@@ -65,7 +65,7 @@ void ProjectileSpawner::SpawnProjectiles()
 
 	Tmpl8::vec2 randomDir = GetDirDeviation();
 	projectile->Init(PosDir{ offset + (*pos) + (*dir + randomDir).normalized() * OFFSET_MULTIPLIER, (*dir + randomDir).normalized() });
-	Tmpl8::Game::AddElement(projectile->getColl());
+	Tmpl8::Game::AddCollider(projectile->getColl());
 }
 
 void ProjectileSpawner::setFlag(bool fire)

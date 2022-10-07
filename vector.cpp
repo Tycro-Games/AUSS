@@ -360,3 +360,4 @@ template class vector <Updateable*>;
 template class vector <Enemy*>;
 template class vector <Collider*>;
 template class vector <Tile>;
+template class vector <Moveable*>;

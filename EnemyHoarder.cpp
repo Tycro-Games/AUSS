@@ -1,17 +1,18 @@
 #include "EnemyHoarder.h"
 #include "MathFunctions.h"
 EnemyHoarder::EnemyHoarder(PosDir posDir, Tmpl8::Sprite* sprite, EnemySpawner* spawner) :
-	Enemy( posDir.pos, sprite, spawner),
+	Enemy(posDir.pos, sprite, spawner),
 	randomNumbers()
 {
 	dg = DG;
 	col = (new Collider(COL_MIN, COL_MAX, &pos));
 	dir = new Tmpl8::vec2();
 	mover = new MoveToADirection(&pos, dir, col, this, SPEED);
+	move = mover;
 	attack = new Timer(this, TIME_TO_ATTACK, true);
 	rotate = new Timer();
-	rot = new Rotator(&pos, dir, rVar, frame,mover, spawner);
-	
+	rot = new Rotator(&pos, dir, rVar, &frame, mover, spawner);
+
 	Init(posDir);
 }
 
@@ -41,16 +42,16 @@ void EnemyHoarder::Update(float deltaTime)
 		else {
 			//interacting with enemy 
 
-
-
 		}
 		col->toDeactivate = false;
 
 		//add projectile damage
 	}
 	else {
-		 dist = MathFunctions::GetDistanceSqr(pos, spawner->GetPlayerPos());
-		 mover->Update(deltaTime);
+		mover->Update(deltaTime);
+		currentPos = pos+offset;
+		dist = MathFunctions::GetDistanceSqr(currentPos, spawner->GetPlayerPos());
+
 		if (dist > MAX_DISTANCE_TO_PLAYER) {
 			//not in range
 			InRangeToAtack = false;
@@ -64,7 +65,7 @@ void EnemyHoarder::Update(float deltaTime)
 		{
 			InRangeToAtack = false;
 		}
-		
+
 	}
 
 
@@ -75,7 +76,7 @@ void EnemyHoarder::Render(Tmpl8::Surface* screen)
 	if (!getRenderable())
 		return;
 	sprite->SetFrame(frame);
-	sprite->Draw(screen, static_cast<int>(pos.x), static_cast<int>(pos.y));
+	sprite->Draw(screen, static_cast<int>(currentPos.x), static_cast<int>(currentPos.y));
 	//screen->Box(pos->x, pos->y, pos->x + rVar.SPRITE_OFFSET, pos->y + rVar.SPRITE_OFFSET, 0xffffff);
 
 }
@@ -104,7 +105,7 @@ void EnemyHoarder::ResetEnemy()
 
 void EnemyHoarder::Call()
 {
-	if (attack->FinishedLoop()&&InRangeToAtack) {
+	if (attack->FinishedLoop() && InRangeToAtack) {
 		spawner->PlayerTakesDamage(this);
 		attack->ResetVar();
 		//moves a bit after atacking
@@ -113,7 +114,7 @@ void EnemyHoarder::Call()
 	else {
 		rot->Reflect();
 	}
-	
+
 }
 
 void EnemyHoarder::Die()

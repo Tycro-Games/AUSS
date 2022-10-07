@@ -11,7 +11,7 @@ EnemySpawner::EnemySpawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Being* player, Tm
 	timer = new Timer(this, timeToSpawn, true);
 	for (int i = 0; i < MAX_ENEMIES; i++)
 		CreateMoreEnemies();
-	
+
 }
 
 EnemySpawner::~EnemySpawner()
@@ -19,7 +19,7 @@ EnemySpawner::~EnemySpawner()
 	delete enemySprite;
 	delete timer;
 	delete dir;
-	
+
 }
 
 void EnemySpawner::AddEnemyToPool(Enemy* enemy)
@@ -27,7 +27,8 @@ void EnemySpawner::AddEnemyToPool(Enemy* enemy)
 	enemy->SetActive(false);
 	activeColliders.remove(enemy->getColl());
 	poolOfEnemies.AddElement(enemy);
-	Tmpl8::Game::RemoveElement(enemy->getColl());
+	Tmpl8::Game::RemoveCollider(enemy->getColl());
+	Tmpl8::Game::RemoveMoveable(enemy->getMoveable());
 }
 
 void EnemySpawner::CreateMoreEnemies()
@@ -73,6 +74,8 @@ void EnemySpawner::Call()
 	Tmpl8::vec2 randomDir = GetDirDeviation();
 	enemy->Init(PosDir(*pos, randomDir));
 	activeColliders.push_back(enemy->getColl());
-	Tmpl8::Game::AddElement(enemy->getColl());
+	Tmpl8::Game::AddCollider(enemy->getColl());
+	Tmpl8::Game::AddMoveable(enemy->getMoveable());
+
 
 }
