@@ -23,7 +23,14 @@ void Rotator::RotateToDirection(Tmpl8::vec2 Pos)
 {
 
 	//rotate to the target dir
+	int xPos = static_cast<int>(Pos.x);
+	int yPos = static_cast<int>(Pos.y);
+	int xpos = static_cast<int>(pos->x);
+	int ypos = static_cast<int>(pos->y);
+	if (Pos.x != Pos.x || (xPos == xpos && yPos == ypos))
+		return;
 	MathFunctions::RotateTo(Pos.x, Pos.y, *pos, dir);
+
 	*frame = MathFunctions::RotateToDirectionFrames(rVar, *dir);
 
 }
