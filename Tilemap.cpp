@@ -12,8 +12,8 @@ Tilemap::Tilemap() :
 			0,
 			0),
 		Tmpl8::vec2(
-			.01f,
-			.01f),
+			1,
+			1),
 		&pos))
 
 {
