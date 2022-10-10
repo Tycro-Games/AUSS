@@ -20,6 +20,9 @@ public:
 	Collider* getColl() const {
 		return col;
 	}
+	Moveable* getMoveable() const {
+		return mover;
+	}
 	virtual void Call() override;
 	void ResetBullet();
 	virtual void Update(float deltaTime) override;

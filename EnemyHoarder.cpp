@@ -105,12 +105,14 @@ void EnemyHoarder::ResetEnemy()
 
 void EnemyHoarder::Call()
 {
+	//ready to atack and in range
 	if (attack->FinishedLoop() && InRangeToAtack) {
 		spawner->PlayerTakesDamage(this);
 		attack->ResetVar();
 		//moves a bit after atacking
 		ToMove = true;
 	}
+	//out of bounds
 	else {
 		rot->Reflect();
 	}

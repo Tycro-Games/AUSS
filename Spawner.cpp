@@ -1,6 +1,6 @@
 #include "Spawner.h"
 
-
+#include "game.h"
 Spawner::Spawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Tmpl8::Sprite* explosion) :
 	pos(pos),
 	dir(dir),

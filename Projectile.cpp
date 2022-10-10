@@ -5,7 +5,7 @@
 
 
 Projectile::Projectile(PosDir posDir, Tmpl8::Sprite* sprite, ProjectileSpawner* spawner)
-	:Entity(sprite,  posDir.pos),
+	:Entity(sprite, posDir.pos),
 	col(new Collider(COL_MIN, COL_MAX, &pos)),
 	spawner(spawner)
 {
@@ -26,7 +26,7 @@ void Projectile::Init(PosDir posDir)
 
 Projectile::~Projectile()
 {
-	sprite = nullptr;//so it does not get deleted twice by entity
+	sprite = nullptr;//so it does not get deleted twice 
 	delete timer;
 	delete mover;
 	delete dir;
