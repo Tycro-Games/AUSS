@@ -14,7 +14,7 @@ const float Moveable::GetSpeed() {
 }
 void Moveable::Translation(const Tmpl8::vec2 translation)
 {
-	offset = translation;
+	*pos += translation;
 }
 Moveable::~Moveable()
 {

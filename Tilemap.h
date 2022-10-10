@@ -43,11 +43,13 @@ public:
 	virtual void Update(float deltaTime) override;
 	Tmpl8::vec2* GetPos() {
 		return &pos;
-	}Tmpl8::vec2 GetPosFromStart() {
-		return  pos;
-	} Tmpl8::vec2 GetPosStart() {
-		return startingPos;
-	} Collider* GetCol() {
+	}Tmpl8::vec2 GetOffset() {
+		return  lastPos - pos;
+	}
+	void ResetOffset() {
+		lastPos = pos;
+	}
+	Collider* GetCol() {
 		return col;
 	}
 	void SetPos(const Tmpl8::vec2 p) {
@@ -56,7 +58,7 @@ public:
 private:
 	void DrawTile(Tmpl8::Surface* screen, int tx, int ty, int x, int y);
 	Tmpl8::vec2 pos;
-	Tmpl8::vec2 startingPos;
+	Tmpl8::vec2 lastPos;
 	Tmpl8::Surface tileSurface;
 
 	//consts

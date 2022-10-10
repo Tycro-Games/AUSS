@@ -6,7 +6,7 @@
 Tilemap::Tilemap() :
 	tileSurface("assets/Holiday/RTSpack_tilesheet@2.png"),
 	pos(Tmpl8::vec2(ScreenWidth / 2, ScreenHeight / 2)),
-	startingPos(pos),
+	lastPos(pos),
 	col(new Collider(
 		Tmpl8::vec2(
 			0,

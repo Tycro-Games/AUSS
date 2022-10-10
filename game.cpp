@@ -115,15 +115,19 @@ namespace Tmpl8
 			projectileDetection->Update(deltaTime);
 
 			//movement offset
-			for (int i = 0; i < moveables.getCount(); i++) {
-				moveables[i]->Translation(tileMap->GetPosFromStart());
-			}
 			for (int i = 0; i < updateables.getCount(); i++)
 				updateables[i]->Update(deltaTime);
+			//update the offset to the other entities
+			for (int i = 0; i < moveables.getCount(); i++) {
+				moveables[i]->Translation(-tileMap->GetOffset());
+			}
+			//reset the offset from the tilemap
+			tileMap->ResetOffset();
 
+			//rendering
 			for (int i = 0; i < renderables.getCount(); i++)
 				renderables[i]->Render(screen);
-
+			//shooting
 			if (player->GetMoveable()->IsMoving())
 				player->Rotate(static_cast<int>(cursor->pos.x), static_cast<int>(cursor->pos.y));
 			player->Shoot(isPressingLeftMouse);

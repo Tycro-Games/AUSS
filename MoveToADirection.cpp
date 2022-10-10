@@ -19,11 +19,12 @@ void MoveToADirection::Update(float deltaTime)
 
 	nextP += nextPos;
 
-	if (col->InGameScreen(nextP, *col))
+	/*if (col->InGameScreen(nextP, *col)) //should check for some kind of bounds
 		(*pos) = nextP;
 	else {
 		call->Call();
-	}
+	}*/
+	*pos = nextP;
 
 }
 

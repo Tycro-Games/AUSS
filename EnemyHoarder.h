@@ -28,7 +28,6 @@ private:
 	bool InRangeToAtack = false;
 	float dist;
 	Tmpl8::vec2* dir;
-	Tmpl8::vec2 currentPos = { 0 };
 	float timeToRotate = 0.1f;
 
 	//consts

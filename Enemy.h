@@ -26,7 +26,6 @@ protected:
 	EnemySpawner* spawner;
 	Moveable* move;
 	Collider* col;
-	Tmpl8::vec2 offset = { 0 };
 	int dg;
 
 };

@@ -31,7 +31,7 @@ void EnemyHoarder::Update(float deltaTime)
 {
 	if (!getUpdateable())
 		return;
-	
+
 	rotate->Update(deltaTime);
 	//marked by collision
 	if (col->toDeactivate) {
@@ -49,8 +49,8 @@ void EnemyHoarder::Update(float deltaTime)
 	}
 	else {
 		mover->Update(deltaTime);
-		currentPos = pos+offset;
-		dist = MathFunctions::GetDistanceSqr(currentPos, spawner->GetPlayerPos());
+
+		dist = MathFunctions::GetDistanceSqr(pos, spawner->GetPlayerPos());
 
 		if (dist > MAX_DISTANCE_TO_PLAYER) {
 			//not in range
@@ -76,7 +76,7 @@ void EnemyHoarder::Render(Tmpl8::Surface* screen)
 	if (!getRenderable())
 		return;
 	sprite->SetFrame(frame);
-	sprite->Draw(screen, static_cast<int>(currentPos.x), static_cast<int>(currentPos.y));
+	sprite->Draw(screen, static_cast<int>(pos.x), static_cast<int>(pos.y));
 	//screen->Box(pos->x, pos->y, pos->x + rVar.SPRITE_OFFSET, pos->y + rVar.SPRITE_OFFSET, 0xffffff);
 
 }
