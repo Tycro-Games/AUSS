@@ -46,6 +46,7 @@ private:
 	Tilemap* map;
 	//consts
 	const float TIME_TO_HIT = 2.0f;
+	const float EDGE_DISTANCE = 8;
 
 
 };

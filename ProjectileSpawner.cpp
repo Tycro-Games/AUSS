@@ -34,9 +34,10 @@ void ProjectileSpawner::ChangeFireSpeed(float speed) {
 }
 void ProjectileSpawner::AddProjectileToPool(Projectile* entity)
 {
-	entity->SetActive(false);
-	Tmpl8::Game::RemoveCollider(entity->getColl());
 	Tmpl8::Game::RemoveMoveable(entity->getMoveable());
+	Tmpl8::Game::RemoveCollider(entity->getColl());
+
+	entity->SetActive(false);
 	poolOfProjectiles.AddElement(entity);
 
 }

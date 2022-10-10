@@ -44,13 +44,17 @@ public:
 	Tmpl8::vec2* GetPos() {
 		return &pos;
 	}Tmpl8::vec2 GetOffset() {
-		return  lastPos - pos;
+		return   pos - lastPos;
 	}
 	void ResetOffset() {
 		lastPos = pos;
 	}
 	Collider* GetCol() {
 		return col;
+	}Collider GetGameBounds() {
+		return Collider(
+			Tmpl8::vec2(-OFFSET_X + pos.x, -OFFSET_Y + pos.y),
+			Tmpl8::vec2(OFFSET_X + pos.x, OFFSET_Y + pos.y));
 	}
 	void SetPos(const Tmpl8::vec2 p) {
 		pos = p;

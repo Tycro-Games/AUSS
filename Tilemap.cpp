@@ -12,8 +12,8 @@ Tilemap::Tilemap() :
 			0,
 			0),
 		Tmpl8::vec2(
-			1,
-			1),
+			.01f,
+			.01f),
 		&pos))
 
 {
@@ -66,7 +66,7 @@ void Tilemap::Render(Tmpl8::Surface* screen)
 		}
 	//debug
 	screen->Box(static_cast<int>(pos.x) - OFFSET_X, static_cast<int>(pos.y) - OFFSET_Y,
-		static_cast<int>(pos.x) + OFFSET_X, static_cast<int>(pos.y) + OFFSET_Y, 0xFF0000);
+		static_cast<int>(pos.x) + OFFSET_X, static_cast<int>(pos.y) + OFFSET_Y, 0x00FF00);
 
 	auto posText = std::string(std::to_string(pos.x) + " " + std::to_string(pos.y));
 	screen->Print(posText.c_str(), 200, 10, 0xFF0000);

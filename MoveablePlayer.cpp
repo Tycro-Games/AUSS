@@ -134,7 +134,7 @@ void MoveablePlayer::Update(float deltaTime)
 	currentPos += nextPos * speed * deltaTime;
 	//screen check
 
-	if (Collider::InGameScreen(currentPos, *col)) {
+	if (Collider::TileMapInGameScreen(currentPos, *col)) {
 		(*pos) = currentPos;
 		hasChangedPos = true;
 	}

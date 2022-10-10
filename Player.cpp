@@ -17,7 +17,7 @@ Player::Player(Tmpl8::Sprite* sprite, Tmpl8::vec2 pos, Collider* col, MoveablePl
 		dirToFace,
 		projectileSprite,
 		new Tmpl8::Sprite(new Tmpl8::Surface("assets/smoke.tga"), 10));
-	colMover = (*col) * 4;
+	colMover = (*col) * EDGE_DISTANCE;
 	playerMover = new MoveablePlayer(&this->pos, &colMover);
 	timer = (new Timer(this, TIME_TO_HIT));
 }
@@ -26,7 +26,6 @@ Player::~Player()
 {
 	delete timer;
 	delete col;
-	delete otherMovements;
 	delete playerMover;
 	delete spawner;
 	delete dirToFace;

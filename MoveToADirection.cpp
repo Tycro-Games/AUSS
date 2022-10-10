@@ -18,13 +18,12 @@ void MoveToADirection::Update(float deltaTime)
 	//add collision check
 
 	nextP += nextPos;
-
-	/*if (col->InGameScreen(nextP, *col)) //should check for some kind of bounds
+	//offset by the collider length so it bounces back exactly on the edge
+	if (col->InGameBounds(nextP, (*col))) //should check for some kind of bounds
 		(*pos) = nextP;
 	else {
 		call->Call();
-	}*/
-	*pos = nextP;
+	}
 
 }
 

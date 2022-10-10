@@ -69,7 +69,7 @@ void Projectile::Render(Tmpl8::Surface* screen)
 		return;
 	sprite->SetFrame(frame);
 	sprite->Draw(screen, static_cast<int>(pos.x), static_cast<int>(pos.y));
-	//screen->Box(pos.x, pos.y, pos.x + rVar.SPRITE_OFFSET, pos.y + rVar.SPRITE_OFFSET, 0xffffff);
+	screen->Box(static_cast<int>(pos.x), static_cast<int>(pos.y), static_cast<int>(pos.x + rVar.SPRITE_OFFSET), static_cast<int>(pos.y + rVar.SPRITE_OFFSET), 0xff0000);
 }
 
 void Projectile::Call()

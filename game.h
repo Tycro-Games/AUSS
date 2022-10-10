@@ -48,6 +48,7 @@ namespace Tmpl8 {
 		static GameState currentState;
 
 		static vector<Moveable*> moveables;
+		static Tilemap* tileMap;
 		//collision detection
 		static vector<Collider*> cols;
 		static void AddCollider(Collider* col);
@@ -65,10 +66,9 @@ namespace Tmpl8 {
 		vector <Renderable*> renderablesUI;
 		//actual game
 		Player* player;
-		Tilemap* tileMap;
 		EnemySpawner* enemySpawner;
 		CollisionDetection* projectileDetection;
-		MoveablePlayer* movements;
+		MoveablePlayer* tileMovement;
 		//update components
 		vector<Updateable*> updateables;
 		vector<Renderable*> renderables;

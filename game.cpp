@@ -8,6 +8,7 @@
 namespace Tmpl8
 {
 	bool Game::isPressingLeftMouse;
+	Tilemap* Game::tileMap;
 	Game::GameState Game::currentState;
 	vector<Collider*> Game::cols;
 	vector<Moveable*> Game::moveables;
@@ -28,13 +29,13 @@ namespace Tmpl8
 	void Game::AllocateMemory()
 	{
 		tileMap = new Tilemap();
-
-		movements = new MoveablePlayer(tileMap->GetPos(), tileMap->GetCol(), -40.0f, -200.0f);
-
+		//moves the tilemap
+		tileMovement = new MoveablePlayer(tileMap->GetPos(), tileMap->GetCol(), -40.0f, -200.0f);
+		//player
 		player = new Player(new Sprite(new Surface("assets/sniper.tga"), 32),
 			vec2(START_POS),
 			new Collider(vec2(COL_MIN), vec2(COL_MAX)),
-			movements,
+			tileMovement,
 			100);
 
 		cursor = (new FollowCursor(new Sprite(new Surface("assets/target.tga"), 1)));
@@ -64,6 +65,7 @@ namespace Tmpl8
 	{
 
 		cols.removeAll();
+		moveables.removeAll();
 		updateables.removeAll();
 		renderables.removeAll();
 		updateablesUI.removeAll();
@@ -95,6 +97,7 @@ namespace Tmpl8
 		delete playButton;
 		delete exitButton;
 
+		delete tileMovement;
 		delete enemySpawner;
 		delete player;
 		delete tileMap;
@@ -119,7 +122,7 @@ namespace Tmpl8
 				updateables[i]->Update(deltaTime);
 			//update the offset to the other entities
 			for (int i = 0; i < moveables.getCount(); i++) {
-				moveables[i]->Translation(-tileMap->GetOffset());
+				moveables[i]->Translation(tileMap->GetOffset());
 			}
 			//reset the offset from the tilemap
 			tileMap->ResetOffset();
