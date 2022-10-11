@@ -396,10 +396,12 @@ int main(int argc, char** argv)
 				game->MouseMove(event.motion.x, event.motion.y);
 				break;
 			case SDL_MOUSEBUTTONUP:
-				game->MouseUp(event.button.button);
+				if (event.button.button == SDL_BUTTON_LEFT)
+					game->MouseUp(event.button.button);
 				break;
 			case SDL_MOUSEBUTTONDOWN:
-				game->MouseDown(event.button.button);
+				if (event.button.button == SDL_BUTTON_LEFT)
+					game->MouseDown(event.button.button);
 				break;
 			default:
 				break;
