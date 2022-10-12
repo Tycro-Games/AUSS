@@ -41,11 +41,22 @@ Tmpl8::vec2 MathFunctions::Reflect(Tmpl8::vec2 dir, Tmpl8::vec2 norm)
 
 void MathFunctions::RotateTo(float x, float y, Tmpl8::vec2 pos, Tmpl8::vec2*& dir)
 {
-
+	if (ValidVec2(static_cast<int>(x),
+		static_cast<int>(pos.x),
+		static_cast<int>(y),
+		static_cast<int>(pos.y)))
+ 		return;
 	dir->x = x - pos.x;
 	dir->y = y - pos.y;
 
+
+
+
+
+
 	dir->normalize();
+
+
 
 }
 

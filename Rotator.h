@@ -9,6 +9,7 @@ public:
 	Rotator(Tmpl8::vec2* pos, Tmpl8::vec2* dir, RotationVar rVar, int* frame, MoveToADirection*, EnemySpawner*);
 
 	void RotateToDirection(Tmpl8::vec2);
+	static bool CheckVec2(const Tmpl8::vec2& Pos);
 	void Reflect();
 	~Rotator() {};
 	virtual void Call() override;

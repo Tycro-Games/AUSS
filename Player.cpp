@@ -1,8 +1,9 @@
 #include "Player.h"
 #include "MathFunctions.h"
-#include <string>
 #include"game.h"
+#include "Rotator.h"
 
+#include <string>
 Player::Player(Tmpl8::Sprite* sprite, Tmpl8::vec2 pos, Collider* col, MoveablePlayer* movements, int hp)
 	:dirToFace(new Tmpl8::vec2()),
 	Being(sprite, pos, hp),
@@ -10,13 +11,13 @@ Player::Player(Tmpl8::Sprite* sprite, Tmpl8::vec2 pos, Collider* col, MoveablePl
 	col(col),
 	map(map),
 	otherMovements(movements),
-	projectileSprite(new Tmpl8::Sprite(new Tmpl8::Surface("assets/missile_big.tga"), 32))
+	projectileSprite(new Tmpl8::Sprite(new Tmpl8::Surface("assets/OriginalAssets/phaser.tga"), 16))
 
 {
 	spawner = new ProjectileSpawner(&this->pos, -Tmpl8::vec2(rVar.SPRITE_OFFSET / 2, rVar.SPRITE_OFFSET / 2),
 		dirToFace,
 		projectileSprite,
-		new Tmpl8::Sprite(new Tmpl8::Surface("assets/smoke.tga"), 10));
+		new Tmpl8::Sprite(new Tmpl8::Surface("assets/OriginalAssets/smoke.tga"), 10));
 	colMover = (*col) * EDGE_DISTANCE;
 	playerMover = new MoveablePlayer(&this->pos, &colMover);
 	timer = (new Timer(this, TIME_TO_HIT));
@@ -35,6 +36,7 @@ Player::~Player()
 
 void Player::Render(Tmpl8::Surface* screen)
 {
+	spawner->Render(screen);
 	sprite->SetFrame(frame);
 	sprite->Draw(screen, static_cast<int>(pos.x - rVar.SPRITE_OFFSET / 2), static_cast<int>(pos.y - rVar.SPRITE_OFFSET / 2));
 	//debug for player's collider	
@@ -42,7 +44,6 @@ void Player::Render(Tmpl8::Surface* screen)
 	//debug for collision with screen borders
 	screen->Box(static_cast<int>(pos.x + colMover.min.x), static_cast<int>(pos.y + colMover.min.y), static_cast<int>(pos.x + colMover.max.x), static_cast<int>(pos.y + colMover.max.y), 0xffffff);
 
-	spawner->Render(screen);
 	auto inactive = std::string("HP: " + std::to_string(hp));
 
 	screen->Print(inactive.c_str(), 10, 40, 0x00000000);
@@ -82,8 +83,7 @@ void Player::Rotate(int x, int y) {
 
 
 	float angle = MathFunctions::GetDirInAnglesPos(*dirToFace);
-
-
+	//calculate the frame we need to switch for the corresponding angle
 	angle += rVar.OFFSET_SPRITE;
 	angle = static_cast<float>(fmod(angle, 360));
 	frame = static_cast<int>(angle / rVar.ANGLE_SIZE);

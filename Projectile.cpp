@@ -7,7 +7,8 @@
 Projectile::Projectile(PosDir posDir, Tmpl8::Sprite* sprite, ProjectileSpawner* spawner)
 	:Entity(sprite, posDir.pos),
 	col(new Collider(COL_MIN, COL_MAX, &pos)),
-	spawner(spawner)
+	spawner(spawner),
+	rVar(RotationVar(360 / (sprite->Frames() - 1), 90.0f, 20.0f))
 {
 	dir = new Tmpl8::vec2();
 	timer = new Timer();

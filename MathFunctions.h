@@ -17,6 +17,10 @@ public:
 	static float GetDistanceSqr(Tmpl8::vec2 pos1, Tmpl8::vec2 pos2);
 	///should receive a number between 0 and 1
 	static float DashFunction(float);
+	static bool ValidVec2(int xPos, int xpos, int yPos, int ypos)
+	{
+		return  (xPos == xpos && yPos == ypos);
+	}
 
 	static float Lerp(float a, float b, float f)
 	{

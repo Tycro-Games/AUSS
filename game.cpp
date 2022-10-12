@@ -32,25 +32,25 @@ namespace Tmpl8
 		//moves the tilemap
 		tileMovement = new MoveablePlayer(tileMap->GetPos(), tileMap->GetCol(), -40.0f, -200.0f);
 		//player
-		player = new Player(new Sprite(new Surface("assets/sniper.tga"), 32),
+		player = new Player(new Sprite(new Surface("assets/player.png"), 32),
 			vec2(START_POS),
 			new Collider(vec2(COL_MIN), vec2(COL_MAX)),
 			tileMovement,
 			100);
 
-		cursor = (new FollowCursor(new Sprite(new Surface("assets/target.tga"), 1)));
+		cursor = (new FollowCursor(new Sprite(new Surface("assets/OriginalAssets/target.tga"), 1)));
 		//static spawner
 		enemySpawner = new EnemySpawner(tileMap->GetPos(), new Tmpl8::vec2(), player,
-			new Sprite(new Surface("assets/phaser.tga"), 16),
-			new Sprite(new Surface("assets/smoke.tga"), 10));
+			new Sprite(new Surface("assets/OriginalAssets/phaser.tga"), 16),
+			new Sprite(new Surface("assets/OriginalAssets/smoke.tga"), 10));
 
-		playButton = new PlayButton(new Sprite(new Surface("assets/Play_Idle.png"), 1), Tmpl8::vec2(ScreenWidth / 2, ScreenHeight / 2),
+		playButton = new PlayButton(new Sprite(new Surface("assets/UI/Play_Idle.png"), 1), Tmpl8::vec2(ScreenWidth / 2, ScreenHeight / 2),
 			cursor->GetCollider(),
-			new Sprite(new Tmpl8::Surface("assets/Play_Pushed.png"), 1));
+			new Sprite(new Tmpl8::Surface("assets/UI/Play_Pushed.png"), 1));
 
-		exitButton = new ExitButton(new Sprite(new Surface("assets/Cross_Idle.png"), 1), Tmpl8::vec2(ScreenWidth / 2, ScreenHeight / 2 + 64),
+		exitButton = new ExitButton(new Sprite(new Surface("assets/UI/Cross_Idle.png"), 1), Tmpl8::vec2(ScreenWidth / 2, ScreenHeight / 2 + 64),
 			cursor->GetCollider(),
-			new Sprite(new Tmpl8::Surface("assets/Cross_Pushed.png"), 1));
+			new Sprite(new Tmpl8::Surface("assets/UI/Cross_Pushed.png"), 1));
 	}
 	void Game::ResetGame()
 	{
@@ -127,13 +127,13 @@ namespace Tmpl8
 			//reset the offset from the tilemap
 			tileMap->ResetOffset();
 
+			if (player->GetMoveable()->IsMoving())
+				player->Rotate(static_cast<int>(cursor->pos.x), static_cast<int>(cursor->pos.y));
+			player->Shoot(isPressingLeftMouse);
 			//rendering
 			for (int i = 0; i < renderables.getCount(); i++)
 				renderables[i]->Render(screen);
 			//shooting
-			if (player->GetMoveable()->IsMoving())
-				player->Rotate(static_cast<int>(cursor->pos.x), static_cast<int>(cursor->pos.y));
-			player->Shoot(isPressingLeftMouse);
 
 			break;
 		case(mainMenu):
