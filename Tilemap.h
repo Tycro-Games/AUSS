@@ -56,6 +56,10 @@ public:
 			Tmpl8::vec2(-OFFSET_X + pos.x, -OFFSET_Y + pos.y),
 			Tmpl8::vec2(OFFSET_X + pos.x, OFFSET_Y + pos.y));
 	}
+	bool CheckPos(int x, int y) {
+		int tx = x / TILE_SIZE, ty = y / TILE_SIZE;
+		return tiles[tx + ty * X_TILES].IsBlocking;
+	}
 	void SetPos(const Tmpl8::vec2 p) {
 		pos = p;
 	}
@@ -67,7 +71,7 @@ private:
 
 	//consts
 	const Tile SNOW_TILE = { false, 0, 0, 128,128 };
-	const Tile SNOW_TILE2 = { false, 128,128,128,128 };
+	const Tile SNOW_TILE2 = { true, 128,128,128,128 };
 
 	const int X_TILES = 13;
 	const int Y_TILES = 8;

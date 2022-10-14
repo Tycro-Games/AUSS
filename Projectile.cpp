@@ -8,7 +8,7 @@ Projectile::Projectile(PosDir posDir, Tmpl8::Sprite* sprite, ProjectileSpawner* 
 	:Entity(sprite, posDir.pos),
 	col(new Collider(COL_MIN, COL_MAX, &pos)),
 	spawner(spawner),
-	rVar(RotationVar(360 / (sprite->Frames() - 1), 90.0f, 20.0f))
+	rVar(RotationVar(360 / (static_cast<const float>(sprite->Frames() - 1)), 90.0f, 20.0f))
 {
 	dir = new Tmpl8::vec2();
 	timer = new Timer();
@@ -40,10 +40,10 @@ void Projectile::RotateToDirection()
 	frame = MathFunctions::RotateToDirectionFrames(rVar, *dir);
 }
 
-void Projectile::Reflect()
+void Projectile::Reflect(const Tmpl8::vec2 normal)
 {
 
-	Tmpl8::vec2 normal = Collider::GetNormalEdgeScreen(mover->nextP, *col);
+
 
 	mover->OppositeDirection(normal);
 	RotateToDirection();
@@ -81,7 +81,7 @@ void Projectile::Call()
 		ResetBullet();
 	}
 	else //collides with screen
-		Reflect();
+		Reflect(Collider::GetNormalEdgeScreen(mover->nextP, *col));
 }
 
 void Projectile::ResetBullet()

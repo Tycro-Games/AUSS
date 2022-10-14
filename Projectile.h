@@ -14,7 +14,7 @@ public:
 
 	virtual ~Projectile();
 	void RotateToDirection();
-	void Reflect();
+	void Reflect(Tmpl8::vec2 normal);
 
 	void Init(PosDir posDir);
 	Collider* getColl() const {
