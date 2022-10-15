@@ -4,13 +4,13 @@
 #include "Rotator.h"
 
 #include <string>
-Player::Player(Tmpl8::Sprite* sprite, Tmpl8::vec2 pos, Collider* col, MoveablePlayer* movements, int hp)
+Player::Player(Tmpl8::Sprite* sprite, Tmpl8::vec2 pos, Collider co, Collider* tileMapCol, int hp)
 	:dirToFace(new Tmpl8::vec2()),
 	Being(sprite, pos, hp),
 	startingPos(pos),
-	col(col),
+	col(Collider(co.min, co.max, &startingPos)),
 	map(map),
-	otherMovements(movements),
+	tilemapCollider(tileMapCol),
 	projectileSprite(new Tmpl8::Sprite(new Tmpl8::Surface("assets/OriginalAssets/phaser.tga"), 16))
 
 {
@@ -18,15 +18,14 @@ Player::Player(Tmpl8::Sprite* sprite, Tmpl8::vec2 pos, Collider* col, MoveablePl
 		dirToFace,
 		projectileSprite,
 		new Tmpl8::Sprite(new Tmpl8::Surface("assets/OriginalAssets/smoke.tga"), 10));
-	colMover = (*col) * EDGE_DISTANCE;
-	playerMover = new MoveablePlayer(&this->pos, &colMover);
+
+	playerMover = new MoveablePlayer(&this->pos, &col, tilemapCollider);
 	timer = (new Timer(this, TIME_TO_HIT));
 }
 
 Player::~Player()
 {
 	delete timer;
-	delete col;
 	delete playerMover;
 	delete spawner;
 	delete dirToFace;
@@ -40,23 +39,23 @@ void Player::Render(Tmpl8::Surface* screen)
 	sprite->SetFrame(frame);
 	sprite->Draw(screen, static_cast<int>(pos.x - rVar.SPRITE_OFFSET / 2), static_cast<int>(pos.y - rVar.SPRITE_OFFSET / 2));
 	//debug for player's collider	
-	screen->Box(static_cast<int>(pos.x - rVar.SPRITE_OFFSET / 2), static_cast<int>(pos.y - rVar.SPRITE_OFFSET / 2), static_cast<int>(pos.x + rVar.SPRITE_OFFSET / 2), static_cast<int>(pos.y + rVar.SPRITE_OFFSET / 2), 0xffffff);
+	screen->Box(static_cast<int>(pos.x + col.min.x), static_cast<int>(pos.y + col.min.y), static_cast<int>(pos.x + col.max.x), static_cast<int>(pos.y + col.max.y), 0xffffff);
 	//debug for collision with screen borders
-	screen->Box(static_cast<int>(pos.x + colMover.min.x), static_cast<int>(pos.y + colMover.min.y), static_cast<int>(pos.x + colMover.max.x), static_cast<int>(pos.y + colMover.max.y), 0xffffff);
+	screen->Box(static_cast<int>(pos.x + col.min.x * 8), static_cast<int>(pos.y + col.min.y * 8), static_cast<int>(pos.x + col.max.x * 8), static_cast<int>(pos.y + col.max.y * 8), 0xffffff);
 
 	auto inactive = std::string("HP: " + std::to_string(hp));
 
-	screen->Print(inactive.c_str(), 10, 40, 0x00000000);
+	screen->Print(inactive.c_str(), 10, 40, 0xFF0000);
 }
 
 void Player::Update(float deltaTime)
 {
-	//copy the input from the player to the tilemap mover
-	playerMover->copyInput(*otherMovements);
-	otherMovements->Update(deltaTime);
-
-	if (!otherMovements->ChangedPos()) {
-		//tilemap is trying to go past the limits
+	
+	//tries to move tilemap
+	playerMover->Update(deltaTime);
+	//tilemap is trying to go past the limits
+	if (!playerMover->ChangedPos()) {
+		playerMover->SetMovingPlayer(true);
 		//move player instead
 		playerMover->Update(deltaTime);
 

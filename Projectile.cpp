@@ -43,8 +43,6 @@ void Projectile::RotateToDirection()
 void Projectile::Reflect(const Tmpl8::vec2 normal)
 {
 
-
-
 	mover->OppositeDirection(normal);
 	RotateToDirection();
 }
@@ -55,10 +53,11 @@ void Projectile::Update(float deltaTime)
 {
 	if (!getUpdateable())
 		return;
+
 	mover->Update(deltaTime);
 	timer->Update(deltaTime);
 
-	//marked by collision
+	
 	if (col->toDeactivate)
 		ResetBullet();
 }
@@ -80,7 +79,21 @@ void Projectile::Call()
 
 		ResetBullet();
 	}
-	else //collides with screen
+	else if (col->toReflect) {
+		Tmpl8::vec2 normal = (pos - *col->collision->pos).normalized();
+		//round up the direction to the normal
+		if (normal.x < 0)
+			normal.x = -normal.x + 1;
+		if (normal.y < 0)
+			normal.y = -normal.y + 1;
+		if (normal.x > normal.y)
+			Reflect(Tmpl8::vec2(1, 0));
+		else
+			Reflect(Tmpl8::vec2(0, 1));
+		col->toReflect = false;
+
+	}
+	else
 		Reflect(Collider::GetNormalEdgeScreen(mover->nextP, *col));
 }
 

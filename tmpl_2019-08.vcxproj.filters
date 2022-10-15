@@ -92,6 +92,9 @@
     <ClCompile Include="Tilemap.cpp">
       <Filter>Tilemap</Filter>
     </ClCompile>
+    <ClCompile Include="Obstacle.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -199,6 +202,9 @@
     </ClInclude>
     <ClInclude Include="Tilemap.h">
       <Filter>Tilemap</Filter>
+    </ClInclude>
+    <ClInclude Include="Obstacle.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -6,6 +6,9 @@
 #include "vector.h"
 #include "Renderable.h"
 #include "Updateable.h"
+
+#include <iostream>
+#include "Obstacle.h"
 struct Tile
 {
 	/// <summary>
@@ -29,6 +32,7 @@ struct Tile
 	/// </summary>
 	int yd;
 };
+
 class Tilemap :public Renderable, public Updateable
 {
 public:
@@ -56,9 +60,12 @@ public:
 			Tmpl8::vec2(-OFFSET_X + pos.x, -OFFSET_Y + pos.y),
 			Tmpl8::vec2(OFFSET_X + pos.x, OFFSET_Y + pos.y));
 	}
-	bool CheckPos(int x, int y) {
-		int tx = x / TILE_SIZE, ty = y / TILE_SIZE;
-		return tiles[tx + ty * X_TILES].IsBlocking;
+	bool IsFree(float x, float y) {
+		x += OFFSET_X - (pos.x);
+		y += OFFSET_Y - (pos.y);
+		int tx = static_cast<int>(x / TILE_SIZE), ty = static_cast<int>(y / TILE_SIZE);
+		/*std::cout << tx << " " << ty << '\n';*/
+		return !tiles[tx + ty * X_TILES].IsBlocking;
 	}
 	void SetPos(const Tmpl8::vec2 p) {
 		pos = p;
@@ -83,5 +90,6 @@ private:
 
 	Collider* col;
 	vector<Tile> tiles;
+	vector<Obstacle*> blockingTiles;
 
 };

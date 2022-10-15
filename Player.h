@@ -12,7 +12,7 @@
 class Player :public Being, public Callable
 {
 public:
-	Player(Tmpl8::Sprite* sprite, Tmpl8::vec2 pos, Collider* col, MoveablePlayer*, int hp);
+	Player(Tmpl8::Sprite* sprite, Tmpl8::vec2 pos, Collider col, Collider*, int hp);
 	~Player();
 	void Render(Tmpl8::Surface* screen);
 	void Update(float deltaTime);
@@ -37,16 +37,15 @@ private:
 	//assets
 	Tmpl8::Sprite* projectileSprite;
 	//components
-	MoveablePlayer* otherMovements;
+	Collider* tilemapCollider;
 	MoveablePlayer* playerMover;
-	Collider* col;
-	Collider colMover;
+	Collider col;
 	ProjectileSpawner* spawner;
 	Timer* timer;
 	Tilemap* map;
 	//consts
 	const float TIME_TO_HIT = 2.0f;
-	const float EDGE_DISTANCE = 8;
+	
 
 
 };

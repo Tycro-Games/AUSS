@@ -18,6 +18,7 @@ public:
 	Tmpl8::vec2* pos;
 	Collider* collision;
 	bool toDeactivate = false;
+	bool toReflect = false;
 	Collider At(const Tmpl8::vec2& offset) const {
 		return Collider(min + offset, max + offset);
 	}

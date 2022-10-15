@@ -29,13 +29,11 @@ namespace Tmpl8
 	void Game::AllocateMemory()
 	{
 		tileMap = new Tilemap();
-		//moves the tilemap
-		tileMovement = new MoveablePlayer(tileMap->GetPos(), tileMap->GetCol(), -40.0f, -200.0f);
 		//player
 		player = new Player(new Sprite(new Surface("assets/player.png"), 32),
 			vec2(START_POS),
-			new Collider(vec2(COL_MIN), vec2(COL_MAX)),
-			tileMovement,
+			Collider(vec2(COL_MIN), vec2(COL_MAX)),
+			tileMap->GetCol(),
 			100);
 
 		cursor = (new FollowCursor(new Sprite(new Surface("assets/OriginalAssets/target.tga"), 1)));
@@ -127,7 +125,7 @@ namespace Tmpl8
 			//reset the offset from the tilemap
 			tileMap->ResetOffset();
 
-			if (player->GetMoveable()->IsMoving())
+			if (player->GetMoveable()->CanRotate())
 				player->Rotate(static_cast<int>(cursor->pos.x), static_cast<int>(cursor->pos.y));
 			player->Shoot(isPressingLeftMouse);
 			//rendering

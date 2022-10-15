@@ -119,7 +119,12 @@ void vector<T>::print()
 		}
 		std::cout << '\n';
 	}
-}template<>
+}
+template<>
+void vector<Obstacle>::print()
+{
+}
+template<>
 void vector<Tile>::print()
 {
 	if (count > 0) {
@@ -160,7 +165,14 @@ void vector<T>::print(int& i, int& j)
 		std::cout << arr[i] << " ";
 	}
 	std::cout << '\n';
-}template<>
+
+}
+template<>
+void vector<Obstacle>::print(int& i, int& j)
+{
+
+}
+template<>
 void vector<Tile>::print(int& i, int& j)
 {
 	for (; i <= j; i++) {
@@ -226,7 +238,7 @@ template<>
 int vector<Tile>::find(const Tile& item)
 {
 	for (int i = 0; i < count; i++) {
-		if (arr[i].x == item.x&& arr[i].y == item.y) {
+		if (arr[i].x == item.x && arr[i].y == item.y) {
 			return i;
 		}
 	}
@@ -304,6 +316,7 @@ void vector<T>::remove(const T& item)
 	}
 	delete[]aux;
 }
+
 template<>
 void vector<Tile>::remove(const Tile& item)
 {
@@ -361,3 +374,5 @@ template class vector <Enemy*>;
 template class vector <Collider*>;
 template class vector <Tile>;
 template class vector <Moveable*>;
+template class vector <Obstacle*>;
+

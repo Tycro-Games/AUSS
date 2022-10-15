@@ -1,9 +1,11 @@
 #include "MoveablePlayer.h"
 #include "MathFunctions.h"
 #include <iostream>
-MoveablePlayer::MoveablePlayer(Tmpl8::vec2* pos, Collider* col, float speed, float DashSpeed) :
+#include "game.h"
+MoveablePlayer::MoveablePlayer(Tmpl8::vec2* pos, Collider* col, Collider* tileMapCol, float speed, float DashSpeed) :
 	Moveable(pos, col, speed),
-	timer(new Timer())
+	timer(new Timer()),
+	tileMapCol(tileMapCol)
 
 
 {
@@ -57,6 +59,7 @@ void MoveablePlayer::startDash()
 
 
 		timer->isUpdateable = true;
+		
 		Dashing();
 	}
 }
@@ -65,22 +68,23 @@ void MoveablePlayer::Dashing()
 {
 	dashing = true;
 	timePassed = 0;
+	std::cout << timePassed << '\n';
 	speed = dashSpeed;
 }
 
-bool MoveablePlayer::IsMoving()
+bool MoveablePlayer::CanRotate()
 {
-	return isMoving;
+	return canRotate;
 }
 
 void MoveablePlayer::Call()
 {
 
-
 	//animation dash to add, use maybe a square + 1
 	timer->ResetVar();
 	timer->isUpdateable = false;
 	speed = initSpeed;
+	std::cout << timePassed << '\n';
 
 
 }
@@ -89,10 +93,10 @@ void MoveablePlayer::Call()
 void MoveablePlayer::Update(float deltaTime)
 {
 
-	timer->Update(deltaTime);
-	Tmpl8::vec2 nextPos = { 0 }, currentPos = *pos;
 	hasChangedPos = false;
+	timer->Update(deltaTime);
 
+	Tmpl8::vec2 nextPos = { 0 };
 
 	if (up) {
 		nextPos.y--;
@@ -112,14 +116,14 @@ void MoveablePlayer::Update(float deltaTime)
 		nextPos.normalize();
 	//dashing
 	if ((nextPos.x != 0 || nextPos.y != 0)) {
-		isMoving = true;
+		canRotate = true;
 		if (startedDashing)
 			startDash();
 	}
 	else
-		isMoving = false;
-	if (!startedDashing && timer->isUpdateable == false && dashing) {
+		canRotate = false;
 
+	if (!startedDashing && timer->isUpdateable == false && dashing) {
 		dashing = false;
 
 	}
@@ -130,14 +134,47 @@ void MoveablePlayer::Update(float deltaTime)
 		nextPos *= MathFunctions::DashFunction(linearT);//this value is from the function graph
 
 	}
+	//player or tilemap
+	Tmpl8::vec2 currentPos = *pos;
+	Collider c = *col;
+	//tile check
+	Tmpl8::vec2 tilePos = *pos;
+	Collider tileCol = *col;
+	
+	float spe = speed;
+	//the tile check position
+	tilePos += nextPos * spe * deltaTime;
 
-	currentPos += nextPos * speed * deltaTime;
-	//screen check
 
-	if (Collider::TileMapInGameScreen(currentPos, *col)) {
-		(*pos) = currentPos;
-		hasChangedPos = true;
+	//checks if the player or the tilemap should be moved
+	if (!movingPlayer) {
+		currentPos = *tileMapCol->pos;
+		c = *tileMapCol;
+		spe = -spe;
+
 	}
+	
+	currentPos += nextPos * spe * deltaTime;
+	//checks collision with obstacles
+	if (Tmpl8::Game::tileMap->IsFree(tilePos.x + tileCol.min.x, tilePos.y + tileCol.min.y) &&
+		Tmpl8::Game::tileMap->IsFree(tilePos.x + tileCol.max.x, (tilePos.y + tileCol.min.y)) &&
+		Tmpl8::Game::tileMap->IsFree(tilePos.x + tileCol.min.x, (tilePos.y + tileCol.max.y)) &&
+		Tmpl8::Game::tileMap->IsFree(tilePos.x + tileCol.max.x, (tilePos.y + tileCol.max.y))) {
+		//tilemap checks
+		if (!movingPlayer) {
+			if (Collider::TileMapInGameScreen(currentPos, c)) {
+
+				*tileMapCol->pos = currentPos;
+				hasChangedPos = true;
+			}
+		}//player checks
+		else if (Collider::TileMapInGameScreen(currentPos, c * EDGE_DISTANCE))
+		{
+			*pos = currentPos;
+		}
+	}
+
+	movingPlayer = false;
 
 
 }

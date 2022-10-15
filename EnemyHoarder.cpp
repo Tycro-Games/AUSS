@@ -35,7 +35,7 @@ void EnemyHoarder::Update(float deltaTime)
 	rotate->Update(deltaTime);
 	//marked by collision
 	if (col->toDeactivate) {
-		//take damage of the collision is from the projectile
+		//take damage from the collision if it is from the projectile or block
 		if (!spawner->IsEnemy(col->collision)) {
 			TakeDamage(DG_TO_TAKE);
 		}
@@ -45,10 +45,9 @@ void EnemyHoarder::Update(float deltaTime)
 		}
 		col->toDeactivate = false;
 
-		//add projectile damage
 	}
 	else {
-		mover->Update(deltaTime);
+		//mover->Update(deltaTime);
 
 		dist = MathFunctions::GetDistanceSqr(pos, spawner->GetPlayerPos());
 

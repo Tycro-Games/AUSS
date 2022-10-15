@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <algorithm>
+#include "game.h"
 Tilemap::Tilemap() :
 	tileSurface("assets/Holiday/RTSpack_tilesheet@2.png"),
 	pos(Tmpl8::vec2(ScreenWidth / 2, ScreenHeight / 2)),
@@ -38,6 +39,21 @@ Tilemap::Tilemap() :
 	//line 8
 	tiles.push_back(SNOW_TILE); tiles.push_back(SNOW_TILE); tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);
 
+	//13x8 tiles
+	for (int y = 0; y < Y_TILES; y++)
+		for (int x = 0; x < X_TILES; x++)
+		{
+			int index = x + y * X_TILES;
+			if (tiles[index].IsBlocking) {
+				//memory leak
+				Tmpl8::vec2 p = Tmpl8::vec2(x * TILE_SIZE + static_cast<int>(pos.x) - OFFSET_X,
+					y * TILE_SIZE + static_cast<int>(pos.y) - OFFSET_Y);
+
+				Obstacle* obs = new Obstacle(p, Collider(0, TILE_SIZE));
+				blockingTiles.push_back(obs);
+				Tmpl8::Game::AddMoveable(obs);
+			}
+		}
 
 
 
@@ -65,8 +81,6 @@ void Tilemap::Render(Tmpl8::Surface* screen)
 				y * tiles[index].yd + static_cast<int>(pos.y) - OFFSET_Y);
 		}
 	//debug
-	screen->Box(-OFFSET_X, -OFFSET_Y,
-		+OFFSET_X, +OFFSET_Y, 0x00FF00);
 
 	auto posText = std::string(std::to_string(pos.x) + " " + std::to_string(pos.y));
 	screen->Print(posText.c_str(), 200, 10, 0xFF0000);
@@ -75,7 +89,10 @@ void Tilemap::Render(Tmpl8::Surface* screen)
 
 void Tilemap::Update(float deltaTime)
 {
+	for (int i = 0; i < blockingTiles.getCount(); i++) {
 
+		blockingTiles[i]->Update(deltaTime);
+	}
 }
 
 void Tilemap::DrawTile(Tmpl8::Surface* screen, int tx, int ty, int x, int y)
