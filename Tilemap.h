@@ -31,6 +31,8 @@ struct Tile
 	/// dimension of the tile on y
 	/// </summary>
 	int yd;
+
+	Obstacle* obs = NULL;
 };
 
 class Tilemap :public Renderable, public Updateable
@@ -66,6 +68,15 @@ public:
 		int tx = static_cast<int>(x / TILE_SIZE), ty = static_cast<int>(y / TILE_SIZE);
 		/*std::cout << tx << " " << ty << '\n';*/
 		return !tiles[tx + ty * X_TILES].IsBlocking;
+	}
+	Obstacle* GetObstacle(float x, float y) {
+		x += OFFSET_X - (pos.x);
+		y += OFFSET_Y - (pos.y);
+		int tx = static_cast<int>(x / TILE_SIZE), ty = static_cast<int>(y / TILE_SIZE);
+
+
+
+		return tiles[tx + ty * X_TILES].obs;
 	}
 	void SetPos(const Tmpl8::vec2 p) {
 		pos = p;

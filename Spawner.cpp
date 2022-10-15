@@ -1,6 +1,6 @@
 #include "Spawner.h"
 
-#include "game.h"
+
 Spawner::Spawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Tmpl8::Sprite* explosion) :
 	pos(pos),
 	dir(dir),
@@ -38,7 +38,7 @@ void Spawner::AddExplosionToPool(ExplosionBullet* entity)
 
 void Spawner::CreateMoreExplosions()
 {
-	ExplosionBullet* bullet = new ExplosionBullet(explosionSprite, this);
+	ExplosionBullet* bullet = new ExplosionBullet(explosionSprite, this, Tmpl8::vec2(0));
 	updateObjects.push_back(bullet);
 
 	AddExplosionToPool(bullet);

@@ -1,15 +1,15 @@
 #include "ExplosionBullet.h"
 
-#include "ProjectileSpawner.h"
+#include "game.h"
 
-ExplosionBullet::ExplosionBullet(Tmpl8::Sprite* sprite, Spawner* spawner, Tmpl8::vec2* pos) :
+ExplosionBullet::ExplosionBullet(Tmpl8::Sprite* sprite, Spawner* spawner, Tmpl8::vec2 pos) :
 	Entity(sprite),
 	spawner(spawner),
-	timer ( new Timer())
+	timer(new Timer())
 {
 	TotalAnimation = loops * desiredTime * sprite->Frames();
-
-	Init(*pos);
+	move = new MoveInstance(&this->pos);
+	Init(pos);
 }
 
 
@@ -17,6 +17,7 @@ ExplosionBullet::ExplosionBullet(Tmpl8::Sprite* sprite, Spawner* spawner, Tmpl8:
 ExplosionBullet::~ExplosionBullet()
 {
 	delete timer;
+	delete move;
 }
 
 void ExplosionBullet::Init(Tmpl8::vec2 pos)
@@ -25,6 +26,7 @@ void ExplosionBullet::Init(Tmpl8::vec2 pos)
 	frame = 0;
 	this->pos = pos;
 	timer->Init(this, TotalAnimation);
+	Tmpl8::Game::AddMoveable(move);
 }
 
 void ExplosionBullet::Update(float deltaTime)
@@ -55,4 +57,5 @@ void ExplosionBullet::Render(Tmpl8::Surface* screen)
 void ExplosionBullet::Call()
 {
 	spawner->AddExplosionToPool(this);
+	Tmpl8::Game::RemoveMoveable(move);
 }

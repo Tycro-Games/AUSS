@@ -2,13 +2,16 @@
 #include "Entity.h"
 #include "Timer.h"
 #include "Spawner.h"
+
+#include "MoveInstance.h"
 class Spawner;
-class ExplosionBullet :public Entity, public Callable
+
+class ExplosionBullet : public Entity, public Callable
 {
 public:
-	ExplosionBullet(Tmpl8::Sprite* sprite, Spawner* spawner, Tmpl8::vec2* pos = new Tmpl8::vec2());
+	ExplosionBullet(Tmpl8::Sprite* sprite, Spawner* spawner, Tmpl8::vec2 pos);
 
-	~ExplosionBullet();
+	virtual ~ExplosionBullet();
 	void Init(Tmpl8::vec2 pos);
 	virtual void Update(float deltaTime) override;
 
@@ -21,6 +24,7 @@ private:
 	int loops = 7;//how many animations
 	Timer* timer;
 	Spawner* spawner;
+	MoveInstance* move;
 
 
 

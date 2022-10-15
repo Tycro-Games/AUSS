@@ -239,6 +239,7 @@
     <ClCompile Include="MergeSort.cpp" />
     <ClCompile Include="Moveable.cpp" />
     <ClCompile Include="MoveablePlayer.cpp" />
+    <ClCompile Include="MoveInstance.cpp" />
     <ClCompile Include="MoveToADirection.cpp" />
     <ClCompile Include="Obstacle.cpp" />
     <ClCompile Include="PlayButton.cpp" />
@@ -274,6 +275,7 @@
     <ClInclude Include="MergeSort.h" />
     <ClInclude Include="Moveable.h" />
     <ClInclude Include="MoveablePlayer.h" />
+    <ClInclude Include="MoveInstance.h" />
     <ClInclude Include="MoveToADirection.h" />
     <ClInclude Include="Obstacle.h" />
     <ClInclude Include="PlayButton.h" />

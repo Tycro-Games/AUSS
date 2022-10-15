@@ -29,7 +29,7 @@ Tilemap::Tilemap() :
 	//line 3
 	tiles.push_back(SNOW_TILE); tiles.push_back(SNOW_TILE); tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);
 	//line 4
-	tiles.push_back(SNOW_TILE); tiles.push_back(SNOW_TILE); tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE2);	tiles.push_back(SNOW_TILE2);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);
+	tiles.push_back(SNOW_TILE); tiles.push_back(SNOW_TILE); tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE2);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE2);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);
 	//line 5
 	tiles.push_back(SNOW_TILE); tiles.push_back(SNOW_TILE); tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);
 	//line 6
@@ -46,12 +46,13 @@ Tilemap::Tilemap() :
 			int index = x + y * X_TILES;
 			if (tiles[index].IsBlocking) {
 				//memory leak
-				Tmpl8::vec2 p = Tmpl8::vec2(x * TILE_SIZE + static_cast<int>(pos.x) - OFFSET_X,
-					y * TILE_SIZE + static_cast<int>(pos.y) - OFFSET_Y);
+				Tmpl8::vec2 p = Tmpl8::vec2(x * TILE_SIZE + pos.x - static_cast<float>(OFFSET_X),
+					y * TILE_SIZE + pos.y - static_cast<float>(OFFSET_Y));
 
-				Obstacle* obs = new Obstacle(p, Collider(0, TILE_SIZE));
-				blockingTiles.push_back(obs);
-				Tmpl8::Game::AddMoveable(obs);
+
+				tiles[index].obs = new Obstacle(p, Collider(0.0f, static_cast<float>(TILE_SIZE)));
+				blockingTiles.push_back(tiles[index].obs);
+				Tmpl8::Game::AddMoveable(tiles[index].obs);
 			}
 		}
 

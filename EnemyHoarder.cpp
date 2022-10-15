@@ -47,7 +47,7 @@ void EnemyHoarder::Update(float deltaTime)
 
 	}
 	else {
-		//mover->Update(deltaTime);
+		mover->Update(deltaTime);
 
 		dist = MathFunctions::GetDistanceSqr(pos, spawner->GetPlayerPos());
 

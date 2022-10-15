@@ -5,6 +5,11 @@ Moveable::Moveable(Tmpl8::vec2* pos, Collider* col, float speed)
 	col(col),
 	speed(speed)
 {
+}Moveable::Moveable(Tmpl8::vec2* pos)
+	: pos(pos),
+	col(NULL),
+	speed(0)
+{
 }
 void Moveable::SetSpeed(float s) {
 	speed = s;

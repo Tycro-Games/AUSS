@@ -18,7 +18,6 @@ public:
 	Tmpl8::vec2* pos;
 	Collider* collision;
 	bool toDeactivate = false;
-	bool toReflect = false;
 	Collider At(const Tmpl8::vec2& offset) const {
 		return Collider(min + offset, max + offset);
 	}
@@ -62,8 +61,8 @@ public:
 	static bool Collider::InGameScreen(Tmpl8::vec2& pos, Collider& col)
 	{
 
-		return pos.x + col.min.x > 0 && pos.y + col.min.y > 0
-			&& pos.x + col.max.x < ScreenWidth - 1 && pos.y + col.max.y < ScreenHeight - 1;
+		return pos.x + col.min.x >= 0 && pos.y + col.min.y >= 0
+			&& pos.x + col.max.x <= ScreenWidth - 1 && pos.y + col.max.y <= ScreenHeight - 1;
 	}
 	static Tmpl8::vec2 Collider::GetNormalEdgeScreen(const Tmpl8::vec2& pos, const Collider& col);
 
