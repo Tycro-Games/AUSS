@@ -10,7 +10,7 @@ public:
 
 	void RotateToDirection(Tmpl8::vec2);
 	static bool CheckVec2(const Tmpl8::vec2& Pos);
-	void Reflect();
+	void Reflect(Tmpl8::vec2 normal);
 	~Rotator() {};
 	virtual void Call() override;
 	void RotateToPlayer();

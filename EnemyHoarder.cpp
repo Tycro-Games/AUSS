@@ -111,9 +111,19 @@ void EnemyHoarder::Call()
 		//moves a bit after atacking
 		ToMove = true;
 	}
+	else if (col->collision != NULL) {
+		Collider c = *col->collision;
+
+
+		if (pos.x + col->min.x < c.min.x + c.pos->x || pos.x + col->max.x > c.max.x + c.pos->x)
+			rot->Reflect(Tmpl8::vec2(1, 0));
+		if (pos.y + col->min.y < c.min.y + c.pos->y || pos.y + col->max.y > c.max.y + c.pos->y)
+			rot->Reflect(Tmpl8::vec2(0, 1));
+		col->collision = NULL;
+	}
 	//out of bounds
 	else {
-		rot->Reflect();
+		rot->Reflect(Collider::GetNormalEdgeScreen(mover->nextP, *mover->getColl()));
 	}
 
 }

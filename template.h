@@ -16,7 +16,7 @@ constexpr int ScreenHeight = 512;
 //#define FULLSCREEN
 #define ADVANCEDGL	// faster if your system supports it. Switches SDL2's texture buffer out for OpenGL texture buffer with mappings to CPU Memory. 
 
-static const char* TemplateVersion = "A Mess of Snowballs";
+static const char* TemplateVersion = "An Unrealistic Spaceship Simulator";
 
 //SIMD Intrinsics headers.
 //#include "emmintrin.h"

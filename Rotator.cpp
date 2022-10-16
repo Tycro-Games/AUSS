@@ -35,10 +35,9 @@ void Rotator::RotateToDirection(Tmpl8::vec2 Pos)
 }
 
 
-void Rotator::Reflect()
+void Rotator::Reflect(const Tmpl8::vec2 normal)
 {
 
-	Tmpl8::vec2 normal = Collider::GetNormalEdgeScreen(mover->nextP, *mover->getColl());
 
 	mover->OppositeDirection(normal);
 	RotateToDirection(*pos + *dir);
