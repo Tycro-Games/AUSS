@@ -76,8 +76,8 @@ namespace Tmpl8 {
 		//consts
 		const float FIRE_SPEED_CHANGE = .1f;
 		const Tmpl8::vec2 START_POS = Tmpl8::vec2(ScreenWidth / 2, ScreenHeight / 2);
-		const Tmpl8::vec2 COL_MIN = Tmpl8::vec2(-33/2,-33/2);
-		const Tmpl8::vec2 COL_MAX = Tmpl8::vec2(33/2, 33/2);
+		const Tmpl8::vec2 COL_MIN = Tmpl8::vec2(-33/2-5,-33/2-5);
+		const Tmpl8::vec2 COL_MAX = Tmpl8::vec2(33/2+5, 33/2+5);
 
 	};
 

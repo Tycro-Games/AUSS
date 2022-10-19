@@ -1,6 +1,6 @@
 #include "Player.h"
 #include "MathFunctions.h"
-#include"game.h"
+#include "game.h"
 #include "Rotator.h"
 
 #include <string>
@@ -41,7 +41,7 @@ void Player::Render(Tmpl8::Surface* screen)
 	//debug for player's collider	
 	screen->Box(static_cast<int>(pos.x + col.min.x), static_cast<int>(pos.y + col.min.y), static_cast<int>(pos.x + col.max.x), static_cast<int>(pos.y + col.max.y), 0xffffff);
 	//debug for collision with screen borders
-	screen->Box(static_cast<int>(pos.x + col.min.x * 8), static_cast<int>(pos.y + col.min.y * 8), static_cast<int>(pos.x + col.max.x * 8), static_cast<int>(pos.y + col.max.y * 8), 0xffffff);
+	screen->Box(static_cast<int>(pos.x + col.min.x * 6), static_cast<int>(pos.y + col.min.y * 6), static_cast<int>(pos.x + col.max.x * 6), static_cast<int>(pos.y + col.max.y * 6), 0xffffff);
 
 	auto inactive = std::string("HP: " + std::to_string(hp));
 
@@ -50,7 +50,7 @@ void Player::Render(Tmpl8::Surface* screen)
 
 void Player::Update(float deltaTime)
 {
-	
+
 	//tries to move tilemap
 	playerMover->Update(deltaTime);
 	//tilemap is trying to go past the limits

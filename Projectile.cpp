@@ -69,7 +69,7 @@ void Projectile::Render(Tmpl8::Surface* screen)
 		return;
 	sprite->SetFrame(frame);
 	sprite->Draw(screen, static_cast<int>(pos.x + col->min.x), static_cast<int>(pos.y + col->min.y));
-	screen->Box(static_cast<int>(pos.x + col->min.x), static_cast<int>(pos.y + col->min.y), static_cast<int>(pos.x + +col->max.x), static_cast<int>(pos.y + col->max.y), 0xff0000);
+	screen->Box(static_cast<int>(pos.x + col->min.x), static_cast<int>(pos.y + col->min.y), static_cast<int>(pos.x + col->max.x), static_cast<int>(pos.y + col->max.y), 0xff0000);
 }
 
 void Projectile::Call()
@@ -79,15 +79,15 @@ void Projectile::Call()
 
 		ResetBullet();
 	}
-	else if (col->collision != NULL) {
-		Collider c = *col->collision;
+	else if (mover->colToReflectFrom != NULL) {
+		Collider c = *mover->colToReflectFrom;
 
 
 		if (pos.x + col->min.x < c.min.x + c.pos->x || pos.x + col->max.x > c.max.x + c.pos->x)
 			Reflect(Tmpl8::vec2(1, 0));
 		if (pos.y + col->min.y < c.min.y + c.pos->y || pos.y + col->max.y > c.max.y + c.pos->y)
 			Reflect(Tmpl8::vec2(0, 1));
-		col->collision = NULL;
+		mover->colToReflectFrom = NULL;
 	}
 	else
 		Reflect(Collider::GetNormalEdgeScreen(mover->nextP, *col));
@@ -99,5 +99,5 @@ void Projectile::ResetBullet()
 	col->toDeactivate = false;
 	timer->isFinished = true;
 	spawner->AddProjectileToPool(this);
-	spawner->SpawnExplosions(pos);
+	spawner->SpawnExplosions(pos + col->min);
 }

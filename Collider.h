@@ -53,17 +53,12 @@ public:
 	{
 
 		return pos.x + col.min.x >= 0 && pos.y + col.min.y >= 0
-			&& pos.x + col.max.x < ScreenWidth - 1 && pos.y + col.max.y < ScreenHeight - 1;
+			&& pos.x + col.max.x <= ScreenWidth - 1 && pos.y + col.max.y <= ScreenHeight - 1;
 	}
 	static bool Collider::InGameBounds(Collider& col);
 	static bool Collider::InGameBounds(Tmpl8::vec2& pos, Collider& col);
 
-	static bool Collider::InGameScreen(Tmpl8::vec2& pos, Collider& col)
-	{
-
-		return pos.x + col.min.x >= 0 && pos.y + col.min.y >= 0
-			&& pos.x + col.max.x <= ScreenWidth - 1 && pos.y + col.max.y <= ScreenHeight - 1;
-	}
+	
 	static Tmpl8::vec2 Collider::GetNormalEdgeScreen(const Tmpl8::vec2& pos, const Collider& col);
 
 

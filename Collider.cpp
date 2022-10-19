@@ -38,9 +38,9 @@ Tmpl8::vec2 Collider::GetNormalEdgeScreen(const Tmpl8::vec2& pos, const Collider
 {
 	Tmpl8::vec2 normal;
 	Collider gameBounds = Tmpl8::Game::tileMap->GetGameBounds();
-	if (pos.x + col.min.x <= gameBounds.min.x || pos.x + col.max.x >= gameBounds.max.x)
+	if (pos.x + col.min.x < gameBounds.min.x || pos.x + col.max.x > gameBounds.max.x)
 		normal = Tmpl8::vec2(1, 0);
-	else if (pos.y + col.min.y <= gameBounds.min.y || pos.y + col.max.y >= gameBounds.max.y)
+	else//if (pos.y + col.min.y < gameBounds.min.y || pos.y + col.max.y < gameBounds.max.y)
 		normal = Tmpl8::vec2(0, 1);
 	return normal;
 }

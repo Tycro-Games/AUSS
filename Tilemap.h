@@ -4,6 +4,7 @@
 
 #include "Collider.h"
 #include "vector.h"
+#include <vector>
 #include "Renderable.h"
 #include "Updateable.h"
 
@@ -59,8 +60,8 @@ public:
 		return col;
 	}Collider GetGameBounds() {
 		return Collider(
-			Tmpl8::vec2(-OFFSET_X + pos.x, -OFFSET_Y + pos.y),
-			Tmpl8::vec2(OFFSET_X + pos.x, OFFSET_Y + pos.y));
+			Tmpl8::vec2(-OFFSET_X + pos.x + TILE_SIZE, -OFFSET_Y + pos.y + TILE_SIZE),
+			Tmpl8::vec2(OFFSET_X + pos.x - TILE_SIZE, OFFSET_Y + pos.y - TILE_SIZE));
 	}
 	bool IsFree(float x, float y) {
 		x += OFFSET_X - (pos.x);
@@ -75,7 +76,6 @@ public:
 		int tx = static_cast<int>(x / TILE_SIZE), ty = static_cast<int>(y / TILE_SIZE);
 
 
-
 		return tiles[tx + ty * X_TILES].obs;
 	}
 	void SetPos(const Tmpl8::vec2 p) {
@@ -88,19 +88,56 @@ private:
 	Tmpl8::Surface tileSurface;
 
 	//consts
-	const Tile SNOW_TILE = { false, 0, 0, 128,128 };
-	const Tile SNOW_TILE2 = { true, 128,128,128,128 };
+	// edges
+	//top tile edge, shorter names for readbility
+	const Tile TEL = { false, 864, 72, 72,72 };
+	const Tile TEM = { false, 936, 72, 72,72 };
+	const Tile TER = { false, 1008, 72, 72,72 };
+	//side tile edge
+	const Tile SET = { false, 720, 0, 72,72 };
+	const Tile SEM = { false, 720, 72, 72,72 };
+	const Tile SEB = { false, 720, 144, 72,72 };
+	//corners L=Left R=Right T=Top B=Bottom M=Mid
+	//top 
+	const Tile CLT = { false, 0, 0, 72,72 };
+	const Tile CMT = { false, 72, 0, 72,72 };
+	const Tile CRT = { false, 144, 0, 72,72 };
+	//mid
+	const Tile CLM = { false, 0, 72, 72,72 };
+	//bottom
+	const Tile CLB = { false, 0, 144, 72,72 };
 
-	const int X_TILES = 13;
-	const int Y_TILES = 8;
-	const int TILE_SIZE = 128;
-	const int TILEMAP_SIZE = 640;
+	static const int X_TILES = 24;
+	static const int Y_TILES = 16;
+	const int TILE_SIZE = 72;
+	const int TILEMAP_SIZE = 1940;
 	//center the tilemap
 	const int OFFSET_X = TILE_SIZE * X_TILES / 2;
 	const int OFFSET_Y = TILE_SIZE * Y_TILES / 2;
 
 	Collider* col;
-	vector<Tile> tiles;
 	vector<Obstacle*> blockingTiles;
+	//tim
+	Tile tiles[X_TILES * Y_TILES] = {
+	  CLT,CMT,CRT,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEL,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,
+	  CLM,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEL,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,
+	  CLM,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEL,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,
+	  CLM,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEL,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,
+	  CLM,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEL,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,
+	  CLM,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEL,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,
+	  CLM,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEL,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,
+	  CLM,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEL,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,
+	  CLM,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEL,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,
+	  CLM,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEL,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,
+	  CLM,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEL,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,
+	  CLM,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEL,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,
+	  CLM,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEL,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,CLM,
+	  CLM,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEL,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,CLM,
+	  CLM,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEL,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,
+	  CLB,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,CLM,TEL,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,
+
+
+	};
+
 
 };

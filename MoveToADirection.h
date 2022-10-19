@@ -16,10 +16,10 @@ public:
 	}
 	virtual ~MoveToADirection();
 	Tmpl8::vec2 nextP;
+	Collider* colToReflectFrom = nullptr;
 protected:
 	const float desiredTime = 1.5f;
 	Tmpl8::vec2* dir;
-
 	Callable* call;
 
 };

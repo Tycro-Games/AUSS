@@ -46,7 +46,7 @@ private:
 	float timePassed = 0.0f;
 	//consts
 	const float DASH_DURATION = 0.35f;
-	const float EDGE_DISTANCE = 8;
+	const float EDGE_DISTANCE = 6;
 	// Inherited via Callable
 	virtual void Call() override;
 

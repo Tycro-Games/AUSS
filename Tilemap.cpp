@@ -5,7 +5,7 @@
 #include <algorithm>
 #include "game.h"
 Tilemap::Tilemap() :
-	tileSurface("assets/Holiday/RTSpack_tilesheet@2.png"),
+	tileSurface("assets/Spaceship-shooter#01/Wang tiles/02-Craters.png"),
 	pos(Tmpl8::vec2(ScreenWidth / 2, ScreenHeight / 2)),
 	lastPos(pos),
 	col(new Collider(
@@ -16,38 +16,17 @@ Tilemap::Tilemap() :
 			1,
 			1),
 		&pos))
-
 {
 
-
-
-	//tiles adding
-	//line 1
-	tiles.push_back(SNOW_TILE); tiles.push_back(SNOW_TILE); tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);
-	//line 2
-	tiles.push_back(SNOW_TILE); tiles.push_back(SNOW_TILE); tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);
-	//line 3
-	tiles.push_back(SNOW_TILE); tiles.push_back(SNOW_TILE); tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);
-	//line 4
-	tiles.push_back(SNOW_TILE); tiles.push_back(SNOW_TILE); tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE2);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE2);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);
-	//line 5
-	tiles.push_back(SNOW_TILE); tiles.push_back(SNOW_TILE); tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);
-	//line 6
-	tiles.push_back(SNOW_TILE); tiles.push_back(SNOW_TILE); tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);
-	//line 7
-	tiles.push_back(SNOW_TILE); tiles.push_back(SNOW_TILE); tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);
-	//line 8
-	tiles.push_back(SNOW_TILE); tiles.push_back(SNOW_TILE); tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);	tiles.push_back(SNOW_TILE);
-
-	//13x8 tiles
+	//add obstacles
 	for (int y = 0; y < Y_TILES; y++)
 		for (int x = 0; x < X_TILES; x++)
 		{
 			int index = x + y * X_TILES;
 			if (tiles[index].IsBlocking) {
 				//memory leak
-				Tmpl8::vec2 p = Tmpl8::vec2(x * TILE_SIZE + pos.x - static_cast<float>(OFFSET_X),
-					y * TILE_SIZE + pos.y - static_cast<float>(OFFSET_Y));
+				Tmpl8::vec2 p = Tmpl8::vec2(x * tiles[index].xd + pos.x - static_cast<float>(OFFSET_X),
+					y * tiles[index].yd + pos.y - static_cast<float>(OFFSET_Y));
 
 
 				tiles[index].obs = new Obstacle(p, Collider(0.0f, static_cast<float>(TILE_SIZE)));
@@ -95,6 +74,8 @@ void Tilemap::Update(float deltaTime)
 		blockingTiles[i]->Update(deltaTime);
 	}
 }
+
+
 
 void Tilemap::DrawTile(Tmpl8::Surface* screen, int tx, int ty, int x, int y)
 {

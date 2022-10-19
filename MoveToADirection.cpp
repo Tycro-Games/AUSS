@@ -27,19 +27,22 @@ void MoveToADirection::Update(float deltaTime)
 			(*pos) = nextP;
 		else {
 			//reflect on obstacle
+		//	Obstacle* obs = Tmpl8::Game::tileMap->GetObstacle(nextP.x + col->min.x, nextP.y + col->min.y);
 			Obstacle* obs = Tmpl8::Game::tileMap->GetObstacle(nextP.x + col->min.x, nextP.y + col->min.y);
 			Obstacle* obs1 = Tmpl8::Game::tileMap->GetObstacle(nextP.x + col->min.x, nextP.y + col->max.y);
 			Obstacle* obs2 = Tmpl8::Game::tileMap->GetObstacle(nextP.x + col->max.x, nextP.y + col->min.y);
 			Obstacle* obs3 = Tmpl8::Game::tileMap->GetObstacle(nextP.x + col->max.x, nextP.y + col->max.y);
 
 			if (obs != NULL)
-				col->collision = obs->getColl();
-			else if (obs1 != NULL)
-				col->collision = obs1->getColl();
-			else if (obs2 != NULL)
-				col->collision = obs2->getColl();
-			else
-				col->collision = obs3->getColl();
+				colToReflectFrom = obs->getColl();
+			if (obs1 != NULL)
+				colToReflectFrom = obs1->getColl();
+			if (obs2 != NULL)
+				colToReflectFrom = obs2->getColl();
+			if (obs3 != NULL)
+				colToReflectFrom = obs3->getColl();
+
+
 			call->Call();
 		}
 	}
