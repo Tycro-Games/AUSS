@@ -48,6 +48,7 @@ public:
 
 	// Inherited via Updateable
 	virtual void Update(float deltaTime) override;
+
 	Tmpl8::vec2* GetPos() {
 		return &pos;
 	}Tmpl8::vec2 GetOffset() {
@@ -70,7 +71,7 @@ public:
 		/*std::cout << tx << " " << ty << '\n';*/
 		return !tiles[tx + ty * X_TILES].IsBlocking;
 	}
-	Obstacle* GetObstacle(float x, float y) {
+	Obstacle* GetObstacle(float x, float y) const {
 		x += OFFSET_X - (pos.x);
 		y += OFFSET_Y - (pos.y);
 		int tx = static_cast<int>(x / TILE_SIZE), ty = static_cast<int>(y / TILE_SIZE);
@@ -106,9 +107,21 @@ private:
 	const Tile CLM = { false, 0, 72, 72,72 };
 	//bottom
 	const Tile CLB = { false, 0, 144, 72,72 };
+	//obstacle
+	const Tile OLT = { true, 433, 0, 72,72 };
+	const Tile OMT = { true, 505, 0, 72,72 };
+	const Tile ORT = { true, 577, 0, 72,72 };
 
-	static const int X_TILES = 24;
-	static const int Y_TILES = 16;
+	const Tile OLM = { true, 433, 72, 72,72 };
+	const Tile OMM = { true, 505, 72, 72,72 };
+	const Tile OMR = { true, 577, 72, 72,72 };
+
+	const Tile OLB = { true, 433, 144, 72,72 };
+	const Tile OMB = { true, 505, 144, 72,72 };
+	const Tile ORB = { true, 577, 144, 72,72 };
+
+	static const uint32_t X_TILES = 24;
+	static const uint32_t Y_TILES = 16;
 	const int TILE_SIZE = 72;
 	const int TILEMAP_SIZE = 1940;
 	//center the tilemap
@@ -122,9 +135,9 @@ private:
 	  CLT,CMT,CRT,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEL,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,
 	  CLM,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEL,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,
 	  CLM,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEL,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,
-	  CLM,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEL,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,
-	  CLM,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEL,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,
-	  CLM,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEL,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,
+	  CLM,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,OLT,OMT,ORT,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,
+	  CLM,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,OLM,OMM,OMR,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,
+	  CLM,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,OLB,OMB,ORB,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,
 	  CLM,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEL,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,
 	  CLM,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEL,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,
 	  CLM,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEL,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,

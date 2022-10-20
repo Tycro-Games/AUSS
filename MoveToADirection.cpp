@@ -18,30 +18,14 @@ void MoveToADirection::Update(float deltaTime)
 
 
 	nextP += nextPos;
-	//offset by the collider length so it bounces back exactly on the edge
+
 	if (col->InGameBounds(nextP, (*col))) {
-		if (Tmpl8::Game::tileMap->IsFree(nextP.x + col->min.x, nextP.y + col->min.y) &&
-			Tmpl8::Game::tileMap->IsFree(nextP.x + col->min.x, nextP.y + col->max.y) &&
-			Tmpl8::Game::tileMap->IsFree(nextP.x + col->max.x, nextP.y + col->min.y) &&
-			Tmpl8::Game::tileMap->IsFree(nextP.x + col->max.x, nextP.y + col->max.y))
+		if (Tmpl8::Game::tileMap->IsFree(nextP.x, nextP.y))
 			(*pos) = nextP;
 		else {
 			//reflect on obstacle
-		//	Obstacle* obs = Tmpl8::Game::tileMap->GetObstacle(nextP.x + col->min.x, nextP.y + col->min.y);
-			Obstacle* obs = Tmpl8::Game::tileMap->GetObstacle(nextP.x + col->min.x, nextP.y + col->min.y);
-			Obstacle* obs1 = Tmpl8::Game::tileMap->GetObstacle(nextP.x + col->min.x, nextP.y + col->max.y);
-			Obstacle* obs2 = Tmpl8::Game::tileMap->GetObstacle(nextP.x + col->max.x, nextP.y + col->min.y);
-			Obstacle* obs3 = Tmpl8::Game::tileMap->GetObstacle(nextP.x + col->max.x, nextP.y + col->max.y);
-
-			if (obs != NULL)
-				colToReflectFrom = obs->getColl();
-			if (obs1 != NULL)
-				colToReflectFrom = obs1->getColl();
-			if (obs2 != NULL)
-				colToReflectFrom = obs2->getColl();
-			if (obs3 != NULL)
-				colToReflectFrom = obs3->getColl();
-
+			Obstacle* obs = Tmpl8::Game::tileMap->GetObstacle(nextP.x, nextP.y);
+			colToReflectFrom = obs->getColl();
 
 			call->Call();
 		}

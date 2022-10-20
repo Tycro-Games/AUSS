@@ -80,13 +80,37 @@ void Projectile::Call()
 		ResetBullet();
 	}
 	else if (mover->colToReflectFrom != NULL) {
+		//obstacle is a collider with the pivot in the top left
+		//calculate normal based on https://gamedev.stackexchange.com/questions/136073/how-does-one-calculate-the-surface-normal-in-2d-collisions
+		
 		Collider c = *mover->colToReflectFrom;
 
+		Tmpl8::vec2 midPoint = (*c.pos) + Tmpl8::vec2(c.max.x / 2, c.max.y / 2);
 
-		if (pos.x + col->min.x < c.min.x + c.pos->x || pos.x + col->max.x > c.max.x + c.pos->x)
-			Reflect(Tmpl8::vec2(1, 0));
-		if (pos.y + col->min.y < c.min.y + c.pos->y || pos.y + col->max.y > c.max.y + c.pos->y)
-			Reflect(Tmpl8::vec2(0, 1));
+		Tmpl8::vec2 dist = pos - midPoint;
+
+		float ex = c.max.x / 2.0f;
+		float ey = c.max.y / 2.0f;
+		Tmpl8::vec2 BottomLeft = *c.pos + Tmpl8::vec2(0, c.max.y);
+		Tmpl8::vec2 BottomRight = *c.pos + c.max;
+
+		Tmpl8::vec2 ux = (BottomRight - BottomLeft).normalized();
+		Tmpl8::vec2 uy = (*c.pos - BottomLeft).normalized();
+
+		float distX = dist.dot(ux);
+		float distY = dist.dot(uy);
+
+		if (distX > ex)distX = ex;
+		else if (distX < -ex)distX = -ex;
+
+		if (distY > ey)distY = ey;
+		else if (distY < -ey)distY = -ey;
+
+		Tmpl8::vec2 hitPoint = midPoint + ux * distX + uy * distY;
+
+		Tmpl8::vec2 norm = (pos - hitPoint).normalized();
+		Reflect(norm);
+
 		mover->colToReflectFrom = NULL;
 	}
 	else

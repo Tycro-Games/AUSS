@@ -1,4 +1,5 @@
 #include "MathFunctions.h"
+#include "Collider.h"
 
 float MathFunctions::GetDirInAnglesPos(Tmpl8::vec2 dir)
 {
@@ -29,15 +30,15 @@ float MathFunctions::GetDistanceSqr(Tmpl8::vec2 pos1, Tmpl8::vec2 pos2) {
 	float dy = pos2.y - pos1.y;
 	return dx * dx + dy * dy;
 }
+//based on https://www.youtube.com/watch?v=naaeH1qbjdQ
 Tmpl8::vec2 MathFunctions::Reflect(Tmpl8::vec2 dir, Tmpl8::vec2 norm)
 {
-
+	//this is double the projection of the triangle
 	float dn = 2 * dir.dot(norm);
-
+	//substract from the original direction so so we get the reflected vector
 	return dir - norm * dn;
 
 }
-
 
 void MathFunctions::RotateTo(float x, float y, Tmpl8::vec2 pos, Tmpl8::vec2*& dir)
 {
@@ -45,7 +46,7 @@ void MathFunctions::RotateTo(float x, float y, Tmpl8::vec2 pos, Tmpl8::vec2*& di
 		static_cast<int>(pos.x),
 		static_cast<int>(y),
 		static_cast<int>(pos.y)))
- 		return;
+		return;
 	dir->x = x - pos.x;
 	dir->y = y - pos.y;
 
