@@ -27,9 +27,12 @@ Tilemap::Tilemap() :
 				//memory leak
 				Tmpl8::vec2 p = Tmpl8::vec2(x * tiles[index].xd + pos.x - static_cast<float>(OFFSET_X),
 					y * tiles[index].yd + pos.y - static_cast<float>(OFFSET_Y));
+				Tmpl8::vec2 offset = Tmpl8::vec2(tiles[index].pivotX, tiles[index].pivotY);
+				p += offset;
 
-
-				tiles[index].obs = new Obstacle(p, Collider(0.0f, static_cast<float>(TILE_SIZE)));
+				float xD = tiles[index].xd;
+				float yD = tiles[index].yd;
+				tiles[index].obs = new Obstacle(p, Collider(0, Tmpl8::vec2(xD - tiles[index].dimensionsX, yD - tiles[index].dimensionsY)));
 				blockingTiles.push_back(tiles[index].obs);
 				Tmpl8::Game::AddMoveable(tiles[index].obs);
 			}
@@ -58,7 +61,10 @@ void Tilemap::Render(Tmpl8::Surface* screen)
 				y * tiles[index].yd + static_cast<int>(pos.y) - OFFSET_Y);
 		}
 	//debug
-
+	for (int i = 0; i < blockingTiles.getCount(); i++) {
+		Collider c = *blockingTiles[i]->getColl();
+		screen->Box(c.min.x + c.pos->x, c.min.y + c.pos->y, c.max.x + c.pos->x, c.max.y + c.pos->y, 0xFF0000);
+	}
 	auto posText = std::string(std::to_string(pos.x) + " " + std::to_string(pos.y));
 	screen->Print(posText.c_str(), 200, 10, 0xFF0000);
 }

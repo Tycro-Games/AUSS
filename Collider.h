@@ -40,6 +40,18 @@ public:
 		return a.min.x > b.min.x && a.min.y > b.min.y
 			&& a.max.x < b.max.x&& a.max.y < b.max.y;
 
+	}
+	/// <summary>
+	/// checks if the vector it is inside the collider
+	/// </summary>
+	/// <param name="a"> collider to check</param>
+	/// <param name="b">the vector that may be inside the collider</param>
+	/// <returns></returns>
+	static bool Contains(const Collider& a, const Tmpl8::vec2& b) {
+
+		return a.min.x + a.pos->x < b.x&& a.min.y + a.pos->y < b.y
+			&& b.x < a.max.x + a.pos->x && b.y < a.max.y + a.pos->y;
+
 	}static bool CollidesY(const Collider& a, const Collider& b) {
 		return a.min.y < b.max.y&& a.max.y>b.min.y;
 
@@ -58,7 +70,7 @@ public:
 	static bool Collider::InGameBounds(Collider& col);
 	static bool Collider::InGameBounds(Tmpl8::vec2& pos, Collider& col);
 
-	
+
 	static Tmpl8::vec2 Collider::GetNormalEdgeScreen(const Tmpl8::vec2& pos, const Collider& col);
 
 

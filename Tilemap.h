@@ -32,7 +32,23 @@ struct Tile
 	/// dimension of the tile on y
 	/// </summary>
 	unsigned int yd;
-	Tmpl8::vec2 offset={0,0};
+	/// <summary>
+	/// Offset for the collider obstacle
+	/// </summary>
+	float pivotX = 0;
+	/// <summary>
+	/// Offset for the collider obstacle
+	/// </summary>
+	float pivotY = 0;
+	/// <summary>
+	/// Offset for the collider obstacle
+	/// </summary>
+	float dimensionsX = 0;
+	/// <summary>
+	/// Offset for the collider obstacle
+	/// </summary>
+	float dimensionsY = 0;
+
 	Obstacle* obs = NULL;
 };
 
@@ -65,12 +81,16 @@ public:
 			Tmpl8::vec2(OFFSET_X + pos.x - TILE_SIZE, OFFSET_Y + pos.y - TILE_SIZE));
 	}
 	bool IsFree(float x, float y) {
+		Tmpl8::vec2 targetPos = Tmpl8::vec2(x, y);
 		x += OFFSET_X - (pos.x);
 		y += OFFSET_Y - (pos.y);
 		int tx = static_cast<int>(x / TILE_SIZE), ty = static_cast<int>(y / TILE_SIZE);
-		/*std::cout << tx << " " << ty << '\n';*/
-		return !tiles[tx + ty * X_TILES].IsBlocking;
+		if (tiles[tx + ty * X_TILES].IsBlocking && Collider::Contains(*tiles[tx + ty * X_TILES].obs->getColl(), targetPos))
+			return false;
+		//return !tiles[tx + ty * X_TILES].IsBlocking;
+		return true;
 	}
+
 	Obstacle* GetObstacle(float x, float y) const {
 		x += OFFSET_X - (pos.x);
 		y += OFFSET_Y - (pos.y);
@@ -105,28 +125,29 @@ private:
 	const Tile CRT = { false, 144, 0, 72,72 };
 	//mid
 	const Tile CLM = { false, 0, 72, 72,72 };
-	const Tile CMM = { false, 73, 72, 72,72 };
-	const Tile CRM = { false, 145, 72, 72,72 };
+	const Tile CMM = { false, 74, 72, 72,72 };
+	const Tile CRM = { false, 144, 72, 72,72 };
 	//bottom
 	const Tile CLB = { false, 0, 144, 72,72 };
-	const Tile CMB = { false, 73, 144, 72,72 };
-	const Tile CRB = { false, 145, 144, 72,72 };
+	const Tile CMB = { false, 74, 144, 72,72 };
+	const Tile CRB = { false, 144, 144, 72,72 };
 
 	//obstacle
-	const Tile OLT = { true, 433, 0, 72,72 };
-	const Tile OMT = { true, 505, 0, 72,72 };
-	const Tile ORT = { true, 577, 0, 72,72 };
+	const Tile OLT = { true, 432, 0, 72, 72, 23, 24, 23, 24 };
+	const Tile OMT = { true, 504, 0, 72, 72 ,0, 24, 0, 24 };
+	const Tile ORT = { true, 576, 0, 72, 72 ,0, 24, 25, 24 };
 
-	const Tile OLM = { true, 433, 72, 72,72 };
-	const Tile OMM = { true, 505, 72, 72,72 };
-	const Tile OMR = { true, 577, 72, 72,72 };
+	const Tile OLM = { true, 432, 72, 72,72, 23, 0, 25, 0 };
+	const Tile OMM = { false, 504, 72, 72,72 };//mid part
+	const Tile OMR = { true, 576, 72, 72,72 ,0 , 0, 25, 0 };
 
-	const Tile OLB = { true, 433, 144, 72,72 };
-	const Tile OMB = { true, 505, 144, 72,72 };
-	const Tile ORB = { true, 577, 144, 72,72 };
+	const Tile OLB = { true, 432, 144, 72,72, 23, 0, 23, 24 };
+	const Tile OMB = { true, 504, 144, 72,72 ,0 , 0, 0, 24 };
+	const Tile ORB = { true, 576, 144, 72,72 , 0, 0, 25, 24 };
 
 	static const uint32_t X_TILES = 24;
 	static const uint32_t Y_TILES = 16;
+
 	const int TILE_SIZE = 72;
 	const int TILEMAP_SIZE = 1940;
 	//center the tilemap
@@ -135,7 +156,7 @@ private:
 
 	Collider* col;
 	vector<Obstacle*> blockingTiles;
-	
+
 	Tile tiles[X_TILES * Y_TILES] = {
 	  CLT,CMT,CMT,CMT,CMT,CMT,CMT,CMT,CMT,CMT,CMT,CMT,CMT,CMT,CMT,CMT,CMT,CMT,CMT,CMT,CMT,CMT,CMT,CRT,
 	  CLM,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEL,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,CRM,
