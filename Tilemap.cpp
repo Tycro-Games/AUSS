@@ -34,9 +34,6 @@ Tilemap::Tilemap() :
 				Tmpl8::Game::AddMoveable(tiles[index].obs);
 			}
 		}
-
-
-
 }
 
 
