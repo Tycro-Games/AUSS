@@ -27,12 +27,12 @@ struct Tile
 	/// <summary>
 	/// dimensions of the tile on x
 	/// </summary>
-	int xd;
+	unsigned int xd;
 	/// <summary>
 	/// dimension of the tile on y
 	/// </summary>
-	int yd;
-
+	unsigned int yd;
+	Tmpl8::vec2 offset={0,0};
 	Obstacle* obs = NULL;
 };
 
