@@ -6,12 +6,13 @@ EnemyHoarder::EnemyHoarder(PosDir posDir, Tmpl8::Sprite* sprite, EnemySpawner* s
 {
 	dg = DG;
 	col = (new Collider(COL_MIN, COL_MAX, &pos));
-	dir = new Tmpl8::vec2();
-	mover = new MoveToADirection(&pos, dir, col, this, SPEED);
+	mover = new MoveToADirection(&pos, &dir, col, this, SPEED);
+	//as a getter for the base class
 	move = mover;
-	attack = new Timer(this, TIME_TO_ATTACK, true);
-	rotate = new Timer();
-	rot = new Rotator(&pos, dir, rVar, &frame, mover, spawner);
+
+	attack = Timer(this, TIME_TO_ATTACK, true);
+	rotate = Timer();
+	rot = new EnemyRotator(&pos, &dir, rVar, &frame, mover, spawner);
 
 	Init(posDir);
 }
@@ -20,10 +21,7 @@ EnemyHoarder::EnemyHoarder(PosDir posDir, Tmpl8::Sprite* sprite, EnemySpawner* s
 
 EnemyHoarder::~EnemyHoarder()
 {
-	delete dir;
 	delete mover;
-	delete rotate;
-	delete attack;
 	delete rot;
 }
 
@@ -32,7 +30,7 @@ void EnemyHoarder::Update(float deltaTime)
 	if (!getUpdateable())
 		return;
 
-	rotate->Update(deltaTime);
+	rotate.Update(deltaTime);
 	//marked by collision
 	if (col->toDeactivate) {
 		//take damage from the collision if it is from the projectile or block
@@ -57,7 +55,7 @@ void EnemyHoarder::Update(float deltaTime)
 		}
 		else if (dist < MAX_DISTANCE_TO_ATTACK) {
 			//in range to atack player
-			attack->Update(deltaTime);
+			attack.Update(deltaTime);
 			InRangeToAtack = true;
 		}
 		else
@@ -86,10 +84,10 @@ void EnemyHoarder::Init(PosDir posDir)
 {
 	SetActive(true);
 	pos = posDir.pos;
-	*dir = posDir.dir;
+	dir = posDir.dir;
 	hp = 100;
 	mover->SetSpeed(SPEED + randomNumbers.RandomBetweenFloats(-30, 100));
-	rotate->Init(rot, randomNumbers.RandomBetweenFloats(0.1f, 0.9f), true);
+	rotate.Init(rot, randomNumbers.RandomBetweenFloats(0.1f, 0.9f), true);
 	rot->Call();
 }
 
@@ -105,42 +103,17 @@ void EnemyHoarder::ResetEnemy()
 void EnemyHoarder::Call()
 {
 	//ready to atack and in range
-	if (attack->FinishedLoop() && InRangeToAtack) {
+	if (attack.FinishedLoop() && InRangeToAtack) {
 		spawner->PlayerTakesDamage(this);
-		attack->ResetVar();
+		attack.ResetVar();
 		//moves a bit after atacking
 		ToMove = true;
 	}
-	else if (col->collision != NULL) {
-		//calculate normal based on https://gamedev.stackexchange.com/questions/136073/how-does-one-calculate-the-surface-normal-in-2d-collisions
-
+	else if (mover->colToReflectFrom != NULL) {
 		Collider c = *mover->colToReflectFrom;
 
-		Tmpl8::vec2 midPoint = (*c.pos) + Tmpl8::vec2(c.max.x / 2, c.max.y / 2);
 
-		Tmpl8::vec2 dist = pos - midPoint;
-
-		float ex = c.max.x / 2.0f;
-		float ey = c.max.y / 2.0f;
-		Tmpl8::vec2 BottomLeft = *c.pos + Tmpl8::vec2(0, c.max.y);
-		Tmpl8::vec2 BottomRight = *c.pos + c.max;
-
-		Tmpl8::vec2 ux = (BottomRight - BottomLeft).normalized();
-		Tmpl8::vec2 uy = (*c.pos - BottomLeft).normalized();
-
-		float distX = dist.dot(ux);
-		float distY = dist.dot(uy);
-
-		if (distX > ex)distX = ex;
-		else if (distX < -ex)distX = -ex;
-
-		if (distY > ey)distY = ey;
-		else if (distY < -ey)distY = -ey;
-
-		Tmpl8::vec2 hitPoint = midPoint + ux * distX + uy * distY;
-
-		Tmpl8::vec2 norm = (pos - hitPoint).normalized();
-		rot->Reflect(norm);
+		rot->Reflect(Collider::GetNormal(c, *col));
 
 		mover->colToReflectFrom = NULL;
 	}

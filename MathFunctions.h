@@ -2,7 +2,9 @@
 #include "template.h"
 #include <iostream>
 #include "RotationVar.h"
-class MathFunctions {
+
+class MathFunctions
+{
 public:
 	static float GetDirInAnglesPos(Tmpl8::vec2 dir);
 	static float GetDirInAnglesNeg(Tmpl8::vec2 dir);
@@ -30,4 +32,6 @@ public:
 	{
 		return a + f * (b - a);
 	}
+	
+
 };

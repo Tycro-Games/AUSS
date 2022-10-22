@@ -85,9 +85,10 @@ public:
 		x += OFFSET_X - (pos.x);
 		y += OFFSET_Y - (pos.y);
 		int tx = static_cast<int>(x / TILE_SIZE), ty = static_cast<int>(y / TILE_SIZE);
-		if (tiles[tx + ty * X_TILES].IsBlocking && Collider::Contains(*tiles[tx + ty * X_TILES].obs->getColl(), targetPos))
+		//verifies if the position is actually colliding with the obstacle
+		if (tiles[tx + ty * X_TILES].IsBlocking &&
+			Collider::Contains(*tiles[tx + ty * X_TILES].obs->getColl(), targetPos))
 			return false;
-		//return !tiles[tx + ty * X_TILES].IsBlocking;
 		return true;
 	}
 
@@ -95,7 +96,6 @@ public:
 		x += OFFSET_X - (pos.x);
 		y += OFFSET_Y - (pos.y);
 		int tx = static_cast<int>(x / TILE_SIZE), ty = static_cast<int>(y / TILE_SIZE);
-
 
 		return tiles[tx + ty * X_TILES].obs;
 	}
@@ -168,9 +168,9 @@ private:
 	  CLM,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEL,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,CRM,
 	  CLM,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEL,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,CRM,
 	  CLM,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEL,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,CRM,
-	  CLM,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEL,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,CRM,
-	  CLM,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEL,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,CRM,
-	  CLM,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEL,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,CRM,
+	  CLM,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,OLT,OMT,ORT,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,CRM,
+	  CLM,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,OLM,OMM,OMR,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,CRM,
+	  CLM,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,OLB,OMB,ORB,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,CRM,
 	  CLM,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEL,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,CRM,
 	  CLM,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEL,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,CRM,
 	  CLB,CMB,CMB,CMB,CMB,CMB,CMB,CMB,CMB,CMB,CMB,CMB,CMB,CMB,CMB,CMB,CMB,CMB,CMB,CMB,CMB,CMB,CMB,CRB,

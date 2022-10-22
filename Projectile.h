@@ -5,6 +5,7 @@
 #include "MoveToADirection.h"
 #include "RotationVar.h"
 #include "PosDir.h"
+#include "Rotator.h"
 class ProjectileSpawner;
 class Projectile :public Callable, public Entity
 {
@@ -14,7 +15,6 @@ public:
 
 	virtual ~Projectile();
 	void RotateToDirection();
-	void Reflect(Tmpl8::vec2 normal);
 
 	void Init(PosDir posDir);
 	Collider* getColl() const {
@@ -39,12 +39,11 @@ private:
 
 	ProjectileSpawner* spawner;
 	MoveToADirection* mover;
+	Rotator* rot;
 	Collider* col;
 	Timer* timer;
 
 
 
 };
-
-
 

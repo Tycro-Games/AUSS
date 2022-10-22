@@ -1,26 +1,21 @@
 #pragma once
-#include "EnemySpawner.h"
-#include "Callable.h"
+#include "MoveToADirection.h"
 
 
-class Rotator : public Callable
+class Rotator
 {
 public:
-	Rotator(Tmpl8::vec2* pos, Tmpl8::vec2* dir, RotationVar rVar, int* frame, MoveToADirection*, EnemySpawner*);
+	Rotator(Tmpl8::vec2* pos, Tmpl8::vec2* dir, RotationVar rVar, int* frame, MoveToADirection*);
 
 	void RotateToDirection(Tmpl8::vec2);
-	static bool CheckVec2(const Tmpl8::vec2& Pos);
 	void Reflect(Tmpl8::vec2 normal);
 	~Rotator() {};
-	virtual void Call() override;
-	void RotateToPlayer();
-private:
+protected:
 	int* frame;
 	Tmpl8::vec2* pos;
 	Tmpl8::vec2* dir;
 	RotationVar rVar;
 	MoveToADirection* mover;
-	EnemySpawner* spawner;
 
 };
 

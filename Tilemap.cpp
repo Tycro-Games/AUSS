@@ -24,14 +24,15 @@ Tilemap::Tilemap() :
 		{
 			int index = x + y * X_TILES;
 			if (tiles[index].IsBlocking) {
-				//memory leak
+
 				Tmpl8::vec2 p = Tmpl8::vec2(x * tiles[index].xd + pos.x - static_cast<float>(OFFSET_X),
 					y * tiles[index].yd + pos.y - static_cast<float>(OFFSET_Y));
 				Tmpl8::vec2 offset = Tmpl8::vec2(tiles[index].pivotX, tiles[index].pivotY);
 				p += offset;
 
-				float xD = tiles[index].xd;
-				float yD = tiles[index].yd;
+				float xD = static_cast<float>(tiles[index].xd);
+				float yD = static_cast<float>(tiles[index].yd);
+
 				tiles[index].obs = new Obstacle(p, Collider(0, Tmpl8::vec2(xD - tiles[index].dimensionsX, yD - tiles[index].dimensionsY)));
 				blockingTiles.push_back(tiles[index].obs);
 				Tmpl8::Game::AddMoveable(tiles[index].obs);
@@ -47,7 +48,7 @@ Tilemap::~Tilemap()
 
 void Tilemap::Render(Tmpl8::Surface* screen)
 {
-	//13x8 tiles
+	//24x16 tiles
 	for (int y = 0; y < Y_TILES; y++)
 		for (int x = 0; x < X_TILES; x++)
 		{
@@ -112,8 +113,8 @@ void Tilemap::DrawTile(Tmpl8::Surface* screen, int tx, int ty, int x, int y)
 	y += addOffsetMinY;
 
 	//substract the clipped amount from the tile
-	int height = TILE_SIZE - addOffsetMaxY;
-	int width = TILE_SIZE - addOffsetMaxX;
+	int height = TILE_SIZE - addOffsetMaxY - addOffsetMinY;
+	int width = TILE_SIZE - addOffsetMaxX - addOffsetMinX;
 
 
 	//draw tile

@@ -1,24 +1,18 @@
 #include "Rotator.h"
 #include "MathFunctions.h"
 
-Rotator::Rotator(Tmpl8::vec2* pos, Tmpl8::vec2* dir, RotationVar rVar, int* frame, MoveToADirection* mover, EnemySpawner* spawner) :
+Rotator::Rotator(Tmpl8::vec2* pos, Tmpl8::vec2* dir, RotationVar rVar, int* frame, MoveToADirection* mover) :
 	pos(pos),
 	dir(dir),
 	rVar(rVar),
-	spawner(spawner),
 	mover(mover),
 	frame(frame)
 
 {
 
 }
-void Rotator::Call() {
-	RotateToPlayer();
-}
-void Rotator::RotateToPlayer()
-{
-	RotateToDirection(spawner->GetPlayerPos());
-}
+
+
 void Rotator::RotateToDirection(Tmpl8::vec2 Pos)
 {
 

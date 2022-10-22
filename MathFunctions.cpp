@@ -1,5 +1,4 @@
 #include "MathFunctions.h"
-#include "Collider.h"
 
 float MathFunctions::GetDirInAnglesPos(Tmpl8::vec2 dir)
 {
@@ -75,3 +74,5 @@ float MathFunctions::DashFunction(float x)
 		return 1;
 	}
 }
+
+

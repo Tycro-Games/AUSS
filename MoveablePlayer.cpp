@@ -59,7 +59,7 @@ void MoveablePlayer::startDash()
 
 
 		timer->isUpdateable = true;
-		
+
 		Dashing();
 	}
 }
@@ -84,7 +84,6 @@ void MoveablePlayer::Call()
 	timer->ResetVar();
 	timer->isUpdateable = false;
 	speed = initSpeed;
-	std::cout << timePassed << '\n';
 
 
 }
@@ -140,7 +139,7 @@ void MoveablePlayer::Update(float deltaTime)
 	//tile check
 	Tmpl8::vec2 tilePos = *pos;
 	Collider tileCol = *col;
-	
+
 	float spe = speed;
 	//the tile check position
 	tilePos += nextPos * spe * deltaTime;
@@ -153,7 +152,7 @@ void MoveablePlayer::Update(float deltaTime)
 		spe = -spe;
 
 	}
-	
+
 	currentPos += nextPos * spe * deltaTime;
 	//checks collision with obstacles
 	if (Tmpl8::Game::tileMap->IsFree(tilePos.x + tileCol.min.x, tilePos.y + tileCol.min.y) &&
@@ -172,6 +171,10 @@ void MoveablePlayer::Update(float deltaTime)
 		{
 			*pos = currentPos;
 		}
+	}
+	else { //dashing checking
+
+
 	}
 
 	movingPlayer = false;

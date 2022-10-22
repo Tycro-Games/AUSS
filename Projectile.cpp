@@ -1,7 +1,8 @@
 #include "Projectile.h"
 #include "MathFunctions.h"
-#include <iostream>
 #include "ProjectileSpawner.h"
+
+#include <iostream>
 
 
 Projectile::Projectile(PosDir posDir, Tmpl8::Sprite* sprite, ProjectileSpawner* spawner)
@@ -13,6 +14,8 @@ Projectile::Projectile(PosDir posDir, Tmpl8::Sprite* sprite, ProjectileSpawner* 
 	dir = new Tmpl8::vec2();
 	timer = new Timer();
 	mover = new MoveToADirection(&pos, dir, col, this, SPEED);
+	rot = new Rotator(&pos, dir, rVar, &frame, mover);
+
 	Init(posDir);
 }
 void Projectile::Init(PosDir posDir)
@@ -32,6 +35,7 @@ Projectile::~Projectile()
 	delete mover;
 	delete dir;
 	delete col;
+	delete rot;
 }
 
 void Projectile::RotateToDirection()
@@ -40,12 +44,7 @@ void Projectile::RotateToDirection()
 	frame = MathFunctions::RotateToDirectionFrames(rVar, *dir);
 }
 
-void Projectile::Reflect(const Tmpl8::vec2 normal)
-{
 
-	mover->OppositeDirection(normal);
-	RotateToDirection();
-}
 
 
 
@@ -80,42 +79,17 @@ void Projectile::Call()
 		ResetBullet();
 	}
 	else if (mover->colToReflectFrom != NULL) {
-		//obstacle is a collider with the pivot in the top left
-		//calculate normal based on https://gamedev.stackexchange.com/questions/136073/how-does-one-calculate-the-surface-normal-in-2d-collisions
-		
 		Collider c = *mover->colToReflectFrom;
-
-		Tmpl8::vec2 midPoint = (*c.pos) + Tmpl8::vec2(c.max.x / 2, c.max.y / 2);
-
-		Tmpl8::vec2 dist = pos - midPoint;
-
-		float ex = c.max.x / 2.0f;
-		float ey = c.max.y / 2.0f;
-		Tmpl8::vec2 BottomLeft = *c.pos + Tmpl8::vec2(0, c.max.y);
-		Tmpl8::vec2 BottomRight = *c.pos + c.max;
-
-		Tmpl8::vec2 ux = (BottomRight - BottomLeft).normalized();
-		Tmpl8::vec2 uy = (*c.pos - BottomLeft).normalized();
-
-		float distX = dist.dot(ux);
-		float distY = dist.dot(uy);
-
-		if (distX > ex)distX = ex;
-		else if (distX < -ex)distX = -ex;
-
-		if (distY > ey)distY = ey;
-		else if (distY < -ey)distY = -ey;
-
-		Tmpl8::vec2 hitPoint = midPoint + ux * distX + uy * distY;
-
-		Tmpl8::vec2 norm = (pos - hitPoint).normalized();
-		Reflect(norm);
+		rot->Reflect(Collider::GetNormal(c, *col));
 
 		mover->colToReflectFrom = NULL;
 	}
 	else
-		Reflect(Collider::GetNormalEdgeScreen(mover->nextP, *col));
+		rot->Reflect(Collider::GetNormalEdgeScreen(mover->nextP, *col));
 }
+
+
+
 
 void Projectile::ResetBullet()
 {

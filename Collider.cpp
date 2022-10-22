@@ -23,6 +23,35 @@ Collider::Collider() :
 	pos(0)
 {
 }
+Tmpl8::vec2 Collider::GetNormal(const Collider& obstacle, const Collider& source)
+{
+	Tmpl8::vec2 midPoint = (*obstacle.pos) + Tmpl8::vec2(obstacle.max.x / 2, obstacle.max.y / 2);
+
+	Tmpl8::vec2 dist = (*source.pos) - midPoint;
+
+	float ex = obstacle.max.x / 2.0f;
+	float ey = obstacle.max.y / 2.0f;
+
+	Tmpl8::vec2 BottomLeft = (*obstacle.pos) + Tmpl8::vec2(0, obstacle.max.y);
+	Tmpl8::vec2 BottomRight = (*obstacle.pos) + obstacle.max;
+
+	Tmpl8::vec2 ux = (BottomRight - BottomLeft).normalized();
+	//obstacle is a collider with the pivot in the top left
+	Tmpl8::vec2 uy = ((*obstacle.pos) - BottomLeft).normalized();
+
+	float distX = dist.dot(ux);
+	float distY = dist.dot(uy);
+
+	if (distX > ex)distX = ex;
+	else if (distX < -ex)distX = -ex;
+
+	if (distY > ey)distY = ey;
+	else if (distY < -ey)distY = -ey;
+
+	Tmpl8::vec2 hitPoint = midPoint + ux * distX + uy * distY;
+
+	return ((*source.pos) - hitPoint).normalized();
+}
 //checks with the current pos
 bool Collider::InGameBounds(Collider& col) {
 	return col.Collides(Tmpl8::Game::tileMap->GetGameBounds());

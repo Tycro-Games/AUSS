@@ -42,6 +42,14 @@ public:
 
 	}
 	/// <summary>
+	/// Gets the normal from the collider source to the obstacle
+	///based on https://gamedev.stackexchange.com/questions/136073/how-does-one-calculate-the-surface-normal-in-2d-collisions
+	/// </summary>
+	/// <param name="obstacle"> is colliding with source</param>
+	/// <param name="source"> will have the normal point to it</param>
+	/// <returns></returns>
+	static Tmpl8::vec2 GetNormal(const Collider& obstacle, const Collider& source);
+	/// <summary>
 	/// checks if the vector it is inside the collider
 	/// </summary>
 	/// <param name="a"> collider to check</param>
@@ -72,9 +80,6 @@ public:
 
 
 	static Tmpl8::vec2 Collider::GetNormalEdgeScreen(const Tmpl8::vec2& pos, const Collider& col);
-
-
-
 
 };
 

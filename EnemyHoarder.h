@@ -1,7 +1,7 @@
 #pragma once
 #include "Enemy.h"
 #include "RotationVar.h"
-#include "Rotator.h"
+#include "EnemyRotator.h"
 
 
 
@@ -27,7 +27,7 @@ private:
 	bool ToMove = false;
 	bool InRangeToAtack = false;
 	float dist;
-	Tmpl8::vec2* dir;
+	Tmpl8::vec2 dir;
 	float timeToRotate = 0.1f;
 
 	//consts
@@ -40,15 +40,15 @@ private:
 	const float SPEED = 50.0f;
 	const float MAX_DISTANCE_TO_ATTACK = 400.0f;
 	const float MAX_DISTANCE_TO_PLAYER = 100.0f;//this is squared so it is more efficient when comparing
-	Timer* attack;
+	Timer attack;
 
-	Timer* rotate;
+	Timer rotate;
 	MoveToADirection* mover;
 	RandomNumbers randomNumbers;
 
 	RotationVar rVar = RotationVar(360 / 16.0f, 90.0f, 20.0f);
 
-	Rotator* rot;
+	EnemyRotator* rot;
 	// Inherited via Enemy
 	virtual void Die() override;
 
