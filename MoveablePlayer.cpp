@@ -2,13 +2,15 @@
 #include "MathFunctions.h"
 #include <iostream>
 #include "game.h"
-MoveablePlayer::MoveablePlayer(Tmpl8::vec2* pos, Collider* col, Collider* tileMapCol, float speed, float DashSpeed) :
+MoveablePlayer::MoveablePlayer(Tmpl8::vec2* pos, Collider* col, Collider* tileMapCol, Player* player, float speed, float DashSpeed) :
 	Moveable(pos, col, speed),
 	timer(new Timer()),
-	tileMapCol(tileMapCol)
+	tileMapCol(tileMapCol),
+	player(player)
 
 
 {
+
 	timer->Init(this, DASH_DURATION);
 	initSpeed = speed;
 	dashSpeed = DashSpeed;
@@ -68,7 +70,6 @@ void MoveablePlayer::Dashing()
 {
 	dashing = true;
 	timePassed = 0;
-	std::cout << timePassed << '\n';
 	speed = dashSpeed;
 }
 
@@ -154,11 +155,12 @@ void MoveablePlayer::Update(float deltaTime)
 	}
 
 	currentPos += nextPos * spe * deltaTime;
+	Collider obs;
 	//checks collision with obstacles
-	if (Tmpl8::Game::tileMap->IsFree(tilePos.x + tileCol.min.x, tilePos.y + tileCol.min.y) &&
-		Tmpl8::Game::tileMap->IsFree(tilePos.x + tileCol.max.x, (tilePos.y + tileCol.min.y)) &&
-		Tmpl8::Game::tileMap->IsFree(tilePos.x + tileCol.min.x, (tilePos.y + tileCol.max.y)) &&
-		Tmpl8::Game::tileMap->IsFree(tilePos.x + tileCol.max.x, (tilePos.y + tileCol.max.y))) {
+	if (Tmpl8::Game::tileMap->IsFree(tilePos.x + tileCol.min.x, tilePos.y + tileCol.min.y, obs) &&
+		Tmpl8::Game::tileMap->IsFree(tilePos.x + tileCol.max.x, (tilePos.y + tileCol.min.y), obs) &&
+		Tmpl8::Game::tileMap->IsFree(tilePos.x + tileCol.min.x, (tilePos.y + tileCol.max.y), obs) &&
+		Tmpl8::Game::tileMap->IsFree(tilePos.x + tileCol.max.x, (tilePos.y + tileCol.max.y), obs)) {
 		//tilemap checks
 		if (!movingPlayer) {
 			if (Collider::TileMapInGameScreen(currentPos, c)) {
@@ -172,10 +174,12 @@ void MoveablePlayer::Update(float deltaTime)
 			*pos = currentPos;
 		}
 	}
-	else { //dashing checking
-
-
+	else if (dashing) {
+		std::cout << "bounce\n";
+		Tmpl8::vec2 reflected = MathFunctions::Reflect(nextPos, Collider::GetNormal(obs, *col));
+		player->Rotate(reflected.x, reflected.y);
 	}
+
 
 	movingPlayer = false;
 

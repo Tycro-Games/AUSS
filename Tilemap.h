@@ -91,7 +91,19 @@ public:
 			return false;
 		return true;
 	}
-
+	bool IsFree(float x, float y,Collider& col) {
+		Tmpl8::vec2 targetPos = Tmpl8::vec2(x, y);
+		x += OFFSET_X - (pos.x);
+		y += OFFSET_Y - (pos.y);
+		int tx = static_cast<int>(x / TILE_SIZE), ty = static_cast<int>(y / TILE_SIZE);
+		//verifies if the position is actually colliding with the obstacle
+		if (tiles[tx + ty * X_TILES].IsBlocking &&
+			Collider::Contains(*tiles[tx + ty * X_TILES].obs->getColl(), targetPos)) {
+			col = *tiles[tx + ty * X_TILES].obs->getColl();
+			return false;
+		}
+		return true;
+	}
 	Obstacle* GetObstacle(float x, float y) const {
 		x += OFFSET_X - (pos.x);
 		y += OFFSET_Y - (pos.y);

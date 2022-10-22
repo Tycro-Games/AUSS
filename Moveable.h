@@ -16,6 +16,7 @@ public:
 	Collider* getColl() const {
 		return col;
 	}
+
 protected:
 	Tmpl8::vec2* pos;
 	Collider* col;

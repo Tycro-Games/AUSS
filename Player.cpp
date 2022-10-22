@@ -19,7 +19,7 @@ Player::Player(Tmpl8::Sprite* sprite, Tmpl8::vec2 pos, Collider co, Collider* ti
 		projectileSprite,
 		new Tmpl8::Sprite(new Tmpl8::Surface("assets/OriginalAssets/smoke.tga"), 10));
 
-	playerMover = new MoveablePlayer(&this->pos, &col, tilemapCollider);
+	playerMover = new MoveablePlayer(&this->pos, &col, tilemapCollider, this);
 	timer = (new Timer(this, TIME_TO_HIT));
 }
 
