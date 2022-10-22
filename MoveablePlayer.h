@@ -7,7 +7,7 @@
 class MoveablePlayer :public Moveable, public Callable
 {
 public:
-	MoveablePlayer(Tmpl8::vec2* pos, Collider* col, Collider* tileMapCol, Player*, float speed = 70.0f, float dashSpeed = 500);
+	MoveablePlayer(Tmpl8::vec2* pos, Collider* col, Collider* tileMapCol, float speed = 70.0f, float dashSpeed = 500);
 	virtual ~MoveablePlayer();
 	virtual void Update(float deltaTime) override;
 	void copyInput(MoveablePlayer& p);
@@ -39,7 +39,7 @@ private:
 	Collider* tileMapCol;
 	//dash
 	Timer* timer;
-	Player* player;
+	
 	bool dashing = false;
 	bool startedDashing = false;
 	float initSpeed;

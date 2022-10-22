@@ -8,7 +8,6 @@ MoveablePlayer::MoveablePlayer(Tmpl8::vec2* pos, Collider* col, Collider* tileMa
 	tileMapCol(tileMapCol),
 	player(player)
 
-
 {
 
 	timer->Init(this, DASH_DURATION);
