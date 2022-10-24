@@ -49,8 +49,8 @@ Tmpl8::vec2 Collider::GetNormal(const Collider& obstacle, const Collider& source
 	else if (distY < -ey)distY = -ey;
 
 	Tmpl8::vec2 hitPoint = midPoint + ux * distX + uy * distY;
-
-	return ((*source.pos) - hitPoint).normalized();
+	Tmpl8::vec2 norm = ((*source.pos) - hitPoint).normalized();
+	return norm;
 }
 //checks with the current pos
 bool Collider::InGameBounds(Collider& col) {

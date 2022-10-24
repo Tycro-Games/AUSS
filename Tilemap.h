@@ -49,7 +49,7 @@ struct Tile
 	/// </summary>
 	float dimensionsY = 0;
 
-	Obstacle* obs = NULL;
+	Obstacle* obs = nullptr;
 };
 
 class Tilemap :public Renderable, public Updateable

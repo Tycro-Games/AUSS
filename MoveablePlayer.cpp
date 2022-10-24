@@ -59,6 +59,7 @@ void MoveablePlayer::startDash()
 {
 	if (!dashTimer.isUpdateable && !dashing) {
 
+		dashes = 0;
 
 		dashTimer.isUpdateable = true;
 
@@ -98,31 +99,30 @@ void MoveablePlayer::Call()
 
 void MoveablePlayer::Update(float deltaTime)
 {
-	canMove = false;
-	hasChangedPos = false;
+	ResetTriggers();
 	dashTimer.Update(deltaTime);
 	cooldownTimer.Update(deltaTime);
 
 	Tmpl8::vec2 nextPos = { 0 };
 	//no movement when dashing
-	if (!dashTimer.isUpdateable) {
-		if (up) {
-			nextPos.y--;
-		}
-		if (down) {
-			nextPos.y++;
-		}
-		if (right) {
-			nextPos.x++;
-		}
 
-		if (left) {
-			nextPos.x--;
-		}
-		//if the player goes on a diagonal the vector will not have a maginitude of 1
-		if (nextPos.length() > 0)
-			nextPos.normalize();
+	if (up) {
+		nextPos.y--;
 	}
+	if (down) {
+		nextPos.y++;
+	}
+	if (right) {
+		nextPos.x++;
+	}
+
+	if (left) {
+		nextPos.x--;
+	}
+	//if the player goes on a diagonal the vector will not have a maginitude of 1
+	if (nextPos.length() > 0)
+		nextPos.normalize();
+
 	//dashing
 	if ((nextPos.x != 0 || nextPos.y != 0)) {
 		canRotate = true;
@@ -134,16 +134,13 @@ void MoveablePlayer::Update(float deltaTime)
 	else
 		canRotate = false;
 
-	if (dashTimer.isUpdateable == false && dashing) {
+	if (dashTimer.isUpdateable == false && dashing && !startedDashing) {
 		cooldownTimer.isUpdateable = true;
 	}
 	if (dashing && timePassed + deltaTime < DASH_DURATION) {
 
 		timePassed += deltaTime;
-		float linearT = timePassed / DASH_DURATION;
-		nextPos = dashDir;
-		nextPos *= MathFunctions::DashFunction(linearT);//this value is from the function graph
-
+		SetDashPos(nextPos);;//this value is from the function graph
 	}
 
 	//tile check
@@ -158,14 +155,16 @@ void MoveablePlayer::Update(float deltaTime)
 	Collider c = *tileMapCol;
 	currentPos += nextPos * (-speed) * deltaTime;
 
-	Collider obs;
+
 	//checks collision with obstacles
-	bool isFree =
-		Tmpl8::Game::tileMap->IsFree(playerPos.x + playerCol.min.x, playerPos.y + playerCol.min.y, obs) &&
+	Collider obs;
+
+
+
+	if (Tmpl8::Game::tileMap->IsFree(playerPos.x + playerCol.min.x, playerPos.y + playerCol.min.y, obs) &&
 		Tmpl8::Game::tileMap->IsFree(playerPos.x + playerCol.max.x, playerPos.y + playerCol.min.y, obs) &&
 		Tmpl8::Game::tileMap->IsFree(playerPos.x + playerCol.min.x, playerPos.y + playerCol.max.y, obs) &&
-		Tmpl8::Game::tileMap->IsFree(playerPos.x + playerCol.max.x, playerPos.y + playerCol.max.y, obs);
-	if (isFree) {
+		Tmpl8::Game::tileMap->IsFree(playerPos.x + playerCol.max.x, playerPos.y + playerCol.max.y, obs)) {
 		if (Collider::TileMapInGameScreen(currentPos, c)) {
 			*tileMapCol->pos = currentPos;
 			hasChangedPos = true;
@@ -176,10 +175,20 @@ void MoveablePlayer::Update(float deltaTime)
 		playerMovement = playerPos;
 
 	}
+}
 
+void MoveablePlayer::SetDashPos(Tmpl8::vec2& nextPos)
+{
+	float linearT = timePassed / DASH_DURATION;
+	nextPos = dashDir;
+	nextPos *= MathFunctions::DashFunction(linearT);
+}
 
+void MoveablePlayer::ResetTriggers()
+{
 
-
+	canMove = false;
+	hasChangedPos = false;
 }
 
 void MoveablePlayer::MovePlayer()

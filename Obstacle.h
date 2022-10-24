@@ -3,7 +3,7 @@
 class Obstacle :public Moveable
 {
 public:
-	Obstacle(Tmpl8::vec2, Collider col);
+	Obstacle(Tmpl8::vec2, Collider col,size_t index);
 	bool operator==(const Obstacle& ob) {
 		return static_cast<int>(ob.pos.x) == static_cast<int>(pos.x) && static_cast<int>(ob.pos.y) == static_cast<int>(ob.pos.y);
 	}bool operator!=(const Obstacle& ob) {

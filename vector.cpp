@@ -368,6 +368,7 @@ template class vector<ExplosionBullet*>;
 template class vector<Entity*>;
 template class vector<int>;
 template class vector <float>;
+template class vector <size_t>;
 template class vector <Renderable*>;
 template class vector <Updateable*>;
 template class vector <Enemy*>;

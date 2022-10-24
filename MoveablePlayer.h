@@ -10,6 +10,9 @@ public:
 	MoveablePlayer(Tmpl8::vec2* pos, Collider* col, Collider* tileMapCol, float speed = 70.0f, float dashSpeed = 500);
 	virtual ~MoveablePlayer();
 	virtual void Update(float deltaTime) override;
+	void SetPositions(Tmpl8::vec2& playerPos, Tmpl8::vec2& currentPos, Tmpl8::vec2& nextPos, float deltaTime );
+	void SetDashPos(Tmpl8::vec2& nextPos);
+	void ResetTriggers();
 	void MovePlayer();
 	void copyInput(MoveablePlayer& p);
 	void setUp(bool val = false);
@@ -47,6 +50,7 @@ private:
 	Tmpl8::vec2 dashDir = { 0 };
 	bool dashing = false;
 	bool startedDashing = false;
+	int dashes = 0;
 	float initSpeed;
 	float dashSpeed;
 	float timePassed = 0.0f;

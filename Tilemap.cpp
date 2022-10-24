@@ -19,10 +19,11 @@ Tilemap::Tilemap() :
 {
 
 	//add obstacles
+	bool LastOneIsBlocking = false;
 	for (int y = 0; y < Y_TILES; y++)
-		for (int x = 0; x < X_TILES; x++)
-		{
+		for (int x = 0; x < X_TILES; x++) {
 			int index = x + y * X_TILES;
+
 			if (tiles[index].IsBlocking) {
 
 				Tmpl8::vec2 p = Tmpl8::vec2(x * tiles[index].xd + pos.x - static_cast<float>(OFFSET_X),
@@ -33,12 +34,64 @@ Tilemap::Tilemap() :
 				float xD = static_cast<float>(tiles[index].xd);
 				float yD = static_cast<float>(tiles[index].yd);
 
-				tiles[index].obs = new Obstacle(p, Collider(0, Tmpl8::vec2(xD - tiles[index].dimensionsX, yD - tiles[index].dimensionsY)));
+				tiles[index].obs = new Obstacle(p, Collider(0, Tmpl8::vec2(xD - tiles[index].dimensionsX, yD - tiles[index].dimensionsY)), index);
 				blockingTiles.push_back(tiles[index].obs);
 				Tmpl8::Game::AddMoveable(tiles[index].obs);
+
 			}
+
 		}
+
+	////merge obstacles
+
+	//vector<size_t> tilesToAddNewObstacle;
+
+	//for (int i = 0; i < blockingTiles.getCount() - 1; i++) {
+	//	std::cout << blockingTiles[i] << " ";
+	//	Obstacle* a = blockingTiles[i];
+	//	Obstacle* b = blockingTiles[i + 1];
+	//	if (a->getColl()->Collides(b->getColl()->At(*b->getColl()->pos))) {
+
+	//		Collider* bCol = b->getColl();
+	//		Collider* aCol = a->getColl();
+	//		float x1 = aCol->max.x + aCol->pos->x, y1 = aCol->max.y + aCol->pos->y;
+
+	//		x1 = std::max(bCol->pos->x + bCol->max.x, x1);
+	//		y1 = std::max(bCol->pos->y + bCol->max.y, y1);
+
+	//		x1 -= aCol->pos->x;
+	//		y1 -= aCol->pos->y;
+
+
+
+
+	//		tiles[i].obs = new Obstacle((*aCol->pos), Collider(0, Tmpl8::vec2(x1, y1)), a->index);
+
+
+	//		blockingTiles[i] = tiles[i].obs;
+	//		Tmpl8::Game::AddMoveable(tiles[a->index].obs);
+
+	//		Tmpl8::Game::RemoveMoveable(a);
+	//		Tmpl8::Game::RemoveMoveable(b);
+
+	//		blockingTiles.remove(b);
+
+
+
+	//		delete a;
+	//		a = nullptr;
+	//		delete b;
+	//		b = nullptr;
+
+	//	}
+	//}
+
+
 }
+
+
+
+
 
 
 Tilemap::~Tilemap()
