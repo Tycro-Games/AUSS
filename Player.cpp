@@ -46,6 +46,9 @@ void Player::Render(Tmpl8::Surface* screen)
 	auto inactive = std::string("HP: " + std::to_string(hp));
 
 	screen->Print(inactive.c_str(), 10, 40, 0xFF0000);
+	auto dashing = std::string("Dashing: " + std::to_string(playerMover->IsDashing()));
+
+	screen->Print(dashing.c_str(), 50, 40, 0xFFFF00);
 }
 
 void Player::Update(float deltaTime)
@@ -55,10 +58,8 @@ void Player::Update(float deltaTime)
 	playerMover->Update(deltaTime);
 	//tilemap is trying to go past the limits
 	if (!playerMover->ChangedPos()) {
-		playerMover->SetMovingPlayer(true);
-		//move player instead
-		playerMover->Update(deltaTime);
-
+		//move the player
+		playerMover->MovePlayer();
 	}
 
 	spawner->Update(deltaTime);
