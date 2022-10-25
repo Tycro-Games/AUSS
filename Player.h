@@ -14,6 +14,8 @@ class Player :public Being, public Callable
 public:
 	Player(Tmpl8::Sprite* sprite, Tmpl8::vec2 pos, Collider col, Collider*, int hp);
 	~Player();
+	void FadeOut(Tmpl8::Sprite& sprit, Tmpl8::Surface* screen, float alpha);
+	void FadeIn(Tmpl8::Sprite& sprit, Tmpl8::Surface* screen, float alpha);
 	void Render(Tmpl8::Surface* screen);
 	void Update(float deltaTime);
 	void Shoot(bool fire);

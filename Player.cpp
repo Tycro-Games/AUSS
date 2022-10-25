@@ -4,6 +4,7 @@
 #include "Rotator.h"
 
 #include <string>
+using namespace Tmpl8;
 Player::Player(Tmpl8::Sprite* sprite, Tmpl8::vec2 pos, Collider co, Collider* tileMapCol, int hp)
 	:dirToFace(new Tmpl8::vec2()),
 	Being(sprite, pos, hp),
@@ -32,12 +33,72 @@ Player::~Player()
 	delete projectileSprite;
 
 }
+Tmpl8::Sprite* copy = new Sprite(new Surface("assets/player.png"), 32);
+bool toFadeIn = false;
 
+void Player::FadeOut(Tmpl8::Sprite& sprit, Tmpl8::Surface* screen, float alpha) {
+	
+	bool hasFaded = true;
+	for (int x = 0; x < sprite->GetSurface()->GetPitch(); x++) {
+		for (int y = 0; y < sprite->GetHeight(); y++) {
+			Pixel pixe = sprite->GetBuffer()[x + y * sprite->GetSurface()->GetPitch()];
+
+			Pixel R = (pixe & RedMask) >> 16;
+			Pixel G = (pixe & GreenMask) >> 8;
+			Pixel B = (pixe & BlueMask);
+			float deltaR = 1 / (255.0f / R);
+			float deltaG = 1 / (255.0f / G);
+			float deltaB = 1 / (255.0f / B);
+
+			B -= deltaB * alpha;
+			R -= deltaR * alpha;
+			G -= deltaG * alpha;
+			
+			Pixel c = R << 16 | G << 8 | B;
+			if (c)
+				hasFaded = false;
+			sprite->GetBuffer()[x + y * sprite->GetSurface()->GetPitch()] = c;
+		}
+	}
+	if (hasFaded)
+		toFadeIn = true;
+
+}
+void Player::FadeIn(Tmpl8::Sprite& sprit, Tmpl8::Surface* screen, float alpha) {
+
+	for (int x = 0; x < copy->GetSurface()->GetPitch(); x++) {
+		for (int y = 0; y < copy->GetHeight(); y++) {
+			Pixel pixe = copy->GetBuffer()[x + y * copy->GetSurface()->GetPitch()];
+
+			Pixel R = (pixe & RedMask) >> 16;
+			Pixel G = (pixe & GreenMask) >> 8;
+			Pixel B = (pixe & BlueMask);
+			float deltaR = 1 / (255.0f / R);
+			float deltaG = 1 / (255.0f / G);
+			float deltaB = 1 / (255.0f / B);
+
+			B -= deltaB * alpha;
+			R -= deltaR * alpha;
+			G -= deltaG * alpha;
+			
+
+			Pixel c = R << 16 | G << 8 | B;
+			sprite->GetBuffer()[x + y * sprite->GetSurface()->GetPitch()] = pixe;
+		}
+	}
+}
 void Player::Render(Tmpl8::Surface* screen)
 {
 	spawner->Render(screen);
 	sprite->SetFrame(frame);
+
+	if (!toFadeIn)
+		FadeOut(*sprite, screen, 1);
+	
+	if (toFadeIn)
+		FadeIn(*sprite, screen, 1);
 	sprite->Draw(screen, static_cast<int>(pos.x - rVar.SPRITE_OFFSET / 2), static_cast<int>(pos.y - rVar.SPRITE_OFFSET / 2));
+
 	//debug for player's collider	
 	screen->Box(static_cast<int>(pos.x + col.min.x), static_cast<int>(pos.y + col.min.y), static_cast<int>(pos.x + col.max.x), static_cast<int>(pos.y + col.max.y), 0xffffff);
 	//debug for collision with screen borders
