@@ -101,6 +101,9 @@
     <ClCompile Include="EnemyRotator.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="SpriteTransparency.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -216,6 +219,9 @@
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="EnemyRotator.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteTransparency.h">
       <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>

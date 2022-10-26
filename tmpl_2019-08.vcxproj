@@ -252,6 +252,7 @@
     <ClCompile Include="ProjectileSpawner.cpp" />
     <ClCompile Include="Rotator.cpp" />
     <ClCompile Include="Spawner.cpp" />
+    <ClCompile Include="SpriteTransparency.cpp" />
     <ClCompile Include="surface.cpp" />
     <ClCompile Include="template.cpp" />
     <ClCompile Include="Tilemap.cpp" />
@@ -292,6 +293,7 @@
     <ClInclude Include="ProjectileSpawner.h" />
     <ClInclude Include="Rotator.h" />
     <ClInclude Include="Spawner.h" />
+    <ClInclude Include="SpriteTransparency.h" />
     <ClInclude Include="surface.h" />
     <ClInclude Include="template.h" />
     <ClInclude Include="Tilemap.h" />

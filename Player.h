@@ -5,8 +5,8 @@
 #include "ProjectileSpawner.h"
 #include "RotationVar.h"
 #include "MoveablePlayer.h"
-
 #include "Tilemap.h"
+#include "SpriteTransparency.h"
 
 
 class Player :public Being, public Callable
@@ -14,8 +14,6 @@ class Player :public Being, public Callable
 public:
 	Player(Tmpl8::Sprite* sprite, Tmpl8::vec2 pos, Collider col, Collider*, int hp);
 	~Player();
-	void FadeOut(Tmpl8::Sprite& sprit, Tmpl8::Surface* screen, float alpha);
-	void FadeIn(Tmpl8::Sprite& sprit, Tmpl8::Surface* screen, float alpha);
 	void Render(Tmpl8::Surface* screen);
 	void Update(float deltaTime);
 	void Shoot(bool fire);
@@ -40,6 +38,7 @@ private:
 	Tmpl8::Sprite* projectileSprite;
 	//components
 	Collider* tilemapCollider;
+	SpriteTransparency* spriteFade;
 	MoveablePlayer* playerMover;
 	Collider col;
 	ProjectileSpawner* spawner;
@@ -47,7 +46,6 @@ private:
 	Tilemap* map;
 	//consts
 	const float TIME_TO_HIT = 2.0f;
-	
 
 
 };
