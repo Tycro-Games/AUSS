@@ -73,8 +73,11 @@ void EnemyHoarder::Render(Tmpl8::Surface* screen)
 	if (!getRenderable())
 		return;
 	sprite->SetFrame(frame);
-	sprite->Draw(screen, static_cast<int>(pos.x), static_cast<int>(pos.y));
-	//screen->Box(pos->x, pos->y, pos->x + rVar.SPRITE_OFFSET, pos->y + rVar.SPRITE_OFFSET, 0xffffff);
+	sprite->Draw(screen, static_cast<int>(static_cast<int>(pos.x - rVar.SPRITE_OFFSET/2)), static_cast<int>(pos.y - rVar.SPRITE_OFFSET / 2));
+	screen->Box(static_cast<int>(pos.x - rVar.SPRITE_OFFSET / 2),
+		static_cast<int>(pos.y - rVar.SPRITE_OFFSET / 2),
+		pos.x + rVar.SPRITE_OFFSET/2,
+		pos.y + rVar.SPRITE_OFFSET/2, 0xffff);
 
 }
 
