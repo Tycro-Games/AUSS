@@ -1,7 +1,7 @@
 #include "Rotator.h"
 #include "MathFunctions.h"
 
-Rotator::Rotator(Tmpl8::vec2* pos, Tmpl8::vec2* dir, RotationVar rVar, int* frame, MoveToADirection* mover) :
+Rotator::Rotator(Tmpl8::vec2* pos, Tmpl8::vec2* dir, RotationVar rVar, unsigned int* frame, MoveToADirection* mover) :
 	pos(pos),
 	dir(dir),
 	rVar(rVar),

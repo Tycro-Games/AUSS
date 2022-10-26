@@ -4,7 +4,7 @@
 #include <string>
 #include <algorithm>
 #include "game.h"
-Tilemap::Tilemap() :
+Tilemap::Tilemap(uint32_t width, uint32_t height) :
 	tileSurface("assets/Spaceship-shooter#01/Wang tiles/02-Craters.png"),
 	pos(Tmpl8::vec2(ScreenWidth / 2, ScreenHeight / 2)),
 	lastPos(pos),
@@ -133,6 +133,11 @@ void Tilemap::Update(float deltaTime)
 }
 
 
+
+void Tilemap::SetPos(const Tmpl8::vec2 p)
+{
+	pos = p;
+}
 
 void Tilemap::DrawTile(Tmpl8::Surface* screen, int tx, int ty, int x, int y)
 {

@@ -21,7 +21,7 @@ public:
 	Tmpl8::vec2 pos;
 
 protected:
-	 int frame = 0;
+	 unsigned int frame = 0;
 
 
 

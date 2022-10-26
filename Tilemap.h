@@ -55,7 +55,7 @@ struct Tile
 class Tilemap :public Renderable, public Updateable
 {
 public:
-	Tilemap();
+	Tilemap(uint32_t width = 1, uint32_t height = 1);
 	~Tilemap();
 
 	// Inherited via Renderable
@@ -65,17 +65,13 @@ public:
 	// Inherited via Updateable
 	virtual void Update(float deltaTime) override;
 
-	Tmpl8::vec2* GetPos() {
-		return &pos;
-	}Tmpl8::vec2 GetOffset() {
-		return   pos - lastPos;
-	}
 	void ResetOffset() {
 		lastPos = pos;
 	}
-	Collider* GetCol() {
+	inline Collider* GetCol() const {
 		return col;
-	}Collider GetGameBounds() {
+	}
+	Collider GetGameBounds() const {
 		return Collider(
 			Tmpl8::vec2(-OFFSET_X + pos.x + TILE_SIZE, -OFFSET_Y + pos.y + TILE_SIZE),
 			Tmpl8::vec2(OFFSET_X + pos.x - TILE_SIZE, OFFSET_Y + pos.y - TILE_SIZE));
@@ -91,7 +87,7 @@ public:
 			return false;
 		return true;
 	}
-
+	//returns the collider at the coordonates x and y in the col variable
 	bool IsFree(float x, float y, Collider& col) {
 		Tmpl8::vec2 targetPos = Tmpl8::vec2(x, y);
 		x += OFFSET_X - (pos.x);
@@ -105,16 +101,23 @@ public:
 		}
 		return true;
 	}
-	Obstacle* GetObstacle(float x, float y) const {
+	const Obstacle* GetObstacle(float x, float y) const {
 		x += OFFSET_X - (pos.x);
 		y += OFFSET_Y - (pos.y);
 		size_t tx = static_cast<size_t>(x / TILE_SIZE), ty = static_cast<size_t>(y / TILE_SIZE);
 
 		return tiles[tx + ty * X_TILES].obs;
 	}
-	void SetPos(const Tmpl8::vec2 p) {
-		pos = p;
+	const Obstacle* GetObstacle(size_t x, size_t  y) const {
+
+		return tiles[x + y * X_TILES].obs;
 	}
+	void SetPos(const Tmpl8::vec2 p);
+
+	inline Tmpl8::vec2* GetPos();
+	inline const Tmpl8::vec2 GetOffset();
+
+
 private:
 	void DrawTile(Tmpl8::Surface* screen, int tx, int ty, int x, int y);
 	Tmpl8::vec2 pos;
@@ -193,3 +196,10 @@ private:
 
 
 };
+
+inline Tmpl8::vec2* Tilemap::GetPos() {
+	return &pos;
+}
+inline const Tmpl8::vec2 Tilemap::GetOffset() {
+	return   pos - lastPos;
+}

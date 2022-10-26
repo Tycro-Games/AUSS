@@ -42,8 +42,10 @@ void Player::Render(Tmpl8::Surface* screen)
 	spawner->Render(screen);
 	sprite->SetFrame(frame);
 
-
-	spriteFade->SetTransperency(sprite->GetSurface(), screen, .1f);
+	spriteFade->SetTransperency(sprite, screen,
+		static_cast<int>(pos.x - rVar.SPRITE_OFFSET / 2),
+		static_cast<int>(pos.y - rVar.SPRITE_OFFSET / 2),
+		.1f, frame);
 	sprite->Draw(screen, static_cast<int>(pos.x - rVar.SPRITE_OFFSET / 2), static_cast<int>(pos.y - rVar.SPRITE_OFFSET / 2));
 
 	//debug for player's collider	

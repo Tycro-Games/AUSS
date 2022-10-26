@@ -24,8 +24,7 @@ void MoveToADirection::Update(float deltaTime)
 			(*pos) = nextP;
 		else {
 			//reflect on obstacle
-			Obstacle* obs = Tmpl8::Game::tileMap->GetObstacle(nextP.x, nextP.y);
-			colToReflectFrom = obs->getColl();
+			colToReflectFrom = Tmpl8::Game::tileMap->GetObstacle(nextP.x, nextP.y)->getColl();
 
 			call->Call();
 		}
