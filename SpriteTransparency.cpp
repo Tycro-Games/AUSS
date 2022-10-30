@@ -27,18 +27,13 @@ void SpriteTransparency::SetTransperency(Tmpl8::Sprite* sprit, Tmpl8::Surface* s
 			unsigned char Rdst = (pixe & Tmpl8::RedMask) >> 16;
 			unsigned char Gdst = (pixe & Tmpl8::GreenMask) >> 8;
 			unsigned char Bdst = (pixe & Tmpl8::BlueMask);
-			R = R * alpha;
-			G = G * alpha;
-			B = B * alpha;
-			//add sublending
-
-			Rdst = (1 - alpha) * Rdst;
-			Gdst = (1 - alpha) * Gdst;
-			Bdst = (1 - alpha) * Bdst;
-
+			R = R * alpha + (1 - alpha) * Rdst;
+			G = G * alpha + (1 - alpha) * Gdst;
+			B = B * alpha + (1 - alpha) * Bdst;
+			
 			Tmpl8::Pixel c = R << 16 | G << 8 | B;
 
-			sprit->GetBuffer()[frame * sprit->GetWidth() + x + y * sprit->GetSurface()->GetPitch()] = Tmpl8::AddBlend(c, pixe);
+			sprit->GetBuffer()[frame * sprit->GetWidth() + x + y * sprit->GetSurface()->GetPitch()] = c;
 		}
 	}
 }
