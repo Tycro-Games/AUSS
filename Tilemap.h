@@ -67,7 +67,7 @@ public:
 	virtual void ResetOffset() override {
 		lastPos = pos;
 	}
-	
+
 	inline Collider* GetCol() const {
 		return col;
 	}
@@ -75,53 +75,21 @@ public:
 	/// The bounds where an object is inside the map
 	/// </summary>
 	/// <returns></returns>
-	Collider GetGameBounds() const {
-		return Collider(
-			Tmpl8::vec2(-OFFSET_X + pos.x + TILE_SIZE, -OFFSET_Y + pos.y + TILE_SIZE),
-			Tmpl8::vec2(OFFSET_X + pos.x - TILE_SIZE, OFFSET_Y + pos.y - TILE_SIZE));
-	}
-	bool IsFree(float x, float y) {
-		Tmpl8::vec2 targetPos = Tmpl8::vec2(x, y);
-		x += OFFSET_X - (pos.x);
-		y += OFFSET_Y - (pos.y);
-		int tx = static_cast<int>(x / TILE_SIZE), ty = static_cast<int>(y / TILE_SIZE);
-		//verifies if the position is actually colliding with the obstacle
-		if (tiles[tx + ty * X_TILES].IsBlocking &&
-			Collider::Contains(*tiles[tx + ty * X_TILES].obs->getColl(), targetPos))
-			return false;
-		return true;
-	}
+	inline Collider GetGameBounds() const;
+
+	bool IsFree(float x, float y);
 	//returns the collider at the coordonates x and y in the col variable
-	bool IsFree(float x, float y, Collider& col) {
-		Tmpl8::vec2 targetPos = Tmpl8::vec2(x, y);
-		x += OFFSET_X - (pos.x);
-		y += OFFSET_Y - (pos.y);
-		size_t tx = static_cast<size_t>(x / TILE_SIZE), ty = static_cast<size_t>(y / TILE_SIZE);
-		//verifies if the position is actually colliding with the obstacle
-		if (tiles[tx + ty * X_TILES].IsBlocking &&
-			Collider::Contains(*tiles[tx + ty * X_TILES].obs->getColl(), targetPos)) {
-			col = *tiles[tx + ty * X_TILES].obs->getColl();
-			return false;
-		}
-		return true;
-	}
-	const Obstacle* GetObstacle(float x, float y) const {
-		x += OFFSET_X - (pos.x);
-		y += OFFSET_Y - (pos.y);
-		size_t tx = static_cast<size_t>(x / TILE_SIZE), ty = static_cast<size_t>(y / TILE_SIZE);
+	bool IsFree(float x, float y, Collider& col);
 
-		return tiles[tx + ty * X_TILES].obs;
-	}
-	const Obstacle* GetObstacle(size_t x, size_t  y) const {
+	const Obstacle* GetObstacle(float x, float y) const;
 
-		return tiles[x + y * X_TILES].obs;
-	}
+	const Obstacle* GetObstacle(size_t x, size_t  y) const;
+
+
 	void SetPos(const Tmpl8::vec2 p);
 
 	inline Tmpl8::vec2* GetPos();
 	virtual inline const Tmpl8::vec2 GetOffset() override;
-
-
 
 private:
 	void DrawTile(Tmpl8::Surface* screen, int tx, int ty, int x, int y);
@@ -186,16 +154,19 @@ private:
 	  CLM,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,CRM,
 	  CLM,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,CRM,
 	  CLB,CMB,CMB,CMB,CMB,CMB,CMB,CMB,CMB,CMB,CMB,CMB,CMB,CMB,CMB,CMB,CMB,CMB,CMB,CMB,CMB,CMB,CMB,CRB,
-
-
 	};
-
-
 };
 
 inline Tmpl8::vec2* Tilemap::GetPos() {
 	return &pos;
 }
- const Tmpl8::vec2 Tilemap::GetOffset() {
+inline const Tmpl8::vec2 Tilemap::GetOffset() {
 	return   pos - lastPos;
 }
+inline Collider Tilemap::GetGameBounds() const {
+	return Collider(
+		Tmpl8::vec2(-OFFSET_X + pos.x + TILE_SIZE, -OFFSET_Y + pos.y + TILE_SIZE),
+		Tmpl8::vec2(OFFSET_X + pos.x - TILE_SIZE, OFFSET_Y + pos.y - TILE_SIZE));
+}
+
+

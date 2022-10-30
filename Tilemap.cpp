@@ -5,6 +5,7 @@
 #include <iostream>
 #include <string>
 #include <algorithm>
+#include <cassert>
 Tilemap::Tilemap() :
 	tileSurface("assets/Spaceship-shooter#01/Wang tiles/02-Craters.png"),
 	pos(Tmpl8::vec2(ScreenWidth / 2, ScreenHeight / 2)),
@@ -15,8 +16,7 @@ Tilemap::Tilemap() :
 {
 	lastPos = pos;
 	prop = new ParallaxProp(new Tmpl8::Sprite(new Tmpl8::Surface("assets/Spaceship-shooter#01/background/Space02.png"), 1),
-		Tmpl8::vec2(pos.x - OFFSET_X, pos.y - OFFSET_Y), .25f);
-	Tmpl8::Game::AddMoveable(prop->getMover(), &Tmpl8::Game::moveablesPlayer);
+		Tmpl8::vec2(pos.x - OFFSET_X, pos.y - OFFSET_Y), .75f);
 	Tmpl8::Game::AddMoveable(prop->getMover(), &Tmpl8::Game::moveablesTile);
 	//add obstacles
 	bool LastOneIsBlocking = false;
@@ -180,4 +180,48 @@ void Tilemap::DrawTile(Tmpl8::Surface* screen, int tx, int ty, int x, int y)
 		dst += screen->GetPitch();
 
 	}
+}
+bool Tilemap::IsFree(float x, float y)
+{
+	Tmpl8::vec2 targetPos = Tmpl8::vec2(x, y);
+	x += OFFSET_X - (pos.x);
+	y += OFFSET_Y - (pos.y);
+	int tx = static_cast<int>(x / TILE_SIZE), ty = static_cast<int>(y / TILE_SIZE);
+	//verifies if the position is actually colliding with the obstacle
+	if (tiles[tx + ty * X_TILES].IsBlocking &&
+		Collider::Contains(*tiles[tx + ty * X_TILES].obs->getColl(), targetPos))
+		return false;
+	return true;
+}
+
+bool Tilemap::IsFree(float x, float y, Collider& col)
+{
+	Tmpl8::vec2 targetPos = Tmpl8::vec2(x, y);
+	x += OFFSET_X - (pos.x);
+	y += OFFSET_Y - (pos.y);
+	size_t tx = static_cast<size_t>(x / TILE_SIZE), ty = static_cast<size_t>(y / TILE_SIZE);
+	//verifies if the position is actually colliding with the obstacle
+	if (tiles[tx + ty * X_TILES].IsBlocking &&
+		Collider::Contains(*tiles[tx + ty * X_TILES].obs->getColl(), targetPos)) {
+		col = *tiles[tx + ty * X_TILES].obs->getColl();
+		return false;
+	}
+	return true;
+}
+
+const Obstacle* Tilemap::GetObstacle(float x, float y) const
+{
+
+	x += OFFSET_X - (pos.x);
+	y += OFFSET_Y - (pos.y);
+	size_t tx = static_cast<size_t>(x / TILE_SIZE), ty = static_cast<size_t>(y / TILE_SIZE);
+
+	return GetObstacle(tx, ty);
+}
+
+const Obstacle* Tilemap::GetObstacle(size_t x, size_t y) const
+{
+	assert(x < X_TILES);
+	assert(y < Y_TILES);
+	return tiles[x + y * X_TILES].obs;
 }

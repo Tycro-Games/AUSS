@@ -51,7 +51,7 @@ private:
 
 };
 inline const Tmpl8::vec2 Player::GetOffset() {
-	return   pos - lastPos;
+	return   -pos + lastPos;
 }
 
 

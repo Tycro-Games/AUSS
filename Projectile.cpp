@@ -97,7 +97,6 @@ void Projectile::ResetBullet()
 	col->toDeactivate = false;
 	timer->isFinished = true;
 	spawner->AddProjectileToPool(this);
-
 	spawner->SpawnExplosions(pos + col->min);
 
 }
