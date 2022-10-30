@@ -104,6 +104,9 @@
     <ClCompile Include="SpriteTransparency.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="ParallaxProp.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -222,6 +225,9 @@
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="SpriteTransparency.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ParallaxProp.h">
       <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>

@@ -3,13 +3,11 @@
 #include "template.h"
 
 #include "Collider.h"
-#include "vector.h"
-#include <vector>
-#include "Renderable.h"
-#include "Updateable.h"
-
-#include <iostream>
 #include "Obstacle.h"
+#include "ParallaxProp.h"
+#include "vector.h"
+
+
 struct Tile
 {
 	/// <summary>
@@ -55,7 +53,7 @@ struct Tile
 class Tilemap :public Renderable, public Updateable
 {
 public:
-	Tilemap(uint32_t width = 1, uint32_t height = 1);
+	Tilemap();
 	~Tilemap();
 
 	// Inherited via Renderable
@@ -127,7 +125,7 @@ private:
 	Tmpl8::vec2 pos;
 	Tmpl8::vec2 lastPos;
 	Tmpl8::Surface tileSurface;
-
+	ParallaxProp* prop = nullptr;
 	//consts
 	// edges
 	//top tile edge, shorter names for readbility
@@ -165,8 +163,8 @@ private:
 	const Tile OMB = { true, 504, 144, 72,72 ,0 , 0, 0, 24 };
 	const Tile ORB = { true, 576, 144, 72,72 , 0, 0, 25, 24 };
 
-	static const uint32_t X_TILES = 24;
-	static const uint32_t Y_TILES = 16;
+	static const int X_TILES = 24;
+	static const int Y_TILES = 16;
 
 	const int TILE_SIZE = 72;
 	const int TILEMAP_SIZE = 1940;

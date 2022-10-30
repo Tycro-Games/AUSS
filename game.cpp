@@ -29,8 +29,7 @@ namespace Tmpl8
 	void Game::AllocateMemory()
 	{
 		tileMap = new Tilemap();
-		//pnew Sprite(new Surface("assets//OriginalAssets/sniper.tga")
-		//new Sprite(new Surface("assets/player.png")
+
 		player = new Player(new Sprite(new Surface("assets/player.png"), 32),
 			vec2(START_POS),
 			Collider(vec2(COL_MIN), vec2(COL_MAX)),
@@ -109,7 +108,7 @@ namespace Tmpl8
 	void Game::Tick(float deltaTime)
 	{
 		deltaTime /= 1000.0f; //make time into seconds
-		screen->Clear(0);
+		screen->Clear(255<<16);
 
 		switch (currentState)
 		{

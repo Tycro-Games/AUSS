@@ -243,6 +243,7 @@
     <ClCompile Include="MoveInstance.cpp" />
     <ClCompile Include="MoveToADirection.cpp" />
     <ClCompile Include="Obstacle.cpp" />
+    <ClCompile Include="ParallaxProp.cpp" />
     <ClCompile Include="PlayButton.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="pool.cpp" />
@@ -281,6 +282,7 @@
     <ClInclude Include="MoveInstance.h" />
     <ClInclude Include="MoveToADirection.h" />
     <ClInclude Include="Obstacle.h" />
+    <ClInclude Include="ParallaxProp.h" />
     <ClInclude Include="PlayButton.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="pool.h" />

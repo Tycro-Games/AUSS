@@ -1,8 +1,7 @@
 #pragma once
-#include "template.h"
 
-#include "Updateable.h"
 #include "Collider.h"
+#include "Updateable.h"
 class Moveable :public Updateable
 {
 public:
@@ -12,7 +11,7 @@ public:
 	virtual void Update(float deltaTime) = 0;
 	void SetSpeed(float);
 	const float GetSpeed();
-	void Translation(const Tmpl8::vec2);
+	virtual void Translation(const Tmpl8::vec2);
 	Collider* getColl() const {
 		return col;
 	}

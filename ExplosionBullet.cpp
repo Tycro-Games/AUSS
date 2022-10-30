@@ -34,6 +34,7 @@ void ExplosionBullet::Update(float deltaTime)
 	if (!getUpdateable())
 		return;
 	timer->Update(deltaTime);
+	//animation
 	if (currenTime < desiredTime)
 		currenTime += deltaTime;
 	else {
