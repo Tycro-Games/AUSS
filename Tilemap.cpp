@@ -166,3 +166,4 @@ void Tilemap::DrawTile(Tmpl8::Surface* screen, int tx, int ty, int x, int y)
 		dst += screen->GetPitch();
 
 	}
+}
