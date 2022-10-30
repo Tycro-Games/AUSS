@@ -16,7 +16,7 @@ Player::Player(Tmpl8::Sprite* sprite, Tmpl8::vec2 pos, Collider co, Collider* ti
 	projectileSprite(new Tmpl8::Sprite(new Tmpl8::Surface("assets/OriginalAssets/phaser.tga"), 16))
 
 {
-
+	lastPos = pos;
 	spawner = new ProjectileSpawner(&this->pos, -Tmpl8::vec2(rVar.SPRITE_OFFSET / 2, rVar.SPRITE_OFFSET / 2),
 		dirToFace,
 		projectileSprite,

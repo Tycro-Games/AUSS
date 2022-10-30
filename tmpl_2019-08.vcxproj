@@ -273,6 +273,7 @@
     <ClInclude Include="Entity.h" />
     <ClInclude Include="ExitButton.h" />
     <ClInclude Include="ExplosionBullet.h" />
+    <ClInclude Include="Followable.h" />
     <ClInclude Include="FollowCursor.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="MathFunctions.h" />

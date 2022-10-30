@@ -8,7 +8,7 @@
 #include "SpriteTransparency.h"
 
 
-class Player :public Being, public Callable
+class Player :public Being, public Callable, public Followable
 {
 public:
 	Player(Tmpl8::Sprite* sprite, Tmpl8::vec2 pos, Collider col, Collider*, int hp);
@@ -20,9 +20,11 @@ public:
 	virtual void Call()override {};
 	virtual void TakeDamage(int) override;
 	virtual void Die() override;
-
+	virtual const Tmpl8::vec2 GetOffset() override;
+	virtual void ResetOffset() override {
+		lastPos = pos;
+	}
 	MoveablePlayer* GetMoveable();
-
 
 	ProjectileSpawner* GetSpawner();
 	Tmpl8::vec2 GetPosFromStart() {
@@ -48,6 +50,9 @@ private:
 
 
 };
+inline const Tmpl8::vec2 Player::GetOffset() {
+	return   pos - lastPos;
+}
 
 
 

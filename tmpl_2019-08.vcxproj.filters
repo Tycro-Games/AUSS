@@ -230,6 +230,9 @@
     <ClInclude Include="ParallaxProp.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="Followable.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="template code">

@@ -33,8 +33,8 @@ private:
 	//consts
 	const int DG = 25;
 	const int DG_TO_TAKE = 25;
-	const Tmpl8::vec2 COL_MIN = Tmpl8::vec2(0, 0);
-	const Tmpl8::vec2 COL_MAX = Tmpl8::vec2(20, 20);
+	const Tmpl8::vec2 COL_MIN = Tmpl8::vec2(-10, -10);
+	const Tmpl8::vec2 COL_MAX = Tmpl8::vec2(10, 10);
 	const float TIME_TO_ATTACK = 1;
 
 	const float SPEED = 50.0f;

@@ -11,7 +11,8 @@ namespace Tmpl8
 	Tilemap* Game::tileMap;
 	Game::GameState Game::currentState;
 	vector<Collider*> Game::cols;
-	vector<Moveable*> Game::moveables;
+	vector<Moveable*> Game::moveablesTile;
+	vector<Moveable*> Game::moveablesPlayer;
 	void Game::Init()
 	{
 #ifdef _RELEASE
@@ -63,7 +64,7 @@ namespace Tmpl8
 	{
 
 		cols.removeAll();
-		moveables.removeAll();
+		moveablesTile.removeAll();
 		updateables.removeAll();
 		renderables.removeAll();
 		updateablesUI.removeAll();
@@ -108,7 +109,7 @@ namespace Tmpl8
 	void Game::Tick(float deltaTime)
 	{
 		deltaTime /= 1000.0f; //make time into seconds
-		screen->Clear(255<<16);
+		screen->Clear(0);
 
 		switch (currentState)
 		{
@@ -119,12 +120,15 @@ namespace Tmpl8
 			for (int i = 0; i < updateables.getCount(); i++)
 				updateables[i]->Update(deltaTime);
 			//update the offset to the other entities
-			for (int i = 0; i < moveables.getCount(); i++) {
-				moveables[i]->Translation(tileMap->GetOffset());
+			for (int i = 0; i < moveablesTile.getCount(); i++) {
+				moveablesTile[i]->Translation(tileMap->GetOffset());
 			}
-			//reset the offset from the tilemap
+			for (int i = 0; i < moveablesPlayer.getCount(); i++) {
+				moveablesPlayer[i]->Translation(player->GetOffset());
+			}
+			//reset the offsets
 			tileMap->ResetOffset();
-
+			player->ResetOffset();
 			//shooting
 			if (player->GetMoveable()->CanRotate())
 				player->Rotate(static_cast<int>(cursor->pos.x), static_cast<int>(cursor->pos.y));
@@ -272,14 +276,16 @@ namespace Tmpl8
 	void Game::AddCollider(Collider* col)
 	{
 		cols.push_back(col);
-	}void Game::AddMoveable(Moveable* col)
-	{
-		moveables.push_back(col);
 	}
-	void Game::RemoveMoveable(Moveable* col)
+	void Game::AddMoveable(Moveable* col, vector<Moveable*>* vec)
 	{
-		moveables.remove(col);
-	}void Game::RemoveCollider(Collider* col)
+		vec->push_back(col);
+	}
+	void Game::RemoveMoveable(Moveable* col, vector<Moveable*>* vec)
+	{
+		vec->remove(col);
+	}
+	void Game::RemoveCollider(Collider* col)
 	{
 		cols.remove(col);
 	}

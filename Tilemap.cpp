@@ -8,15 +8,16 @@
 Tilemap::Tilemap() :
 	tileSurface("assets/Spaceship-shooter#01/Wang tiles/02-Craters.png"),
 	pos(Tmpl8::vec2(ScreenWidth / 2, ScreenHeight / 2)),
-	lastPos(pos),
 	col(new Collider(
 		Tmpl8::vec2(0),
 		Tmpl8::vec2(0),
-		&pos)),
-	prop(new ParallaxProp(new Tmpl8::Sprite(new Tmpl8::Surface("assets/Spaceship-shooter#01/background/Space02.png"), 1),
-		Tmpl8::vec2(pos.x - OFFSET_X, pos.y - OFFSET_Y), .75f))
+		&pos))
 {
-	Tmpl8::Game::AddMoveable(prop->getMover());
+	lastPos = pos;
+	prop = new ParallaxProp(new Tmpl8::Sprite(new Tmpl8::Surface("assets/Spaceship-shooter#01/background/Space02.png"), 1),
+		Tmpl8::vec2(pos.x - OFFSET_X, pos.y - OFFSET_Y), .25f);
+	Tmpl8::Game::AddMoveable(prop->getMover(), &Tmpl8::Game::moveablesPlayer);
+	Tmpl8::Game::AddMoveable(prop->getMover(), &Tmpl8::Game::moveablesTile);
 	//add obstacles
 	bool LastOneIsBlocking = false;
 	for (int y = 0; y < Y_TILES; y++)
@@ -56,6 +57,7 @@ Tilemap::Tilemap() :
 						tiles[l + m * X_TILES].obs = tiles[index].obs;
 					}
 				}
+				//get to the end of the added obstacle
 				x = i + 1;
 				blockingTiles.push_back(tiles[index].obs);
 				Tmpl8::Game::AddMoveable(tiles[index].obs);
@@ -86,9 +88,14 @@ void Tilemap::Render(Tmpl8::Surface* screen)
 		{
 
 			int index = x + y * X_TILES;
+			//if the tile is blank skip it
+			if (!tiles[index].xd || !tiles[index].yd) {
+				continue;
+			}
 			int tx = tiles[index].x;
 			int ty = tiles[index].y;
 			//uses some offset to center the tilemap
+
 			DrawTile(screen, tx, ty,
 				x * tiles[index].xd + static_cast<int>(pos.x) - OFFSET_X,
 				y * tiles[index].yd + static_cast<int>(pos.y) - OFFSET_Y);
@@ -158,10 +165,17 @@ void Tilemap::DrawTile(Tmpl8::Surface* screen, int tx, int ty, int x, int y)
 	//draw tile
 	Tmpl8::Pixel* src = tileSurface.GetBuffer() + tx + ty * tileSurface.GetPitch();
 	Tmpl8::Pixel* dst = screen->GetBuffer() + x + y * screen->GetPitch();
+
 	for (int i = 0; i < height; i++)
 	{
+		for (int j = 0; j < width; j++) {
 
-		memcpy(dst, src, sizeof(Tmpl8::Pixel) * width);
+			//memcpy(dst, src, sizeof(Tmpl8::Pixel) * width);
+			//check if the pixel we want to copy is opaque
+			if ((src[j] & 0xFF000000) >> 24 == 255)
+				dst[j] = src[j];
+
+		}
 		src += tileSurface.GetPitch();
 		dst += screen->GetPitch();
 

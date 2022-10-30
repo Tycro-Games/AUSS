@@ -5,6 +5,7 @@
 #include "Collider.h"
 #include "Obstacle.h"
 #include "ParallaxProp.h"
+#include "Followable.h"
 #include "vector.h"
 
 
@@ -50,7 +51,7 @@ struct Tile
 	Obstacle* obs = nullptr;
 };
 
-class Tilemap :public Renderable, public Updateable
+class Tilemap :public Renderable, public Updateable, public Followable
 {
 public:
 	Tilemap();
@@ -62,10 +63,11 @@ public:
 
 	// Inherited via Updateable
 	virtual void Update(float deltaTime) override;
-
-	void ResetOffset() {
+	//Inherited via Followable
+	virtual void ResetOffset() override {
 		lastPos = pos;
 	}
+	
 	inline Collider* GetCol() const {
 		return col;
 	}
@@ -117,25 +119,17 @@ public:
 	void SetPos(const Tmpl8::vec2 p);
 
 	inline Tmpl8::vec2* GetPos();
-	inline const Tmpl8::vec2 GetOffset();
+	virtual inline const Tmpl8::vec2 GetOffset() override;
+
 
 
 private:
 	void DrawTile(Tmpl8::Surface* screen, int tx, int ty, int x, int y);
 	Tmpl8::vec2 pos;
-	Tmpl8::vec2 lastPos;
 	Tmpl8::Surface tileSurface;
 	ParallaxProp* prop = nullptr;
 	//consts
-	// edges
-	//top tile edge, shorter names for readbility
-	const Tile TEL = { false, 864, 72, 72,72 };
-	const Tile TEM = { false, 936, 72, 72,72 };
-	const Tile TER = { false, 1008, 72, 72,72 };
-	//side tile edge
-	const Tile SET = { false, 720, 0, 72,72 };
-	const Tile SEM = { false, 720, 72, 72,72 };
-	const Tile SEB = { false, 720, 144, 72,72 };
+	const Tile BLK = { false };
 	//corners L=Left R=Right T=Top B=Bottom M=Mid
 	//top 
 	const Tile CLT = { false, 0, 0, 72,72 };
@@ -177,20 +171,20 @@ private:
 
 	Tile tiles[X_TILES * Y_TILES] = {
 	  CLT,CMT,CMT,CMT,CMT,CMT,CMT,CMT,CMT,CMT,CMT,CMT,CMT,CMT,CMT,CMT,CMT,CMT,CMT,CMT,CMT,CMT,CMT,CRT,
-	  CLM,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEL,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,CRM,
-	  CLM,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEL,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,CRM,
-	  CLM,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,OLT,OMT,ORT,TEM,OLT,OMT,OMT,ORT,TEM,TEM,TEM,TEM,TEM,CRM,
-	  CLM,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,OLM,OMM,OMR,TEM,OLM,OMM,OMM,OMR,TEM,TEM,TEM,TEM,TEM,CRM,
-	  CLM,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,OLM,OMM,OMR,TEM,OLB,OMB,OMB,ORB,TEM,TEM,TEM,TEM,TEM,CRM,
-	  CLM,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,OLB,OMB,ORB,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,CRM,
-	  CLM,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEL,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,CRM,
-	  CLM,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEL,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,CRM,
-	  CLM,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEL,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,CRM,
-	  CLM,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,OLT,OMT,OMT,OMT,ORT,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,CRM,
-	  CLM,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,OLM,OMM,OMM,OMM,OMR,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,CRM,
-	  CLM,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,OLB,OMB,OMB,OMB,ORB,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,CRM,
-	  CLM,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEL,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,CRM,
-	  CLM,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEL,TEM,TER,TEM,TEM,TEM,TEM,TEM,TEM,TEM,TEM,CRM,
+	  CLM,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,CRM,
+	  CLM,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,CRM,
+	  CLM,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,OLT,OMT,ORT,BLK,OLT,OMT,OMT,ORT,BLK,BLK,BLK,BLK,BLK,CRM,
+	  CLM,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,OLM,OMM,OMR,BLK,OLM,OMM,OMM,OMR,BLK,BLK,BLK,BLK,BLK,CRM,
+	  CLM,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,OLM,OMM,OMR,BLK,OLB,OMB,OMB,ORB,BLK,BLK,BLK,BLK,BLK,CRM,
+	  CLM,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,OLB,OMB,ORB,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,CRM,
+	  CLM,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,CRM,
+	  CLM,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,CRM,
+	  CLM,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,CRM,
+	  CLM,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,OLT,OMT,OMT,OMT,ORT,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,CRM,
+	  CLM,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,OLM,OMM,OMM,OMM,OMR,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,CRM,
+	  CLM,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,OLB,OMB,OMB,OMB,ORB,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,CRM,
+	  CLM,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,CRM,
+	  CLM,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,BLK,CRM,
 	  CLB,CMB,CMB,CMB,CMB,CMB,CMB,CMB,CMB,CMB,CMB,CMB,CMB,CMB,CMB,CMB,CMB,CMB,CMB,CMB,CMB,CMB,CMB,CRB,
 
 
@@ -202,6 +196,6 @@ private:
 inline Tmpl8::vec2* Tilemap::GetPos() {
 	return &pos;
 }
-inline const Tmpl8::vec2 Tilemap::GetOffset() {
+ const Tmpl8::vec2 Tilemap::GetOffset() {
 	return   pos - lastPos;
 }
