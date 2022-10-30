@@ -10,7 +10,6 @@ public:
 	MoveablePlayer(Tmpl8::vec2* pos, Collider* col, Collider* tileMapCol, float speed = 70.0f, float dashSpeed = 500);
 	virtual ~MoveablePlayer();
 	virtual void Update(float deltaTime) override;
-	void SetPositions(Tmpl8::vec2& playerPos, Tmpl8::vec2& currentPos, Tmpl8::vec2& nextPos, float deltaTime );
 	void SetDashPos(Tmpl8::vec2& nextPos);
 	void ResetTriggers();
 	void MovePlayer();
@@ -24,15 +23,11 @@ public:
 	void startDash();
 
 	void Dashing();
-	bool CanRotate();
-	bool IsDashing() {
-		return dashTimer.isUpdateable;
-	}
-	
-	bool ChangedPos() {
 
-		return hasChangedPos;
-	};
+	float GetDashLinearTime() const;
+	bool CanRotate()const;
+	bool IsDashing() const;
+	bool ChangedPos() const;
 private:
 	bool hasChangedPos = false;
 	bool canMove = false;
@@ -54,6 +49,7 @@ private:
 	float initSpeed;
 	float dashSpeed;
 	float timePassed = 0.0f;
+	float linearT = 0.0f;
 	//consts
 	const float DASH_DURATION = 0.45f;
 	const float COOLDOWN_DURATION = 0.6f;

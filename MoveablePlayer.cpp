@@ -1,7 +1,9 @@
 #include "MoveablePlayer.h"
 #include "MathFunctions.h"
-#include <iostream>
 #include "game.h"
+
+#include <iostream>
+
 MoveablePlayer::MoveablePlayer(Tmpl8::vec2* pos, Collider* col, Collider* tileMapCol, float speed, float DashSpeed) :
 	Moveable(pos, col, speed),
 	dashTimer(Timer()),
@@ -74,15 +76,30 @@ void MoveablePlayer::Dashing()
 	speed = dashSpeed;
 }
 
-bool MoveablePlayer::CanRotate()
+float MoveablePlayer::GetDashLinearTime() const
+{
+	return linearT;
+}
+
+bool MoveablePlayer::CanRotate() const
 {
 	return canRotate;
+}
+
+bool MoveablePlayer::IsDashing() const
+{
+	return dashTimer.isUpdateable;
+}
+
+bool MoveablePlayer::ChangedPos() const
+{
+	return hasChangedPos;
 }
 
 void MoveablePlayer::Call()
 {
 
-	//animation dash to add, use maybe a square + 1
+
 	if (dashTimer.isUpdateable) {
 		dashTimer.ResetVar();
 		dashTimer.isUpdateable = false;
@@ -135,8 +152,10 @@ void MoveablePlayer::Update(float deltaTime)
 		canRotate = false;
 
 	if (dashTimer.isUpdateable == false && dashing && !startedDashing) {
+		//start the cooldown then the dash is finished
 		cooldownTimer.isUpdateable = true;
 	}
+	
 	if (dashing && timePassed + deltaTime < DASH_DURATION) {
 
 		timePassed += deltaTime;
@@ -179,7 +198,7 @@ void MoveablePlayer::Update(float deltaTime)
 
 void MoveablePlayer::SetDashPos(Tmpl8::vec2& nextPos)
 {
-	float linearT = timePassed / DASH_DURATION;
+	linearT = timePassed / DASH_DURATION;
 	nextPos = dashDir;
 	nextPos *= MathFunctions::DashFunction(linearT);
 }

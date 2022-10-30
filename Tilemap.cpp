@@ -9,12 +9,8 @@ Tilemap::Tilemap(uint32_t width, uint32_t height) :
 	pos(Tmpl8::vec2(ScreenWidth / 2, ScreenHeight / 2)),
 	lastPos(pos),
 	col(new Collider(
-		Tmpl8::vec2(
-			0,
-			0),
-		Tmpl8::vec2(
-			1,
-			1),
+		Tmpl8::vec2(0),
+		Tmpl8::vec2(0),
 		&pos))
 {
 
@@ -24,69 +20,46 @@ Tilemap::Tilemap(uint32_t width, uint32_t height) :
 		for (int x = 0; x < X_TILES; x++) {
 			int index = x + y * X_TILES;
 
-			if (tiles[index].IsBlocking) {
+			if (tiles[index].IsBlocking && tiles[index].obs == nullptr) {
 
 				Tmpl8::vec2 p = Tmpl8::vec2(x * tiles[index].xd + pos.x - static_cast<float>(OFFSET_X),
 					y * tiles[index].yd + pos.y - static_cast<float>(OFFSET_Y));
 				Tmpl8::vec2 offset = Tmpl8::vec2(tiles[index].pivotX, tiles[index].pivotY);
 				p += offset;
-
+				//add other obstacles
+				int i = x, j = y;
 				float xD = static_cast<float>(tiles[index].xd);
 				float yD = static_cast<float>(tiles[index].yd);
+				Tmpl8::vec2 dimensions = Tmpl8::vec2(xD - tiles[index].dimensionsX, yD - tiles[index].dimensionsY);
+				while (tiles[++i + j * X_TILES].IsBlocking) {
+					xD = static_cast<float>(tiles[i + j * X_TILES].xd);
+					yD = static_cast<float>(tiles[i + j * X_TILES].yd);
+					dimensions += Tmpl8::vec2(xD - tiles[i + j * X_TILES].dimensionsX, 0);
+				}
+				i--;
+				while (tiles[i + (++j) * X_TILES].IsBlocking) {
+					xD = static_cast<float>(tiles[i + j * X_TILES].xd);
+					yD = static_cast<float>(tiles[i + j * X_TILES].yd);
+					dimensions += Tmpl8::vec2(0, yD - tiles[i + j * X_TILES].dimensionsY);
 
-				tiles[index].obs = new Obstacle(p, Collider(0, Tmpl8::vec2(xD - tiles[index].dimensionsX, yD - tiles[index].dimensionsY)), index);
+				}
+				j--;
+
+				tiles[index].obs = new Obstacle(p, Collider(0, dimensions), index);
+				for (int l = x; l <= i; l++) {
+					for (int m = y; m <= j; m++) {
+						if (+m * X_TILES == index)
+							continue;
+						tiles[l + m * X_TILES].obs = tiles[index].obs;
+					}
+				}
+				x = i + 1;
 				blockingTiles.push_back(tiles[index].obs);
 				Tmpl8::Game::AddMoveable(tiles[index].obs);
 
 			}
 
 		}
-
-	////merge obstacles
-
-	//vector<size_t> tilesToAddNewObstacle;
-
-	//for (int i = 0; i < blockingTiles.getCount() - 1; i++) {
-	//	std::cout << blockingTiles[i] << " ";
-	//	Obstacle* a = blockingTiles[i];
-	//	Obstacle* b = blockingTiles[i + 1];
-	//	if (a->getColl()->Collides(b->getColl()->At(*b->getColl()->pos))) {
-
-	//		Collider* bCol = b->getColl();
-	//		Collider* aCol = a->getColl();
-	//		float x1 = aCol->max.x + aCol->pos->x, y1 = aCol->max.y + aCol->pos->y;
-
-	//		x1 = std::max(bCol->pos->x + bCol->max.x, x1);
-	//		y1 = std::max(bCol->pos->y + bCol->max.y, y1);
-
-	//		x1 -= aCol->pos->x;
-	//		y1 -= aCol->pos->y;
-
-
-
-
-	//		tiles[i].obs = new Obstacle((*aCol->pos), Collider(0, Tmpl8::vec2(x1, y1)), a->index);
-
-
-	//		blockingTiles[i] = tiles[i].obs;
-	//		Tmpl8::Game::AddMoveable(tiles[a->index].obs);
-
-	//		Tmpl8::Game::RemoveMoveable(a);
-	//		Tmpl8::Game::RemoveMoveable(b);
-
-	//		blockingTiles.remove(b);
-
-
-
-	//		delete a;
-	//		a = nullptr;
-	//		delete b;
-	//		b = nullptr;
-
-	//	}
-	//}
-
-
 }
 
 
@@ -150,10 +123,10 @@ void Tilemap::DrawTile(Tmpl8::Surface* screen, int tx, int ty, int x, int y)
 		return;
 	//determine the clipping amount
 	int minCX = std::max(0, x);
-	int maxCX = std::min(ScreenWidth - 1, maxX);
+	int maxCX = std::min(ScreenWidth, maxX);
 
 	int minCY = std::max(0, y);
-	int maxCY = std::min(ScreenHeight - 1, maxY);
+	int maxCY = std::min(ScreenHeight, maxY);
 
 	//difference of the clipped amount and the actual amount
 	int addOffsetMinX = abs(minCX - x);

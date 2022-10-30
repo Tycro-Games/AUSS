@@ -29,7 +29,8 @@ namespace Tmpl8
 	void Game::AllocateMemory()
 	{
 		tileMap = new Tilemap();
-		//player
+		//pnew Sprite(new Surface("assets//OriginalAssets/sniper.tga")
+		//new Sprite(new Surface("assets/player.png")
 		player = new Player(new Sprite(new Surface("assets/player.png"), 32),
 			vec2(START_POS),
 			Collider(vec2(COL_MIN), vec2(COL_MAX)),
@@ -125,13 +126,13 @@ namespace Tmpl8
 			//reset the offset from the tilemap
 			tileMap->ResetOffset();
 
+			//shooting
 			if (player->GetMoveable()->CanRotate())
 				player->Rotate(static_cast<int>(cursor->pos.x), static_cast<int>(cursor->pos.y));
 			player->Shoot(isPressingLeftMouse);
 			//rendering
 			for (int i = 0; i < renderables.getCount(); i++)
 				renderables[i]->Render(screen);
-			//shooting
 
 			break;
 		case(mainMenu):
