@@ -39,7 +39,6 @@ private:
 	Tmpl8::Sprite* projectileSprite;
 	//components
 	Collider* tilemapCollider;
-	SpriteTransparency* spriteFade;
 	MoveablePlayer* playerMover;
 	Collider col;
 	ProjectileSpawner* spawner;

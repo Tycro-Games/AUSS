@@ -18,22 +18,23 @@ void SpriteTransparency::SetTransperency(Tmpl8::Sprite* sprit, Tmpl8::Surface* s
 
 			Tmpl8::Pixel colorSrc = copy->GetBuffer()[frame * (copy->GetHeight()) + x + y * copy->GetPitch()];
 			Tmpl8::Pixel colorDst = screen->GetBuffer()[X + x + (y + Y) * screen->GetPitch()];
-
-			unsigned char Asrc = ((colorSrc & 0xFF000000) >> 24)/255.0f*alpha;
+			//get the alpha of the source
+			unsigned char Asrc = ((colorSrc & 0xFF000000) >> 24) / 255.0f * alpha;
+			//channels of the source
 			unsigned char Rsrc = (colorSrc & Tmpl8::RedMask) >> 16;
 			unsigned char Gsrc = (colorSrc & Tmpl8::GreenMask) >> 8;
 			unsigned char Bsrc = (colorSrc & Tmpl8::BlueMask);
 
-
+			//channels of the destination
 			unsigned char Rdst = (colorDst & Tmpl8::RedMask) >> 16;
 			unsigned char Gdst = (colorDst & Tmpl8::GreenMask) >> 8;
 			unsigned char Bdst = (colorDst & Tmpl8::BlueMask);
+			//alpha sub-blending
+			Rdst = static_cast<unsigned char>(R * Asrc + (1 - Asrc) * Rdst);
+			Gdst = static_cast<unsigned char>(G * Asrc + (1 - Asrc) * Gdst);
+			Bdst = static_cast<unsigned char>(B * Asrc + (1 - Asrc) * Bdst);
 			
-			Rdst = static_cast<unsigned char>(R * Asrc + (1 - alpha) * Rdst);
-			Gdst = static_cast<unsigned char>(G * Asrc + (1 - alpha) * Gdst);
-			Bdst = static_cast<unsigned char>(B * Asrc + (1 - alpha) * Bdst);
 			
-
 			Tmpl8::Pixel c = Rdst << 16 | Gdst << 8 | Bdst;
 
 			screen->GetBuffer()[X + x + (y + Y) * screen->GetPitch()] = c;

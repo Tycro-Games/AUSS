@@ -8,7 +8,6 @@ using namespace Tmpl8;
 Player::Player(Tmpl8::Sprite* sprite, Tmpl8::vec2 pos, Collider co, Collider* tileMapCol, int hp)
 	:dirToFace(new Tmpl8::vec2()),
 	Being(sprite, pos, hp),
-	spriteFade(new SpriteTransparency(sprite->GetSurface())),
 	startingPos(pos),
 	col(Collider(co.min, co.max, &startingPos)),
 	map(map),
@@ -33,8 +32,7 @@ Player::~Player()
 	delete spawner;
 	delete dirToFace;
 	delete projectileSprite;
-	delete spriteFade;
-}
+	delete spriteFade;}
 
 
 void Player::Render(Tmpl8::Surface* screen)
@@ -43,14 +41,13 @@ void Player::Render(Tmpl8::Surface* screen)
 	sprite->SetFrame(frame);
 	//when dashing fade the sprite based on the dash multiplier
 	if (playerMover->IsDashing()) {
-		spriteFade->SetTransperency(sprite, screen,
+		SpriteTransparency::SetTransperency(sprite, screen,
 			static_cast<int>(pos.x - rVar.SPRITE_OFFSET / 2),
 			static_cast<int>(pos.y - rVar.SPRITE_OFFSET / 2),
 			playerMover->GetDashLinearTime(), frame);
-		std::cout << playerMover->GetDashLinearTime() << '\n';
 	}
 	else {
-		spriteFade->SetTransperency(sprite, screen,
+		SpriteTransparency::SetTransperency(sprite, screen,
 			static_cast<int>(pos.x - rVar.SPRITE_OFFSET / 2),
 			static_cast<int>(pos.y - rVar.SPRITE_OFFSET / 2),
 			1, frame);
