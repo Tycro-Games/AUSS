@@ -5,11 +5,11 @@
 #include "FollowCursor.h"
 #include "Playbutton.h"
 #include "Exitbutton.h"
-
-#include <SDL_Scancode.h>
+#include "EnemyWaveSpawner.h"
 #include "CollisionDetection.h"
 #include "Tilemap.h"
 
+#include <SDL_Scancode.h>
 namespace Tmpl8 {
 
 	class Surface;
@@ -70,6 +70,7 @@ namespace Tmpl8 {
 		EnemySpawner* enemySpawner;
 		CollisionDetection* projectileDetection;
 		MoveablePlayer* tileMovement;
+		EnemyWaveSpawner spawner;
 		//update components
 		vector<Updateable*> updateables;
 		vector<Renderable*> renderables;

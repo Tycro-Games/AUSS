@@ -107,6 +107,9 @@
     <ClCompile Include="ParallaxProp.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="EnemyWaveSpawner.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -233,6 +236,9 @@
     <ClInclude Include="Followable.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
+    <ClInclude Include="EnemyWaveSpawner.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="template code">
@@ -279,5 +285,9 @@
     <Text Include="_readme.txt">
       <Filter>template code</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="enemy_waves.json" />
+    <None Include="schema.json" />
   </ItemGroup>
 </Project>
