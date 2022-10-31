@@ -32,7 +32,7 @@ Player::~Player()
 	delete spawner;
 	delete dirToFace;
 	delete projectileSprite;
-	delete spriteFade;}
+}
 
 
 void Player::Render(Tmpl8::Surface* screen)
@@ -52,8 +52,7 @@ void Player::Render(Tmpl8::Surface* screen)
 			static_cast<int>(pos.y - rVar.SPRITE_OFFSET / 2),
 			1, frame);
 	}
-	sprite->Draw(screen, static_cast<int>(pos.x - rVar.SPRITE_OFFSET / 2), static_cast<int>(pos.y - rVar.SPRITE_OFFSET / 2));
-	
+
 
 
 
