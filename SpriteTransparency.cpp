@@ -16,7 +16,7 @@ void SpriteTransparency::SetTransperency(Tmpl8::Sprite* sprit, Tmpl8::Surface* s
 	for (int x = 0; x < sprit->GetWidth(); x++) {
 		for (int y = 0; y < sprit->GetHeight(); y++) {
 
-			Tmpl8::Pixel colorSrc = copy->GetBuffer()[frame * (copy->GetHeight()) + x + y * copy->GetPitch()];
+			Tmpl8::Pixel colorSrc = sprit->GetBuffer()[frame * (copy->GetHeight()) + x + y * sprit->GetPitch()];
 			Tmpl8::Pixel colorDst = screen->GetBuffer()[X + x + (y + Y) * screen->GetPitch()];
 			//get the alpha of the source
 			unsigned char Asrc = ((colorSrc >> 24) / 255.0f * alpha;
