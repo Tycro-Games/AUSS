@@ -6,6 +6,7 @@
 #include <iostream>
 #include "Enemy.h"
 #include "Tilemap.h"
+#include "Observer.h"
 template<class T>
 vector<T>::vector()
 {
@@ -377,4 +378,5 @@ template class vector <Tile>;
 template class vector <Tile*>;
 template class vector <Moveable*>;
 template class vector <Obstacle*>;
+template class vector <Observer*>;
 

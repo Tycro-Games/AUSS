@@ -3,18 +3,19 @@
 #include "Spawner.h"
 #include "Timer.h"
 #include "Enemy.h"
-
-#include <iostream>
 #include "Being.h"
+
+#include "Subject.h"
+#include <iostream>
 class Enemy;
-class EnemySpawner :public Spawner, public Callable
+class EnemySpawner :public Spawner, public Callable, public Subject
 {
 public:
 	~EnemySpawner();
 
 	EnemySpawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Being* player, Tmpl8::Sprite* toSpawn, Tmpl8::Sprite* explosion);
 
-	void AddEnemyToPool(Enemy* enemy);
+	void AddEnemyToPool(Enemy* enemy, bool isDead = false);
 	void CreateMoreEnemies();
 
 	void PlayerTakesDamage(Enemy* enemy);
@@ -24,6 +25,7 @@ public:
 	virtual void Update(float deltaTime) override;
 	virtual void Render(Tmpl8::Surface* screen) override;
 private:
+	bool pooling = true;
 	Timer* timer;
 	float timeToSpawn = 5.0f;
 	Being* player;

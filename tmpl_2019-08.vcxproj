@@ -253,8 +253,10 @@
     <ClCompile Include="RandomNumbers.cpp" />
     <ClCompile Include="ProjectileSpawner.cpp" />
     <ClCompile Include="Rotator.cpp" />
+    <ClCompile Include="Score.cpp" />
     <ClCompile Include="Spawner.cpp" />
     <ClCompile Include="SpriteTransparency.cpp" />
+    <ClCompile Include="Subject.cpp" />
     <ClCompile Include="surface.cpp" />
     <ClCompile Include="template.cpp" />
     <ClCompile Include="Tilemap.cpp" />
@@ -284,6 +286,7 @@
     <ClInclude Include="MoveablePlayer.h" />
     <ClInclude Include="MoveInstance.h" />
     <ClInclude Include="MoveToADirection.h" />
+    <ClInclude Include="Observer.h" />
     <ClInclude Include="Obstacle.h" />
     <ClInclude Include="ParallaxProp.h" />
     <ClInclude Include="PlayButton.h" />
@@ -297,8 +300,10 @@
     <ClInclude Include="RotationVar.h" />
     <ClInclude Include="ProjectileSpawner.h" />
     <ClInclude Include="Rotator.h" />
+    <ClInclude Include="Score.h" />
     <ClInclude Include="Spawner.h" />
     <ClInclude Include="SpriteTransparency.h" />
+    <ClInclude Include="Subject.h" />
     <ClInclude Include="surface.h" />
     <ClInclude Include="template.h" />
     <ClInclude Include="Tilemap.h" />

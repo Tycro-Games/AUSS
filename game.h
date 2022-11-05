@@ -10,6 +10,7 @@
 #include "Tilemap.h"
 
 #include <SDL_Scancode.h>
+#include "Score.h"
 namespace Tmpl8 {
 
 	class Surface;
@@ -23,6 +24,9 @@ namespace Tmpl8 {
 		void ResetGame();
 		void RemoveAllUpdateables();
 		void AddInstancesToUpdates();
+
+		void AssignSubject(Subject& subject, Observer& observer);
+
 
 		//SDL functions
 		void Shutdown();
@@ -67,6 +71,7 @@ namespace Tmpl8 {
 		vector <Renderable*> renderablesUI;
 		//actual game
 		Player* player;
+		Score score;
 		EnemySpawner* enemySpawner;
 		CollisionDetection* projectileDetection;
 		MoveablePlayer* tileMovement;

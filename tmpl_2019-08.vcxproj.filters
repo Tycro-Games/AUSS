@@ -110,6 +110,12 @@
     <ClCompile Include="EnemyWaveSpawner.cpp">
       <Filter>Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="Score.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Subject.cpp">
+      <Filter>Interfaces</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -238,6 +244,15 @@
     </ClInclude>
     <ClInclude Include="EnemyWaveSpawner.h">
       <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Score.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Observer.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Subject.h">
+      <Filter>Interfaces</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

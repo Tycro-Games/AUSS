@@ -1,6 +1,7 @@
 #include "game.h"
 #include "surface.h"
 #include <iostream>
+#include <string>
 #include "template.h"
 
 #include "MathFunctions.h"
@@ -13,6 +14,7 @@ namespace Tmpl8
 	vector<Collider*> Game::cols;
 	vector<Moveable*> Game::moveablesTile;
 	vector<Moveable*> Game::moveablesPlayer;
+
 	void Game::Init()
 	{
 #ifdef _RELEASE
@@ -29,6 +31,9 @@ namespace Tmpl8
 	}
 	void Game::AllocateMemory()
 	{
+		//reset the score
+		score.init();
+
 		tileMap = new Tilemap();
 
 		player = new Player(new Sprite(new Surface("assets/player.png"), 32),
@@ -84,12 +89,19 @@ namespace Tmpl8
 
 		updateables.push_back(enemySpawner);
 		renderables.push_back(enemySpawner);
+		//assign score
+		AssignSubject(*enemySpawner, score);
+
 
 		updateables.push_back(player);
 		renderables.push_back(player);
 
 		projectileDetection = new CollisionDetection();
 
+	}
+	void Game::AssignSubject(Subject& subject, Observer& observer)
+	{
+		subject.addObserver(&observer);
 	}
 	void Game::Shutdown()
 	{
@@ -136,7 +148,7 @@ namespace Tmpl8
 			//rendering
 			for (int i = 0; i < renderables.getCount(); i++)
 				renderables[i]->Render(screen);
-
+			screen->Print(std::to_string(score.getTotal()).c_str(), ScreenWidth - 30, 20, 0x00FF00);
 			break;
 		case(mainMenu):
 			//update main menu stuff;

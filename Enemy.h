@@ -13,6 +13,7 @@ public:
 	Enemy(Tmpl8::vec2, Tmpl8::Sprite* sprite, EnemySpawner* spawner);
 	virtual ~Enemy();
 	virtual void Init(PosDir) = 0;
+
 	Collider* getColl() const {
 		return col;
 	}
@@ -23,11 +24,13 @@ public:
 		return dg;
 	}
 protected:
+	virtual void ResetEnemy() = 0;
+
 	EnemySpawner* spawner;
 	Moveable* move;
 	Collider* col;
 	int dg;
-
+	unsigned int score = 0;
 };
 
 

@@ -18,7 +18,7 @@ public:
 	virtual void Render(Tmpl8::Surface* screen) override;
 
 	void Init(PosDir posDir);
-	void ResetEnemy();
+	virtual void ResetEnemy() override;
 
 	virtual void Call() override;
 

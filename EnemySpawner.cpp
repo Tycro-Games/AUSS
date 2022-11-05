@@ -22,8 +22,10 @@ EnemySpawner::~EnemySpawner()
 
 }
 
-void EnemySpawner::AddEnemyToPool(Enemy* enemy)
+void EnemySpawner::AddEnemyToPool(Enemy* enemy, bool isDead)
 {
+	if (isDead)
+		notify(1, Additive);
 	enemy->SetActive(false);
 	activeColliders.remove(enemy->getColl());
 	poolOfEnemies.AddElement(enemy);
