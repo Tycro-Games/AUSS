@@ -44,9 +44,7 @@ namespace Tmpl8
 
 		cursor = (new FollowCursor(new Sprite(new Surface("assets/OriginalAssets/target.tga"), 1)));
 		//static spawner
-		enemySpawner = new EnemySpawner(tileMap->GetPos(), new Tmpl8::vec2(), player,
-			new Sprite(new Surface("assets/OriginalAssets/phaser.tga"), 16),
-			new Sprite(new Surface("assets/OriginalAssets/smoke.tga"), 10));
+		enemySpawner = new EnemyWaveSpawner(player, new Sprite(new Surface("assets/OriginalAssets/smoke.tga"), 10));
 
 		playButton = new PlayButton(new Sprite(new Surface("assets/UI/Play_Idle.png"), 1), Tmpl8::vec2(ScreenWidth / 2, ScreenHeight / 2),
 			cursor->GetCollider(),

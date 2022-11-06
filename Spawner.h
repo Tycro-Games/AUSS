@@ -11,7 +11,8 @@ class ExplosionBullet;
 class Spawner : public Updateable, public Renderable
 {
 public:
-	Spawner(Tmpl8::vec2*, Tmpl8::vec2*, Tmpl8::Sprite* explosion);
+	Spawner(Tmpl8::vec2*, Tmpl8::Sprite* explosion);
+	Spawner(Tmpl8::Sprite* explosion);
 	virtual ~Spawner();
 	void AddExplosionToPool(ExplosionBullet* entity);
 	void CreateMoreExplosions();
@@ -20,7 +21,6 @@ public:
 
 protected:
 	Tmpl8::vec2* pos;
-	Tmpl8::vec2* dir;
 	RandomNumbers randomNumbers;
 	//to update
 	vector<Entity*> updateObjects;

@@ -5,7 +5,8 @@
 
 #include "game.h"
 ProjectileSpawner::ProjectileSpawner(Tmpl8::vec2* pos, Tmpl8::vec2 offset, Tmpl8::vec2* dir, Tmpl8::Sprite* tospawn, Tmpl8::Sprite* explosion)
-	:Spawner(pos, dir, explosion),
+	:Spawner(pos, explosion),
+	dir(dir),
 	projectileSprite(tospawn),
 	offset(offset)
 

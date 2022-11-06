@@ -2,16 +2,16 @@
 #include "Being.h"
 
 #include "MoveToADirection.h"
-#include "EnemySpawner.h"
+#include "EnemyWaveSpawner.h"
 #include "PosDir.h"
-
-class EnemySpawner;
+//based on https://gameprogrammingpatterns.com/prototype.html
+class EnemyWaveSpawner;
 class Enemy : public Being
 {
 public:
-
-	Enemy(Tmpl8::vec2, Tmpl8::Sprite* sprite, EnemySpawner* spawner);
+	Enemy(Tmpl8::vec2, Tmpl8::Sprite*, EnemyWaveSpawner*);
 	virtual ~Enemy();
+	virtual Enemy* clone() = 0;
 	virtual void Init(PosDir) = 0;
 
 	Collider* getColl() const {
@@ -20,15 +20,19 @@ public:
 	Moveable* getMoveable() const {
 		return move;
 	}
-	int getDg() {
+	int getDg() const {
 		return dg;
 	}
+	EnemyTypes GetEnemyType() {
+		return enemyType;
+	}
 protected:
+	EnemyTypes enemyType;
 	virtual void ResetEnemy() = 0;
-
-	EnemySpawner* spawner;
+	EnemyWaveSpawner* spawner;
 	Moveable* move;
 	Collider* col;
+	Tmpl8::vec2 dir;
 	int dg;
 	unsigned int score = 0;
 };

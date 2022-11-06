@@ -1,15 +1,15 @@
 #pragma once
-#include "Enemy.h"
 #include "RotationVar.h"
 #include "EnemyRotator.h"
+#include "Enemy.h"
 
 
 
 class EnemyHoarder :public Enemy, public Callable
 {
 public:
-	EnemyHoarder(PosDir posDir, Tmpl8::Sprite* sprite, EnemySpawner* spawner);
-	//EnemyHoarder(const Enemy& enemy);
+	EnemyHoarder(PosDir posDir, Tmpl8::Sprite* sprite, EnemyWaveSpawner* spawner);
+
 	~EnemyHoarder();
 
 	// Inherited via Enemy
@@ -22,12 +22,13 @@ public:
 
 	virtual void Call() override;
 
+	// Inherited via Enemy
+	virtual Enemy* clone() override;
 private:
 	//movement
 	bool ToMove = false;
 	bool InRangeToAtack = false;
 	float dist;
-	Tmpl8::vec2 dir;
 	float timeToRotate = 0.1f;
 
 	//consts
@@ -51,6 +52,8 @@ private:
 	EnemyRotator* rot;
 	// Inherited via Enemy
 	virtual void Die() override;
+
+
 
 };
 

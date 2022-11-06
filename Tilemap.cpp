@@ -104,7 +104,7 @@ void Tilemap::Render(Tmpl8::Surface* screen)
 
 	for (int i = 0; i < blockingTiles.getCount(); i++) {
 		Collider c = *blockingTiles[i]->getColl();
-		screen->Box(c.min.x + c.pos->x, c.min.y + c.pos->y, c.max.x + c.pos->x, c.max.y + c.pos->y, 0xFF0000);
+		screen->Box(static_cast<int>(c.min.x + c.pos->x), static_cast<int>(c.min.y + c.pos->y), static_cast<int>(c.max.x + c.pos->x), static_cast<int>(c.max.y + c.pos->y), 0xFF0000);
 	}
 	auto posText = std::string(std::to_string(pos.x) + " " + std::to_string(pos.y));
 	screen->Print(posText.c_str(), 200, 10, 0xFF0000);

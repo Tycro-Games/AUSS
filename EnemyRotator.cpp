@@ -1,6 +1,6 @@
 #include "EnemyRotator.h"
 
-EnemyRotator::EnemyRotator(Tmpl8::vec2* pos, Tmpl8::vec2* dir, RotationVar rVar,unsigned int* frame, MoveToADirection* mover, EnemySpawner* spawner)
+EnemyRotator::EnemyRotator(Tmpl8::vec2* pos, Tmpl8::vec2* dir, RotationVar rVar,unsigned int* frame, MoveToADirection* mover, EnemyWaveSpawner* spawner)
 	: Rotator(pos, dir, rVar, frame, mover),
 	spawner(spawner)
 {

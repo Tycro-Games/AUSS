@@ -28,6 +28,7 @@ public:
 private:
 	float fireRate = 1.0f, currentTime, desiredTime;
 
+	Tmpl8::vec2* dir;
 	Tmpl8::vec2 offset;
 
 	pool<Projectile*> poolOfProjectiles;

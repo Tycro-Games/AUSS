@@ -1,18 +1,19 @@
 #pragma once
 #include "Rotator.h"
 
-#include "EnemySpawner.h"
+#include "EnemyWaveSpawner.h"
+class EnemyWaveSpawner;
 class EnemyRotator :public Rotator, public Callable
 {
 public:
-	EnemyRotator(Tmpl8::vec2* pos, Tmpl8::vec2* dir, RotationVar rVar, unsigned int* frame, MoveToADirection*, EnemySpawner*);
+	EnemyRotator(Tmpl8::vec2* pos, Tmpl8::vec2* dir, RotationVar rVar, unsigned int* frame, MoveToADirection*, EnemyWaveSpawner*);
 	~EnemyRotator();
 	void RotateToPlayer();
 	virtual void Call() override;
 
 
 private:
-	EnemySpawner* spawner;
+	EnemyWaveSpawner* spawner;
 
 };
 

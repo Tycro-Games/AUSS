@@ -1,81 +1,63 @@
 #include "EnemySpawner.h"
-#include "EnemyHoarder.h"
 #include "game.h"
 
 
-EnemySpawner::EnemySpawner(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Being* player, Tmpl8::Sprite* toSpawn, Tmpl8::Sprite* explosion) :
-	Spawner(pos, dir, explosion),
-	player(player),
-	enemySprite(toSpawn)
+EnemySpawner::EnemySpawner(Tmpl8::vec2* pos, EnemyWaveSpawner* enemyWave, Tmpl8::Sprite* explosion) :
+	Spawner(pos, explosion),
+	enemyWave(enemyWave)
 {
-	timer = new Timer(this, timeToSpawn, true);
-	for (int i = 0; i < MAX_ENEMIES; i++)
-		CreateMoreEnemies();
+	timer = new Timer(this, timeToSpawn);
+
 
 }
 
 EnemySpawner::~EnemySpawner()
 {
-	delete enemySprite;
 	delete timer;
-	delete dir;
 
 }
 
-void EnemySpawner::AddEnemyToPool(Enemy* enemy, bool isDead)
-{
-	if (isDead)
-		notify(1, Additive);
-	enemy->SetActive(false);
-	activeColliders.remove(enemy->getColl());
-	poolOfEnemies.AddElement(enemy);
-	Tmpl8::Game::RemoveCollider(enemy->getColl());
-	Tmpl8::Game::RemoveMoveable(enemy->getMoveable());
-}
-
-void EnemySpawner::CreateMoreEnemies()
-{
-	Enemy* enemy = new EnemyHoarder(PosDir(*pos + *dir * OFFSET, *dir), enemySprite, this);
-	updateObjects.push_back(enemy);
-
-	AddEnemyToPool(enemy);
-}
 
 void EnemySpawner::Update(float deltaTime)
 {
 	if (timer->isUpdateable)
 		timer->Update(deltaTime);
 
-	for (int i = 0; i < updateObjects.getCount(); i++)
-		updateObjects[i]->Update(deltaTime);
+
 }
 
 Tmpl8::vec2 EnemySpawner::GetPlayerPos()
 {
-	return player->pos;
+	return enemyWave->GetPlayerPos();
+}
+void EnemySpawner::SetEnemy(EnemyTypes enemy)
+{
+	enemyToSpawn = enemy;
 }
 bool EnemySpawner::IsEnemy(Collider* col)
 {
-	return activeColliders.contains(col);
+	return enemyWave->IsEnemy(col);
 }
 void EnemySpawner::Render(Tmpl8::Surface* screen)
 {
-	for (int i = 0; i < updateObjects.getCount(); i++)
-		updateObjects[i]->Render(screen);
+	//render a sprite maybe
 }
 void EnemySpawner::PlayerTakesDamage(Enemy* enemy)
 {
-	player->TakeDamage(enemy->getDg());
+	enemyWave->PlayerTakesDamage(enemy);
 }
-
+void EnemySpawner::ResetTimer(float timeToSpawn)
+{
+	timer->Init(this, timeToSpawn);
+}
+//called by timer
 void EnemySpawner::Call()
 {
-	if (poolOfEnemies.getCount() == 0)
-		CreateMoreEnemies();
-	Enemy* enemy = poolOfEnemies.PopElement();
+	//calls the wave spawner
+	Enemy* enemy = enemyWave->SpawnEnemy(*pos, enemyToSpawn);
 	Tmpl8::vec2 randomDir = GetDirDeviation();
 	enemy->Init(PosDir(*pos, randomDir));
-	activeColliders.push_back(enemy->getColl());
+	//game wiring
 	Tmpl8::Game::AddCollider(enemy->getColl());
 	Tmpl8::Game::AddMoveable(enemy->getMoveable());
 

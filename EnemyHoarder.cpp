@@ -1,9 +1,10 @@
 #include "EnemyHoarder.h"
 #include "MathFunctions.h"
-EnemyHoarder::EnemyHoarder(PosDir posDir, Tmpl8::Sprite* sprite, EnemySpawner* spawner) :
+EnemyHoarder::EnemyHoarder(PosDir posDir, Tmpl8::Sprite* sprite, EnemyWaveSpawner* spawner) :
 	Enemy(posDir.pos, sprite, spawner),
 	randomNumbers()
 {
+	enemyType = Hoarder;
 	//json magic
 	score = 10;
 	dg = DG;
@@ -78,8 +79,8 @@ void EnemyHoarder::Render(Tmpl8::Surface* screen)
 	sprite->Draw(screen, static_cast<int>(static_cast<int>(pos.x - rVar.SPRITE_OFFSET / 2)), static_cast<int>(pos.y - rVar.SPRITE_OFFSET / 2));
 	screen->Box(static_cast<int>(pos.x - rVar.SPRITE_OFFSET / 2),
 		static_cast<int>(pos.y - rVar.SPRITE_OFFSET / 2),
-		pos.x + rVar.SPRITE_OFFSET / 2,
-		pos.y + rVar.SPRITE_OFFSET / 2, 0xffff);
+		static_cast<int>(pos.x + rVar.SPRITE_OFFSET / 2),
+			static_cast<int>(pos.y + rVar.SPRITE_OFFSET / 2), 0xffff);
 
 }
 
@@ -132,4 +133,9 @@ void EnemyHoarder::Call()
 void EnemyHoarder::Die()
 {
 	ResetEnemy();
+}
+
+Enemy* EnemyHoarder::clone()
+{
+	return new EnemyHoarder(PosDir(pos, dir), sprite, spawner);
 }

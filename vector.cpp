@@ -379,4 +379,5 @@ template class vector <Tile*>;
 template class vector <Moveable*>;
 template class vector <Obstacle*>;
 template class vector <Observer*>;
+template class vector<EnemySpawner*>;
 

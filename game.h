@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Player.h"
-#include "EnemySpawner.h"
 #include "FollowCursor.h"
 #include "Playbutton.h"
 #include "Exitbutton.h"
@@ -72,10 +71,9 @@ namespace Tmpl8 {
 		//actual game
 		Player* player;
 		Score score;
-		EnemySpawner* enemySpawner;
+		EnemyWaveSpawner* enemySpawner;
 		CollisionDetection* projectileDetection;
 		MoveablePlayer* tileMovement;
-		EnemyWaveSpawner spawner;
 		//update components
 		vector<Updateable*> updateables;
 		vector<Renderable*> renderables;
