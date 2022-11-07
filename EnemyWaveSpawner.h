@@ -22,21 +22,24 @@ public:
 	void AddEnemyToPool(Enemy* enemy, bool isDead = false);
 	void CreateMoreEnemies(EnemyTypes enemy);
 	void PlayerTakesDamage(Enemy* enemy);
+	void ThrowError(const char*);
 	Enemy* SpawnEnemy(Tmpl8::vec2, EnemyTypes enemies);
 	// Inherited via Renderable
 	virtual void Render(Tmpl8::Surface* screen) override;
 	// Inherited via Updateable
 	virtual void Update(float deltaTime) override;
 
+
 	bool IsEnemy(Collider* col);
 	bool EnemyWaveSpawner::IsPoolEmpty(pool<Enemy*>& pool);
 	Tmpl8::vec2 EnemyWaveSpawner::GetPlayerPos();
 	EnemyTypes ConvertToEnum(std::string str) {
+		EnemyTypes type;
 		if (str == "Hoarder")
-			return Hoarder;
+			type = Hoarder;
 		else if (str == "Runner")
-			return Runner;
-
+			type = Hoarder;
+		return type;
 	}
 private:
 	void InitializeSpawners();

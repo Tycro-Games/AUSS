@@ -3,8 +3,10 @@
 
 #include "EnemyHoarder.h"
 #include "EnemyRunner.h"
-
 #include "game.h"
+namespace Tmpl8 {
+	void NotifyUser(char* s);
+}
 EnemyWaveSpawner::EnemyWaveSpawner(Being* player, Tmpl8::Sprite* spriteExplosion)
 	:Spawner(spriteExplosion),
 	player(player)
@@ -23,15 +25,22 @@ void EnemyWaveSpawner::InitializeSpawners()
 	enemySpawners.push_back(enemy);
 	enemy->SetEnemy(Hoarder);
 }
-
+void EnemyWaveSpawner::ThrowError(const char* place) {
+	char t[128];
+	sprintf(t, "Invalid json: %s", place);
+	Tmpl8::NotifyUser(t);
+}
 void EnemyWaveSpawner::ReadWaves()
 {
-	std::ifstream f("json/enemy_waves.json");
+	const char filename[] = { "json/enemy_waves.json" };
+	std::ifstream f(filename);
 	json  wavesInput = json::parse(f);
 	//oh yeah
-
+	ThrowError(filename);
 	for (int i = 0; i < wavesInput["waves"].size(); i++) {
 		waves[i].weight = wavesInput["waves"][i].at("weight");
+
+
 		for (int j = 0; j < wavesInput["waves"][i].at("enemy_types").size(); j++)
 			waves[i].enemiesInWave[j] = ConvertToEnum(wavesInput["waves"][i].at("enemy_types")[j]);
 
