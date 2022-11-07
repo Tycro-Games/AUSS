@@ -29,11 +29,20 @@ void EnemyWaveSpawner::ReadWaves()
 	std::ifstream f("json/enemy_waves.json");
 	json  wavesInput = json::parse(f);
 	//oh yeah
-	std::cout<<wavesInput["waves"].size();
-	
-	/*for (json::iterator it = wavesInput.begin(); it != wavesInput.end(); ++it) {
-		std::cout << it.key() << " : " << it.value() << "\n";
-	}*/
+
+	for (int i = 0; i < wavesInput["waves"].size(); i++) {
+		waves[i].weight = wavesInput["waves"][i].at("weight");
+		for (int j = 0; j < wavesInput["waves"][i].at("enemy_types").size(); j++)
+			waves[i].enemiesInWave[j] = ConvertToEnum(wavesInput["waves"][i].at("enemy_types")[j]);
+
+	}
+	for (int i = 0; i < wavesInput["waves"].size(); i++) {
+		std::cout << waves[i].weight << "\n";
+		for (int j = 0; j < wavesInput["waves"][i].at("enemy_types").size(); j++)
+			std::cout << waves[i].enemiesInWave[j] << " ";
+		std::cout << '\n';
+
+	}
 }
 
 EnemyWaveSpawner::~EnemyWaveSpawner()

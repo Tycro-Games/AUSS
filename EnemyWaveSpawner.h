@@ -31,7 +31,13 @@ public:
 	bool IsEnemy(Collider* col);
 	bool EnemyWaveSpawner::IsPoolEmpty(pool<Enemy*>& pool);
 	Tmpl8::vec2 EnemyWaveSpawner::GetPlayerPos();
+	EnemyTypes ConvertToEnum(std::string str) {
+		if (str == "Hoarder")
+			return Hoarder;
+		else if (str == "Runner")
+			return Runner;
 
+	}
 private:
 	void InitializeSpawners();
 	void ReadWaves();
@@ -48,7 +54,7 @@ private:
 
 	vector<Collider*> activeColliders;
 	vector<EnemySpawner*> enemySpawners;
-	
+
 
 	Wave waves[2];
 
