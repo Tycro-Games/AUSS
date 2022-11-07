@@ -11,9 +11,9 @@
 
 #include <fstream>
 
-using json = nlohmann::json;
 class Enemy;
 class EnemySpawner;
+using json = nlohmann::json;
 class EnemyWaveSpawner : public Spawner, public Subject
 {
 public:
@@ -33,6 +33,9 @@ public:
 	Tmpl8::vec2 EnemyWaveSpawner::GetPlayerPos();
 
 private:
+	void InitializeSpawners();
+	void ReadWaves();
+
 	Being* player;
 	Tmpl8::Sprite* hoarderSprite;
 	Tmpl8::Sprite* runnerSprite;
@@ -45,9 +48,9 @@ private:
 
 	vector<Collider*> activeColliders;
 	vector<EnemySpawner*> enemySpawners;
-	Wave waves[2] = { {5,{Hoarder,Runner}},{3,{Runner}} };
-	json input;
-	//consts
+	
+
+	Wave waves[2];
 
 };
 inline bool EnemyWaveSpawner::IsPoolEmpty(pool<Enemy*>& pool) {

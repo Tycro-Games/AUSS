@@ -12,15 +12,28 @@ EnemyWaveSpawner::EnemyWaveSpawner(Being* player, Tmpl8::Sprite* spriteExplosion
 
 	hoarderSprite = new Tmpl8::Sprite(new Tmpl8::Surface("assets/OriginalAssets/phaser.tga"), 16);
 	runnerSprite = new Tmpl8::Sprite(new Tmpl8::Surface("assets/OriginalAssets/sniper.tga"), 32);
-	std::ifstream f("enemy_waves.json");
-	input = json::parse(f);
-	for (json::iterator it = input.begin(); it != input.end(); ++it) {
-		std::cout << it.key() << " : " << it.value() << "\n";
-	}
+	InitializeSpawners();
+	ReadWaves();
+}
+
+void EnemyWaveSpawner::InitializeSpawners()
+{
 	//place the spawners
 	EnemySpawner* enemy = new EnemySpawner(new Tmpl8::vec2(ScreenWidth / 2, ScreenWidth / 2), this, explosionSprite);
 	enemySpawners.push_back(enemy);
 	enemy->SetEnemy(Hoarder);
+}
+
+void EnemyWaveSpawner::ReadWaves()
+{
+	std::ifstream f("json/enemy_waves.json");
+	json  wavesInput = json::parse(f);
+	//oh yeah
+	std::cout<<wavesInput["waves"].size();
+	
+	/*for (json::iterator it = wavesInput.begin(); it != wavesInput.end(); ++it) {
+		std::cout << it.key() << " : " << it.value() << "\n";
+	}*/
 }
 
 EnemyWaveSpawner::~EnemyWaveSpawner()
