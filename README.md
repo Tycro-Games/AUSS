@@ -7,6 +7,7 @@ A top-down shooter made using this [template](https://www.3dgep.com/wp-content/u
   - array of enemy types from the [list](https://github.com/OneBogdan01/TopDownShooter/edit/master/README.md#enemy-types) below
 - one can also validate the [enemy waves](json/enemy_waves.json) using this [link](https://www.jsonschemavalidator.net/s/9zhf3M4W) or any other json schema validators, use the [schema](json/schema.json) from the project 
   - ***Note that this may still result in an invalid json file if the enemy types have typos***
+- the code does not add duplicates to the current wave when it does the parsing, when it encounters a duplicate in the same wave it will skip over it
 
 ## Enemy Types:
 - Runner
