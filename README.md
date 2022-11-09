@@ -1,5 +1,17 @@
 # An Unrealistic Spaceship Simulator
 A top-down shooter made using this [template](https://www.3dgep.com/wp-content/uploads/2019/08/TheTemplate.zip)
+## Players can change the waves of enemies by modifying [this](json/enemy_waves.json) json file. 
+### Guideline for modifying the enemy waves:
+- every wave needs to have:
+  - a weight that is a positive integer
+  - array of enemy types from the [list](https://github.com/OneBogdan01/TopDownShooter/edit/master/README.md#enemy-types) below
+- one can also validate the [enemy waves](json/enemy_waves.json) using this [link](https://www.jsonschemavalidator.net/s/9zhf3M4W) or any other json schema validators, use the [schema](json/schema.json) from the project 
+  - ***Note that this may still result in an invalid json file if the enemy types have typos***
+
+## Enemy Types:
+- Runner
+- Hoarder
+
 ## Playable on [itch](https://tycro-games.itch.io/auss)
 
 # License
