@@ -62,6 +62,7 @@ void dynamic_array<T>::push_back(const T& item)
 template<class T>
 void dynamic_array<T>::push_unique(const T& item)
 {
+	//if it already in the array skip it
 	if (this->find(item) != -1)
 		return;
 	if (count < maxSize)
@@ -380,4 +381,5 @@ template class dynamic_array <Moveable*>;
 template class dynamic_array <Obstacle*>;
 template class dynamic_array <Observer*>;
 template class dynamic_array<EnemySpawner*>;
+template class dynamic_array<EnemyTypes>;
 

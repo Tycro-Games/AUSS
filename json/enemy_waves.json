@@ -5,7 +5,7 @@
       "enemy_types":["Runner"]
     },
 		{
-      "weight":3,
+      "weight":5,
       "enemy_types":["Runner","Hoarder"]
     }
 	]

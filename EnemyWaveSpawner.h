@@ -29,11 +29,13 @@ public:
 	bool EnemyWaveSpawner::IsPoolEmpty(pool<Enemy*>& pool);
 	Tmpl8::vec2 EnemyWaveSpawner::GetPlayerPos();
 	EnemyTypes ConvertToEnum(std::string str) {
-		EnemyTypes type{};
+		EnemyTypes type = NUMBER_OF_ENEMIES;
 		if (str == "Hoarder")
 			type = Hoarder;
 		else if (str == "Runner")
 			type = Runner;
+		if (type == NUMBER_OF_ENEMIES)
+			ThrowError(str.c_str());
 		return type;
 	}
 private:

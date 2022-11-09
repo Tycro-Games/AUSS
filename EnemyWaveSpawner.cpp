@@ -36,18 +36,22 @@ void EnemyWaveSpawner::ReadWaves()
 	std::ifstream f(filename);
 	json  wavesInput = json::parse(f);
 	//oh yeah
-	ThrowError(filename);
+
 	for (int i = 0; i < wavesInput["waves"].size(); i++) {
+
 		waves[i].weight = wavesInput["waves"][i].at("weight");
-
-
-		for (int j = 0; j < wavesInput["waves"][i].at("enemy_types").size(); j++)
-			waves[i].enemiesInWave[j] = ConvertToEnum(wavesInput["waves"][i].at("enemy_types")[j]);
+		//check if weight is valid
+		if (waves[i].weight < 0)
+			ThrowError("weight must be a positive integer");
+		for (int j = 0; j < wavesInput["waves"][i].at("enemy_types").size(); j++) {
+			EnemyTypes enu = ConvertToEnum(wavesInput["waves"][i].at("enemy_types")[j]);
+			waves[i].enemiesInWave.push_unique(enu);
+		}
 
 	}
 	for (int i = 0; i < wavesInput["waves"].size(); i++) {
 		std::cout << waves[i].weight << "\n";
-		for (int j = 0; j < wavesInput["waves"][i].at("enemy_types").size(); j++)
+		for (int j = 0; j < waves[i].enemiesInWave.getCount(); j++)
 			std::cout << waves[i].enemiesInWave[j] << " ";
 		std::cout << '\n';
 

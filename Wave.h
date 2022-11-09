@@ -1,4 +1,5 @@
 #pragma once
+#include "dynamic_array.h"
 enum EnemyTypes
 {
 	Hoarder,
@@ -9,6 +10,7 @@ struct Wave
 {
 
 	int weight = 0;
-	EnemyTypes enemiesInWave[NUMBER_OF_ENEMIES];
+	dynamic_array<EnemyTypes> enemiesInWave;
+
 
 };
