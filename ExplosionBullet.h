@@ -1,7 +1,6 @@
 #pragma once
 #include "Entity.h"
 #include "Timer.h"
-#include "Spawner.h"
 
 #include "MoveInstance.h"
 class Spawner;

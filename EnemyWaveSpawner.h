@@ -2,17 +2,12 @@
 #include "nlohmann_json/single_include/nlohmann/json.hpp"
 #include "vector.h"
 #include "Subject.h"
-
 #include "Wave.h"
-
 #include "EnemySpawner.h"
-
-
 
 #include <fstream>
 
 class Enemy;
-class EnemySpawner;
 using json = nlohmann::json;
 class EnemyWaveSpawner : public Spawner, public Subject
 {
@@ -34,11 +29,11 @@ public:
 	bool EnemyWaveSpawner::IsPoolEmpty(pool<Enemy*>& pool);
 	Tmpl8::vec2 EnemyWaveSpawner::GetPlayerPos();
 	EnemyTypes ConvertToEnum(std::string str) {
-		EnemyTypes type;
+		EnemyTypes type{};
 		if (str == "Hoarder")
 			type = Hoarder;
 		else if (str == "Runner")
-			type = Hoarder;
+			type = Runner;
 		return type;
 	}
 private:

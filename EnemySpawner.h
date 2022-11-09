@@ -3,11 +3,9 @@
 #include "Spawner.h"
 #include "Timer.h"
 #include "Being.h"
+#include "Wave.h"
 
 #include <iostream>
-#include "EnemyWaveSpawner.h"
-#include "Enemy.h"
-class Enemy;
 class EnemyWaveSpawner;
 class EnemySpawner :public Spawner, public Callable
 {
@@ -17,7 +15,6 @@ public:
 
 
 
-	void PlayerTakesDamage(Enemy* enemy);
 	void ResetTimer(float timeToSpawn);
 	Tmpl8::vec2 GetPlayerPos();
 	void SetEnemy(EnemyTypes enemy);

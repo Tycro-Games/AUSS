@@ -1,7 +1,7 @@
 #include "EnemySpawner.h"
 #include "game.h"
 
-
+#include "Enemy.h"
 EnemySpawner::EnemySpawner(Tmpl8::vec2* pos, EnemyWaveSpawner* enemyWave, Tmpl8::Sprite* explosion) :
 	Spawner(pos, explosion),
 	enemyWave(enemyWave)
@@ -42,10 +42,7 @@ void EnemySpawner::Render(Tmpl8::Surface* screen)
 {
 	//render a sprite maybe
 }
-void EnemySpawner::PlayerTakesDamage(Enemy* enemy)
-{
-	enemyWave->PlayerTakesDamage(enemy);
-}
+
 void EnemySpawner::ResetTimer(float timeToSpawn)
 {
 	timer->Init(this, timeToSpawn);

@@ -3,11 +3,11 @@
 #include "vector.h"
 #include "pool.h"
 
-#include "ExplosionBullet.h"
 #include "Entity.h"
 #include "Collider.h"
 #include "RandomNumbers.h"
-class ExplosionBullet;
+#include "ExplosionBullet.h"
+
 class Spawner : public Updateable, public Renderable
 {
 public:

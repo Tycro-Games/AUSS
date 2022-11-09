@@ -1,7 +1,6 @@
 #pragma once
 #include "Spawner.h"
 
-#include "Projectile.h"
 
 class Projectile;
 

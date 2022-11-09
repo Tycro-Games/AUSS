@@ -5,7 +5,6 @@
 #include "EnemyWaveSpawner.h"
 #include "PosDir.h"
 //based on https://gameprogrammingpatterns.com/prototype.html
-class EnemyWaveSpawner;
 class Enemy : public Being
 {
 public:
