@@ -18,8 +18,8 @@ CollisionDetection::~CollisionDetection()
 void CollisionDetection::DetectCollisions()
 {
 
-	vector <Collider*> allPairs;
-	vector <Collider*> activeIntervals;
+	dynamic_array <Collider*> allPairs;
+	dynamic_array <Collider*> activeIntervals;
 	//add enemies and projectiles
 
 	//sort on x axis

@@ -50,10 +50,10 @@ public:
 	/// <returns></returns>
 	static Tmpl8::vec2 GetNormal(const Collider& obstacle, const Collider& source);
 	/// <summary>
-	/// checks if the vector it is inside the collider
+	/// checks if the dynamic_array it is inside the collider
 	/// </summary>
 	/// <param name="a"> collider to check</param>
-	/// <param name="b">the vector that may be inside the collider</param>
+	/// <param name="b">the dynamic_array that may be inside the collider</param>
 	/// <returns></returns>
 	static bool Contains(const Collider& a, const Tmpl8::vec2& b) {
 

@@ -29,7 +29,7 @@
     <ClCompile Include="MathFunctions.cpp">
       <Filter>Math</Filter>
     </ClCompile>
-    <ClCompile Include="vector.cpp">
+    <ClCompile Include="dynamic_array.cpp">
       <Filter>DataStructures</Filter>
     </ClCompile>
     <ClCompile Include="FollowCursor.cpp">
@@ -128,7 +128,7 @@
     <ClInclude Include="template.h">
       <Filter>template code</Filter>
     </ClInclude>
-    <ClInclude Include="vector.h">
+    <ClInclude Include="dynamic_array.h">
       <Filter>DataStructures</Filter>
     </ClInclude>
     <ClInclude Include="Updateable.h">

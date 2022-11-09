@@ -13,7 +13,7 @@ void QuickSort<T>::Sort(int l, int h)
 }
 template <class T>
 
-QuickSort<T>::QuickSort(vector<T>* list) :
+QuickSort<T>::QuickSort(dynamic_array<T>* list) :
 	list(list)
 {
 

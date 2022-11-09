@@ -1,6 +1,6 @@
 #pragma once
 
-#include "vector.h"
+#include "dynamic_array.h"
 #include "pool.h"
 
 #include "Entity.h"
@@ -23,7 +23,7 @@ protected:
 	Tmpl8::vec2* pos;
 	RandomNumbers randomNumbers;
 	//to update
-	vector<Entity*> updateObjects;
+	dynamic_array<Entity*> updateObjects;
 	pool<ExplosionBullet*> poolOfExplosions;
 	//assets 
 	Tmpl8::Sprite* explosionSprite;

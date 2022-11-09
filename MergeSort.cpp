@@ -11,7 +11,7 @@ MergeSort<T>::~MergeSort()
 {
 }
 template <class T>
-void MergeSort<T>::Init(vector<T>* lis) {
+void MergeSort<T>::Init(dynamic_array<T>* lis) {
 	list = lis;
 }
 template<class T>
@@ -31,7 +31,7 @@ template<class T>
 void MergeSort<T>::Merge(int l, int mid, int h)
 {
 	int i = l, j = mid + 1;
-	vector<T> A(16);
+	dynamic_array<T> A(16);
 	while (i <= mid && j <= h) {
 		if (list->get(i) < list->get(j))
 			A.push_back(list->get(i++));
@@ -61,7 +61,7 @@ template<>
 void MergeSort<Collider*>::Merge(int l, int mid, int h)
 {
 	int i = l, j = mid + 1;
-	vector<Collider*> A(16);
+	dynamic_array<Collider*> A(16);
 	while (i <= mid && j <= h) {
 		if (list->get(i)->pos->x < list->get(j)->pos->x)
 			A.push_back(list->get(i++));

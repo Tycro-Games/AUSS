@@ -1,6 +1,6 @@
 #pragma once
 #include "nlohmann_json/single_include/nlohmann/json.hpp"
-#include "vector.h"
+#include "dynamic_array.h"
 #include "Subject.h"
 #include "Wave.h"
 #include "EnemySpawner.h"
@@ -48,10 +48,10 @@ private:
 	//Enemy Runner
 	pool<Enemy*> poolOfRunners;
 
-	vector<Entity*> updateObjects;
+	dynamic_array<Entity*> updateObjects;
 
-	vector<Collider*> activeColliders;
-	vector<EnemySpawner*> enemySpawners;
+	dynamic_array<Collider*> activeColliders;
+	dynamic_array<EnemySpawner*> enemySpawners;
 
 
 	Wave waves[2];

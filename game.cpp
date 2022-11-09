@@ -11,9 +11,9 @@ namespace Tmpl8
 	bool Game::isPressingLeftMouse;
 	Tilemap* Game::tileMap;
 	Game::GameState Game::currentState;
-	vector<Collider*> Game::cols;
-	vector<Moveable*> Game::moveablesTile;
-	vector<Moveable*> Game::moveablesPlayer;
+	dynamic_array<Collider*> Game::cols;
+	dynamic_array<Moveable*> Game::moveablesTile;
+	dynamic_array<Moveable*> Game::moveablesPlayer;
 
 	void Game::Init()
 	{
@@ -287,11 +287,11 @@ namespace Tmpl8
 	{
 		cols.push_back(col);
 	}
-	void Game::AddMoveable(Moveable* col, vector<Moveable*>* vec)
+	void Game::AddMoveable(Moveable* col, dynamic_array<Moveable*>* vec)
 	{
 		vec->push_back(col);
 	}
-	void Game::RemoveMoveable(Moveable* col, vector<Moveable*>* vec)
+	void Game::RemoveMoveable(Moveable* col, dynamic_array<Moveable*>* vec)
 	{
 		vec->remove(col);
 	}

@@ -1,15 +1,15 @@
 #pragma once
-#include "vector.h"
+#include "dynamic_array.h"
 template <class T>
 class QuickSort
 {
 public:
-	QuickSort(vector<T>* list);
+	QuickSort(dynamic_array<T>* list);
 	void Sort(int l, int h);
 
 
 private:
-	vector<T>* list;
+	dynamic_array<T>* list;
 	inline void Swap(T& i, T& j);
 
 	int Partition(int l, int h);

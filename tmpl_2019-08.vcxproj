@@ -262,7 +262,7 @@
     <ClCompile Include="template.cpp" />
     <ClCompile Include="Tilemap.cpp" />
     <ClCompile Include="Timer.cpp" />
-    <ClCompile Include="vector.cpp" />
+    <ClCompile Include="dynamic_array.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Being.h" />
@@ -311,7 +311,7 @@
     <ClInclude Include="Tilemap.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Updateable.h" />
-    <ClInclude Include="vector.h" />
+    <ClInclude Include="dynamic_array.h" />
     <ClInclude Include="Wave.h" />
   </ItemGroup>
   <ItemGroup>
