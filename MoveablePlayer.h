@@ -10,6 +10,7 @@ public:
 	MoveablePlayer(Tmpl8::vec2* pos, Collider* col, Collider* tileMapCol, float speed = 70.0f, float dashSpeed = 500);
 	virtual ~MoveablePlayer();
 	virtual void Update(float deltaTime) override;
+	bool CheckPositionForCollisions(Tmpl8::vec2& playerPos, Collider& playerCol, Collider& obs);
 	void SetDashPos(Tmpl8::vec2& nextPos);
 	void ResetTriggers();
 	void MovePlayer();

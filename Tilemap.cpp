@@ -16,7 +16,7 @@ Tilemap::Tilemap() :
 {
 	lastPos = pos;
 	prop = new ParallaxProp(new Tmpl8::Sprite(new Tmpl8::Surface("assets/Spaceship-shooter#01/background/Space02.png"), 1),
-		Tmpl8::vec2(pos.x - OFFSET_X, pos.y - OFFSET_Y), .75f);
+		Tmpl8::vec2(pos.x - OFFSET_X, pos.y - OFFSET_Y), .5f);
 	Tmpl8::Game::AddMoveable(prop->getMover(), &Tmpl8::Game::moveablesTile);
 	//add obstacles
 	bool LastOneIsBlocking = false;

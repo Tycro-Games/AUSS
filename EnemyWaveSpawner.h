@@ -17,7 +17,6 @@ public:
 	void AddEnemyToPool(Enemy* enemy, bool isDead = false);
 	void CreateMoreEnemies(EnemyTypes enemy);
 	void PlayerTakesDamage(Enemy* enemy);
-	void ThrowError(const char*);
 	Enemy* SpawnEnemy(Tmpl8::vec2, EnemyTypes enemies);
 	// Inherited via Renderable
 	virtual void Render(Tmpl8::Surface* screen) override;
@@ -28,17 +27,10 @@ public:
 	bool IsEnemy(Collider* col);
 	bool EnemyWaveSpawner::IsPoolEmpty(pool<Enemy*>& pool);
 	Tmpl8::vec2 EnemyWaveSpawner::GetPlayerPos();
-	EnemyTypes ConvertToEnum(std::string str) {
-		EnemyTypes type = NUMBER_OF_ENEMIES;
-		if (str == "Hoarder")
-			type = Hoarder;
-		else if (str == "Runner")
-			type = Runner;
-		if (type == NUMBER_OF_ENEMIES)
-			ThrowError(str.c_str());
-		return type;
-	}
+	EnemyTypes ConvertToEnum(std::string str);
 private:
+	void ThrowError(const char*);
+	void EnemySpriteInit();
 	void InitializeSpawners();
 	void ReadWaves();
 
@@ -56,7 +48,10 @@ private:
 	dynamic_array<EnemySpawner*> enemySpawners;
 
 
-	Wave waves[2];
+	Wave waves[NUMBER_OF_ENEMIES];
+	//consts
+	const float SPAWNERS_XPOS_MULTIPLIERS = 0.88f;
+	const float SPAWNERS_YPOS_MULTIPLIERS = 0.83f;
 
 };
 inline bool EnemyWaveSpawner::IsPoolEmpty(pool<Enemy*>& pool) {
@@ -65,4 +60,16 @@ inline bool EnemyWaveSpawner::IsPoolEmpty(pool<Enemy*>& pool) {
 inline Tmpl8::vec2 EnemyWaveSpawner::GetPlayerPos()
 {
 	return player->pos;
+}
+
+inline EnemyTypes EnemyWaveSpawner::ConvertToEnum(std::string str)
+{
+	EnemyTypes type = NUMBER_OF_ENEMIES;
+	if (str == "Hoarder")
+		type = Hoarder;
+	else if (str == "Runner")
+		type = Runner;
+	if (type == NUMBER_OF_ENEMIES)
+		ThrowError(str.c_str());
+	return type;
 }

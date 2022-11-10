@@ -4,17 +4,20 @@
 #include "Enemy.h"
 EnemySpawner::EnemySpawner(Tmpl8::vec2* pos, EnemyWaveSpawner* enemyWave, Tmpl8::Sprite* explosion) :
 	Spawner(pos, explosion),
-	enemyWave(enemyWave)
+	enemyWave(enemyWave),
+	move(new MoveInstance(this->pos))
 {
+	Tmpl8::Game::AddMoveable(move);
 	timer = new Timer(this, timeToSpawn);
-
-
+	timer->isUpdateable = false;
 }
 
 EnemySpawner::~EnemySpawner()
 {
 	delete timer;
-
+	delete move;
+	//position is owned by enemy spawner
+	delete pos;
 }
 
 
@@ -34,10 +37,7 @@ void EnemySpawner::SetEnemy(EnemyTypes enemy)
 {
 	enemyToSpawn = enemy;
 }
-bool EnemySpawner::IsEnemy(Collider* col)
-{
-	return enemyWave->IsEnemy(col);
-}
+
 void EnemySpawner::Render(Tmpl8::Surface* screen)
 {
 	//render a sprite maybe
@@ -46,6 +46,10 @@ void EnemySpawner::Render(Tmpl8::Surface* screen)
 void EnemySpawner::ResetTimer(float timeToSpawn)
 {
 	timer->Init(this, timeToSpawn);
+}
+Tmpl8::vec2 EnemySpawner::GetSpawnerPos() const
+{
+	return *pos;
 }
 //called by timer
 void EnemySpawner::Call()

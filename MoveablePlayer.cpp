@@ -155,7 +155,7 @@ void MoveablePlayer::Update(float deltaTime)
 		//start the cooldown then the dash is finished
 		cooldownTimer.isUpdateable = true;
 	}
-	
+
 	if (dashing && timePassed + deltaTime < DASH_DURATION) {
 
 		timePassed += deltaTime;
@@ -167,25 +167,34 @@ void MoveablePlayer::Update(float deltaTime)
 	Collider playerCol = *col;
 
 
+	float playerPosOnX = nextPos.x * speed * deltaTime;
+	float  playerPosOnY = nextPos.y * speed * deltaTime;
 	playerPos += nextPos * speed * deltaTime;
-
 	//tilemap
-	Tmpl8::vec2 currentPos = *tileMapCol->pos;
+	Tmpl8::vec2 tilemapPos = *tileMapCol->pos;
 	Collider c = *tileMapCol;
-	currentPos += nextPos * (-speed) * deltaTime;
+	tilemapPos += nextPos * (-speed) * deltaTime;
 
 
 	//checks collision with obstacles
 	Collider obs;
+	//the player is moving on the diagonal
+	if (nextPos.x != 0 && nextPos.y != 0)
+		if (CheckPositionForCollisions(playerPos, playerCol, obs)) {
+			std::cout << "Moves on diagonal\n";
+		}
+	//if the diagonal is not working, try on x
+		else if (CheckPositionForCollisions(Tmpl8::vec2(pos->x + playerPosOnX, pos->y), playerCol, obs)) {
+			std::cout << "MoveOnX\n";
+		}
+	//try on y
+		else if (CheckPositionForCollisions(Tmpl8::vec2(pos->x, pos->y + playerPosOnY), playerCol, obs)) {
+			std::cout << "MoveOnY\n";
+		}
 
-
-
-	if (Tmpl8::Game::tileMap->IsFree(playerPos.x + playerCol.min.x, playerPos.y + playerCol.min.y, obs) &&
-		Tmpl8::Game::tileMap->IsFree(playerPos.x + playerCol.max.x, playerPos.y + playerCol.min.y, obs) &&
-		Tmpl8::Game::tileMap->IsFree(playerPos.x + playerCol.min.x, playerPos.y + playerCol.max.y, obs) &&
-		Tmpl8::Game::tileMap->IsFree(playerPos.x + playerCol.max.x, playerPos.y + playerCol.max.y, obs)) {
-		if (Collider::TileMapInGameScreen(currentPos, c)) {
-			*tileMapCol->pos = currentPos;
+	if (CheckPositionForCollisions(playerPos, playerCol, obs)) {
+		if (Collider::TileMapInGameScreen(tilemapPos, c)) {
+			*tileMapCol->pos = tilemapPos;
 			hasChangedPos = true;
 
 		}
@@ -194,6 +203,18 @@ void MoveablePlayer::Update(float deltaTime)
 		playerMovement = playerPos;
 
 	}
+	else
+	{
+		std::cout << "is not moving\n";
+	}
+}
+
+bool MoveablePlayer::CheckPositionForCollisions(Tmpl8::vec2& playerPos, Collider& playerCol, Collider& obs)
+{
+	return Tmpl8::Game::tileMap->IsFree(playerPos.x + playerCol.min.x, playerPos.y + playerCol.min.y, obs) &&
+		Tmpl8::Game::tileMap->IsFree(playerPos.x + playerCol.max.x, playerPos.y + playerCol.min.y, obs) &&
+		Tmpl8::Game::tileMap->IsFree(playerPos.x + playerCol.min.x, playerPos.y + playerCol.max.y, obs) &&
+		Tmpl8::Game::tileMap->IsFree(playerPos.x + playerCol.max.x, playerPos.y + playerCol.max.y, obs);
 }
 
 void MoveablePlayer::SetDashPos(Tmpl8::vec2& nextPos)

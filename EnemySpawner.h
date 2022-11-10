@@ -16,17 +16,18 @@ public:
 
 
 	void ResetTimer(float timeToSpawn);
+	Tmpl8::vec2 GetSpawnerPos() const;
 	Tmpl8::vec2 GetPlayerPos();
 	void SetEnemy(EnemyTypes enemy);
-	bool IsEnemy(Collider*);
 	virtual void Update(float deltaTime) override;
 	virtual void Render(Tmpl8::Surface* screen) override;
 private:
 	Timer* timer;
 	float timeToSpawn = 5.0f;
+	//default the value of enemyToSpawn
 	EnemyTypes enemyToSpawn = NUMBER_OF_ENEMIES;
 	EnemyWaveSpawner* enemyWave = nullptr;
-
+	MoveInstance* move;
 	// Inherited via Callable
 	virtual void Call() override;
 

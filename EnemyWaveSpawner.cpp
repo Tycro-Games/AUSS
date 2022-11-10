@@ -3,6 +3,7 @@
 
 #include "EnemyHoarder.h"
 #include "EnemyRunner.h"
+
 #include "game.h"
 namespace Tmpl8 {
 	void NotifyUser(char* s);
@@ -11,51 +12,55 @@ EnemyWaveSpawner::EnemyWaveSpawner(Being* player, Tmpl8::Sprite* spriteExplosion
 	:Spawner(spriteExplosion),
 	player(player)
 {
-
-	hoarderSprite = new Tmpl8::Sprite(new Tmpl8::Surface("assets/OriginalAssets/phaser.tga"), 16);
-	runnerSprite = new Tmpl8::Sprite(new Tmpl8::Surface("assets/OriginalAssets/sniper.tga"), 32);
+	//enemy sprite intialization
+	EnemySpriteInit();
 	InitializeSpawners();
 	ReadWaves();
 }
 
+void EnemyWaveSpawner::EnemySpriteInit()
+{
+	hoarderSprite = new Tmpl8::Sprite(new Tmpl8::Surface("assets/OriginalAssets/phaser.tga"), 16);
+	runnerSprite = new Tmpl8::Sprite(new Tmpl8::Surface("assets/OriginalAssets/sniper.tga"), 32);
+}
+
 void EnemyWaveSpawner::InitializeSpawners()
 {
-	//place the spawners
-	EnemySpawner* enemy = new EnemySpawner(new Tmpl8::vec2(ScreenWidth / 2, ScreenWidth / 2), this, explosionSprite);
-	enemySpawners.push_back(enemy);
-	enemy->SetEnemy(Hoarder);
-}
-void EnemyWaveSpawner::ThrowError(const char* place) {
-	char t[128];
-	sprintf(t, "Invalid json: %s", place);
-	Tmpl8::NotifyUser(t);
+	//place the spawners in the four corners of the map
+	Tmpl8::vec2 center = Tmpl8::vec2(ScreenWidth / 2, ScreenHeight / 2);
+	float xOffset = SPAWNERS_XPOS_MULTIPLIERS * ScreenWidth;
+	float yOffset = SPAWNERS_YPOS_MULTIPLIERS * ScreenHeight;
+
+	enemySpawners.push_back(new EnemySpawner(new Tmpl8::vec2(center + Tmpl8::vec2(xOffset, yOffset)), this, explosionSprite));
+	enemySpawners.push_back(new EnemySpawner(new Tmpl8::vec2(center + Tmpl8::vec2(xOffset, -yOffset)), this, explosionSprite));
+	enemySpawners.push_back(new EnemySpawner(new Tmpl8::vec2(center + Tmpl8::vec2(-xOffset, yOffset)), this, explosionSprite));
+	enemySpawners.push_back(new EnemySpawner(new Tmpl8::vec2(center + Tmpl8::vec2(-xOffset, -yOffset)), this, explosionSprite));
 }
 void EnemyWaveSpawner::ReadWaves()
 {
-	const char filename[] = { "json/enemy_waves.json" };
-	std::ifstream f(filename);
+	std::ifstream f("json/enemy_waves.json");
 	json  wavesInput = json::parse(f);
-	//oh yeah
+	std::cout << "json parsed successfully\n";
 
 	for (int i = 0; i < wavesInput["waves"].size(); i++) {
-
 		waves[i].weight = wavesInput["waves"][i].at("weight");
 		//check if weight is valid
 		if (waves[i].weight < 0)
 			ThrowError("weight must be a positive integer");
 		for (int j = 0; j < wavesInput["waves"][i].at("enemy_types").size(); j++) {
-			EnemyTypes enu = ConvertToEnum(wavesInput["waves"][i].at("enemy_types")[j]);
-			waves[i].enemiesInWave.push_unique(enu);
+
+			//check if enum is valid and avoid duplicates
+			waves[i].enemiesInWave.push_unique(ConvertToEnum(wavesInput["waves"][i].at("enemy_types")[j]));
 		}
 
 	}
-	for (int i = 0; i < wavesInput["waves"].size(); i++) {
+
+	/*for (int i = 0; i < wavesInput["waves"].size(); i++) {
 		std::cout << waves[i].weight << "\n";
 		for (int j = 0; j < waves[i].enemiesInWave.getCount(); j++)
 			std::cout << waves[i].enemiesInWave[j] << " ";
 		std::cout << '\n';
-
-	}
+	}*/
 }
 
 EnemyWaveSpawner::~EnemyWaveSpawner()
@@ -85,20 +90,23 @@ Enemy* EnemyWaveSpawner::SpawnEnemy(Tmpl8::vec2, EnemyTypes enemy)
 		enemyToSpawn = poolOfRunners.PopElement();
 		break;
 	default:
-		throw std::invalid_argument("something is wrong with the wave");
 		break;
 	}
 
-
-	activeColliders.push_back(enemyToSpawn->getColl());
-
+	if (enemy == NUMBER_OF_ENEMIES)
+		ThrowError("enemy spawner was not initialized");
+	else if (enemyToSpawn) {
+		activeColliders.push_back(enemyToSpawn->getColl());
+	}
 	return enemyToSpawn;
 }
 
 void EnemyWaveSpawner::Render(Tmpl8::Surface* screen)
 {
-	for (int i = 0; i < enemySpawners.getCount(); i++)
+	for (int i = 0; i < enemySpawners.getCount(); i++) {
 		enemySpawners[i]->Render(screen);
+		screen->Box(static_cast<int>(enemySpawners[i]->GetSpawnerPos().x), static_cast<int>(enemySpawners[i]->GetSpawnerPos().y), static_cast<int>(enemySpawners[i]->GetSpawnerPos().x) + 5, static_cast<int>(enemySpawners[i]->GetSpawnerPos().y) + 5, 0xFF0000);
+	}
 
 	for (int i = 0; i < updateObjects.getCount(); i++)
 		updateObjects[i]->Render(screen);
@@ -153,9 +161,15 @@ void EnemyWaveSpawner::CreateMoreEnemies(EnemyTypes enemyType)
 
 		break;
 	default:
+		ThrowError("The creation of the enemy has failed");
 		break;
 	}
 	updateObjects.push_back(enemy);
 
 	AddEnemyToPool(enemy);
+}
+void EnemyWaveSpawner::ThrowError(const char* place) {
+	char t[128];
+	sprintf(t, "Invalid json: %s", place);
+	Tmpl8::NotifyUser(t);
 }
