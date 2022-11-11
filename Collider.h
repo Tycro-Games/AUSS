@@ -61,15 +61,15 @@ public:
 			&& b.x < a.max.x + a.pos->x && b.y < a.max.y + a.pos->y;
 
 	}static bool CollidesY(const Collider& a, const Collider& b) {
-		return a.min.y <= b.max.y&& a.max.y>=b.min.y;
+		return a.min.y <= b.max.y && a.max.y >= b.min.y;
 
 	}
 	static bool CollidesX(const Collider& a, const Collider& b) {
 
-		return a.min.x <= b.max.x&& a.max.x>=b.min.x;
+		return a.min.x <= b.max.x && a.max.x >= b.min.x;
 
 	}
-	static bool Collider::TileMapInGameScreen(Tmpl8::vec2& pos, Collider& col)
+	static bool Collider::TileMapInGameScreen(Tmpl8::vec2& pos, Collider col)
 	{
 
 		return pos.x + col.min.x >= 0 && pos.y + col.min.y >= 0
