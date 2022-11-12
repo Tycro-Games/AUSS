@@ -175,11 +175,17 @@ void MoveablePlayer::Update(float deltaTime)
 	Tmpl8::vec2 tilemapPos = *tileMapCol->pos;
 	Collider c = *tileMapCol;
 	tilemapPos += nextPos * (-speed) * deltaTime;
-
 	Collider obs;
 	if (CheckPositionForCollisions(playerPos, playerCol, obs)) {
 		MoveTileOrPlayer(tilemapPos, c, playerPos);
-
+	}
+	else if (nextPos.x != 0 && nextPos.y != 0) {
+		if (CheckPositionForCollisions((*pos) + Tmpl8::vec2(0, playerPosOnY), playerCol)) {
+			MoveTileOrPlayer((*c.pos) - Tmpl8::vec2(0, playerPosOnY), c, (*pos) + Tmpl8::vec2(0, playerPosOnY));
+		}
+		else if (CheckPositionForCollisions((*pos) + Tmpl8::vec2(playerPosOnX, 0), playerCol)) {
+			MoveTileOrPlayer((*c.pos) - Tmpl8::vec2(playerPosOnX, 0), c, (*pos) + Tmpl8::vec2(playerPosOnX, 0));
+		}
 	}
 }
 
@@ -202,14 +208,20 @@ void MoveablePlayer::MoveTileOrPlayer(Tmpl8::vec2& tilemapPos, Collider& c, cons
 
 
 
-bool MoveablePlayer::CheckPositionForCollisions(Tmpl8::vec2& playerPos, Collider& playerCol, Collider& obs)
+bool MoveablePlayer::CheckPositionForCollisions(const Tmpl8::vec2& playerPos, Collider& playerCol, Collider& obs)
 {
 	return Tmpl8::Game::tileMap->IsFree(playerPos.x + playerCol.min.x, playerPos.y + playerCol.min.y, obs) &&
 		Tmpl8::Game::tileMap->IsFree(playerPos.x + playerCol.max.x, playerPos.y + playerCol.min.y, obs) &&
 		Tmpl8::Game::tileMap->IsFree(playerPos.x + playerCol.min.x, playerPos.y + playerCol.max.y, obs) &&
 		Tmpl8::Game::tileMap->IsFree(playerPos.x + playerCol.max.x, playerPos.y + playerCol.max.y, obs);
 }
-
+bool MoveablePlayer::CheckPositionForCollisions(const Tmpl8::vec2& playerPos, Collider& playerCol)
+{
+	return Tmpl8::Game::tileMap->IsFree(playerPos.x + playerCol.min.x, playerPos.y + playerCol.min.y) &&
+		Tmpl8::Game::tileMap->IsFree(playerPos.x + playerCol.max.x, playerPos.y + playerCol.min.y) &&
+		Tmpl8::Game::tileMap->IsFree(playerPos.x + playerCol.min.x, playerPos.y + playerCol.max.y) &&
+		Tmpl8::Game::tileMap->IsFree(playerPos.x + playerCol.max.x, playerPos.y + playerCol.max.y);
+}
 void MoveablePlayer::SetDashPos(Tmpl8::vec2& nextPos)
 {
 	linearT = timePassed / DASH_DURATION;
