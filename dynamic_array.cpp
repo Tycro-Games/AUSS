@@ -31,7 +31,7 @@ dynamic_array<T>::dynamic_array(size_t size)
 }
 
 template<class T>
-T& dynamic_array<T>::operator[](const int index)
+T& dynamic_array<T>::operator[](const size_t index)
 {
 	if (index < maxSize)
 		return arr[index];
@@ -123,6 +123,16 @@ void dynamic_array<T>::print()
 	}
 }
 template<>
+void dynamic_array<Wave>::print()
+{
+	if (count > 0) {
+		for (int i = 0; i < count; i++) {
+			std::cout << arr[i].weight << " ";
+		}
+		std::cout << '\n';
+	}
+}
+template<>
 void dynamic_array<Obstacle>::print()
 {
 }
@@ -161,7 +171,7 @@ void dynamic_array<Collider*>::print()
 
 
 template<class T>
-void dynamic_array<T>::print(int& i, int& j)
+void dynamic_array<T>::print(size_t& i, size_t& j)
 {
 	for (; i <= j; i++) {
 		std::cout << arr[i] << " ";
@@ -170,12 +180,21 @@ void dynamic_array<T>::print(int& i, int& j)
 
 }
 template<>
-void dynamic_array<Obstacle>::print(int& i, int& j)
+void dynamic_array<Wave>::print(size_t& i, size_t& j)
+{
+	for (; i <= j; i++) {
+		std::cout << arr[i].weight << " ";
+	}
+	std::cout << '\n';
+
+}
+template<>
+void dynamic_array<Obstacle>::print(size_t& i, size_t& j)
 {
 
 }
 template<>
-void dynamic_array<Tile>::print(int& i, int& j)
+void dynamic_array<Tile>::print(size_t& i, size_t& j)
 {
 	for (; i <= j; i++) {
 		std::cout << arr[i].x << " ";
@@ -184,7 +203,7 @@ void dynamic_array<Tile>::print(int& i, int& j)
 	std::cout << '\n';
 }
 template< >
-void dynamic_array<Projectile*>::print(int& i, int& j)
+void dynamic_array<Projectile*>::print(size_t& i, size_t& j)
 {
 	for (; i <= j; i++) {
 		std::cout << arr[i]->pos.x << " ";
@@ -192,7 +211,7 @@ void dynamic_array<Projectile*>::print(int& i, int& j)
 	std::cout << '\n';
 }
 template<class T>
-T& dynamic_array<T>::get(int const& i)
+T& dynamic_array<T>::get(size_t const& i)
 {
 	if (i < count)
 		return arr[i];
@@ -237,6 +256,13 @@ int dynamic_array<T>::find(const T& item)
 	return -1;
 }
 template<>
+int dynamic_array<Wave>::find(const Wave& item)
+{
+	//no need for this
+	std::cout << "wave is not defined for this\n";
+	return -1;
+}
+template<>
 int dynamic_array<Tile>::find(const Tile& item)
 {
 	for (int i = 0; i < count; i++) {
@@ -258,6 +284,13 @@ bool dynamic_array<T>::contains(const T& item)
 	return false;
 }
 template<>
+
+bool dynamic_array<Wave>::contains(const Wave& item)
+{
+	std::cout << "wave is not defined for this\n";
+	return false;
+}
+template<>
 bool dynamic_array<Tile>::contains(const Tile& item)
 {
 	for (int i = 0; i < count; i++) {
@@ -271,7 +304,7 @@ bool dynamic_array<Tile>::contains(const Tile& item)
 
 
 template<class T>
-void dynamic_array<T>::insert(int index, const T& item)
+void dynamic_array<T>::insert(size_t index, const T& item)
 {
 	if (index == count)
 		push_back(item);
@@ -281,13 +314,12 @@ void dynamic_array<T>::insert(int index, const T& item)
 		count++;
 		T toAdd = arr[index];
 		T lastItem;
-		for (int i = index + 1; i < count; i++) {
+		for (size_t i = index + 1; i < count; i++) {
 			lastItem = arr[i];
 			arr[i] = toAdd;
 			toAdd = lastItem;
 		}
 		arr[index] = item;
-
 	}
 }
 
@@ -318,6 +350,12 @@ void dynamic_array<T>::remove(const T& item)
 	}
 	delete[]aux;
 }
+template<>
+void dynamic_array<Wave>::remove(const Wave& item)
+{
+	std::cout << "wave is not defined for this\n";
+
+}
 
 template<>
 void dynamic_array<Tile>::remove(const Tile& item)
@@ -341,12 +379,12 @@ void dynamic_array<Tile>::remove(const Tile& item)
 }
 
 template<class T>
-void dynamic_array<T>::removeAtIndex(const int& index)
+void dynamic_array<T>::removeAtIndex(const size_t& index)
 {
 	if (count == 0)
 		return;
 	count--;
-	for (int i = index; i < count; i++) {
+	for (size_t i = index; i < count; i++) {
 		arr[i] = arr[i + 1];
 	}
 }
@@ -382,4 +420,6 @@ template class dynamic_array <Obstacle*>;
 template class dynamic_array <Observer*>;
 template class dynamic_array<EnemySpawner*>;
 template class dynamic_array<EnemyTypes>;
+
+template class dynamic_array<Wave>;
 

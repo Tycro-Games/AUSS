@@ -6,7 +6,7 @@ class pool
 public:
 	pool();
 	~pool();
-	int getCount();
+	size_t getCount();
 	//needs checking before
 	T& PopElement();
 	void AddElement(T element);

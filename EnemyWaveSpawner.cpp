@@ -12,10 +12,12 @@ EnemyWaveSpawner::EnemyWaveSpawner(Being* player, Tmpl8::Sprite* spriteExplosion
 	:Spawner(spriteExplosion),
 	player(player)
 {
-	//enemy sprite intialization
+	//enemy prototypes intialization
 	EnemyInit();
 	InitializeSpawners();
 	ReadWaves();
+
+	SpawnCurrentWave();
 }
 
 void EnemyWaveSpawner::EnemyInit()
@@ -23,7 +25,7 @@ void EnemyWaveSpawner::EnemyInit()
 	hoarderSprite = new Tmpl8::Sprite(new Tmpl8::Surface("assets/OriginalAssets/phaser.tga"), 16);
 	runnerSprite = new Tmpl8::Sprite(new Tmpl8::Surface("assets/OriginalAssets/sniper.tga"), 32);
 	for (int i = 0; i < NUMBER_OF_ENEMIES; i++) {
-		CreateEnemy(allEnemyTypes[i], enemyPrototypes[i]);
+		enemyPrototypes[i] = CreateEnemy(allEnemyTypes[i]);
 	}
 }
 
@@ -47,15 +49,15 @@ void EnemyWaveSpawner::ReadWaves()
 
 	for (int i = 0; i < wavesInput["waves"].size(); i++) {
 		waves[i].weight = wavesInput["waves"][i].at("weight");
+
 		//check if weight is valid
-		if (waves[i].weight < 0)
+		if (waves[i].weight <= 0)
 			ThrowError("weight must be a positive integer");
 		for (int j = 0; j < wavesInput["waves"][i].at("enemy_types").size(); j++) {
-
 			//check if enum is valid and avoid duplicates
 			waves[i].enemiesInWave.push_unique(ConvertToEnum(wavesInput["waves"][i].at("enemy_types")[j]));
-		}
 
+		}
 	}
 
 	/*for (int i = 0; i < wavesInput["waves"].size(); i++) {
@@ -68,9 +70,12 @@ void EnemyWaveSpawner::ReadWaves()
 
 EnemyWaveSpawner::~EnemyWaveSpawner()
 {
-	delete hoarderSprite;
-	delete runnerSprite;
-	delete[] enemyPrototypes;
+	for (size_t i = 0; i < NUMBER_OF_ENEMIES; i++) {
+		delete enemyPrototypes[i];
+	}
+	//deleted by the above statement
+	/*delete hoarderSprite;
+	delete runnerSprite;*/
 }
 void EnemyWaveSpawner::PlayerTakesDamage(Enemy* enemy)
 {
@@ -80,10 +85,36 @@ void EnemyWaveSpawner::SpawnCurrentWave() {
 	int weight = waves[indexWave].weight;
 	dynamic_array<EnemyTypes>enemiesToSpawn;
 	dynamic_array<EnemyTypes>possibleEnemies;
-	for (size_t i = 0; i < waves[indexWave].enemiesInWave.getCount(); i++)
+	CheckThePossibleEnemies(weight, possibleEnemies);
+	while (weight != 0) {
+		size_t index;
+		if (possibleEnemies.getCount() > 1)
+			index = randomNumbers.RandomBetweenInts(0, possibleEnemies.getCount());
+		else
+			index = 0;
+		EnemyTypes type = possibleEnemies[index];
+		enemiesToSpawn.push_back(type);
+		weight -= enemyPrototypes[type]->getWeight();
+		//recheck the possible enemies
+		CheckThePossibleEnemies(weight, possibleEnemies);
+	}
+	//spawn enemies in the spawners' postions
+	for (size_t i = 0; i < enemiesToSpawn.getCount(); i++) {
+		SpawnEnemy(
+			enemySpawners[static_cast<size_t>(randomNumbers.RandomBetweenInts(0, static_cast<int>(enemiesToSpawn.getCount() - 1)))]->GetSpawnerPos(),
+			enemiesToSpawn[i]);
+		std::cout << enemiesToSpawn[i] << "\n";
+	}
 
-		possibleEnemies.push_back(waves[indexWave].enemiesInWave[i]);
-
+}
+void EnemyWaveSpawner::CheckThePossibleEnemies(size_t weight, dynamic_array<EnemyTypes>& possibleEnemies)
+{
+	possibleEnemies.removeAll();
+	for (size_t i = 0; i < waves[indexWave].enemiesInWave.getCount(); i++) {
+		//checks if the enemy weight is bigger the the weight of the entire wave
+		if (enemyPrototypes[waves[indexWave].enemiesInWave[i]]->getWeight() <= weight)
+			possibleEnemies.push_back(waves[indexWave].enemiesInWave[i]);
+	}
 }
 Enemy* EnemyWaveSpawner::SpawnEnemy(Tmpl8::vec2, EnemyTypes enemy)
 {
@@ -141,7 +172,7 @@ bool EnemyWaveSpawner::IsEnemy(Collider* col)
 void EnemyWaveSpawner::AddEnemyToPool(Enemy* enemy, bool isDead)
 {
 	if (isDead)
-		notify(1, Additive);
+		notify(enemy->getScore(), Additive);
 	enemy->SetActive(false);
 	activeColliders.remove(enemy->getColl());
 	switch (enemy->GetEnemyType())
@@ -159,27 +190,48 @@ void EnemyWaveSpawner::AddEnemyToPool(Enemy* enemy, bool isDead)
 	Tmpl8::Game::RemoveCollider(enemy->getColl());
 	Tmpl8::Game::RemoveMoveable(enemy->getMoveable());
 }
-void EnemyWaveSpawner::CreateEnemy(EnemyTypes enemyType, Enemy* enemy) {
+Enemy* EnemyWaveSpawner::CreateEnemy(EnemyTypes enemyType) {
+
+	std::ifstream f;
+	json enemyJson;
+	Enemy* enemy = nullptr;
 	switch (enemyType)
 	{
 	case Hoarder:
+		f.open("json/Hoarder.json");
 		enemy = new EnemyHoarder(PosDir(Tmpl8::vec2(0), Tmpl8::vec2(0)), hoarderSprite, this);
+		enemyJson = json::parse(f);
+
+		SetJsonValues(enemy, enemyJson);
 
 		break;
 	case Runner:
-		enemy = new EnemyRunner(PosDir(Tmpl8::vec2(0), Tmpl8::vec2(0)), runnerSprite, this);
+		f.open("json/Runner.json");
 
+		enemy = new EnemyRunner(PosDir(Tmpl8::vec2(0), Tmpl8::vec2(0)), runnerSprite, this);
+		enemyJson = json::parse(f);
+
+		SetJsonValues(enemy, enemyJson);
 		break;
 	default:
 		ThrowError("The creation of the enemy has failed");
 		break;
 	}
+	return enemy;
+}
+void EnemyWaveSpawner::SetJsonValues(Enemy* enemy, json& enemyJson)
+{
+	enemy->setDg(enemyJson["dg"]);
+	enemy->setHp(enemyJson["hp"]);
+	enemy->setScore(enemyJson["score"]);
+	enemy->setWeight(enemyJson["weight"]);
 }
 void EnemyWaveSpawner::CreateMoreEnemies(EnemyTypes enemyType)
 {
 	Enemy* enemy = nullptr;
 	switch (enemyType)
 	{
+		//add the json values t
 	case Hoarder:
 		enemy = enemyPrototypes[Hoarder]->clone();
 		break;

@@ -15,28 +15,23 @@ Enemy::~Enemy()
 	delete col;
 }
 
-inline Collider* Enemy::getColl() const {
-	return col;
-}
-
-inline Moveable* Enemy::getMoveable() const {
-	return move;
-}
-
-inline unsigned int Enemy::getDg() const {
-	return dg;
-}
-
-inline unsigned int Enemy::getScore() const {
-	return score;
-}
-
-inline unsigned int Enemy::getWeight() const
+void Enemy::setDg(unsigned int Dg)
 {
-	return weight;
+	dg = dg;
 }
 
-inline EnemyTypes Enemy::GetEnemyType() const {
-	return enemyType;
+void Enemy::setHp(unsigned int Hp)
+{
+	maxHp = Hp;
+}
+
+void Enemy::setScore(unsigned int Score)
+{
+	score = Score;
+}
+
+void Enemy::setWeight(unsigned int Weight)
+{
+	weight = Weight;
 }
 

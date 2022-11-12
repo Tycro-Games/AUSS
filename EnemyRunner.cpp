@@ -34,7 +34,7 @@ void EnemyRunner::Init(PosDir posDir)
 	SetActive(true);
 	pos = posDir.pos;
 	dir = posDir.dir;
-	hp = 100;
+	hp = maxHp;
 }
 
 void EnemyRunner::ResetEnemy()

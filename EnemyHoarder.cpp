@@ -1,8 +1,7 @@
 #include "EnemyHoarder.h"
 #include "MathFunctions.h"
 EnemyHoarder::EnemyHoarder(PosDir posDir, Tmpl8::Sprite* sprite, EnemyWaveSpawner* spawner) :
-	Enemy(posDir.pos, sprite, spawner),
-	randomNumbers()
+	Enemy(posDir.pos, sprite, spawner)
 {
 	enemyType = Hoarder;
 
@@ -86,10 +85,11 @@ void EnemyHoarder::Render(Tmpl8::Surface* screen)
 
 void EnemyHoarder::Init(PosDir posDir)
 {
+
 	SetActive(true);
 	pos = posDir.pos;
 	dir = posDir.dir;
-	hp = 100;
+	hp = maxHp;
 	mover->SetSpeed(SPEED + randomNumbers.RandomBetweenFloats(-30, 100));
 	rotate.Init(rot, randomNumbers.RandomBetweenFloats(0.1f, 0.9f), true);
 	rot->Call();

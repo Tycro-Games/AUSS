@@ -1,6 +1,6 @@
 #pragma once
 #include "dynamic_array.h"
-enum EnemyTypes
+enum  EnemyTypes
 {
 	Hoarder,
 	Runner,

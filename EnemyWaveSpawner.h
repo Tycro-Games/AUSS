@@ -1,12 +1,9 @@
 #pragma once
 #include "nlohmann_json/single_include/nlohmann/json.hpp"
-#include "dynamic_array.h"
 #include "Subject.h"
 #include "Wave.h"
 #include "EnemySpawner.h"
-
 #include <fstream>
-
 class Enemy;
 using json = nlohmann::json;
 class EnemyWaveSpawner : public Spawner, public Subject
@@ -15,10 +12,12 @@ public:
 	EnemyWaveSpawner(Being* player, Tmpl8::Sprite* explosion);
 	~EnemyWaveSpawner();
 	void AddEnemyToPool(Enemy* enemy, bool isDead = false);
-	void CreateEnemy(EnemyTypes enemyType, Enemy* enemy);
+	Enemy* CreateEnemy(EnemyTypes enemyType);
+	void SetJsonValues(Enemy* enemy, json& enemyJson);
 	void CreateMoreEnemies(EnemyTypes enemy);
 	void PlayerTakesDamage(Enemy* enemy);
 	void SpawnCurrentWave();
+	void CheckThePossibleEnemies(size_t weight, dynamic_array<EnemyTypes>& possibleEnemies);
 	Enemy* SpawnEnemy(Tmpl8::vec2, EnemyTypes enemies);
 	// Inherited via Renderable
 	virtual void Render(Tmpl8::Surface* screen) override;
@@ -44,17 +43,17 @@ private:
 	//Enemy Runner
 	pool<Enemy*> poolOfRunners;
 
-	dynamic_array<Entity*> updateObjects;
 
 	dynamic_array<Collider*> activeColliders;
 	dynamic_array<EnemySpawner*> enemySpawners;
 
 
-	dynamic_array<Wave> waves;
+	Wave waves[2];
 	size_t indexWave = 0;
 	//prototypes
 	Enemy* enemyPrototypes[NUMBER_OF_ENEMIES];
 	EnemyTypes allEnemyTypes[NUMBER_OF_ENEMIES] = { Hoarder,Runner };
+	RandomNumbers randomNumbers;
 	//consts
 	const float SPAWNERS_XPOS_MULTIPLIERS = 0.88f;
 	const float SPAWNERS_YPOS_MULTIPLIERS = 0.83f;

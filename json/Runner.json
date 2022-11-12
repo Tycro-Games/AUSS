@@ -1,5 +1,6 @@
 {
     "hp":100,
-    "score":2,
+    "dg":25,
+    "score":5,
     "weight":1
 }

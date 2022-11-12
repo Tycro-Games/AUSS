@@ -15,7 +15,7 @@ pool<T>::~pool()
 }
 
 template<class T>
-int pool<T>::getCount()
+size_t pool<T>::getCount()
 {
 	return poolOf.getCount();
 }

@@ -6,9 +6,9 @@ public:
 	MergeSort();
 	~MergeSort();
 	void Init(dynamic_array<T>* list);
-	void Sort(int l, int h);
+	void Sort(size_t l, size_t h);
 
-	void Merge(int l, int mid, int h);
+	void Merge(size_t l, size_t mid, size_t h);
 
 private:
 	dynamic_array<T>* list;

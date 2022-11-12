@@ -1,12 +1,11 @@
 #pragma once
-#include "nlohmann_json/single_include/nlohmann/json.hpp"
 #include "Being.h"
 
 #include "MoveToADirection.h"
-#include "EnemyWaveSpawner.h"
 #include "PosDir.h"
+#include "Wave.h"
 
-using json = nlohmann::json;
+#include "EnemyWaveSpawner.h"
 //based on https://gameprogrammingpatterns.com/prototype.html
 class Enemy : public Being
 {
@@ -15,15 +14,34 @@ public:
 	virtual ~Enemy();
 	virtual Enemy* clone() = 0;
 	virtual void Init(PosDir) = 0;
-	void SetJsonValues() {
-
+	void setDg(unsigned int);
+	void setHp(unsigned int);
+	void setScore(unsigned int);
+	void setWeight(unsigned int);
+	//get linker errors unless these functions are declared in the header (from enemyWaveSpawner)
+	Collider* getColl() const {
+		return col;
 	}
-	Collider* getColl() const;
-	Moveable* getMoveable() const;
-	unsigned int getDg() const;
-	unsigned int getScore() const;
-	unsigned int getWeight() const;
-	EnemyTypes GetEnemyType() const;
+	Moveable* getMoveable() const {
+		return move;
+	}
+	unsigned int getDg() const {
+		return dg;
+	}
+	unsigned int getHp() const
+	{
+		return maxHp;
+	}
+	unsigned int getScore() const {
+		return score;
+	}
+	unsigned int getWeight() const
+	{
+		return weight;
+	}
+	EnemyTypes GetEnemyType() const {
+		return enemyType;
+	}
 
 protected:
 	EnemyTypes enemyType;
@@ -34,8 +52,9 @@ protected:
 	Tmpl8::vec2 dir;
 
 	unsigned int dg;
+	unsigned int maxHp;
 	unsigned int weight;
-	unsigned int score = 0;
+	unsigned int score;
 };
 
 

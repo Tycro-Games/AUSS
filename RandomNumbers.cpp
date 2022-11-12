@@ -9,7 +9,7 @@ void RandomNumbers::SetSeed(int seed)
 {
 	srand(seed);
 }
-
+//based on https://stackoverflow.com/questions/5289613/generate-random-float-between-two-floats
 float RandomNumbers::RandomBetweenFloats(float l, float h)
 {
 	return l + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (h - l)));

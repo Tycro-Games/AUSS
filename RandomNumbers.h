@@ -1,5 +1,4 @@
 #pragma once
-#
 //random numbers
 #include <cstdlib>
 #include <ctime>
