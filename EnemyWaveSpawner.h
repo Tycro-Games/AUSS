@@ -15,8 +15,10 @@ public:
 	EnemyWaveSpawner(Being* player, Tmpl8::Sprite* explosion);
 	~EnemyWaveSpawner();
 	void AddEnemyToPool(Enemy* enemy, bool isDead = false);
+	void CreateEnemy(EnemyTypes enemyType, Enemy* enemy);
 	void CreateMoreEnemies(EnemyTypes enemy);
 	void PlayerTakesDamage(Enemy* enemy);
+	void SpawnCurrentWave();
 	Enemy* SpawnEnemy(Tmpl8::vec2, EnemyTypes enemies);
 	// Inherited via Renderable
 	virtual void Render(Tmpl8::Surface* screen) override;
@@ -30,7 +32,7 @@ public:
 	EnemyTypes ConvertToEnum(std::string str);
 private:
 	void ThrowError(const char*);
-	void EnemySpriteInit();
+	void EnemyInit();
 	void InitializeSpawners();
 	void ReadWaves();
 
@@ -48,7 +50,11 @@ private:
 	dynamic_array<EnemySpawner*> enemySpawners;
 
 
-	Wave waves[NUMBER_OF_ENEMIES];
+	dynamic_array<Wave> waves;
+	size_t indexWave = 0;
+	//prototypes
+	Enemy* enemyPrototypes[NUMBER_OF_ENEMIES];
+	EnemyTypes allEnemyTypes[NUMBER_OF_ENEMIES] = { Hoarder,Runner };
 	//consts
 	const float SPAWNERS_XPOS_MULTIPLIERS = 0.88f;
 	const float SPAWNERS_YPOS_MULTIPLIERS = 0.83f;

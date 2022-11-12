@@ -107,9 +107,9 @@ size_t dynamic_array<T>::size()
 }
 
 template<class T>
-int dynamic_array<T>::getCount()
+size_t dynamic_array<T>::getCount()
 {
-	return static_cast<int>(count);
+	return count;
 }
 
 template<class T>

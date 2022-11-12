@@ -5,9 +5,7 @@ EnemyHoarder::EnemyHoarder(PosDir posDir, Tmpl8::Sprite* sprite, EnemyWaveSpawne
 	randomNumbers()
 {
 	enemyType = Hoarder;
-	//json magic
-	score = 10;
-	dg = DG;
+
 	col = (new Collider(COL_MIN, COL_MAX, &pos));
 	mover = new MoveToADirection(&pos, &dir, col, this, SPEED);
 	//as a getter for the base class
@@ -80,7 +78,7 @@ void EnemyHoarder::Render(Tmpl8::Surface* screen)
 	screen->Box(static_cast<int>(pos.x - rVar.SPRITE_OFFSET / 2),
 		static_cast<int>(pos.y - rVar.SPRITE_OFFSET / 2),
 		static_cast<int>(pos.x + rVar.SPRITE_OFFSET / 2),
-			static_cast<int>(pos.y + rVar.SPRITE_OFFSET / 2), 0xffff);
+		static_cast<int>(pos.y + rVar.SPRITE_OFFSET / 2), 0xffff);
 
 }
 

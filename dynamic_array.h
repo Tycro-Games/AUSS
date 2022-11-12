@@ -30,7 +30,7 @@ public:
 	//gives the number of items it can hold
 	size_t size();
 	//give the number of the actual items that is holding
-	int getCount();
+	size_t getCount();
 	void print();
 	void print(int& i, int& j);
 	T& get(int const& i);

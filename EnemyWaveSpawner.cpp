@@ -13,15 +13,18 @@ EnemyWaveSpawner::EnemyWaveSpawner(Being* player, Tmpl8::Sprite* spriteExplosion
 	player(player)
 {
 	//enemy sprite intialization
-	EnemySpriteInit();
+	EnemyInit();
 	InitializeSpawners();
 	ReadWaves();
 }
 
-void EnemyWaveSpawner::EnemySpriteInit()
+void EnemyWaveSpawner::EnemyInit()
 {
 	hoarderSprite = new Tmpl8::Sprite(new Tmpl8::Surface("assets/OriginalAssets/phaser.tga"), 16);
 	runnerSprite = new Tmpl8::Sprite(new Tmpl8::Surface("assets/OriginalAssets/sniper.tga"), 32);
+	for (int i = 0; i < NUMBER_OF_ENEMIES; i++) {
+		CreateEnemy(allEnemyTypes[i], enemyPrototypes[i]);
+	}
 }
 
 void EnemyWaveSpawner::InitializeSpawners()
@@ -67,12 +70,21 @@ EnemyWaveSpawner::~EnemyWaveSpawner()
 {
 	delete hoarderSprite;
 	delete runnerSprite;
+	delete[] enemyPrototypes;
 }
 void EnemyWaveSpawner::PlayerTakesDamage(Enemy* enemy)
 {
 	player->TakeDamage(enemy->getDg());
 }
+void EnemyWaveSpawner::SpawnCurrentWave() {
+	int weight = waves[indexWave].weight;
+	dynamic_array<EnemyTypes>enemiesToSpawn;
+	dynamic_array<EnemyTypes>possibleEnemies;
+	for (size_t i = 0; i < waves[indexWave].enemiesInWave.getCount(); i++)
 
+		possibleEnemies.push_back(waves[indexWave].enemiesInWave[i]);
+
+}
 Enemy* EnemyWaveSpawner::SpawnEnemy(Tmpl8::vec2, EnemyTypes enemy)
 {
 	//no more enemies of this type
@@ -147,17 +159,32 @@ void EnemyWaveSpawner::AddEnemyToPool(Enemy* enemy, bool isDead)
 	Tmpl8::Game::RemoveCollider(enemy->getColl());
 	Tmpl8::Game::RemoveMoveable(enemy->getMoveable());
 }
+void EnemyWaveSpawner::CreateEnemy(EnemyTypes enemyType, Enemy* enemy) {
+	switch (enemyType)
+	{
+	case Hoarder:
+		enemy = new EnemyHoarder(PosDir(Tmpl8::vec2(0), Tmpl8::vec2(0)), hoarderSprite, this);
 
+		break;
+	case Runner:
+		enemy = new EnemyRunner(PosDir(Tmpl8::vec2(0), Tmpl8::vec2(0)), runnerSprite, this);
+
+		break;
+	default:
+		ThrowError("The creation of the enemy has failed");
+		break;
+	}
+}
 void EnemyWaveSpawner::CreateMoreEnemies(EnemyTypes enemyType)
 {
 	Enemy* enemy = nullptr;
 	switch (enemyType)
 	{
 	case Hoarder:
-		enemy = new EnemyHoarder(PosDir(Tmpl8::vec2(0), Tmpl8::vec2(0)), hoarderSprite, this);
+		enemy = enemyPrototypes[Hoarder]->clone();
 		break;
 	case Runner:
-		enemy = new EnemyHoarder(PosDir(Tmpl8::vec2(0), Tmpl8::vec2(0)), hoarderSprite, this);
+		enemy = enemyPrototypes[Runner]->clone();
 
 		break;
 	default:
@@ -168,6 +195,7 @@ void EnemyWaveSpawner::CreateMoreEnemies(EnemyTypes enemyType)
 
 	AddEnemyToPool(enemy);
 }
+
 void EnemyWaveSpawner::ThrowError(const char* place) {
 	char t[128];
 	sprintf(t, "Invalid json: %s", place);
