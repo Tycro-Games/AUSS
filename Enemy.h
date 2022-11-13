@@ -19,29 +19,13 @@ public:
 	void setScore(unsigned int);
 	void setWeight(unsigned int);
 	//get linker errors unless these functions are declared in the header (from enemyWaveSpawner)
-	Collider* getColl() const {
-		return col;
-	}
-	Moveable* getMoveable() const {
-		return move;
-	}
-	unsigned int getDg() const {
-		return dg;
-	}
-	unsigned int getHp() const
-	{
-		return maxHp;
-	}
-	unsigned int getScore() const {
-		return score;
-	}
-	unsigned int getWeight() const
-	{
-		return weight;
-	}
-	EnemyTypes GetEnemyType() const {
-		return enemyType;
-	}
+	Collider* getColl() const;
+	Moveable* getMoveable() const;
+	unsigned int getDg() const;
+	unsigned int getHp() const;
+	unsigned int getScore() const;
+	unsigned int getWeight() const;
+	EnemyTypes GetEnemyType() const;
 
 protected:
 	void Enemy::SetJsonValues(Enemy* enem);
