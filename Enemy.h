@@ -18,7 +18,6 @@ public:
 	void setHp(unsigned int);
 	void setScore(unsigned int);
 	void setWeight(unsigned int);
-	//get linker errors unless these functions are declared in the header (from enemyWaveSpawner)
 	Collider* getColl() const;
 	Moveable* getMoveable() const;
 	unsigned int getDg() const;
@@ -41,5 +40,54 @@ protected:
 	unsigned int weight;
 	unsigned int score;
 };
+//inlined functions
+inline void Enemy::setDg(unsigned int Dg)
+{
+	dg = dg;
+}
 
+inline void Enemy::setHp(unsigned int Hp)
+{
+	maxHp = Hp;
+}
+
+inline void Enemy::setScore(unsigned int Score)
+{
+	score = Score;
+}
+
+inline void Enemy::setWeight(unsigned int Weight)
+{
+	weight = Weight;
+}
+
+inline Collider* Enemy::getColl() const {
+	return col;
+}
+
+inline Moveable* Enemy::getMoveable() const {
+	return move;
+}
+
+inline unsigned int Enemy::getDg() const {
+	return dg;
+}
+
+inline unsigned int Enemy::getHp() const
+{
+	return maxHp;
+}
+
+inline unsigned int Enemy::getScore() const {
+	return score;
+}
+
+inline unsigned int Enemy::getWeight() const
+{
+	return weight;
+}
+
+inline EnemyTypes Enemy::GetEnemyType() const {
+	return enemyType;
+}
 
