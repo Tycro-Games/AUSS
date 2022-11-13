@@ -14,11 +14,12 @@ public:
 
 	virtual Enemy* clone() override;
 
+
 	virtual void Init(PosDir) override;
 
 	virtual void ResetEnemy() override;
 private:
-
+	MoveInstance* mover;
 
 
 };

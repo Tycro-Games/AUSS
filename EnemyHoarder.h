@@ -13,16 +13,15 @@ public:
 	~EnemyHoarder();
 
 	// Inherited via Enemy
+	virtual void Init(PosDir posDir) override;
 	virtual void Update(float deltaTime) override;
 
 	virtual void Render(Tmpl8::Surface* screen) override;
 
-	void Init(PosDir posDir);
 	virtual void ResetEnemy() override;
 
 	virtual void Call() override;
 
-	// Inherited via Enemy
 	virtual Enemy* clone() override;
 private:
 	//movement

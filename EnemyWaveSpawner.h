@@ -6,7 +6,7 @@
 #include <fstream>
 class Enemy;
 using json = nlohmann::json;
-class EnemyWaveSpawner : public Spawner, public Subject
+class EnemyWaveSpawner : public Spawner, public Subject, public Callable
 {
 public:
 	EnemyWaveSpawner(Being* player, Tmpl8::Sprite* explosion);
@@ -34,7 +34,7 @@ private:
 	void EnemyInit();
 	void InitializeSpawners();
 	void ReadWaves();
-
+	Timer timer;
 	Being* player;
 	Tmpl8::Sprite* hoarderSprite;
 	Tmpl8::Sprite* runnerSprite;
@@ -43,12 +43,11 @@ private:
 	//Enemy Runner
 	pool<Enemy*> poolOfRunners;
 
-
 	dynamic_array<Collider*> activeColliders;
 	dynamic_array<EnemySpawner*> enemySpawners;
 
 
-	Wave waves[2];
+	Wave waves[10000];
 	size_t indexWave = 0;
 	//prototypes
 	Enemy* enemyPrototypes[NUMBER_OF_ENEMIES];
@@ -57,6 +56,10 @@ private:
 	//consts
 	const float SPAWNERS_XPOS_MULTIPLIERS = 0.88f;
 	const float SPAWNERS_YPOS_MULTIPLIERS = 0.83f;
+
+
+	// Inherited via Callable
+	virtual void Call() override;
 
 };
 inline bool EnemyWaveSpawner::IsPoolEmpty(pool<Enemy*>& pool) {

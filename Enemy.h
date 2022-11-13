@@ -44,6 +44,7 @@ public:
 	}
 
 protected:
+	void Enemy::SetJsonValues(Enemy* enem);
 	EnemyTypes enemyType;
 	virtual void ResetEnemy() = 0;
 	EnemyWaveSpawner* spawner;

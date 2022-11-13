@@ -4,10 +4,14 @@ EnemyRunner::EnemyRunner(PosDir posDir, Tmpl8::Sprite* sprite, EnemyWaveSpawner*
 	:Enemy(posDir.pos, sprite, spawner)
 {
 	enemyType = Runner;
+	col = new Collider(0, 0, &pos);
+	mover = new MoveInstance(&this->pos);
+	move = mover;
 }
 
 EnemyRunner::~EnemyRunner()
 {
+	delete mover;
 }
 
 void EnemyRunner::Render(Tmpl8::Surface* screen)
@@ -26,8 +30,12 @@ void EnemyRunner::Die()
 
 Enemy* EnemyRunner::clone()
 {
-	return new EnemyRunner(PosDir(pos, dir), sprite, spawner);
+	Enemy* enem = new EnemyRunner(PosDir(pos, dir), sprite, spawner);
+	SetJsonValues(enem);
+	return enem;
 }
+
+
 
 void EnemyRunner::Init(PosDir posDir)
 {

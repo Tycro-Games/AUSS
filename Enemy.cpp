@@ -35,3 +35,11 @@ void Enemy::setWeight(unsigned int Weight)
 	weight = Weight;
 }
 
+void Enemy::SetJsonValues(Enemy* enem)
+{
+	enem->setDg(dg);
+	enem->setHp(maxHp);
+	enem->setScore(score);
+	enem->setWeight(weight);
+}
+

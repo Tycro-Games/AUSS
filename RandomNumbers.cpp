@@ -14,9 +14,15 @@ float RandomNumbers::RandomBetweenFloats(float l, float h)
 {
 	return l + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (h - l)));
 }
+/// <summary>
+/// returns a random int
+/// </summary>
+/// <param name="l">inclusive</param>
+/// <param name="h">exclusive</param>
+/// <returns> </returns>
 int RandomNumbers::RandomBetweenInts(int l, int h)
 {
-	return l + (rand()) / ((RAND_MAX / (h - l)));
+	return l + (rand()) % (h - l);
 }
 
 RandomNumbers::RandomNumbers()

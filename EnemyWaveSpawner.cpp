@@ -12,12 +12,12 @@ EnemyWaveSpawner::EnemyWaveSpawner(Being* player, Tmpl8::Sprite* spriteExplosion
 	:Spawner(spriteExplosion),
 	player(player)
 {
+	timer.Init(this, 1.0f);
 	//enemy prototypes intialization
 	EnemyInit();
 	InitializeSpawners();
 	ReadWaves();
 
-	SpawnCurrentWave();
 }
 
 void EnemyWaveSpawner::EnemyInit()
@@ -68,6 +68,11 @@ void EnemyWaveSpawner::ReadWaves()
 	}*/
 }
 
+void EnemyWaveSpawner::Call()
+{
+	SpawnCurrentWave();
+}
+
 EnemyWaveSpawner::~EnemyWaveSpawner()
 {
 	for (size_t i = 0; i < NUMBER_OF_ENEMIES; i++) {
@@ -85,25 +90,31 @@ void EnemyWaveSpawner::SpawnCurrentWave() {
 	int weight = waves[indexWave].weight;
 	dynamic_array<EnemyTypes>enemiesToSpawn;
 	dynamic_array<EnemyTypes>possibleEnemies;
+
 	CheckThePossibleEnemies(weight, possibleEnemies);
+
 	while (weight != 0) {
+
 		size_t index;
+		//if there are more than one enemy
 		if (possibleEnemies.getCount() > 1)
-			index = randomNumbers.RandomBetweenInts(0, possibleEnemies.getCount());
+			index = static_cast<size_t>(randomNumbers.RandomBetweenInts(0, static_cast<int>(possibleEnemies.getCount())));
 		else
 			index = 0;
+		std::cout << index << ' ';
 		EnemyTypes type = possibleEnemies[index];
 		enemiesToSpawn.push_back(type);
+
 		weight -= enemyPrototypes[type]->getWeight();
 		//recheck the possible enemies
 		CheckThePossibleEnemies(weight, possibleEnemies);
 	}
+	std::cout << "index done\n";
 	//spawn enemies in the spawners' postions
 	for (size_t i = 0; i < enemiesToSpawn.getCount(); i++) {
-		SpawnEnemy(
-			enemySpawners[static_cast<size_t>(randomNumbers.RandomBetweenInts(0, static_cast<int>(enemiesToSpawn.getCount() - 1)))]->GetSpawnerPos(),
-			enemiesToSpawn[i]);
-		std::cout << enemiesToSpawn[i] << "\n";
+		size_t index = static_cast<size_t>(randomNumbers.RandomBetweenInts(0, static_cast<int>(enemySpawners.getCount())));
+		SpawnEnemy(enemySpawners[index]->GetSpawnerPos(), enemiesToSpawn[i]);
+		std::cout << index << "\n";
 	}
 
 }
@@ -116,7 +127,7 @@ void EnemyWaveSpawner::CheckThePossibleEnemies(size_t weight, dynamic_array<Enem
 			possibleEnemies.push_back(waves[indexWave].enemiesInWave[i]);
 	}
 }
-Enemy* EnemyWaveSpawner::SpawnEnemy(Tmpl8::vec2, EnemyTypes enemy)
+Enemy* EnemyWaveSpawner::SpawnEnemy(Tmpl8::vec2 pos, EnemyTypes enemy)
 {
 	//no more enemies of this type
 	Enemy* enemyToSpawn = nullptr;
@@ -135,12 +146,20 @@ Enemy* EnemyWaveSpawner::SpawnEnemy(Tmpl8::vec2, EnemyTypes enemy)
 	default:
 		break;
 	}
-
 	if (enemy == NUMBER_OF_ENEMIES)
 		ThrowError("enemy spawner was not initialized");
+
 	else if (enemyToSpawn) {
 		activeColliders.push_back(enemyToSpawn->getColl());
+
+		Tmpl8::vec2 randomDir = GetDirDeviation();
+		//set position to the spawner's
+		enemyToSpawn->Init(PosDir{ pos ,randomDir });
+		Tmpl8::Game::AddCollider(enemyToSpawn->getColl());
+		Tmpl8::Game::AddMoveable(enemyToSpawn->getMoveable());
+
 	}
+
 	return enemyToSpawn;
 }
 
@@ -157,6 +176,7 @@ void EnemyWaveSpawner::Render(Tmpl8::Surface* screen)
 
 void EnemyWaveSpawner::Update(float deltaTime)
 {
+	timer.Update(deltaTime);
 	for (int i = 0; i < enemySpawners.getCount(); i++)
 		enemySpawners[i]->Update(deltaTime);
 
@@ -243,6 +263,7 @@ void EnemyWaveSpawner::CreateMoreEnemies(EnemyTypes enemyType)
 		ThrowError("The creation of the enemy has failed");
 		break;
 	}
+
 	updateObjects.push_back(enemy);
 
 	AddEnemyToPool(enemy);

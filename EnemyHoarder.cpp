@@ -135,5 +135,7 @@ void EnemyHoarder::Die()
 
 Enemy* EnemyHoarder::clone()
 {
-	return new EnemyHoarder(PosDir(pos, dir), sprite, spawner);
+	Enemy* enem = new EnemyHoarder(PosDir(pos, dir), sprite, spawner);
+	SetJsonValues(enem);
+	return enem;
 }
