@@ -36,6 +36,7 @@ public:
 	bool ChangedPos() const;
 private:
 	bool hasChangedPos = false;
+	bool tileDiagonalMoved = false;
 	bool canMove = false;
 	bool canRotate = false;
 	bool up = false;

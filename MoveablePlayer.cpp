@@ -175,10 +175,10 @@ void MoveablePlayer::Update(float deltaTime)
 	Tmpl8::vec2 tilemapPos = *tileMapCol->pos;
 	Collider c = *tileMapCol;
 	tilemapPos += nextPos * (-speed) * deltaTime;
-	Collider obs;
-	if (CheckPositionForCollisions(playerPos, playerCol, obs)) {
+	if (CheckPositionForCollisions(playerPos, playerCol)) {
 		MoveTileOrPlayer(tilemapPos, c, playerPos);
 	}
+	//moving diagonally and hitting an obstacle
 	else if (nextPos.x != 0 && nextPos.y != 0) {
 		if (CheckPositionForCollisions((*pos) + Tmpl8::vec2(0, playerPosOnY), playerCol)) {
 			MoveTileOrPlayer((*c.pos) - Tmpl8::vec2(0, playerPosOnY), c, (*pos) + Tmpl8::vec2(0, playerPosOnY));
@@ -199,7 +199,10 @@ void MoveablePlayer::MoveTileOrPlayer(Tmpl8::vec2& tilemapPos, Collider& c, cons
 	}
 	else
 	{
-		ClampTheMovementVector(c, tilemapPos, *tileMapCol->pos, hasChangedPos);
+		//this would also move the player so we need to limit the speed
+		tileDiagonalMoved = false;
+		ClampTheMovementVector(c, tilemapPos, *tileMapCol->pos, tileDiagonalMoved);
+
 	}
 
 	canMove = true;
@@ -243,6 +246,7 @@ void MoveablePlayer::MovePlayer()
 		if (Collider::TileMapInGameScreen(playerMovement, c * EDGE_DISTANCE))
 			*pos = playerMovement;
 		else {
+
 			ClampTheMovementVector(c, playerMovement, *pos);
 		}
 	}
@@ -251,11 +255,11 @@ void MoveablePlayer::MovePlayer()
 void MoveablePlayer::ClampTheMovementVector(const Collider& c, const Tmpl8::vec2 newVec, Tmpl8::vec2& originalVec, bool& changed)
 {
 	//try to move the player only on one axis
-	Tmpl8::vec2 nextPos = newVec - originalVec;
+	Tmpl8::vec2 nextPos = (newVec - originalVec);
 	if (CheckVecForOneDir(nextPos))
 		return;
-	Tmpl8::vec2 clampedOnX = Tmpl8::vec2(originalVec.x + nextPos.x, originalVec.y);
-	Tmpl8::vec2 clampedOnY = Tmpl8::vec2(originalVec.x, originalVec.y + nextPos.y);
+	Tmpl8::vec2 clampedOnX = Tmpl8::vec2(originalVec.x + nextPos.x / 2, originalVec.y);
+	Tmpl8::vec2 clampedOnY = Tmpl8::vec2(originalVec.x, originalVec.y + nextPos.y / 2);
 	if (Collider::TileMapInGameScreen(clampedOnX, c))
 		originalVec = clampedOnX, changed = true;
 	else if (Collider::TileMapInGameScreen(clampedOnY, c))
@@ -275,8 +279,16 @@ void MoveablePlayer::ClampTheMovementVector(const Collider& c, const Tmpl8::vec2
 
 	if (CheckVecForOneDir(nextPos))
 		return;
-	Tmpl8::vec2 clampedOnX = Tmpl8::vec2(originalVec.x + nextPos.x, originalVec.y);
-	Tmpl8::vec2 clampedOnY = Tmpl8::vec2(originalVec.x, originalVec.y + nextPos.y);
+	Tmpl8::vec2 clampedOnX;
+	Tmpl8::vec2 clampedOnY;
+	if (tileDiagonalMoved) {
+		clampedOnX = Tmpl8::vec2(originalVec.x + nextPos.x / 2, originalVec.y);
+		clampedOnY = Tmpl8::vec2(originalVec.x, originalVec.y + nextPos.y / 2);
+	}
+	else {
+		clampedOnX = Tmpl8::vec2(originalVec.x + nextPos.x, originalVec.y);
+		clampedOnY = Tmpl8::vec2(originalVec.x, originalVec.y + nextPos.y);
+	}
 	if (Collider::TileMapInGameScreen(clampedOnX, c))
 		originalVec = clampedOnX;
 	else if (Collider::TileMapInGameScreen(clampedOnY, c))
