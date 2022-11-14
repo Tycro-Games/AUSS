@@ -43,7 +43,7 @@ protected:
 //inlined functions
 inline void Enemy::setDg(unsigned int Dg)
 {
-	dg = dg;
+	dg = Dg;
 }
 
 inline void Enemy::setHp(unsigned int Hp)
