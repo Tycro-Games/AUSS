@@ -6,6 +6,7 @@ EnemyHoarder::EnemyHoarder(PosDir posDir, Tmpl8::Sprite* sprite, EnemyWaveSpawne
 	enemyType = Hoarder;
 
 	col = (new Collider(COL_MIN, COL_MAX, &pos));
+	SetColToEnemyFlag();
 	mover = new MoveToADirection(&pos, &dir, col, this, SPEED);
 	//as a getter for the base class
 	move = mover;
@@ -33,14 +34,8 @@ void EnemyHoarder::Update(float deltaTime)
 	rotate.Update(deltaTime);
 	//marked by collision
 	if (col->toDeactivate) {
-		//take damage from the collision if it is from the projectile or block
-		if (!spawner->IsEnemy(col->collision)) {
-			TakeDamage(DG_TO_TAKE);
-		}
-		else {
-			//interacting with enemy 
-
-		}
+		TakeDamage(DG_TO_TAKE);
+		std::cout << "took damage\n";
 		col->toDeactivate = false;
 
 	}

@@ -11,6 +11,7 @@ Projectile::Projectile(PosDir posDir, Tmpl8::Sprite* sprite, ProjectileSpawner* 
 	spawner(spawner),
 	rVar(RotationVar(360 / (static_cast<const float>(sprite->Frames() - 1)), 90.0f, 20.0f))
 {
+	col->type = Collider::Projectile;
 	dir = new Tmpl8::vec2();
 	timer = new Timer();
 	mover = new MoveToADirection(&pos, dir, col, this, SPEED);
@@ -53,12 +54,12 @@ void Projectile::Update(float deltaTime)
 	if (!getUpdateable())
 		return;
 
+	if (col->toDeactivate)
+		ResetBullet();
 	mover->Update(deltaTime);
 	timer->Update(deltaTime);
 
 
-	if (col->toDeactivate)
-		ResetBullet();
 }
 
 void Projectile::Render(Tmpl8::Surface* screen)
@@ -78,13 +79,13 @@ void Projectile::Call()
 
 		ResetBullet();
 	}
-	else if (mover->colToReflectFrom != NULL) {
+	else if (mover->colToReflectFrom != NULL) { //reflect on obstacle
 		Collider c = *mover->colToReflectFrom;
 		rot->Reflect(Collider::GetNormal(c, *col));
 
 		mover->colToReflectFrom = NULL;
 	}
-	else
+	else //reflect on screen
 		rot->Reflect(Collider::GetNormalEdgeScreen(mover->nextP, *col));
 }
 
@@ -93,7 +94,9 @@ void Projectile::Call()
 
 void Projectile::ResetBullet()
 {
-
+	if (col->collision)
+		if (col->collision->type == Collider::Enemy)
+			col->collision->toDeactivate = true;
 	col->toDeactivate = false;
 	timer->isFinished = true;
 	spawner->AddProjectileToPool(this);

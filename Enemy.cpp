@@ -8,6 +8,7 @@ Enemy::Enemy(Tmpl8::vec2 pos, Tmpl8::Sprite* sprite, EnemyWaveSpawner* spawner) 
 	dg()
 
 {
+
 }
 
 Enemy::~Enemy()

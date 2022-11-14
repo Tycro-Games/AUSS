@@ -59,13 +59,23 @@ void CollisionDetection::DetectCollisions()
 
 	for (int i = 0; i < allPairs.getCount(); i += 2) {
 		//trigger the collision flags for the colliders
-		allPairs[i]->toDeactivate = true;
-		allPairs[i]->collision = allPairs[i + 1];
-		allPairs[i + 1]->toDeactivate = true;
-		allPairs[i + 1]->collision = allPairs[i];
+		CheckProjectile(allPairs, i, i + 1);
+
 
 	}
 
+}
+
+void CollisionDetection::CheckProjectile(dynamic_array<Collider*>& allPairs, int i, int j)
+{
+	if (allPairs[i]->type == Collider::Projectile) {
+		allPairs[i]->toDeactivate = true;
+		allPairs[i]->collision = allPairs[i + 1];
+	}
+	if (allPairs[j]->type == Collider::Projectile) {
+		allPairs[j]->toDeactivate = true;
+		allPairs[j]->collision = allPairs[i];
+	}
 }
 
 void CollisionDetection::Update(float deltaTime)

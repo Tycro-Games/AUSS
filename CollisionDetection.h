@@ -12,6 +12,8 @@ public:
 	~CollisionDetection();
 	void DetectCollisions();
 
+	void CheckProjectile(dynamic_array<Collider*>& allPairs, int i, int j);
+
 	virtual void Update(float deltaTime) override;
 	// Inherited via Callable
 	virtual void Call() override;

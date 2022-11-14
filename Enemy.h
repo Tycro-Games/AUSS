@@ -27,6 +27,7 @@ public:
 	EnemyTypes GetEnemyType() const;
 
 protected:
+	void SetColToEnemyFlag();
 	void Enemy::SetJsonValues(Enemy* enem);
 	EnemyTypes enemyType;
 	virtual void ResetEnemy() = 0;
@@ -41,6 +42,10 @@ protected:
 	unsigned int score;
 };
 //inlined functions
+inline void Enemy::SetColToEnemyFlag() {
+	col->type = Collider::Enemy;
+}
+
 inline void Enemy::setDg(unsigned int Dg)
 {
 	dg = Dg;

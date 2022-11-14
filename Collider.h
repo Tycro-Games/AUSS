@@ -1,9 +1,12 @@
 #pragma once
 #include "template.h"
-
 struct Collider
 {
 public:
+	enum Type {
+		Projectile,
+		Enemy
+	};
 	Collider(Tmpl8::vec2 min, Tmpl8::vec2 max);
 	Collider(Tmpl8::vec2 min, Tmpl8::vec2 max, Tmpl8::vec2* pos);
 	Collider();
@@ -14,6 +17,7 @@ public:
 	}
 
 	~Collider();
+	Type type;
 	Tmpl8::vec2 min, max;
 	Tmpl8::vec2* pos;
 	Collider* collision;
