@@ -30,10 +30,12 @@ public:
 	Tmpl8::vec2 EnemyWaveSpawner::GetPlayerPos();
 	EnemyTypes ConvertToEnum(std::string str);
 private:
+	bool startedWave = false;
 	void ThrowError(const char*);
 	void EnemyInit();
 	void InitializeSpawners();
 	void ReadWaves();
+	size_t indexSpawn;
 	Timer timer;
 	Being* player;
 	Tmpl8::Sprite* hoarderSprite;
@@ -45,10 +47,12 @@ private:
 
 	dynamic_array<Collider*> activeColliders;
 	dynamic_array<EnemySpawner*> enemySpawners;
+	dynamic_array<EnemyTypes>enemiesToSpawn;
 
 
 	Wave waves[10000];
 	size_t indexWave = 0;
+	size_t wavesCount = 0;
 	//prototypes
 	Enemy* enemyPrototypes[NUMBER_OF_ENEMIES];
 	EnemyTypes allEnemyTypes[NUMBER_OF_ENEMIES] = { Hoarder,Runner };

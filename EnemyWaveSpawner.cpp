@@ -46,7 +46,7 @@ void EnemyWaveSpawner::ReadWaves()
 	std::ifstream f("json/enemy_waves.json");
 	json  wavesInput = json::parse(f);
 	std::cout << "json parsed successfully\n";
-
+	wavesCount = wavesInput["waves"].size();
 	for (int i = 0; i < wavesInput["waves"].size(); i++) {
 		waves[i].weight = wavesInput["waves"][i].at("weight");
 
@@ -70,7 +70,17 @@ void EnemyWaveSpawner::ReadWaves()
 
 void EnemyWaveSpawner::Call()
 {
-	SpawnCurrentWave();
+	if (!startedWave)
+		SpawnCurrentWave();
+	else {
+		SpawnEnemy(enemySpawners[(indexSpawn) % enemySpawners.getCount()]->GetSpawnerPos(), enemiesToSpawn[indexSpawn]);
+		std::cout << indexSpawn << " ";
+		indexSpawn++;
+		if (enemiesToSpawn.getCount() == indexSpawn) {
+			timer.isFinished = true;
+			startedWave = false;
+		}
+	}
 }
 
 EnemyWaveSpawner::~EnemyWaveSpawner()
@@ -87,8 +97,9 @@ void EnemyWaveSpawner::PlayerTakesDamage(Enemy* enemy)
 	player->TakeDamage(enemy->getDg());
 }
 void EnemyWaveSpawner::SpawnCurrentWave() {
+	startedWave = true;
 	int weight = waves[indexWave].weight;
-	dynamic_array<EnemyTypes>enemiesToSpawn;
+	enemiesToSpawn.removeAll();
 	dynamic_array<EnemyTypes>possibleEnemies;
 
 	CheckThePossibleEnemies(weight, possibleEnemies);
@@ -109,14 +120,13 @@ void EnemyWaveSpawner::SpawnCurrentWave() {
 		//recheck the possible enemies
 		CheckThePossibleEnemies(weight, possibleEnemies);
 	}
-	std::cout << "index done\n";
-	//spawn enemies in the spawners' postions
-	for (size_t i = 0; i < enemiesToSpawn.getCount(); i++) {
-		size_t index = static_cast<size_t>(randomNumbers.RandomBetweenInts(0, static_cast<int>(enemySpawners.getCount())));
-		SpawnEnemy(enemySpawners[index]->GetSpawnerPos(), enemiesToSpawn[i]);
-		std::cout << index << "\n";
-	}
+	//interval for spawninig
+	timer.Init(this, .15f, true);
+	//spawn enemies in the spawners' positons
+	indexSpawn = 0;
 
+
+	std::cout << "index done\n";
 }
 void EnemyWaveSpawner::CheckThePossibleEnemies(size_t weight, dynamic_array<EnemyTypes>& possibleEnemies)
 {
@@ -139,7 +149,7 @@ Enemy* EnemyWaveSpawner::SpawnEnemy(Tmpl8::vec2 pos, EnemyTypes enemy)
 		enemyToSpawn = poolOfHoarders.PopElement();
 		break;
 	case Runner:
-		if (IsPoolEmpty(poolOfHoarders))
+		if (IsPoolEmpty(poolOfRunners))
 			CreateMoreEnemies(Runner);
 		enemyToSpawn = poolOfRunners.PopElement();
 		break;
@@ -154,6 +164,7 @@ Enemy* EnemyWaveSpawner::SpawnEnemy(Tmpl8::vec2 pos, EnemyTypes enemy)
 
 		Tmpl8::vec2 randomDir = GetDirDeviation();
 		//set position to the spawner's
+
 		enemyToSpawn->Init(PosDir{ pos ,randomDir });
 		Tmpl8::Game::AddCollider(enemyToSpawn->getColl());
 		Tmpl8::Game::AddMoveable(enemyToSpawn->getMoveable());
@@ -191,10 +202,13 @@ bool EnemyWaveSpawner::IsEnemy(Collider* col)
 
 void EnemyWaveSpawner::AddEnemyToPool(Enemy* enemy, bool isDead)
 {
-	if (isDead)
-		notify(enemy->getScore(), Additive);
 	enemy->SetActive(false);
 	activeColliders.remove(enemy->getColl());
+	if (isDead) {
+		notify(enemy->getScore(), Additive);
+		if (activeColliders.getCount() == 0)
+			SpawnCurrentWave();
+	}
 	switch (enemy->GetEnemyType())
 	{
 	case Hoarder:
