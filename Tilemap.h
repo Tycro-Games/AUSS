@@ -55,6 +55,7 @@ class Tilemap :public Renderable, public Updateable, public Followable
 {
 public:
 	Tilemap();
+	void Init();
 	~Tilemap();
 
 	// Inherited via Renderable

@@ -118,6 +118,6 @@ void Player::Die()
 {
 	std::cout << "RESET GAME";
 
-	Tmpl8::Game::ChangeGameState(Tmpl8::Game::GameState::reset);
+	Game::Get().ChangeGameState(Tmpl8::Game::GameState::reset);
 }
 

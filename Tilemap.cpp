@@ -6,6 +6,7 @@
 #include <string>
 #include <algorithm>
 #include <cassert>
+using namespace Tmpl8;
 Tilemap::Tilemap() :
 	tileSurface("assets/Spaceship-shooter#01/Wang tiles/02-Craters.png"),
 	pos(Tmpl8::vec2(ScreenWidth / 2, ScreenHeight / 2)),
@@ -14,10 +15,14 @@ Tilemap::Tilemap() :
 		Tmpl8::vec2(0),
 		&pos))
 {
+}
+
+void Tilemap::Init()
+{
 	lastPos = pos;
 	prop = new ParallaxProp(new Tmpl8::Sprite(new Tmpl8::Surface("assets/Spaceship-shooter#01/background/Space02.png"), 1),
 		Tmpl8::vec2(pos.x - OFFSET_X, pos.y - OFFSET_Y), .5f);
-	Tmpl8::Game::AddMoveable(prop->getMover(), &Tmpl8::Game::moveablesTile);
+	Game::Get().AddMoveable(prop->getMover());
 	//add obstacles
 	bool LastOneIsBlocking = false;
 	for (int y = 0; y < Y_TILES; y++)
@@ -60,7 +65,7 @@ Tilemap::Tilemap() :
 				//get to the end of the added obstacle
 				x = i + 1;
 				blockingTiles.push_back(tiles[index].obs);
-				Tmpl8::Game::AddMoveable(tiles[index].obs);
+				Game::Get().AddMoveable(tiles[index].obs);
 
 			}
 

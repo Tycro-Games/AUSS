@@ -1,6 +1,7 @@
 #include "PlayButton.h"
 #include "game.h"
-PlayButton::PlayButton(Tmpl8::Sprite* sprite, Tmpl8::vec2 pos, Collider* cursor, Tmpl8::Sprite* pressed) :
+using namespace Tmpl8;
+PlayButton::PlayButton(Sprite* sprite, vec2 pos, Collider* cursor, Sprite* pressed) :
 	Button(sprite, pos, cursor, pressed)
 {
 }
@@ -19,18 +20,18 @@ void PlayButton::ChangeSprite()
 void PlayButton::Update(float deltaTime)
 {
 	Button::Update(deltaTime);
-	if (isHovering && Tmpl8::Game::isPressingLeftMouse)
+	if (isHovering && Game::Get().isPressingLeftMouse)
 		ResumeGame();
 }
 
-void PlayButton::Render(Tmpl8::Surface* screen)
+void PlayButton::Render(Surface* screen)
 {
 	Button::Render(screen);
 }
 
 void PlayButton::ResumeGame()
 {
-	Tmpl8::Game::isPressingLeftMouse = false;
-	Tmpl8::Game::currentState = Tmpl8::Game::game;
+	Game::Get().isPressingLeftMouse = false;
+	Game::Get().currentState = Game::GameState::game;
 
 }

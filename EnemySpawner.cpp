@@ -2,12 +2,13 @@
 #include "game.h"
 
 #include "Enemy.h"
+using namespace Tmpl8;
 EnemySpawner::EnemySpawner(Tmpl8::vec2* pos, EnemyWaveSpawner* enemyWave, Tmpl8::Sprite* explosion) :
 	Spawner(pos, explosion),
 	enemyWave(enemyWave),
 	move(new MoveInstance(this->pos))
 {
-	Tmpl8::Game::AddMoveable(move);
+	Game::Get().AddMoveable(move);
 	timer = new Timer(this, timeToSpawn);
 	timer->isUpdateable = false;
 }
@@ -59,8 +60,8 @@ void EnemySpawner::Call()
 	Tmpl8::vec2 randomDir = GetDirDeviation();
 	enemy->Init(PosDir(*pos, randomDir));
 	//game wiring
-	Tmpl8::Game::AddCollider(enemy->getColl());
-	Tmpl8::Game::AddMoveable(enemy->getMoveable());
+	Game::Get().AddCollider(enemy->getColl());
+	Game::Get().AddMoveable(enemy->getMoveable());
 
 
 }

@@ -169,8 +169,8 @@ Enemy* EnemyWaveSpawner::SpawnEnemy(vec2 pos, EnemyTypes enemy)
 		//set position to the spawner's
 
 		enemyToSpawn->Init(PosDir{ pos ,randomDir });
-		Game::AddCollider(enemyToSpawn->getColl());
-		Game::AddMoveable(enemyToSpawn->getMoveable());
+		Game::Get().AddCollider(enemyToSpawn->getColl());
+		Game::Get().AddMoveable(enemyToSpawn->getMoveable());
 
 	}
 
@@ -224,8 +224,8 @@ void EnemyWaveSpawner::AddEnemyToPool(Enemy* enemy, bool isDead)
 		break;
 	}
 	//game wiring
-	Game::RemoveCollider(enemy->getColl());
-	Game::RemoveMoveable(enemy->getMoveable());
+	Game::Get().RemoveCollider(enemy->getColl());
+	Game::Get().RemoveMoveable(enemy->getMoveable());
 }
 Enemy* EnemyWaveSpawner::CreateEnemy(EnemyTypes enemyType) {
 

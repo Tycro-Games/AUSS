@@ -16,8 +16,10 @@ namespace Tmpl8 {
 	class Game
 	{
 	public:
-		void SetTarget(Surface* surface) { screen = surface; }
+		Game();
+		static Game& Get();
 
+		void SetTarget(Surface* surface) { screen = surface; }
 		void Init();
 		void AllocateMemory();
 		void ResetGame();
@@ -37,9 +39,9 @@ namespace Tmpl8 {
 		void KeyUp(SDL_Scancode key);
 		void KeyDown(SDL_Scancode key);
 
-		static bool isPressingLeftMouse;
+		bool isPressingLeftMouse = false;
 		//switching between game states
-		enum GameState
+		enum class GameState
 		{
 
 			mainMenu,
@@ -47,18 +49,17 @@ namespace Tmpl8 {
 			paused,
 			reset
 		};
-		static void ChangeGameState(GameState state);
-		static GameState currentState;
-
-		static std::vector<Moveable*> moveablesTile;
-		static std::vector<Moveable*> moveablesPlayer;
-		static Tilemap* tileMap;
 		//collision detection
-		static std::vector<Collider*> cols;
-		static void AddCollider(Collider* col);
-		static void AddMoveable(Moveable* col, std::vector<Moveable*>* vec = &moveablesTile);
-		static void RemoveCollider(Collider* col);
-		static void RemoveMoveable(Moveable* col, std::vector<Moveable*>* vec = &moveablesTile);
+		std::vector<Collider*> colliders;
+		void AddCollider(Collider* col);
+		void AddMoveable(Moveable* col);
+		void RemoveCollider(Collider* col);
+		void RemoveMoveable(Moveable* col);
+		void ChangeGameState(GameState state);
+		GameState currentState;
+
+		std::vector<Moveable*> moveablesTile;
+		Tilemap tileMap;
 	private:
 		Surface* screen;
 
@@ -73,7 +74,6 @@ namespace Tmpl8 {
 		Score score;
 		EnemyWaveSpawner* enemySpawner;
 		CollisionDetection* projectileDetection;
-		MoveablePlayer* tileMovement;
 		//update components
 		std::vector<Updateable*> updateables;
 		std::vector<Renderable*> renderables;

@@ -11,7 +11,6 @@ public:
 	virtual ~MoveablePlayer();
 	virtual void Update(float deltaTime) override;
 	void MoveTileOrPlayer(Tmpl8::vec2& tilemapPos, Collider& c, const Tmpl8::vec2& playerPos);
-	bool CheckPositionForCollisions(const Tmpl8::vec2& playerPos, Collider& playerCol, Collider& obs);
 	bool CheckPositionForCollisions(const Tmpl8::vec2& playerPos, Collider& playerCol);
 	void SetDashPos(Tmpl8::vec2& nextPos);
 	void ResetTriggers();

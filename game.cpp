@@ -9,14 +9,18 @@
 using namespace std;
 namespace Tmpl8
 {
-	bool Game::isPressingLeftMouse;
-	Tilemap* Game::tileMap;
-	Game::GameState Game::currentState;
-	vector<Collider*> Game::cols;
-	//moves stuff when the tilemap moves
-	vector<Moveable*> Game::moveablesTile;
-	//moves stuff when player moves
-	vector<Moveable*> Game::moveablesPlayer;
+	static Game* gs_Game = nullptr;
+
+	Game::Game()
+	{
+		gs_Game = this;
+
+	}
+
+	Game& Game::Get()
+	{
+		return *gs_Game;
+	}
 
 	void Game::Init()
 	{
@@ -24,25 +28,25 @@ namespace Tmpl8
 		currentState = mainMenu;
 #endif
 #ifdef _DEBUG
-		currentState = game;
+		currentState = GameState::game;
 #endif
 
 		AllocateMemory();
 
 
 		AddInstancesToUpdates();
-	}
+}
 	void Game::AllocateMemory()
 	{
 		//reset the score
 		score.init();
 
-		tileMap = new Tilemap();
 
+		tileMap.Init();
 		player = new Player(new Sprite(new Surface("assets/player.png"), 32),
 			vec2(START_POS),
 			Collider(vec2(COL_MIN), vec2(COL_MAX)),
-			tileMap->GetCol(),
+			tileMap.GetCol(),
 			100);
 
 		cursor = (new FollowCursor(new Sprite(new Surface("assets/OriginalAssets/target.tga"), 1)));
@@ -64,12 +68,12 @@ namespace Tmpl8
 		RemoveAllUpdateables();
 		AllocateMemory();
 		AddInstancesToUpdates();
-		ChangeGameState(mainMenu);
+		ChangeGameState(GameState::mainMenu);
 	}
 	void Game::RemoveAllUpdateables()
 	{
 
-		cols.clear();
+		colliders.clear();
 		moveablesTile.clear();
 		updateables.clear();
 		renderables.clear();
@@ -84,8 +88,8 @@ namespace Tmpl8
 		updateablesUI.push_back(exitButton);
 		renderablesUI.push_back(exitButton);
 
-		updateables.push_back(tileMap);
-		renderables.push_back(tileMap);
+		updateables.push_back(&tileMap);
+		renderables.push_back(&tileMap);
 
 
 		updateables.push_back(enemySpawner);
@@ -109,10 +113,8 @@ namespace Tmpl8
 		delete playButton;
 		delete exitButton;
 
-		delete tileMovement;
 		delete enemySpawner;
 		delete player;
-		delete tileMap;
 		delete cursor;
 		delete projectileDetection;
 
@@ -126,7 +128,7 @@ namespace Tmpl8
 
 		switch (currentState)
 		{
-		case(game):
+		case GameState::game:
 			projectileDetection->Update(deltaTime);
 
 			//movement offset
@@ -134,13 +136,11 @@ namespace Tmpl8
 				updateables[i]->Update(deltaTime);
 			//update the offset to the other entities
 			for (int i = 0; i < moveablesTile.size(); i++) {
-				moveablesTile[i]->Translation(tileMap->GetOffset());
+				moveablesTile[i]->Translation(tileMap.GetOffset());
 			}
-			for (int i = 0; i < moveablesPlayer.size(); i++) {
-				moveablesPlayer[i]->Translation(player->GetOffset());
-			}
+
 			//reset the offsets
-			tileMap->ResetOffset();
+			tileMap.ResetOffset();
 			player->ResetOffset();
 			//shooting
 			if (player->GetMoveable()->CanRotate())
@@ -151,7 +151,7 @@ namespace Tmpl8
 				renderables[i]->Render(screen);
 			screen->Print(std::to_string(score.getTotal()).c_str(), ScreenWidth - 30, 20, 0x00FF00);
 			break;
-		case(mainMenu):
+		case GameState::mainMenu:
 			//update main menu stuff;
 			for (int i = 0; i < renderablesUI.size(); i++)
 				renderablesUI[i]->Render(screen);
@@ -160,14 +160,14 @@ namespace Tmpl8
 				updateablesUI[i]->Update(deltaTime);
 
 			break;
-		case(paused):
+		case GameState::paused:
 			//pause stuff menu
 			for (int i = 0; i < renderablesUI.size(); i++)
 				renderablesUI[i]->Render(screen);
 			for (int i = 0; i < updateablesUI.size(); i++)
 				updateablesUI[i]->Update(deltaTime);
 			break;
-		case(reset):
+		case GameState::reset:
 			ResetGame();
 			break;
 		default:
@@ -192,14 +192,14 @@ namespace Tmpl8
 		cursor->ChangePosition(x, y);
 		switch (currentState)
 		{
-		case game:
+		case GameState::game:
 
 			player->Rotate(x, y);
 			break;
-		case paused:
+		case GameState::paused:
 			//check buttons only if the mouse is moving
 			CheckButtons();
-		case mainMenu:
+		case GameState::mainMenu:
 			//check buttons only if the mouse is moving
 			CheckButtons();
 		}
@@ -269,8 +269,8 @@ namespace Tmpl8
 			player->GetSpawner()->ChangeFireSpeed(-FIRE_SPEED_CHANGE);
 			break;
 		case SDL_SCANCODE_ESCAPE:
-			if (currentState == game) {
-				ChangeGameState(paused);
+			if (currentState == GameState::game) {
+				ChangeGameState(GameState::paused);
 				//reset button sprites
 				playButton->Init();
 				exitButton->Init();
@@ -288,19 +288,19 @@ namespace Tmpl8
 	}
 	void Game::AddCollider(Collider* col)
 	{
-		cols.push_back(col);
+		colliders.push_back(col);
 	}
-	void Game::AddMoveable(Moveable* col, vector<Moveable*>* vec)
+	void Game::AddMoveable(Moveable* col)
 	{
-		vec->push_back(col);
+		moveablesTile.push_back(col);
 	}
-	void Game::RemoveMoveable(Moveable* col, vector<Moveable*>* vec)
+	void Game::RemoveMoveable(Moveable* col)
 	{
-		vec->erase(remove(vec->begin(), vec->end(), col), vec->end());
+		moveablesTile.erase(remove(moveablesTile.begin(), moveablesTile.end(), col), moveablesTile.end());
 	}
 	void Game::RemoveCollider(Collider* col)
 	{
-		cols.erase(remove(cols.begin(), cols.end(), col), cols.end());
+		colliders.erase(remove(colliders.begin(), colliders.end(), col), colliders.end());
 
 	}
 };

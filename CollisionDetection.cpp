@@ -1,6 +1,7 @@
 #include "CollisionDetection.h"
 #include "game.h"
 using namespace std;
+using namespace Tmpl8;
 CollisionDetection::CollisionDetection()
 {
 	timer = new Timer(this, .05f, true);
@@ -13,10 +14,10 @@ CollisionDetection::~CollisionDetection()
 	delete timer;
 }
 
-
-bool CompareXPositions(Collider* a, Collider* b) {
-	return a->pos->x < b->pos->x;
-}
+//this is what the lambda function does below
+//bool CompareXPositions(Collider* a, Collider* b) {
+//	return a->pos->x < b->pos->x;
+//}
 void CollisionDetection::DetectCollisions()
 {
 
@@ -25,13 +26,13 @@ void CollisionDetection::DetectCollisions()
 	//add enemies and projectiles
 
 	//sort on x axis
-	if (Tmpl8::Game::cols.size() == 0)
+	if (Game::Get().colliders.size() == 0)
 		return;
-	sort(Tmpl8::Game::cols.begin(), Tmpl8::Game::cols.end(), CompareXPositions);
+	sort(Game::Get().colliders.begin(), Game::Get().colliders.end(), [](const Collider* a, const Collider* b) { return a->pos->x < b->pos->x; });
 
-	for (int i = 0; i < Tmpl8::Game::cols.size(); i++)
+	for (int i = 0; i < Game::Get().Tmpl8::Game::colliders.size(); i++)
 	{
-		Collider* a = Tmpl8::Game::cols[i];
+		Collider* a = Game::Get().colliders[i];
 
 		for (int j = 0; j < activeIntervals.size(); j++) {
 			//possible collision

@@ -1,7 +1,8 @@
 #include "ExitButton.h"
 #include "game.h"
 #include "SDL.h"
-ExitButton::ExitButton(Tmpl8::Sprite* sprite, Tmpl8::vec2 pos, Collider* cursor,  Tmpl8::Sprite* pressed) :
+using namespace Tmpl8;
+ExitButton::ExitButton(Sprite* sprite, vec2 pos, Collider* cursor, Sprite* pressed) :
 	Button(sprite, pos, cursor, pressed)
 {
 }
@@ -20,7 +21,7 @@ void ExitButton::ChangeSprite()
 void ExitButton::Update(float deltaTime)
 {
 	Button::Update(deltaTime);
-	if (isHovering && Tmpl8::Game::isPressingLeftMouse)
+	if (isHovering && Game::Get().isPressingLeftMouse)
 	{
 		SDL_Event quit;
 		quit.type = SDL_QUIT;
@@ -29,7 +30,7 @@ void ExitButton::Update(float deltaTime)
 	}
 }
 
-void ExitButton::Render(Tmpl8::Surface* screen)
+void ExitButton::Render(Surface* screen)
 {
 	Button::Render(screen);
 }

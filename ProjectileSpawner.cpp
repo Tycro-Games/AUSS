@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "game.h"
+using namespace Tmpl8;
 ProjectileSpawner::ProjectileSpawner(Tmpl8::vec2* pos, Tmpl8::vec2 offset, Tmpl8::vec2* dir, Tmpl8::Sprite* tospawn, Tmpl8::Sprite* explosion)
 	:Spawner(pos, explosion),
 	dir(dir),
@@ -35,8 +36,8 @@ void ProjectileSpawner::ChangeFireSpeed(float speed) {
 }
 void ProjectileSpawner::AddProjectileToPool(Projectile* entity)
 {
-	Tmpl8::Game::RemoveMoveable(entity->getMoveable());
-	Tmpl8::Game::RemoveCollider(entity->getColl());
+	Game::Get().RemoveMoveable(entity->getMoveable());
+	Game::Get().RemoveCollider(entity->getColl());
 
 	entity->SetActive(false);
 	poolOfProjectiles.AddElement(entity);
@@ -68,8 +69,8 @@ void ProjectileSpawner::SpawnProjectiles()
 
 	Tmpl8::vec2 randomDir = GetDirDeviation();
 	projectile->Init(PosDir{ (*pos) + (*dir + randomDir).normalized() * OFFSET_MULTIPLIER, (*dir + randomDir).normalized() });
-	Tmpl8::Game::AddCollider(projectile->getColl());
-	Tmpl8::Game::AddMoveable(projectile->getMoveable());
+	Game::Get().AddCollider(projectile->getColl());
+	Game::Get().AddMoveable(projectile->getMoveable());
 }
 
 void ProjectileSpawner::setFlag(bool fire)

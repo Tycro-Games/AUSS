@@ -3,8 +3,8 @@
 #include "game.h"
 
 #include <iostream>
-
-MoveablePlayer::MoveablePlayer(Tmpl8::vec2* pos, Collider* col, Collider* tileMapCol, float speed, float DashSpeed) :
+using namespace Tmpl8;
+MoveablePlayer::MoveablePlayer(vec2* pos, Collider* col, Collider* tileMapCol, float speed, float DashSpeed) :
 	Moveable(pos, col, speed),
 	dashTimer(Timer()),
 	cooldownTimer(Timer()),
@@ -120,7 +120,7 @@ void MoveablePlayer::Update(float deltaTime)
 	dashTimer.Update(deltaTime);
 	cooldownTimer.Update(deltaTime);
 
-	Tmpl8::vec2 nextPos = { 0 };
+	vec2 nextPos = { 0 };
 	//no movement when dashing
 
 	if (up) {
@@ -163,7 +163,7 @@ void MoveablePlayer::Update(float deltaTime)
 	}
 
 	//tile check
-	Tmpl8::vec2 playerPos = *pos;
+	vec2 playerPos = *pos;
 	Collider playerCol = *col;
 
 
@@ -172,7 +172,7 @@ void MoveablePlayer::Update(float deltaTime)
 
 	playerPos += nextPos * speed * deltaTime;
 	//tilemap
-	Tmpl8::vec2 tilemapPos = *tileMapCol->pos;
+	vec2 tilemapPos = *tileMapCol->pos;
 	Collider c = *tileMapCol;
 	tilemapPos += nextPos * (-speed) * deltaTime;
 	if (CheckPositionForCollisions(playerPos, playerCol)) {
@@ -180,16 +180,16 @@ void MoveablePlayer::Update(float deltaTime)
 	}
 	//moving diagonally and hitting an obstacle
 	else if (nextPos.x != 0 && nextPos.y != 0) {
-		if (CheckPositionForCollisions((*pos) + Tmpl8::vec2(0, playerPosOnY), playerCol)) {
-			MoveTileOrPlayer((*c.pos) - Tmpl8::vec2(0, playerPosOnY), c, (*pos) + Tmpl8::vec2(0, playerPosOnY));
+		if (CheckPositionForCollisions((*pos) + vec2(0, playerPosOnY), playerCol)) {
+			MoveTileOrPlayer((*c.pos) - vec2(0, playerPosOnY), c, (*pos) + vec2(0, playerPosOnY));
 		}
-		else if (CheckPositionForCollisions((*pos) + Tmpl8::vec2(playerPosOnX, 0), playerCol)) {
-			MoveTileOrPlayer((*c.pos) - Tmpl8::vec2(playerPosOnX, 0), c, (*pos) + Tmpl8::vec2(playerPosOnX, 0));
+		else if (CheckPositionForCollisions((*pos) + vec2(playerPosOnX, 0), playerCol)) {
+			MoveTileOrPlayer((*c.pos) - vec2(playerPosOnX, 0), c, (*pos) + vec2(playerPosOnX, 0));
 		}
 	}
 }
 
-void MoveablePlayer::MoveTileOrPlayer(Tmpl8::vec2& tilemapPos, Collider& c, const Tmpl8::vec2& playerPos)
+void MoveablePlayer::MoveTileOrPlayer(vec2& tilemapPos, Collider& c, const vec2& playerPos)
 {
 	//move tilemap if it does not hit the bounds
 	if (Collider::TileMapInGameScreen(tilemapPos, c)) {
@@ -211,21 +211,15 @@ void MoveablePlayer::MoveTileOrPlayer(Tmpl8::vec2& tilemapPos, Collider& c, cons
 
 
 
-bool MoveablePlayer::CheckPositionForCollisions(const Tmpl8::vec2& playerPos, Collider& playerCol, Collider& obs)
+bool MoveablePlayer::CheckPositionForCollisions(const vec2& playerPos, Collider& playerCol)
 {
-	return Tmpl8::Game::tileMap->IsFree(playerPos.x + playerCol.min.x, playerPos.y + playerCol.min.y, obs) &&
-		Tmpl8::Game::tileMap->IsFree(playerPos.x + playerCol.max.x, playerPos.y + playerCol.min.y, obs) &&
-		Tmpl8::Game::tileMap->IsFree(playerPos.x + playerCol.min.x, playerPos.y + playerCol.max.y, obs) &&
-		Tmpl8::Game::tileMap->IsFree(playerPos.x + playerCol.max.x, playerPos.y + playerCol.max.y, obs);
+	return Game::Get().tileMap.IsFree(playerPos.x + playerCol.min.x, playerPos.y + playerCol.min.y) &&
+		Game::Get().tileMap.IsFree(playerPos.x + playerCol.max.x, playerPos.y + playerCol.min.y) &&
+		Game::Get().tileMap.IsFree(playerPos.x + playerCol.min.x, playerPos.y + playerCol.max.y) &&
+		Game::Get().tileMap.IsFree(playerPos.x + playerCol.max.x, playerPos.y + playerCol.max.y);
 }
-bool MoveablePlayer::CheckPositionForCollisions(const Tmpl8::vec2& playerPos, Collider& playerCol)
-{
-	return Tmpl8::Game::tileMap->IsFree(playerPos.x + playerCol.min.x, playerPos.y + playerCol.min.y) &&
-		Tmpl8::Game::tileMap->IsFree(playerPos.x + playerCol.max.x, playerPos.y + playerCol.min.y) &&
-		Tmpl8::Game::tileMap->IsFree(playerPos.x + playerCol.min.x, playerPos.y + playerCol.max.y) &&
-		Tmpl8::Game::tileMap->IsFree(playerPos.x + playerCol.max.x, playerPos.y + playerCol.max.y);
-}
-void MoveablePlayer::SetDashPos(Tmpl8::vec2& nextPos)
+
+void MoveablePlayer::SetDashPos(::vec2& nextPos)
 {
 	linearT = timePassed / DASH_DURATION;
 	nextPos = dashDir;
@@ -252,42 +246,42 @@ void MoveablePlayer::MovePlayer()
 	}
 }
 
-void MoveablePlayer::ClampTheMovementVector(const Collider& c, const Tmpl8::vec2 newVec, Tmpl8::vec2& originalVec, bool& changed)
+void MoveablePlayer::ClampTheMovementVector(const Collider& c, const vec2 newVec, vec2& originalVec, bool& changed)
 {
 	//try to move the player only on one axis
-	Tmpl8::vec2 nextPos = (newVec - originalVec);
+	::vec2 nextPos = (newVec - originalVec);
 	if (CheckVecForOneDir(nextPos))
 		return;
-	Tmpl8::vec2 clampedOnX = Tmpl8::vec2(originalVec.x + nextPos.x / 2, originalVec.y);
-	Tmpl8::vec2 clampedOnY = Tmpl8::vec2(originalVec.x, originalVec.y + nextPos.y / 2);
+	::vec2 clampedOnX = vec2(originalVec.x + nextPos.x / 2, originalVec.y);
+	vec2 clampedOnY = vec2(originalVec.x, originalVec.y + nextPos.y / 2);
 	if (Collider::TileMapInGameScreen(clampedOnX, c))
 		originalVec = clampedOnX, changed = true;
 	else if (Collider::TileMapInGameScreen(clampedOnY, c))
 		originalVec = clampedOnY, changed = true;
 }
-bool MoveablePlayer::CheckVecForOneDir(Tmpl8::vec2& nextPos)
+bool MoveablePlayer::CheckVecForOneDir(vec2& nextPos)
 {
 
 	return nextPos.x == 0 || nextPos.y == 0;
 
 
 }
-void MoveablePlayer::ClampTheMovementVector(const Collider& c, const Tmpl8::vec2 newVec, Tmpl8::vec2& originalVec)
+void MoveablePlayer::ClampTheMovementVector(const Collider& c, const vec2 newVec, vec2& originalVec)
 {
 	//try to move the player only on one axis
-	Tmpl8::vec2 nextPos = newVec - originalVec;
+	vec2 nextPos = newVec - originalVec;
 
 	if (CheckVecForOneDir(nextPos))
 		return;
-	Tmpl8::vec2 clampedOnX;
-	Tmpl8::vec2 clampedOnY;
+	vec2 clampedOnX;
+	vec2 clampedOnY;
 	if (tileDiagonalMoved) {
-		clampedOnX = Tmpl8::vec2(originalVec.x + nextPos.x / 2, originalVec.y);
-		clampedOnY = Tmpl8::vec2(originalVec.x, originalVec.y + nextPos.y / 2);
+		clampedOnX = vec2(originalVec.x + nextPos.x / 2, originalVec.y);
+		clampedOnY = vec2(originalVec.x, originalVec.y + nextPos.y / 2);
 	}
 	else {
-		clampedOnX = Tmpl8::vec2(originalVec.x + nextPos.x, originalVec.y);
-		clampedOnY = Tmpl8::vec2(originalVec.x, originalVec.y + nextPos.y);
+		clampedOnX = vec2(originalVec.x + nextPos.x, originalVec.y);
+		clampedOnY = vec2(originalVec.x, originalVec.y + nextPos.y);
 	}
 	if (Collider::TileMapInGameScreen(clampedOnX, c))
 		originalVec = clampedOnX;

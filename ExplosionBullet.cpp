@@ -1,8 +1,8 @@
 #include "ExplosionBullet.h"
 
 #include "game.h"
-
-ExplosionBullet::ExplosionBullet(Tmpl8::Sprite* sprite, Spawner* spawner, Tmpl8::vec2 pos) :
+using namespace Tmpl8;
+ExplosionBullet::ExplosionBullet(Sprite* sprite, Spawner* spawner, vec2 pos) :
 	Entity(sprite),
 	spawner(spawner),
 	timer(new Timer())
@@ -20,13 +20,13 @@ ExplosionBullet::~ExplosionBullet()
 	delete move;
 }
 
-void ExplosionBullet::Init(Tmpl8::vec2 pos)
+void ExplosionBullet::Init(vec2 pos)
 {
 	SetActive(true);
 	frame = 0;
 	this->pos = pos;
 	timer->Init(this, TotalAnimation);
-	Tmpl8::Game::AddMoveable(move);
+	Game::Get().AddMoveable(move);
 }
 
 void ExplosionBullet::Update(float deltaTime)
@@ -44,7 +44,7 @@ void ExplosionBullet::Update(float deltaTime)
 
 }
 
-void ExplosionBullet::Render(Tmpl8::Surface* screen)
+void ExplosionBullet::Render(Surface* screen)
 {
 	if (!getRenderable())
 		return;
@@ -58,5 +58,5 @@ void ExplosionBullet::Render(Tmpl8::Surface* screen)
 void ExplosionBullet::Call()
 {
 	spawner->AddExplosionToPool(this);
-	Tmpl8::Game::RemoveMoveable(move);
+	Game::Get().RemoveMoveable(move);
 }
