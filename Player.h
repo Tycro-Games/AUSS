@@ -43,7 +43,6 @@ private:
 	Collider col;
 	ProjectileSpawner* spawner;
 	Timer* timer;
-	Tilemap* map;
 	//consts
 	const float TIME_TO_HIT = 2.0f;
 

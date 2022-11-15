@@ -50,15 +50,15 @@ namespace Tmpl8 {
 		static void ChangeGameState(GameState state);
 		static GameState currentState;
 
-		static dynamic_array<Moveable*> moveablesTile;
-		static dynamic_array<Moveable*> moveablesPlayer;
+		static std::vector<Moveable*> moveablesTile;
+		static std::vector<Moveable*> moveablesPlayer;
 		static Tilemap* tileMap;
 		//collision detection
-		static dynamic_array<Collider*> cols;
+		static std::vector<Collider*> cols;
 		static void AddCollider(Collider* col);
-		static void AddMoveable(Moveable* col, dynamic_array<Moveable*>* vec = &moveablesTile);
+		static void AddMoveable(Moveable* col, std::vector<Moveable*>* vec = &moveablesTile);
 		static void RemoveCollider(Collider* col);
-		static void RemoveMoveable(Moveable* col, dynamic_array<Moveable*>* vec = &moveablesTile);
+		static void RemoveMoveable(Moveable* col, std::vector<Moveable*>* vec = &moveablesTile);
 	private:
 		Surface* screen;
 
@@ -66,8 +66,8 @@ namespace Tmpl8 {
 		FollowCursor* cursor;
 		Button* playButton;
 		Button* exitButton;
-		dynamic_array <Updateable*> updateablesUI;
-		dynamic_array <Renderable*> renderablesUI;
+		std::vector <Updateable*> updateablesUI;
+		std::vector <Renderable*> renderablesUI;
 		//actual game
 		Player* player;
 		Score score;
@@ -75,8 +75,8 @@ namespace Tmpl8 {
 		CollisionDetection* projectileDetection;
 		MoveablePlayer* tileMovement;
 		//update components
-		dynamic_array<Updateable*> updateables;
-		dynamic_array<Renderable*> renderables;
+		std::vector<Updateable*> updateables;
+		std::vector<Renderable*> renderables;
 
 		//consts
 		const float FIRE_SPEED_CHANGE = .1f;

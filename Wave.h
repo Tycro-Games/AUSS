@@ -1,5 +1,5 @@
 #pragma once
-#include "dynamic_array.h"
+#include <vector>
 enum  EnemyTypes
 {
 	Hoarder,
@@ -10,7 +10,7 @@ struct Wave
 {
 
 	int weight = 0;
-	dynamic_array<EnemyTypes> enemiesInWave;
+	std::vector<EnemyTypes> enemiesInWave;
 
 
 };

@@ -89,7 +89,7 @@ void ProjectileSpawner::Update(float deltaTime)
 	else
 		currentTime += deltaTime;
 
-	for (int i = 0; i < updateObjects.getCount(); i++)
+	for (int i = 0; i < updateObjects.size(); i++)
 		updateObjects[i]->Update(deltaTime);
 
 }
@@ -104,7 +104,7 @@ void ProjectileSpawner::Render(Tmpl8::Surface* screen)
 
 	screen->Print(inactiveB.c_str(), 10, 20, 0x00FF0000);
 
-	auto total = std::string("Objects active:" + std::to_string(updateObjects.getCount() - poolOfProjectiles.getCount() - poolOfExplosions.getCount()));
+	auto total = std::string("Objects active:" + std::to_string(updateObjects.size() - poolOfProjectiles.getCount() - poolOfExplosions.getCount()));
 
 	screen->Print(total.c_str(), 10, 30, 0x00FF0000);
 	auto firerate = std::string("Firerate: " + std::to_string(fireRate));
@@ -113,7 +113,7 @@ void ProjectileSpawner::Render(Tmpl8::Surface* screen)
 
 	screen->Print("Use up arrow and down arrow to adjust the firerate", 10, 70, 0x00FF0000);
 	screen->Print("Use space bar to dash", 10, 80, 0x00FF0000);
-	for (int i = 0; i < updateObjects.getCount(); i++)
+	for (int i = 0; i < updateObjects.size(); i++)
 		updateObjects[i]->Render(screen);
 
 }

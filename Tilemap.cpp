@@ -102,7 +102,7 @@ void Tilemap::Render(Tmpl8::Surface* screen)
 		}
 	//debug
 
-	for (int i = 0; i < blockingTiles.getCount(); i++) {
+	for (int i = 0; i < blockingTiles.size(); i++) {
 		Collider c = *blockingTiles[i]->getColl();
 		screen->Box(static_cast<int>(c.min.x + c.pos->x), static_cast<int>(c.min.y + c.pos->y), static_cast<int>(c.max.x + c.pos->x), static_cast<int>(c.max.y + c.pos->y), 0xFF0000);
 	}
@@ -113,7 +113,7 @@ void Tilemap::Render(Tmpl8::Surface* screen)
 
 void Tilemap::Update(float deltaTime)
 {
-	for (int i = 0; i < blockingTiles.getCount(); i++) {
+	for (int i = 0; i < blockingTiles.size(); i++) {
 
 		blockingTiles[i]->Update(deltaTime);
 	}

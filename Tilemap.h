@@ -6,7 +6,7 @@
 #include "Obstacle.h"
 #include "ParallaxProp.h"
 #include "Followable.h"
-#include "dynamic_array.h"
+#include <vector>
 
 
 struct Tile
@@ -135,7 +135,7 @@ private:
 	const int OFFSET_Y = TILE_SIZE * Y_TILES / 2;
 
 	Collider* col;
-	dynamic_array<Obstacle*> blockingTiles;
+	std::vector<Obstacle*> blockingTiles;
 
 	Tile tiles[X_TILES * Y_TILES] = {
 	  CLT,CMT,CMT,CMT,CMT,CMT,CMT,CMT,CMT,CMT,CMT,CMT,CMT,CMT,CMT,CMT,CMT,CMT,CMT,CMT,CMT,CMT,CMT,CRT,

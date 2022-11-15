@@ -1,5 +1,5 @@
 #pragma once
-#include "dynamic_array.h"
+#include <vector>
 template <class T>
 class pool
 {
@@ -11,6 +11,6 @@ public:
 	T& PopElement();
 	void AddElement(T element);
 private:
-	dynamic_array<T> poolOf;
+	std::vector<T> poolOf;
 };
 

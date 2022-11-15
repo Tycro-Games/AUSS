@@ -17,7 +17,7 @@ pool<T>::~pool()
 template<class T>
 size_t pool<T>::getCount()
 {
-	return poolOf.getCount();
+	return poolOf.size();
 }
 
 
@@ -25,7 +25,7 @@ template<class T>
 T& pool<T>::PopElement()
 {
 
-	T& elem = poolOf.get(poolOf.getCount() - 1);
+	T& elem = poolOf[poolOf.size() - 1];
 	poolOf.pop_back();
 	return elem;
 }

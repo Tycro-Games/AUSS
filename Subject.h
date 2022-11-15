@@ -1,6 +1,6 @@
 #pragma once
 //also based on https://gameprogrammingpatterns.com/observer.html
-#include "dynamic_array.h"
+#include <vector>
 #include "Observer.h"
 class Subject
 {
@@ -10,6 +10,6 @@ public:
 protected:
 	void notify(int points, PointTypes event);
 private:
-	dynamic_array<Observer*> observers;
+	std::vector<Observer*> observers;
 };
 

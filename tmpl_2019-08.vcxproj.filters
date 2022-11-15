@@ -29,9 +29,6 @@
     <ClCompile Include="MathFunctions.cpp">
       <Filter>Math</Filter>
     </ClCompile>
-    <ClCompile Include="dynamic_array.cpp">
-      <Filter>DataStructures</Filter>
-    </ClCompile>
     <ClCompile Include="FollowCursor.cpp">
       <Filter>Components</Filter>
     </ClCompile>
@@ -119,6 +116,9 @@
     <ClCompile Include="EnemyRunner.cpp">
       <Filter>Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="dynamic_array.cpp">
+      <Filter>DataStructures</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -127,9 +127,6 @@
     </ClInclude>
     <ClInclude Include="template.h">
       <Filter>template code</Filter>
-    </ClInclude>
-    <ClInclude Include="dynamic_array.h">
-      <Filter>DataStructures</Filter>
     </ClInclude>
     <ClInclude Include="Updateable.h">
       <Filter>Updating</Filter>
@@ -262,6 +259,9 @@
     </ClInclude>
     <ClInclude Include="Wave.h">
       <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="dynamic_array.h">
+      <Filter>DataStructures</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

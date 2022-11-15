@@ -1,5 +1,7 @@
 #include "MergeSort.h"
 #include "Projectile.h"
+
+using namespace std;
 template<class T>
 MergeSort<T>::MergeSort() :
 	list()
@@ -11,7 +13,7 @@ MergeSort<T>::~MergeSort()
 {
 }
 template <class T>
-void MergeSort<T>::Init(dynamic_array<T>* lis) {
+void MergeSort<T>::Init(vector<T>* lis) {
 	list = lis;
 }
 template<class T>
@@ -31,7 +33,7 @@ template<class T>
 void MergeSort<T>::Merge(size_t l, size_t mid, size_t h)
 {
 	size_t i = l, j = mid + 1;
-	dynamic_array<T> A(16);
+	vector<T> A(16);
 	while (i <= mid && j <= h) {
 		if (list->get(i) < list->get(j))
 			A.push_back(list->get(i++));
@@ -61,7 +63,7 @@ template<>
 void MergeSort<Collider*>::Merge(size_t l, size_t mid, size_t h)
 {
 	size_t i = l, j = mid + 1;
-	dynamic_array<Collider*> A(16);
+	vector<Collider*> A(16);
 	while (i <= mid && j <= h) {
 		if (list->get(i)->pos->x < list->get(j)->pos->x)
 			A.push_back(list->get(i++));

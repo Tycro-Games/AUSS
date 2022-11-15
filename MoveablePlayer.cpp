@@ -136,7 +136,7 @@ void MoveablePlayer::Update(float deltaTime)
 	if (left) {
 		nextPos.x--;
 	}
-	//if the player goes on a diagonal the dynamic_array will not have a maginitude of 1
+	//if the player goes on a diagonal the vector will not have a maginitude of 1
 	if (nextPos.length() > 0)
 		nextPos.normalize();
 

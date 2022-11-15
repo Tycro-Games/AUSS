@@ -6,6 +6,7 @@
 #include "RotationVar.h"
 #include "PosDir.h"
 #include "Rotator.h"
+
 class ProjectileSpawner;
 class Projectile :public Callable, public Entity
 {

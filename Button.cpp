@@ -10,7 +10,6 @@ Button::Button(Tmpl8::Sprite* sprite, Tmpl8::vec2 pos, Collider* cursor, Tmpl8::
 {
 
 }
-
 Button::~Button()
 {
 	delete col;
@@ -39,7 +38,7 @@ void Button::CheckHovering()
 
 void Button::Update(float deltaTime)
 {
-	    //maybe some animation?
+	//maybe some animation?
 }
 
 

@@ -17,7 +17,7 @@ public:
 	void CreateMoreEnemies(EnemyTypes enemy);
 	void PlayerTakesDamage(Enemy* enemy);
 	void SpawnCurrentWave();
-	void CheckThePossibleEnemies(size_t weight, dynamic_array<EnemyTypes>& possibleEnemies);
+	void CheckThePossibleEnemies(size_t weight, std::vector<EnemyTypes>& possibleEnemies);
 	Enemy* SpawnEnemy(Tmpl8::vec2, EnemyTypes enemies);
 	// Inherited via Renderable
 	virtual void Render(Tmpl8::Surface* screen) override;
@@ -25,7 +25,6 @@ public:
 	virtual void Update(float deltaTime) override;
 
 
-	bool IsEnemy(Collider* col);
 	bool EnemyWaveSpawner::IsPoolEmpty(pool<Enemy*>& pool);
 	Tmpl8::vec2 EnemyWaveSpawner::GetPlayerPos();
 	EnemyTypes ConvertToEnum(std::string str);
@@ -45,9 +44,9 @@ private:
 	//Enemy Runner
 	pool<Enemy*> poolOfRunners;
 
-	dynamic_array<Collider*> activeColliders;
-	dynamic_array<EnemySpawner*> enemySpawners;
-	dynamic_array<EnemyTypes>enemiesToSpawn;
+	std::vector<Collider*> activeColliders;
+	std::vector<EnemySpawner*> enemySpawners;
+	std::vector<EnemyTypes>enemiesToSpawn;
 
 
 	Wave waves[10000];

@@ -1,12 +1,12 @@
 #pragma once
 //based on this template https://github.com/jwasham/coding-interview-university#data-structures
 template <class T>
-class dynamic_array {
+class vector {
 public:
-	dynamic_array();
+	vector();
 
-	~dynamic_array();
-	dynamic_array(size_t size);
+	~vector();
+	vector(size_t size);
 	T& operator[](size_t);
 
 

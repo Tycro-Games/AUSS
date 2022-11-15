@@ -1,5 +1,5 @@
 #include "QuickSort.h"
-
+using namespace std;
 template <class T>
 
 void QuickSort<T>::Sort(int l, int h)
@@ -13,7 +13,7 @@ void QuickSort<T>::Sort(int l, int h)
 }
 template <class T>
 
-QuickSort<T>::QuickSort(dynamic_array<T>* list) :
+QuickSort<T>::QuickSort(vector<T>* list) :
 	list(list)
 {
 

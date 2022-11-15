@@ -10,7 +10,6 @@ Player::Player(Tmpl8::Sprite* sprite, Tmpl8::vec2 pos, Collider co, Collider* ti
 	Being(sprite, pos, hp),
 	startingPos(pos),
 	col(Collider(co.min, co.max, &startingPos)),
-	map(map),
 	tilemapCollider(tileMapCol),
 	projectileSprite(new Tmpl8::Sprite(new Tmpl8::Surface("assets/OriginalAssets/phaser.tga"), 16))
 

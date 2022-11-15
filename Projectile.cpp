@@ -94,6 +94,7 @@ void Projectile::Call()
 
 void Projectile::ResetBullet()
 {
+	//trigger the enemy flag for damaging flag
 	if (col->collision)
 		if (col->collision->type == Collider::Enemy)
 			col->collision->toDeactivate = true;

@@ -1,6 +1,6 @@
 #include "CollisionDetection.h"
 #include "game.h"
-
+using namespace std;
 CollisionDetection::CollisionDetection()
 {
 	timer = new Timer(this, .05f, true);
@@ -14,27 +14,28 @@ CollisionDetection::~CollisionDetection()
 }
 
 
-
+bool CompareXPositions(Collider* a, Collider* b) {
+	return a->pos->x < b->pos->x;
+}
 void CollisionDetection::DetectCollisions()
 {
 
-	dynamic_array <Collider*> allPairs;
-	dynamic_array <Collider*> activeIntervals;
+	vector <Collider*> allPairs;
+	vector <Collider*> activeIntervals;
 	//add enemies and projectiles
 
 	//sort on x axis
-	if (Tmpl8::Game::cols.getCount() == 0)
+	if (Tmpl8::Game::cols.size() == 0)
 		return;
-	mergeSort.Init(&Tmpl8::Game::cols);
-	mergeSort.Sort(0, Tmpl8::Game::cols.getCount() - 1);
+	sort(Tmpl8::Game::cols.begin(), Tmpl8::Game::cols.end(), CompareXPositions);
 
-	for (int i = 0; i < Tmpl8::Game::cols.getCount(); i++)
+	for (int i = 0; i < Tmpl8::Game::cols.size(); i++)
 	{
-		Collider* a = Tmpl8::Game::cols.get(i);
+		Collider* a = Tmpl8::Game::cols[i];
 
-		for (int j = 0; j < activeIntervals.getCount(); j++) {
+		for (int j = 0; j < activeIntervals.size(); j++) {
 			//possible collision
-			Collider* b = activeIntervals.get(j);
+			Collider* b = activeIntervals[j];
 
 			if (Collider::CollidesX(a->At(*a->pos),
 				b->At(*b->pos)))
@@ -49,7 +50,7 @@ void CollisionDetection::DetectCollisions()
 			else {
 				//update the interval if no collision
 
-				activeIntervals.removeAtIndex(j);
+				activeIntervals.erase(activeIntervals.begin() + j);
 
 				j--;
 			}
@@ -57,7 +58,7 @@ void CollisionDetection::DetectCollisions()
 		activeIntervals.push_back(a);
 	}
 
-	for (int i = 0; i < allPairs.getCount(); i += 2) {
+	for (int i = 0; i < allPairs.size(); i += 2) {
 		//trigger the collision flags for the colliders
 		CheckProjectile(allPairs, i, i + 1);
 
@@ -66,7 +67,7 @@ void CollisionDetection::DetectCollisions()
 
 }
 
-void CollisionDetection::CheckProjectile(dynamic_array<Collider*>& allPairs, int i, int j)
+void CollisionDetection::CheckProjectile(vector<Collider*>& allPairs, int i, int j)
 {
 	if (allPairs[i]->type == Collider::Projectile) {
 		allPairs[i]->toDeactivate = true;

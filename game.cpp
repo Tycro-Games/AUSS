@@ -1,19 +1,22 @@
 #include "game.h"
-#include "surface.h"
 #include <iostream>
 #include <string>
+
+#include "surface.h"
 #include "template.h"
 
 #include "MathFunctions.h"
-#include "MergeSort.h"
+using namespace std;
 namespace Tmpl8
 {
 	bool Game::isPressingLeftMouse;
 	Tilemap* Game::tileMap;
 	Game::GameState Game::currentState;
-	dynamic_array<Collider*> Game::cols;
-	dynamic_array<Moveable*> Game::moveablesTile;
-	dynamic_array<Moveable*> Game::moveablesPlayer;
+	vector<Collider*> Game::cols;
+	//moves stuff when the tilemap moves
+	vector<Moveable*> Game::moveablesTile;
+	//moves stuff when player moves
+	vector<Moveable*> Game::moveablesPlayer;
 
 	void Game::Init()
 	{
@@ -66,12 +69,12 @@ namespace Tmpl8
 	void Game::RemoveAllUpdateables()
 	{
 
-		cols.removeAll();
-		moveablesTile.removeAll();
-		updateables.removeAll();
-		renderables.removeAll();
-		updateablesUI.removeAll();
-		renderablesUI.removeAll();
+		cols.clear();
+		moveablesTile.clear();
+		updateables.clear();
+		renderables.clear();
+		updateablesUI.clear();
+		renderablesUI.clear();
 	}
 	void Game::AddInstancesToUpdates()
 	{
@@ -127,13 +130,13 @@ namespace Tmpl8
 			projectileDetection->Update(deltaTime);
 
 			//movement offset
-			for (int i = 0; i < updateables.getCount(); i++)
+			for (int i = 0; i < updateables.size(); i++)
 				updateables[i]->Update(deltaTime);
 			//update the offset to the other entities
-			for (int i = 0; i < moveablesTile.getCount(); i++) {
+			for (int i = 0; i < moveablesTile.size(); i++) {
 				moveablesTile[i]->Translation(tileMap->GetOffset());
 			}
-			for (int i = 0; i < moveablesPlayer.getCount(); i++) {
+			for (int i = 0; i < moveablesPlayer.size(); i++) {
 				moveablesPlayer[i]->Translation(player->GetOffset());
 			}
 			//reset the offsets
@@ -144,24 +147,24 @@ namespace Tmpl8
 				player->Rotate(static_cast<int>(cursor->pos.x), static_cast<int>(cursor->pos.y));
 			player->Shoot(isPressingLeftMouse);
 			//rendering
-			for (int i = 0; i < renderables.getCount(); i++)
+			for (int i = 0; i < renderables.size(); i++)
 				renderables[i]->Render(screen);
 			screen->Print(std::to_string(score.getTotal()).c_str(), ScreenWidth - 30, 20, 0x00FF00);
 			break;
 		case(mainMenu):
 			//update main menu stuff;
-			for (int i = 0; i < renderablesUI.getCount(); i++)
+			for (int i = 0; i < renderablesUI.size(); i++)
 				renderablesUI[i]->Render(screen);
 
-			for (int i = 0; i < updateablesUI.getCount(); i++)
+			for (int i = 0; i < updateablesUI.size(); i++)
 				updateablesUI[i]->Update(deltaTime);
 
 			break;
 		case(paused):
 			//pause stuff menu
-			for (int i = 0; i < renderablesUI.getCount(); i++)
+			for (int i = 0; i < renderablesUI.size(); i++)
 				renderablesUI[i]->Render(screen);
-			for (int i = 0; i < updateablesUI.getCount(); i++)
+			for (int i = 0; i < updateablesUI.size(); i++)
 				updateablesUI[i]->Update(deltaTime);
 			break;
 		case(reset):
@@ -287,16 +290,17 @@ namespace Tmpl8
 	{
 		cols.push_back(col);
 	}
-	void Game::AddMoveable(Moveable* col, dynamic_array<Moveable*>* vec)
+	void Game::AddMoveable(Moveable* col, vector<Moveable*>* vec)
 	{
 		vec->push_back(col);
 	}
-	void Game::RemoveMoveable(Moveable* col, dynamic_array<Moveable*>* vec)
+	void Game::RemoveMoveable(Moveable* col, vector<Moveable*>* vec)
 	{
-		vec->remove(col);
+		vec->erase(remove(vec->begin(), vec->end(), col), vec->end());
 	}
 	void Game::RemoveCollider(Collider* col)
 	{
-		cols.remove(col);
+		cols.erase(remove(cols.begin(), cols.end(), col), cols.end());
+
 	}
 };
