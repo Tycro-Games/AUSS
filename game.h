@@ -2,8 +2,7 @@
 
 #include "Player.h"
 #include "Cursor.h"
-#include "Playbutton.h"
-#include "Exitbutton.h"
+#include "Button.h"
 #include "EnemyWaveSpawner.h"
 #include "CollisionDetection.h"
 #include "Tilemap.h"
@@ -35,7 +34,6 @@ namespace Tmpl8 {
 		void MouseUp(int button);
 		void MouseDown(int button);
 		void MouseMove(int x, int y);
-		void CheckButtons();
 		void KeyUp(SDL_Scancode key);
 		void KeyDown(SDL_Scancode key);
 
@@ -67,10 +65,8 @@ namespace Tmpl8 {
 
 		//MainMenu
 		Cursor cursor;
-		Button* playButton;
-		Button* exitButton;
-		std::vector <Updateable*> updateablesUI;
-		std::vector <Renderable*> renderablesUI;
+		Button playButton;
+		Button exitButton;
 		//actual game
 		Player* player;
 		Score score;

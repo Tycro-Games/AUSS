@@ -6,14 +6,22 @@
 #include "template.h"
 
 #include "MathFunctions.h"
+
 #include <SDL_events.h>
+#include <filesystem>
+#include <functional>
 using namespace std;
 namespace Tmpl8
 {
 	static Game* gs_Game = nullptr;
 
 	Game::Game() :
-		cursor(Cursor(new Sprite(new Surface("assets/OriginalAssets/target.tga"), 1)))
+		cursor(Cursor(new Sprite(new Surface("assets/OriginalAssets/target.tga"), 1))),
+		//passes functions as objects
+		playButton("assets/UI/Play_Idle.png", "assets/UI/Play_Pushed.png", vec2(ScreenWidth / 2, ScreenHeight / 2), std::bind(&Game::ResumeGame, this)),
+		exitButton("assets/UI/Cross_Idle.png", "assets/UI/Cross_Pushed.png", vec2(ScreenWidth / 2, ScreenHeight / 2 + 64), std::bind(&Game::ExitGame, this))
+
+
 	{
 		gs_Game = this;
 
@@ -53,13 +61,13 @@ namespace Tmpl8
 		//static spawner
 		enemySpawner = new EnemyWaveSpawner(player, new Sprite(new Surface("assets/OriginalAssets/smoke.tga"), 10));
 
-		playButton = new PlayButton(new Sprite(new Surface("assets/UI/Play_Idle.png"), 1), Tmpl8::vec2(ScreenWidth / 2, ScreenHeight / 2),
-			cursor.GetCollider(),
-			new Sprite(new Tmpl8::Surface("assets/UI/Play_Pushed.png"), 1));
+		/*	playButton = new PlayButton(new Sprite(new Surface("assets/UI/Play_Idle.png"), 1), Tmpl8::vec2(ScreenWidth / 2, ScreenHeight / 2),
+				cursor.GetCollider(),
+				new Sprite(new Tmpl8::Surface("assets/UI/Play_Pushed.png"), 1));
 
-		exitButton = new ExitButton(new Sprite(new Surface("assets/UI/Cross_Idle.png"), 1), Tmpl8::vec2(ScreenWidth / 2, ScreenHeight / 2 + 64),
-			cursor.GetCollider(),
-			new Sprite(new Tmpl8::Surface("assets/UI/Cross_Pushed.png"), 1));
+			exitButton = new ExitButton(new Sprite(new Surface("assets/UI/Cross_Idle.png"), 1), Tmpl8::vec2(ScreenWidth / 2, ScreenHeight / 2 + 64),
+				cursor.GetCollider(),
+				new Sprite(new Tmpl8::Surface("assets/UI/Cross_Pushed.png"), 1));*/
 	}
 	void Game::ResetGame()
 	{
@@ -77,16 +85,10 @@ namespace Tmpl8
 		moveablesTile.clear();
 		updateables.clear();
 		renderables.clear();
-		updateablesUI.clear();
-		renderablesUI.clear();
 	}
 	void Game::AddInstancesToUpdates()
 	{
-		updateablesUI.push_back(playButton);
-		renderablesUI.push_back(playButton);
 
-		updateablesUI.push_back(exitButton);
-		renderablesUI.push_back(exitButton);
 
 		updateables.push_back(&tileMap);
 		renderables.push_back(&tileMap);
@@ -110,8 +112,7 @@ namespace Tmpl8
 	}
 	void Game::Shutdown()
 	{
-		delete playButton;
-		delete exitButton;
+
 
 		delete enemySpawner;
 		delete player;
@@ -152,19 +153,10 @@ namespace Tmpl8
 			break;
 		case GameState::mainMenu:
 			//update main menu stuff;
-			for (int i = 0; i < renderablesUI.size(); i++)
-				renderablesUI[i]->Render(screen);
-
-			for (int i = 0; i < updateablesUI.size(); i++)
-				updateablesUI[i]->Update(deltaTime);
-
-			break;
 		case GameState::paused:
 			//pause stuff menu
-			for (int i = 0; i < renderablesUI.size(); i++)
-				renderablesUI[i]->Render(screen);
-			for (int i = 0; i < updateablesUI.size(); i++)
-				updateablesUI[i]->Update(deltaTime);
+			playButton.Render(screen);
+			exitButton.Render(screen);
 			break;
 		case GameState::reset:
 			ResetGame();
@@ -178,7 +170,14 @@ namespace Tmpl8
 
 	void Game::MouseUp(int button)
 	{
-
+		switch (currentState)
+		{
+		case GameState::mainMenu:
+		case GameState::paused:
+			playButton.OnMouseUp(button);
+			exitButton.OnMouseUp(button);
+			break;
+		}
 		isPressingLeftMouse = false;
 	}
 	void Game::MouseDown(int button)
@@ -196,18 +195,13 @@ namespace Tmpl8
 			player->Rotate(x, y);
 			break;
 		case GameState::paused:
-			//check buttons only if the mouse is moving
-			CheckButtons();
 		case GameState::mainMenu:
-			//check buttons only if the mouse is moving
-			CheckButtons();
+			playButton.OnMouseMoved(x, y);
+			exitButton.OnMouseMoved(x, y);
+			break;
 		}
 	}
-	void Game::CheckButtons()
-	{
-		playButton->ChangeSprite();
-		exitButton->ChangeSprite();
-	}
+
 	void Game::KeyUp(SDL_Scancode key)
 	{
 
@@ -270,11 +264,9 @@ namespace Tmpl8
 		case SDL_SCANCODE_ESCAPE:
 			if (currentState == GameState::game) {
 				ChangeGameState(GameState::paused);
-				//reset button sprites
-				playButton->Init();
-				exitButton->Init();
-				//check if the mouse is already hovering over them
-				CheckButtons();
+				//need update the cursor movement for the buttons
+				playButton.OnMouseMoved(static_cast<int>(cursor.pos.x), static_cast<int>(cursor.pos.y));
+				exitButton.OnMouseMoved(static_cast<int>(cursor.pos.x), static_cast<int>(cursor.pos.y));
 			}
 			break;
 		default:

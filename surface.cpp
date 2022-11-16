@@ -9,7 +9,7 @@
 
 namespace Tmpl8 {
 
-	void NotifyUser(char* s);
+	void NotifyUser(const char* s);
 	char Surface::s_Font[51][5][6];
 	bool Surface::fontInitialized = false;
 
@@ -34,7 +34,7 @@ namespace Tmpl8 {
 		m_Buffer = static_cast<Pixel*>(MALLOC64((unsigned int)a_Width * (unsigned int)a_Height * sizeof(Pixel)));
 	}
 
-	Surface::Surface(char* a_File)
+	Surface::Surface(const  char* a_File)
 	{
 		FILE* f = fopen(a_File, "rb");
 		if (!f)
@@ -48,7 +48,7 @@ namespace Tmpl8 {
 		LoadImage(a_File);
 	}
 
-	void Surface::LoadImage(char* a_File)
+	void Surface::LoadImage(const  char* a_File)
 	{
 		FREE_IMAGE_FORMAT fif = FIF_UNKNOWN;
 		fif = FreeImage_GetFileType(a_File, 0);
@@ -67,7 +67,7 @@ namespace Tmpl8 {
 			{
 				if (m_Pitch != 0)
 				{
-					unsigned char* line = FreeImage_GetScanLine(dib, m_Height - 1 - y);
+					unsigned const char* line = FreeImage_GetScanLine(dib, m_Height - 1 - y);
 					memcpy(m_Buffer + (y * m_Pitch), line, m_Width * sizeof(Pixel));
 				}
 			}
@@ -90,13 +90,13 @@ namespace Tmpl8 {
 		for (int i = 0; i < s; i++) m_Buffer[i] = a_Color;
 	}
 
-	void Surface::Centre(char* a_String, int y1, Pixel color)
+	void Surface::Centre(const char* a_String, int y1, Pixel color)
 	{
 		int x = (m_Width - (int)strlen(a_String) * 6) / 2;
 		Print(a_String, x, y1, color);
 	}
 
-	void Surface::Print(const char* a_String, int x1, int y1, Pixel color)
+	void Surface::Print(const  char* a_String, int x1, int y1, Pixel color)
 	{
 		if (!fontInitialized)
 		{
@@ -110,7 +110,7 @@ namespace Tmpl8 {
 			if ((a_String[i] >= 'A') && (a_String[i] <= 'Z')) pos = s_Transl[(unsigned short)(a_String[i] - ('A' - 'a'))];
 			else pos = s_Transl[(unsigned short)a_String[i]];
 			Pixel* a = t;
-			char* c = (char*)s_Font[pos];
+			const char* c = (const char*)s_Font[pos];
 			for (int v = 0; v < 5; v++, c++, a += m_Pitch)
 				for (int h = 0; h < 5; h++) if (*c++ == 'o') *(a + h) = color, * (a + h + m_Pitch) = 0;
 		}
@@ -265,7 +265,7 @@ namespace Tmpl8 {
 		}
 	}
 
-	void Surface::SetChar(int c, char* c1, char* c2, char* c3, char* c4, char* c5)
+	void Surface::SetChar(int c, const char* c1, const char* c2, const char* c3, const char* c4, const char* c5)
 	{
 		strcpy(s_Font[c][0], c1);
 		strcpy(s_Font[c][1], c2);
@@ -456,7 +456,7 @@ namespace Tmpl8 {
 		}
 	}
 
-	Font::Font(char* a_File, char* a_Chars)
+	Font::Font(const char* a_File, const char* a_Chars)
 	{
 		m_Surface = new Surface(a_File);
 		Pixel* b = m_Surface->GetBuffer();
@@ -499,7 +499,7 @@ namespace Tmpl8 {
 		delete m_Offset;
 	}
 
-	int Font::Width(char* a_Text)
+	int Font::Width(const char* a_Text)
 	{
 		int w = 0;
 		unsigned int i;
@@ -511,13 +511,13 @@ namespace Tmpl8 {
 		return w;
 	}
 
-	void Font::Centre(Surface* a_Target, char* a_Text, int a_Y)
+	void Font::Centre(Surface* a_Target, const char* a_Text, int a_Y)
 	{
 		int x = (a_Target->GetPitch() - Width(a_Text)) / 2;
 		Print(a_Target, a_Text, x, a_Y);
 	}
 
-	void Font::Print(Surface* a_Target, char* a_Text, int a_X, int a_Y, bool clip)
+	void Font::Print(Surface* a_Target, const char* a_Text, int a_X, int a_Y, bool clip)
 	{
 		Pixel* b = a_Target->GetBuffer() + a_X + a_Y * a_Target->GetPitch();
 		Pixel* s = m_Surface->GetBuffer();

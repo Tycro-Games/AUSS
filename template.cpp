@@ -144,7 +144,7 @@ namespace Tmpl8 {
 		return M;
 	}
 
-	void NotifyUser(char* s)
+	void NotifyUser(const char* s)
 	{
 		HWND hApp = FindWindow(nullptr, TemplateVersion);
 		MessageBox(hApp, s, "ERROR", MB_OK);

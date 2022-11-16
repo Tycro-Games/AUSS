@@ -137,6 +137,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <StructMemberAlignment>Default</StructMemberAlignment>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <AdditionalDependencies>winmm.lib;advapi32.lib;user32.lib;sdl2.lib;sdl2main.lib;opengl32.lib;freeimage.lib</AdditionalDependencies>
@@ -207,6 +208,7 @@
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <AdditionalDependencies>winmm.lib;advapi32.lib;user32.lib;sdl2.lib;sdl2main.lib;opengl32.lib;freeimage.lib</AdditionalDependencies>
@@ -225,6 +227,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AABB.cpp" />
     <ClCompile Include="Being.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Collider.cpp" />
@@ -240,7 +243,6 @@
     <ClCompile Include="EnemySpawner.cpp" />
     <ClCompile Include="EnemyWaveSpawner.cpp" />
     <ClCompile Include="Entity.cpp" />
-    <ClCompile Include="ExitButton.cpp" />
     <ClCompile Include="ExplosionBullet.cpp" />
     <ClCompile Include="Cursor.cpp" />
     <ClCompile Include="game.cpp" />
@@ -255,7 +257,6 @@
     <ClCompile Include="MoveToADirection.cpp" />
     <ClCompile Include="Obstacle.cpp" />
     <ClCompile Include="ParallaxProp.cpp" />
-    <ClCompile Include="PlayButton.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="pool.cpp" />
     <ClCompile Include="Projectile.cpp" />
@@ -276,6 +277,7 @@
     <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AABB.h" />
     <ClInclude Include="Being.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Callable.h" />
@@ -292,7 +294,6 @@
     <ClInclude Include="EnemySpawner.h" />
     <ClInclude Include="EnemyWaveSpawner.h" />
     <ClInclude Include="Entity.h" />
-    <ClInclude Include="ExitButton.h" />
     <ClInclude Include="ExplosionBullet.h" />
     <ClInclude Include="Followable.h" />
     <ClInclude Include="Cursor.h" />
@@ -309,7 +310,6 @@
     <ClInclude Include="Observer.h" />
     <ClInclude Include="Obstacle.h" />
     <ClInclude Include="ParallaxProp.h" />
-    <ClInclude Include="PlayButton.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="pool.h" />
     <ClInclude Include="PosDir.h" />

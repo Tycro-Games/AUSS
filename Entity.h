@@ -1,5 +1,4 @@
 #pragma once
-#include "surface.h"
 #include "template.h"
 //interfaces
 #include "Updateable.h"
@@ -21,7 +20,7 @@ public:
 	Tmpl8::vec2 pos;
 
 protected:
-	 unsigned int frame = 0;
+	unsigned int frame = 0;
 
 
 

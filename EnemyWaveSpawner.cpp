@@ -8,7 +8,7 @@
 using namespace std;
 using namespace Tmpl8;
 namespace Tmpl8 {
-	void NotifyUser(char* s);
+	void NotifyUser(const char* s);
 }
 EnemyWaveSpawner::EnemyWaveSpawner(Being* player, Sprite* spriteExplosion)
 	:Spawner(spriteExplosion),

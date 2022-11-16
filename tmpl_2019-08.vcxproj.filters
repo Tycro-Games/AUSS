@@ -44,12 +44,6 @@
     <ClCompile Include="Button.cpp">
       <Filter>UI</Filter>
     </ClCompile>
-    <ClCompile Include="PlayButton.cpp">
-      <Filter>UI</Filter>
-    </ClCompile>
-    <ClCompile Include="ExitButton.cpp">
-      <Filter>UI</Filter>
-    </ClCompile>
     <ClCompile Include="RandomNumbers.cpp">
       <Filter>Components</Filter>
     </ClCompile>
@@ -119,6 +113,9 @@
     <ClCompile Include="dynamic_array.cpp">
       <Filter>DataStructures</Filter>
     </ClCompile>
+    <ClCompile Include="AABB.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -177,12 +174,6 @@
       <Filter>Algorithms</Filter>
     </ClInclude>
     <ClInclude Include="Button.h">
-      <Filter>UI</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayButton.h">
-      <Filter>UI</Filter>
-    </ClInclude>
-    <ClInclude Include="ExitButton.h">
       <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="RandomNumbers.h">
@@ -262,6 +253,9 @@
     </ClInclude>
     <ClInclude Include="dynamic_array.h">
       <Filter>DataStructures</Filter>
+    </ClInclude>
+    <ClInclude Include="AABB.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

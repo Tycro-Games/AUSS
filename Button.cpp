@@ -1,49 +1,59 @@
 #include "Button.h"
-#include "MathFunctions.h"
-#include "game.h"
-Button::Button(Tmpl8::Sprite* sprite, Tmpl8::vec2 pos, Collider& cursor, Tmpl8::Sprite* pressed) :
-	Entity(sprite, pos),
-	pressedSprite(pressed),
-	cursor(&cursor),
-	col(new Collider(Tmpl8::vec2(0), Tmpl8::vec2(64, 64))),
-	offset(32, 32)
+
+using namespace Tmpl8;
+using namespace std;
+Button::Button(const filesystem::path& _defaultSprite, const filesystem::path& _pressedSprite, const vec2& _centerPos, const ButtonPressEvent& ev)
+	:
+	defaultSprite(new Surface(_defaultSprite.string().c_str()), 1),
+	pressedSprite(new Surface(_pressedSprite.string().c_str()), 1),
+	centerPos(_centerPos),
+	mousePos(0.0f),
+	onPress(ev),
+	state(ButtonState::Default)
+
 {
+	aabb.min = vec2(centerPos.x - defaultSprite.GetWidth() / 2.0f, centerPos.y - defaultSprite.GetHeight() / 2.0f);
+	aabb.max = vec2(centerPos.x + defaultSprite.GetWidth() / 2.0f, centerPos.y + defaultSprite.GetHeight() / 2.0f);
+
+	offsetX = static_cast<int>(centerPos.x - defaultSprite.GetWidth() / 2.0f);
+	offsetY = static_cast<int>(centerPos.y - defaultSprite.GetHeight() / 2.0f);
 
 }
-Button::~Button()
+void Button::Render(Surface* screen)
 {
-	delete col;
-	delete pressedSprite;
+	switch (state)
+	{
+	case ButtonState::Default:
+		defaultSprite.Draw(screen, offsetX, offsetY);
+		break;
+	case ButtonState::Hover:
+		pressedSprite.Draw(screen, offsetX, offsetY);
+		break;
+
+	}
 }
 
-void Button::Init()
+void Button::OnMouseMoved(int x, int y)
 {
-	isHovering = false;
+	mousePos = vec2{ static_cast<float>(x),static_cast<float>(y) };
+
+	if (aabb.isColliding(mousePos)) {
+		state = ButtonState::Hover;
+	}
+	else {
+		state = ButtonState::Default;
+	}
 }
 
-void Button::Render(Tmpl8::Surface* screen)
+void Button::OnMouseUp(int button)
 {
-	sprite->SetFrame(frame);
+	switch (state)
+	{
 
-	if (!isHovering)
-		sprite->Draw(screen, static_cast<int>(pos.x - offset.x), static_cast<int>(pos.y - offset.y));
-	else
-		pressedSprite->Draw(screen, static_cast<int>(pos.x - offset.x), static_cast<int>(pos.y - offset.y));
+	case ButtonState::Hover:
+		onPress();
+		break;
+
+
+	}
 }
-
-void Button::CheckHovering()
-{
-	isHovering = Collider::Collides(col->At(pos - offset), cursor->At(*cursor->pos));
-}
-
-void Button::Update(float deltaTime)
-{
-	//maybe some animation?
-}
-
-
-
-
-
-
-
