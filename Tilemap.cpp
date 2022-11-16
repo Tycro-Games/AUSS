@@ -10,14 +10,14 @@ using namespace Tmpl8;
 Tilemap::Tilemap() :
 	tileSurface("assets/Spaceship-shooter#01/Wang tiles/02-Craters.png"),
 	pos(Tmpl8::vec2(ScreenWidth / 2, ScreenHeight / 2)),
-	col(new Collider(
+	col(Collider(
 		Tmpl8::vec2(0),
 		Tmpl8::vec2(0),
 		&pos))
 {
 }
 
-void Tilemap::Init()
+void Tilemap::init()
 {
 	lastPos = pos;
 	prop = new ParallaxProp(new Tmpl8::Sprite(new Tmpl8::Surface("assets/Spaceship-shooter#01/background/Space02.png"), 1),
@@ -79,7 +79,6 @@ void Tilemap::Init()
 
 Tilemap::~Tilemap()
 {
-	delete col;
 	delete prop;
 }
 

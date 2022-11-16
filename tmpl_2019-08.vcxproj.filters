@@ -29,7 +29,7 @@
     <ClCompile Include="MathFunctions.cpp">
       <Filter>Math</Filter>
     </ClCompile>
-    <ClCompile Include="FollowCursor.cpp">
+    <ClCompile Include="Cursor.cpp">
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="CollisionDetection.cpp">
@@ -161,7 +161,7 @@
     <ClInclude Include="MathFunctions.h">
       <Filter>Math</Filter>
     </ClInclude>
-    <ClInclude Include="FollowCursor.h">
+    <ClInclude Include="Cursor.h">
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="PosDir.h">

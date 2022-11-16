@@ -6,12 +6,14 @@
 #include "template.h"
 
 #include "MathFunctions.h"
+#include <SDL_events.h>
 using namespace std;
 namespace Tmpl8
 {
 	static Game* gs_Game = nullptr;
 
-	Game::Game()
+	Game::Game() :
+		cursor(Cursor(new Sprite(new Surface("assets/OriginalAssets/target.tga"), 1)))
 	{
 		gs_Game = this;
 
@@ -31,34 +33,32 @@ namespace Tmpl8
 		currentState = GameState::game;
 #endif
 
-		AllocateMemory();
+		Initializations();
 
 
 		AddInstancesToUpdates();
-}
-	void Game::AllocateMemory()
+	}
+	void Game::Initializations()
 	{
 		//reset the score
 		score.init();
-
-
-		tileMap.Init();
+		tileMap.init();
 		player = new Player(new Sprite(new Surface("assets/player.png"), 32),
 			vec2(START_POS),
 			Collider(vec2(COL_MIN), vec2(COL_MAX)),
 			tileMap.GetCol(),
 			100);
 
-		cursor = (new FollowCursor(new Sprite(new Surface("assets/OriginalAssets/target.tga"), 1)));
+
 		//static spawner
 		enemySpawner = new EnemyWaveSpawner(player, new Sprite(new Surface("assets/OriginalAssets/smoke.tga"), 10));
 
 		playButton = new PlayButton(new Sprite(new Surface("assets/UI/Play_Idle.png"), 1), Tmpl8::vec2(ScreenWidth / 2, ScreenHeight / 2),
-			cursor->GetCollider(),
+			cursor.GetCollider(),
 			new Sprite(new Tmpl8::Surface("assets/UI/Play_Pushed.png"), 1));
 
 		exitButton = new ExitButton(new Sprite(new Surface("assets/UI/Cross_Idle.png"), 1), Tmpl8::vec2(ScreenWidth / 2, ScreenHeight / 2 + 64),
-			cursor->GetCollider(),
+			cursor.GetCollider(),
 			new Sprite(new Tmpl8::Surface("assets/UI/Cross_Pushed.png"), 1));
 	}
 	void Game::ResetGame()
@@ -66,7 +66,7 @@ namespace Tmpl8
 
 		Shutdown();
 		RemoveAllUpdateables();
-		AllocateMemory();
+		Initializations();
 		AddInstancesToUpdates();
 		ChangeGameState(GameState::mainMenu);
 	}
@@ -115,7 +115,6 @@ namespace Tmpl8
 
 		delete enemySpawner;
 		delete player;
-		delete cursor;
 		delete projectileDetection;
 
 	}
@@ -144,7 +143,7 @@ namespace Tmpl8
 			player->ResetOffset();
 			//shooting
 			if (player->GetMoveable()->CanRotate())
-				player->Rotate(static_cast<int>(cursor->pos.x), static_cast<int>(cursor->pos.y));
+				player->Rotate(static_cast<int>(cursor.pos.x), static_cast<int>(cursor.pos.y));
 			player->Shoot(isPressingLeftMouse);
 			//rendering
 			for (int i = 0; i < renderables.size(); i++)
@@ -173,7 +172,7 @@ namespace Tmpl8
 		default:
 			break;
 		}
-		cursor->Render(screen);
+		cursor.Render(screen);
 	}
 
 
@@ -189,7 +188,7 @@ namespace Tmpl8
 	}
 	void Game::MouseMove(int x, int y)
 	{
-		cursor->ChangePosition(x, y);
+		cursor.ChangePosition(x, y);
 		switch (currentState)
 		{
 		case GameState::game:
@@ -285,6 +284,20 @@ namespace Tmpl8
 	void Game::ChangeGameState(GameState state)
 	{
 		currentState = state;
+	}
+	void Game::ResumeGame()
+	{
+		Game::Get().isPressingLeftMouse = false;
+		Game::Get().currentState = Game::GameState::game;
+	}
+	void Game::ExitGame()
+	{
+		if (Game::Get().isPressingLeftMouse)
+		{
+			SDL_Event quit;
+			quit.type = SDL_QUIT;
+			SDL_PushEvent(&quit);
+		}
 	}
 	void Game::AddCollider(Collider* col)
 	{

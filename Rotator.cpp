@@ -22,7 +22,7 @@ void Rotator::RotateToDirection(Tmpl8::vec2 Pos)
 	int xpos = static_cast<int>(pos->x);
 	int ypos = static_cast<int>(pos->y);
 
-	MathFunctions::RotateTo(Pos.x, Pos.y, *pos, dir);
+	MathFunctions::RotateTo(Pos.x, Pos.y, *pos, *dir);
 
 	*frame = MathFunctions::RotateToDirectionFrames(rVar, *dir);
 

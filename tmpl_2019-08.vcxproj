@@ -242,7 +242,7 @@
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="ExitButton.cpp" />
     <ClCompile Include="ExplosionBullet.cpp" />
-    <ClCompile Include="FollowCursor.cpp" />
+    <ClCompile Include="Cursor.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="MathFunctions.cpp" />
     <ClCompile Include="MergeSort.cpp">
@@ -295,7 +295,7 @@
     <ClInclude Include="ExitButton.h" />
     <ClInclude Include="ExplosionBullet.h" />
     <ClInclude Include="Followable.h" />
-    <ClInclude Include="FollowCursor.h" />
+    <ClInclude Include="Cursor.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="MathFunctions.h" />
     <ClInclude Include="MergeSort.h">

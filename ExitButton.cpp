@@ -2,7 +2,7 @@
 #include "game.h"
 #include "SDL.h"
 using namespace Tmpl8;
-ExitButton::ExitButton(Sprite* sprite, vec2 pos, Collider* cursor, Sprite* pressed) :
+ExitButton::ExitButton(Sprite* sprite, vec2 pos, Collider& cursor, Sprite* pressed) :
 	Button(sprite, pos, cursor, pressed)
 {
 }

@@ -14,9 +14,9 @@ MoveablePlayer::MoveablePlayer(vec2* pos, Collider* col, Collider* tileMapCol, f
 	initSpeed = speed;
 	dashSpeed = DashSpeed;
 	//timer init
-	cooldownTimer.Init(this, COOLDOWN_DURATION);
+	cooldownTimer.init(this, COOLDOWN_DURATION);
 	cooldownTimer.isUpdateable = false;
-	dashTimer.Init(this, DASH_DURATION);
+	dashTimer.init(this, DASH_DURATION);
 	dashTimer.isUpdateable = false;
 }
 

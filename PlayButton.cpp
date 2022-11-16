@@ -1,7 +1,7 @@
 #include "PlayButton.h"
 #include "game.h"
 using namespace Tmpl8;
-PlayButton::PlayButton(Sprite* sprite, vec2 pos, Collider* cursor, Sprite* pressed) :
+PlayButton::PlayButton(Sprite* sprite, vec2 pos, Collider& cursor, Sprite* pressed) :
 	Button(sprite, pos, cursor, pressed)
 {
 }

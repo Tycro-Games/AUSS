@@ -46,7 +46,7 @@ void EnemySpawner::Render(Tmpl8::Surface* screen)
 
 void EnemySpawner::ResetTimer(float timeToSpawn)
 {
-	timer->Init(this, timeToSpawn);
+	timer->init(this, timeToSpawn);
 }
 Tmpl8::vec2 EnemySpawner::GetSpawnerPos() const
 {

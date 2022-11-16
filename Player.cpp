@@ -5,31 +5,29 @@
 
 #include <string>
 using namespace Tmpl8;
-Player::Player(Tmpl8::Sprite* sprite, Tmpl8::vec2 pos, Collider co, Collider* tileMapCol, int hp)
-	:dirToFace(new Tmpl8::vec2()),
+Player::Player(Tmpl8::Sprite* sprite, Tmpl8::vec2 pos, Collider co, Collider& tileMapCol, int hp)
+	:
 	Being(sprite, pos, hp),
 	startingPos(pos),
 	col(Collider(co.min, co.max, &startingPos)),
-	tilemapCollider(tileMapCol),
+	tilemapCollider(&tileMapCol),
 	projectileSprite(new Tmpl8::Sprite(new Tmpl8::Surface("assets/OriginalAssets/phaser.tga"), 16))
 
 {
 	lastPos = pos;
 	spawner = new ProjectileSpawner(&this->pos, -Tmpl8::vec2(rVar.SPRITE_OFFSET / 2, rVar.SPRITE_OFFSET / 2),
-		dirToFace,
+		&dirToFace,
 		projectileSprite,
 		new Tmpl8::Sprite(new Tmpl8::Surface("assets/OriginalAssets/smoke.tga"), 10));
 
 	playerMover = new MoveablePlayer(&this->pos, &col, tilemapCollider);
-	timer = (new Timer(this, TIME_TO_HIT));
+	timer.init(this, TIME_TO_HIT);
 }
 
 Player::~Player()
 {
-	delete timer;
 	delete playerMover;
 	delete spawner;
-	delete dirToFace;
 	delete projectileSprite;
 }
 
@@ -78,12 +76,12 @@ void Player::Update(float deltaTime)
 	}
 
 	spawner->Update(deltaTime);
-	timer->Update(deltaTime);
+	timer.Update(deltaTime);
 }
 void Player::TakeDamage(int dg) {
-	if (timer->isFinished) {
+	if (timer.isFinished) {
 		Being::TakeDamage(dg);
-		timer->ResetVar();
+		timer.ResetVar();
 	}
 
 }
@@ -97,7 +95,7 @@ void Player::Rotate(int x, int y) {
 	MathFunctions::RotateTo(static_cast<float>(x), static_cast<float>(y), pos, dirToFace);
 
 
-	float angle = MathFunctions::GetDirInAnglesPos(*dirToFace);
+	float angle = MathFunctions::GetDirInAnglesPos(dirToFace);
 	//calculate the frame we need to switch for the corresponding angle
 	angle += rVar.OFFSET_SPRITE;
 	angle = static_cast<float>(fmod(angle, 360));

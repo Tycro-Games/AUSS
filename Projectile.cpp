@@ -24,7 +24,7 @@ void Projectile::Init(PosDir posDir)
 	SetActive(true);
 	pos = posDir.pos;
 	(*dir) = posDir.dir;
-	timer->Init(this, TIME_ALIVE);
+	timer->init(this, TIME_ALIVE);
 
 	RotateToDirection();
 }

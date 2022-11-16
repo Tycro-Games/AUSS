@@ -1,10 +1,10 @@
 #include "Button.h"
 #include "MathFunctions.h"
 #include "game.h"
-Button::Button(Tmpl8::Sprite* sprite, Tmpl8::vec2 pos, Collider* cursor, Tmpl8::Sprite* pressed) :
+Button::Button(Tmpl8::Sprite* sprite, Tmpl8::vec2 pos, Collider& cursor, Tmpl8::Sprite* pressed) :
 	Entity(sprite, pos),
 	pressedSprite(pressed),
-	cursor(cursor),
+	cursor(&cursor),
 	col(new Collider(Tmpl8::vec2(0), Tmpl8::vec2(64, 64))),
 	offset(32, 32)
 {

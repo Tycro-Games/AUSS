@@ -55,7 +55,7 @@ class Tilemap :public Renderable, public Updateable, public Followable
 {
 public:
 	Tilemap();
-	void Init();
+	void init();
 	~Tilemap();
 
 	// Inherited via Renderable
@@ -69,7 +69,7 @@ public:
 		lastPos = pos;
 	}
 
-	inline Collider* GetCol() const {
+	inline Collider& GetCol() {
 		return col;
 	}
 	/// <summary>
@@ -135,7 +135,7 @@ private:
 	const int OFFSET_X = TILE_SIZE * X_TILES / 2;
 	const int OFFSET_Y = TILE_SIZE * Y_TILES / 2;
 
-	Collider* col;
+	Collider col;
 	std::vector<Obstacle*> blockingTiles;
 
 	Tile tiles[X_TILES * Y_TILES] = {

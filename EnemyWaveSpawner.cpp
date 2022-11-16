@@ -14,7 +14,7 @@ EnemyWaveSpawner::EnemyWaveSpawner(Being* player, Sprite* spriteExplosion)
 	:Spawner(spriteExplosion),
 	player(player)
 {
-	timer.Init(this, 1.0f);
+	timer.init(this, 1.0f);
 	//enemy prototypes intialization
 	EnemyInit();
 	InitializeSpawners();
@@ -124,7 +124,7 @@ void EnemyWaveSpawner::SpawnCurrentWave() {
 		CheckThePossibleEnemies(weight, possibleEnemies);
 	}
 	//interval for spawninig
-	timer.Init(this, .15f, true);
+	timer.init(this, .15f, true);
 	//spawn enemies in the spawners' positons
 	indexSpawn = 0;
 

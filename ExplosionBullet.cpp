@@ -25,7 +25,7 @@ void ExplosionBullet::Init(vec2 pos)
 	SetActive(true);
 	frame = 0;
 	this->pos = pos;
-	timer->Init(this, TotalAnimation);
+	timer->init(this, TotalAnimation);
 	Game::Get().AddMoveable(move);
 }
 

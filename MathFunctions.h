@@ -10,7 +10,7 @@ public:
 	static float GetDirInAnglesNeg(Tmpl8::vec2 dir);
 	static Tmpl8::vec2 Reflect(Tmpl8::vec2 dir, Tmpl8::vec2 norm);
 	//x y coordonates, pos current postion, dir modified by reference
-	static void RotateTo(float x, float y, Tmpl8::vec2 pos, Tmpl8::vec2*& dir);
+	static void RotateTo(float x, float y, Tmpl8::vec2 pos, Tmpl8::vec2& dir);
 	//helper function for rotating sprites
 	static int  RotateToDirectionFrames(RotationVar, Tmpl8::vec2);
 	//the distance between 2 points
@@ -32,6 +32,6 @@ public:
 	{
 		return a + f * (b - a);
 	}
-	
+
 
 };

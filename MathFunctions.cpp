@@ -3,7 +3,7 @@
 float MathFunctions::GetDirInAnglesPos(Tmpl8::vec2 dir)
 {
 	float angle = atan2(dir.y, dir.x);//return angle in radians
-	
+
 	angle *= (180 / Tmpl8::PI);//convert to angles from radians
 	if (angle < 0) //convert to positive angles
 	{
@@ -39,24 +39,17 @@ Tmpl8::vec2 MathFunctions::Reflect(Tmpl8::vec2 dir, Tmpl8::vec2 norm)
 
 }
 
-void MathFunctions::RotateTo(float x, float y, Tmpl8::vec2 pos, Tmpl8::vec2*& dir)
+void MathFunctions::RotateTo(float x, float y, Tmpl8::vec2 pos, Tmpl8::vec2& dir)
 {
 	if (ValidVec2(static_cast<int>(x),
 		static_cast<int>(pos.x),
 		static_cast<int>(y),
 		static_cast<int>(pos.y)))
 		return;
-	dir->x = x - pos.x;
-	dir->y = y - pos.y;
+	dir.x = x - pos.x;
+	dir.y = y - pos.y;
 
-
-
-
-
-
-	dir->normalize();
-
-
+	dir.normalize();
 
 }
 

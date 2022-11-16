@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Player.h"
-#include "FollowCursor.h"
+#include "Cursor.h"
 #include "Playbutton.h"
 #include "Exitbutton.h"
 #include "EnemyWaveSpawner.h"
@@ -21,7 +21,7 @@ namespace Tmpl8 {
 
 		void SetTarget(Surface* surface) { screen = surface; }
 		void Init();
-		void AllocateMemory();
+		void Initializations();
 		void ResetGame();
 		void RemoveAllUpdateables();
 		void AddInstancesToUpdates();
@@ -61,10 +61,12 @@ namespace Tmpl8 {
 		std::vector<Moveable*> moveablesTile;
 		Tilemap tileMap;
 	private:
+		void ResumeGame();
+		void ExitGame();
 		Surface* screen;
 
 		//MainMenu
-		FollowCursor* cursor;
+		Cursor cursor;
 		Button* playButton;
 		Button* exitButton;
 		std::vector <Updateable*> updateablesUI;
