@@ -5,14 +5,20 @@
 
 #include "game.h"
 using namespace Tmpl8;
-ProjectileSpawner::ProjectileSpawner(Tmpl8::vec2* pos, Tmpl8::vec2 offset, Tmpl8::vec2* dir, Tmpl8::Sprite* tospawn, Tmpl8::Sprite* explosion)
-	:Spawner(pos, explosion),
-	dir(dir),
-	projectileSprite(tospawn),
+using namespace std;
+ProjectileSpawner::ProjectileSpawner(const Tmpl8::vec2 offset, const filesystem::path& _projectileSprite, const  filesystem::path& _explosionSprite)
+	:
+	Spawner(_explosionSprite),
+	projectileSprite(new Surface(_projectileSprite.string().c_str()), 16),
 	offset(offset)
+
 
 {
 
+}
+
+void ProjectileSpawner::Init()
+{
 	for (int i = 0; i < MAX_PROJECTILES; i++) {
 		CreateMoreProjectiles();
 	}
@@ -52,7 +58,7 @@ ProjectileSpawner::~ProjectileSpawner()
 
 void ProjectileSpawner::CreateMoreProjectiles()
 {
-	Projectile* entity = new Projectile(PosDir(*pos + *dir * OFFSET, *dir), projectileSprite, this);
+	Projectile* entity = new Projectile(PosDir(), &projectileSprite, this);
 	updateObjects.push_back(entity);
 
 	AddProjectileToPool(entity);
@@ -67,8 +73,11 @@ void ProjectileSpawner::SpawnProjectiles()
 
 	Projectile* projectile = poolOfProjectiles.PopElement();
 
-	Tmpl8::vec2 randomDir = GetDirDeviation();
-	projectile->Init(PosDir{ (*pos) + (*dir + randomDir).normalized() * OFFSET_MULTIPLIER, (*dir + randomDir).normalized() });
+	vec2 randomDir = GetDirDeviation();
+	vec2 playerPos = Game::Get().getPlayer().pos;
+	vec2 playerDir = Game::Get().getPlayer().GetDir();
+	vec2 randomizedDir = (playerDir + randomDir).normalized();
+	projectile->Init(PosDir{ playerPos + randomizedDir * OFFSET_MULTIPLIER,randomizedDir });
 	Game::Get().AddCollider(projectile->getColl());
 	Game::Get().AddMoveable(projectile->getMoveable());
 }

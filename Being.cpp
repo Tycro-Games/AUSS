@@ -5,6 +5,12 @@ Being::Being(Tmpl8::Sprite* sprite, Tmpl8::vec2 pos, int hp)
 	hp(hp)
 {}
 
+Being::Being(const std::filesystem::path& spritePath, unsigned int numberOfFrames, Tmpl8::vec2 pos, int hp)
+	: Entity(spritePath, numberOfFrames, pos),
+	hp(hp)
+{
+}
+
 Being::~Being()
 {
 }

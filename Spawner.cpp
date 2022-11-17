@@ -1,13 +1,13 @@
 #include "Spawner.h"
 
+using namespace Tmpl8;
 
-Spawner::Spawner(Tmpl8::vec2* pos, Tmpl8::Sprite* explosion) :
-	pos(pos),
-	explosionSprite(explosion)
+Spawner::Spawner(const std::filesystem::path& explosion) :
+	explosionSprite(new Surface(explosion.string().c_str()), 10)
 {
 }
-Spawner::Spawner(Tmpl8::Sprite* explosion) :
-	pos(nullptr),
+
+Spawner::Spawner(const Tmpl8::Sprite& explosion) :
 	explosionSprite(explosion)
 {
 }
@@ -19,8 +19,6 @@ Spawner::~Spawner()
 			updateObjects[i]->sprite = nullptr;//the sprite is only a pointer that is cleaned up by sub spawners
 			delete updateObjects[i];
 		}
-	delete explosionSprite;
-	explosionSprite = nullptr;
 }
 Tmpl8::vec2 Spawner::GetDirDeviation()
 {
@@ -44,7 +42,7 @@ void Spawner::AddExplosionToPool(ExplosionBullet* entity)
 
 void Spawner::CreateMoreExplosions()
 {
-	ExplosionBullet* bullet = new ExplosionBullet(explosionSprite, this, Tmpl8::vec2(0));
+	ExplosionBullet* bullet = new ExplosionBullet(&explosionSprite, this, Tmpl8::vec2(0));
 	updateObjects.push_back(bullet);
 
 	AddExplosionToPool(bullet);

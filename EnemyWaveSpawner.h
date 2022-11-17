@@ -3,13 +3,12 @@
 #include "Subject.h"
 #include "Wave.h"
 #include "EnemySpawner.h"
-#include <fstream>
 class Enemy;
 using json = nlohmann::json;
 class EnemyWaveSpawner : public Spawner, public Subject, public Callable
 {
 public:
-	EnemyWaveSpawner(Being* player, Tmpl8::Sprite* explosion);
+	EnemyWaveSpawner(Being* player);
 	~EnemyWaveSpawner();
 	void AddEnemyToPool(Enemy* enemy, bool isDead = false);
 	Enemy* CreateEnemy(EnemyTypes enemyType);
@@ -26,7 +25,7 @@ public:
 
 
 	bool EnemyWaveSpawner::IsPoolEmpty(pool<Enemy*>& pool);
-	Tmpl8::vec2 EnemyWaveSpawner::GetPlayerPos();
+	const Tmpl8::vec2 EnemyWaveSpawner::GetPlayerPos()const;
 	EnemyTypes ConvertToEnum(std::string str);
 private:
 	bool startedWave = false;
@@ -59,6 +58,7 @@ private:
 	//consts
 	const float SPAWNERS_XPOS_MULTIPLIERS = 0.88f;
 	const float SPAWNERS_YPOS_MULTIPLIERS = 0.83f;
+	const std::filesystem::path spriteExplosionPath = "assets/OriginalAssets/smoke.tga";
 
 
 	// Inherited via Callable
@@ -68,7 +68,7 @@ private:
 inline bool EnemyWaveSpawner::IsPoolEmpty(pool<Enemy*>& pool) {
 	return pool.getCount() == 0;
 }
-inline Tmpl8::vec2 EnemyWaveSpawner::GetPlayerPos()
+inline const Tmpl8::vec2 EnemyWaveSpawner::GetPlayerPos() const
 {
 	return player->pos;
 }

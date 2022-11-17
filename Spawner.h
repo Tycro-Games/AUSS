@@ -7,12 +7,13 @@
 #include "Collider.h"
 #include "RandomNumbers.h"
 #include "ExplosionBullet.h"
+#include <filesystem>
 
 class Spawner : public Updateable, public Renderable
 {
 public:
-	Spawner(Tmpl8::vec2*, Tmpl8::Sprite* explosion);
-	Spawner(Tmpl8::Sprite* explosion);
+	Spawner(const std::filesystem::path& explosion);
+	Spawner(const Tmpl8::Sprite& explosion);
 	virtual ~Spawner();
 	void AddExplosionToPool(ExplosionBullet* entity);
 	void CreateMoreExplosions();
@@ -20,13 +21,12 @@ public:
 	Tmpl8::vec2 GetDirDeviation();
 
 protected:
-	Tmpl8::vec2* pos;
 	RandomNumbers randomNumbers;
 	//to update
 	std::vector<Entity*> updateObjects;
 	pool<ExplosionBullet*> poolOfExplosions;
 	//assets 
-	Tmpl8::Sprite* explosionSprite;
+	Tmpl8::Sprite explosionSprite;
 
 	float deviationMultiplier = 1.5f;
 

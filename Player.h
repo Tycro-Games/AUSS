@@ -11,7 +11,8 @@
 class Player :public Being, public Callable, public Followable
 {
 public:
-	Player(Tmpl8::Sprite* sprite, Tmpl8::vec2 pos, Collider collider, Collider& tilemapCollider, int hp);
+	Player(Tmpl8::vec2& pos);
+	void Init(const Collider& tilemapCollider);
 	~Player();
 	void Render(Tmpl8::Surface* screen);
 	void Update(float deltaTime);
@@ -24,28 +25,30 @@ public:
 	virtual void ResetOffset() override {
 		lastPos = pos;
 	}
+	//getters
 	MoveablePlayer* GetMoveable();
-
 	ProjectileSpawner* GetSpawner();
-	Tmpl8::vec2 GetPosFromStart() {
-		return startingPos - pos;
-	}
+	const Tmpl8::vec2 GetDir() const;
+
 private:
 
 	RotationVar rVar;
 	Tmpl8::vec2 dirToFace;
 	Tmpl8::vec2 startingPos;
 	//assets
-	Tmpl8::Sprite* projectileSprite;
-	//components
-	Collider* tilemapCollider;
-	MoveablePlayer* playerMover;
-	Collider col;
-	ProjectileSpawner* spawner;
-	Timer timer;
+	const std::filesystem::path spritePlayerPath = "assets/player.png";
+	const std::filesystem::path spriteProjectilePath = "assets/OriginalAssets/phaser.tga";
+	const std::filesystem::path spriteExplosionPath = "assets/OriginalAssets/smoke.tga";
 	//consts
 	const float TIME_TO_HIT = 2.0f;
-
+	const Tmpl8::vec2 COL_MIN = Tmpl8::vec2(-33 / 2 - 5, -33 / 2 - 5);
+	const Tmpl8::vec2 COL_MAX = Tmpl8::vec2(33 / 2 + 5, 33 / 2 + 5);
+	//components
+	const Collider* tilemapCollider;
+	MoveablePlayer* playerMover;
+	Collider playerCollider;
+	ProjectileSpawner spawner;
+	Timer timer;
 
 };
 inline const Tmpl8::vec2 Player::GetOffset() {

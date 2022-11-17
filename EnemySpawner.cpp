@@ -3,37 +3,33 @@
 
 #include "Enemy.h"
 using namespace Tmpl8;
-EnemySpawner::EnemySpawner(Tmpl8::vec2* pos, EnemyWaveSpawner* enemyWave, Tmpl8::Sprite* explosion) :
-	Spawner(pos, explosion),
+using namespace std;
+EnemySpawner::EnemySpawner(Tmpl8::vec2& _pos, EnemyWaveSpawner* enemyWave, const Sprite& explosion) :
+	Spawner(explosion),
 	enemyWave(enemyWave),
-	move(new MoveInstance(this->pos))
+	pos(_pos),
+	move(new MoveInstance(&pos))
 {
 	Game::Get().AddMoveable(move);
-	timer = new Timer(this, timeToSpawn);
-	timer->isUpdateable = false;
+	timer.init(this, timeToSpawn);
+	timer.isUpdateable = false;
 }
 
 EnemySpawner::~EnemySpawner()
 {
-	delete timer;
 	delete move;
-	//position is owned by enemy spawner
-	delete pos;
 }
 
 
 void EnemySpawner::Update(float deltaTime)
 {
-	if (timer->isUpdateable)
-		timer->Update(deltaTime);
+	if (timer.isUpdateable)
+		timer.Update(deltaTime);
 
 
 }
 
-Tmpl8::vec2 EnemySpawner::GetPlayerPos()
-{
-	return enemyWave->GetPlayerPos();
-}
+
 void EnemySpawner::SetEnemy(EnemyTypes enemy)
 {
 	enemyToSpawn = enemy;
@@ -46,19 +42,19 @@ void EnemySpawner::Render(Tmpl8::Surface* screen)
 
 void EnemySpawner::ResetTimer(float timeToSpawn)
 {
-	timer->init(this, timeToSpawn);
+	timer.init(this, timeToSpawn);
 }
-Tmpl8::vec2 EnemySpawner::GetSpawnerPos() const
+const vec2& EnemySpawner::GetSpawnerPos() const
 {
-	return *pos;
+	return pos;
 }
 //called by timer
 void EnemySpawner::Call()
 {
 	//calls the wave spawner
-	Enemy* enemy = enemyWave->SpawnEnemy(*pos, enemyToSpawn);
+	Enemy* enemy = enemyWave->SpawnEnemy(pos, enemyToSpawn);
 	Tmpl8::vec2 randomDir = GetDirDeviation();
-	enemy->Init(PosDir(*pos, randomDir));
+	enemy->Init(PosDir(pos, randomDir));
 	//game wiring
 	Game::Get().AddCollider(enemy->getColl());
 	Game::Get().AddMoveable(enemy->getMoveable());

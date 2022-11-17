@@ -7,18 +7,17 @@
 class MoveablePlayer :public Moveable, public Callable
 {
 public:
-	MoveablePlayer(Tmpl8::vec2* pos, Collider* col, Collider* tileMapCol, float speed = 70.0f, float dashSpeed = 500);
+	MoveablePlayer(Tmpl8::vec2* pos, Collider* col, const Collider* tileMapCol, float speed = 70.0f, float dashSpeed = 500);
 	virtual ~MoveablePlayer();
 	virtual void Update(float deltaTime) override;
 	void MoveTileOrPlayer(Tmpl8::vec2& tilemapPos, Collider& c, const Tmpl8::vec2& playerPos);
-	bool CheckPositionForCollisions(const Tmpl8::vec2& playerPos, Collider& playerCol);
+	bool CheckPositionForCollisions(const Tmpl8::vec2& playerPos, const Collider& playerCol);
 	void SetDashPos(Tmpl8::vec2& nextPos);
 	void ResetTriggers();
 	void MovePlayer();
 	void ClampTheMovementVector(const Collider& c, const Tmpl8::vec2 newVec, Tmpl8::vec2& originalVec, bool& changed);
 	bool CheckVecForOneDir(Tmpl8::vec2& nextPos);
 	void ClampTheMovementVector(const Collider& c, const Tmpl8::vec2 newVec, Tmpl8::vec2& originalVec);
-	void copyInput(MoveablePlayer& p);
 	void setUp(bool val = false);
 	void setDown(bool val = false);
 	void setRight(bool val = false);
@@ -42,7 +41,7 @@ private:
 	bool down = false;
 	bool right = false;
 	bool left = false;
-	Collider* tileMapCol;
+	const Collider* tileMapCol;
 	Tmpl8::vec2 playerMovement;
 
 	//dash

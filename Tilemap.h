@@ -78,9 +78,9 @@ public:
 	/// <returns></returns>
 	inline Collider GetGameBounds() const;
 
-	bool IsFree(float x, float y);
+	bool IsFree(float x, float y) const;
 	//returns the collider at the coordonates x and y in the col variable
-	bool IsFree(float x, float y, Collider& col);
+	bool IsFree(float x, float y, Collider& col) const;
 
 	const Obstacle* GetObstacle(float x, float y) const;
 

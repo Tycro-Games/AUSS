@@ -185,7 +185,7 @@ void Tilemap::DrawTile(Tmpl8::Surface* screen, int tx, int ty, int x, int y)
 
 	}
 }
-bool Tilemap::IsFree(float x, float y)
+bool Tilemap::IsFree(float x, float y) const
 {
 	Tmpl8::vec2 targetPos = Tmpl8::vec2(x, y);
 	x += OFFSET_X - (pos.x);
@@ -198,7 +198,7 @@ bool Tilemap::IsFree(float x, float y)
 	return true;
 }
 
-bool Tilemap::IsFree(float x, float y, Collider& col)
+bool Tilemap::IsFree(float x, float y, Collider& col) const
 {
 	Tmpl8::vec2 targetPos = Tmpl8::vec2(x, y);
 	x += OFFSET_X - (pos.x);

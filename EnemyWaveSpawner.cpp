@@ -1,5 +1,6 @@
 #include "EnemyWaveSpawner.h"
 #include <iostream>
+#include <fstream>
 
 #include "EnemyHoarder.h"
 #include "EnemyRunner.h"
@@ -10,8 +11,8 @@ using namespace Tmpl8;
 namespace Tmpl8 {
 	void NotifyUser(const char* s);
 }
-EnemyWaveSpawner::EnemyWaveSpawner(Being* player, Sprite* spriteExplosion)
-	:Spawner(spriteExplosion),
+EnemyWaveSpawner::EnemyWaveSpawner(Being* player)
+	:Spawner("assets/OriginalAssets/smoke.tga"),
 	player(player)
 {
 	timer.init(this, 1.0f);
@@ -38,10 +39,10 @@ void EnemyWaveSpawner::InitializeSpawners()
 	float xOffset = SPAWNERS_XPOS_MULTIPLIERS * ScreenWidth;
 	float yOffset = SPAWNERS_YPOS_MULTIPLIERS * ScreenHeight;
 
-	enemySpawners.push_back(new EnemySpawner(new vec2(center + vec2(xOffset, yOffset)), this, explosionSprite));
-	enemySpawners.push_back(new EnemySpawner(new vec2(center + vec2(xOffset, -yOffset)), this, explosionSprite));
-	enemySpawners.push_back(new EnemySpawner(new vec2(center + vec2(-xOffset, yOffset)), this, explosionSprite));
-	enemySpawners.push_back(new EnemySpawner(new vec2(center + vec2(-xOffset, -yOffset)), this, explosionSprite));
+	enemySpawners.push_back(new EnemySpawner(center + vec2(xOffset, yOffset), this, explosionSprite));
+	enemySpawners.push_back(new EnemySpawner(center + vec2(-xOffset, yOffset), this, explosionSprite));
+	enemySpawners.push_back(new EnemySpawner(center + vec2(xOffset, -yOffset), this, explosionSprite));
+	enemySpawners.push_back(new EnemySpawner(center + vec2(-xOffset, -yOffset), this, explosionSprite));
 }
 void EnemyWaveSpawner::ReadWaves()
 {

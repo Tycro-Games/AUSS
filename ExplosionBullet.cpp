@@ -4,8 +4,7 @@
 using namespace Tmpl8;
 ExplosionBullet::ExplosionBullet(Sprite* sprite, Spawner* spawner, vec2 pos) :
 	Entity(sprite),
-	spawner(spawner),
-	timer(new Timer())
+	spawner(spawner)
 {
 	TotalAnimation = loops * desiredTime * sprite->Frames();
 	move = new MoveInstance(&this->pos);
@@ -16,7 +15,6 @@ ExplosionBullet::ExplosionBullet(Sprite* sprite, Spawner* spawner, vec2 pos) :
 
 ExplosionBullet::~ExplosionBullet()
 {
-	delete timer;
 	delete move;
 }
 
@@ -25,7 +23,7 @@ void ExplosionBullet::Init(vec2 pos)
 	SetActive(true);
 	frame = 0;
 	this->pos = pos;
-	timer->init(this, TotalAnimation);
+	timer.init(this, TotalAnimation);
 	Game::Get().AddMoveable(move);
 }
 
@@ -33,7 +31,7 @@ void ExplosionBullet::Update(float deltaTime)
 {
 	if (!getUpdateable())
 		return;
-	timer->Update(deltaTime);
+	timer.Update(deltaTime);
 	//animation
 	if (currenTime < desiredTime)
 		currenTime += deltaTime;

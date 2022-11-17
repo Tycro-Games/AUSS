@@ -21,7 +21,7 @@ private:
 	float currenTime = 0;
 	float desiredTime = .005f;//per frame
 	int loops = 7;//how many animations
-	Timer* timer;
+	Timer timer;
 	Spawner* spawner;
 	MoveInstance* move;
 

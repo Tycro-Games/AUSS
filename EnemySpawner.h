@@ -11,18 +11,20 @@ class EnemySpawner :public Spawner, public Callable
 {
 public:
 	~EnemySpawner();
-	EnemySpawner(Tmpl8::vec2* pos, EnemyWaveSpawner*, Tmpl8::Sprite*);
+	//pos is not a const,because it needs to be modified
+	EnemySpawner(Tmpl8::vec2& pos, EnemyWaveSpawner* _enemyWave, const Tmpl8::Sprite& explosion);
 
 
 
 	void ResetTimer(float timeToSpawn);
-	Tmpl8::vec2 GetSpawnerPos() const;
-	Tmpl8::vec2 GetPlayerPos();
 	void SetEnemy(EnemyTypes enemy);
 	virtual void Update(float deltaTime) override;
 	virtual void Render(Tmpl8::Surface* screen) override;
+	//getters
+	const Tmpl8::vec2& GetSpawnerPos() const;
 private:
-	Timer* timer;
+	Tmpl8::vec2 pos;
+	Timer timer;
 	float timeToSpawn = 5.0f;
 	//default the value of enemyToSpawn
 	EnemyTypes enemyToSpawn = NUMBER_OF_ENEMIES;

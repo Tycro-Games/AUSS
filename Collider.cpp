@@ -55,19 +55,19 @@ vec2 Collider::GetNormal(const Collider& obstacle, const Collider& source)
 }
 //checks with the current pos
 bool Collider::InGameBounds(Collider& col) {
-	return col.Collides(Game::Get().tileMap.GetGameBounds());
+	return col.Collides(Game::Get().getTilemap().GetGameBounds());
 }
 //checks with the position parameter
 bool Collider::InGameBounds(vec2& pos, Collider& col)
 {
-	return Overlaps(col.At(pos), Game::Get().tileMap.GetGameBounds());
+	return Overlaps(col.At(pos), Game::Get().getTilemap().GetGameBounds());
 
 }
 
 vec2 Collider::GetNormalEdgeScreen(const vec2& pos, const Collider& col)
 {
 	vec2 normal;
-	Collider gameBounds = Game::Get().tileMap.GetGameBounds();
+	Collider gameBounds = Game::Get().getTilemap().GetGameBounds();
 	if (pos.x + col.min.x < gameBounds.min.x || pos.x + col.max.x > gameBounds.max.x)
 		normal = vec2(1, 0);
 	else//if (pos.y + col.min.y < gameBounds.min.y || pos.y + col.max.y < gameBounds.max.y)

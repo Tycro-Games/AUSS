@@ -19,7 +19,8 @@ namespace Tmpl8
 		cursor(Cursor(new Sprite(new Surface("assets/OriginalAssets/target.tga"), 1))),
 		//passes functions as objects
 		playButton("assets/UI/Play_Idle.png", "assets/UI/Play_Pushed.png", vec2(ScreenWidth / 2, ScreenHeight / 2), std::bind(&Game::ResumeGame, this)),
-		exitButton("assets/UI/Cross_Idle.png", "assets/UI/Cross_Pushed.png", vec2(ScreenWidth / 2, ScreenHeight / 2 + 64), std::bind(&Game::ExitGame, this))
+		exitButton("assets/UI/Cross_Idle.png", "assets/UI/Cross_Pushed.png", vec2(ScreenWidth / 2, ScreenHeight / 2 + 64), std::bind(&Game::ExitGame, this)),
+		player(vec2(ScreenWidth / 2, ScreenHeight / 2))
 
 
 	{
@@ -51,15 +52,11 @@ namespace Tmpl8
 		//reset the score
 		score.init();
 		tileMap.init();
-		player = new Player(new Sprite(new Surface("assets/player.png"), 32),
-			vec2(START_POS),
-			Collider(vec2(COL_MIN), vec2(COL_MAX)),
-			tileMap.GetCol(),
-			100);
+		player.Init(tileMap.GetCol());
 
 
 		//static spawner
-		enemySpawner = new EnemyWaveSpawner(player, new Sprite(new Surface("assets/OriginalAssets/smoke.tga"), 10));
+		enemySpawner = new EnemyWaveSpawner(&player);
 
 		/*	playButton = new PlayButton(new Sprite(new Surface("assets/UI/Play_Idle.png"), 1), Tmpl8::vec2(ScreenWidth / 2, ScreenHeight / 2),
 				cursor.GetCollider(),
@@ -100,8 +97,8 @@ namespace Tmpl8
 		AssignSubject(*enemySpawner, score);
 
 
-		updateables.push_back(player);
-		renderables.push_back(player);
+		updateables.push_back(&player);
+		renderables.push_back(&player);
 
 		projectileDetection = new CollisionDetection();
 
@@ -115,7 +112,6 @@ namespace Tmpl8
 
 
 		delete enemySpawner;
-		delete player;
 		delete projectileDetection;
 
 	}
@@ -141,11 +137,11 @@ namespace Tmpl8
 
 			//reset the offsets
 			tileMap.ResetOffset();
-			player->ResetOffset();
+			player.ResetOffset();
 			//shooting
-			if (player->GetMoveable()->CanRotate())
-				player->Rotate(static_cast<int>(cursor.pos.x), static_cast<int>(cursor.pos.y));
-			player->Shoot(isPressingLeftMouse);
+			if (player.GetMoveable()->CanRotate())
+				player.Rotate(static_cast<int>(cursor.pos.x), static_cast<int>(cursor.pos.y));
+			player.Shoot(isPressingLeftMouse);
 			//rendering
 			for (int i = 0; i < renderables.size(); i++)
 				renderables[i]->Render(screen);
@@ -192,7 +188,7 @@ namespace Tmpl8
 		{
 		case GameState::game:
 
-			player->Rotate(x, y);
+			player.Rotate(x, y);
 			break;
 		case GameState::paused:
 		case GameState::mainMenu:
@@ -208,23 +204,23 @@ namespace Tmpl8
 		switch (key)
 		{
 		case(SDL_SCANCODE_W):
-			player->GetMoveable()->setUp();
+			player.GetMoveable()->setUp();
 
 			break;
 		case(SDL_SCANCODE_S):
-			player->GetMoveable()->setDown();
+			player.GetMoveable()->setDown();
 
 			break;
 		case(SDL_SCANCODE_D):
-			player->GetMoveable()->setRight();
+			player.GetMoveable()->setRight();
 
 			break;
 		case(SDL_SCANCODE_A):
-			player->GetMoveable()->setLeft();
+			player.GetMoveable()->setLeft();
 
 			break;
 		case (SDL_SCANCODE_SPACE):
-			player->GetMoveable()->setDash();
+			player.GetMoveable()->setDash();
 
 			break;
 		default:
@@ -237,29 +233,29 @@ namespace Tmpl8
 		{
 			//dash
 		case (SDL_SCANCODE_SPACE):
-			player->GetMoveable()->setDash(true);
+			player.GetMoveable()->setDash(true);
 			break;
 
 		case SDL_SCANCODE_W:
-			player->GetMoveable()->setUp(true);
+			player.GetMoveable()->setUp(true);
 			break;
 		case SDL_SCANCODE_S:
-			player->GetMoveable()->setDown(true);
+			player.GetMoveable()->setDown(true);
 			break;
 		case SDL_SCANCODE_D:
-			player->GetMoveable()->setRight(true);
+			player.GetMoveable()->setRight(true);
 			break;
 		case SDL_SCANCODE_A:
-			player->GetMoveable()->setLeft(true);
+			player.GetMoveable()->setLeft(true);
 			break;
 
 
 			//firerate
 		case SDL_SCANCODE_UP:
-			player->GetSpawner()->ChangeFireSpeed(FIRE_SPEED_CHANGE);
+			player.GetSpawner()->ChangeFireSpeed(FIRE_SPEED_CHANGE);
 			break;
 		case SDL_SCANCODE_DOWN:
-			player->GetSpawner()->ChangeFireSpeed(-FIRE_SPEED_CHANGE);
+			player.GetSpawner()->ChangeFireSpeed(-FIRE_SPEED_CHANGE);
 			break;
 		case SDL_SCANCODE_ESCAPE:
 			if (currentState == GameState::game) {
@@ -276,6 +272,24 @@ namespace Tmpl8
 	void Game::ChangeGameState(GameState state)
 	{
 		currentState = state;
+	}
+	const Tilemap& Game::getTilemap()
+	{
+		return tileMap;
+	}
+	const Game::GameState Game::getCurrentState()
+	{
+		return currentState;
+	}
+
+	const Player& Game::getPlayer()
+	{
+		return player;
+	}
+
+	std::vector<Collider*>& Game::getColliders()
+	{
+		return colliders;
 	}
 	void Game::ResumeGame()
 	{

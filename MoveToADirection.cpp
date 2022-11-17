@@ -20,11 +20,11 @@ void MoveToADirection::Update(float deltaTime)
 	nextP += nextPos;
 
 	if (col->InGameBounds(nextP, (*col))) {
-		if (Game::Get().tileMap.IsFree(nextP.x, nextP.y))
+		if (Game::Get().getTilemap().IsFree(nextP.x, nextP.y))
 			(*pos) = nextP;
 		else {
 			//reflect on obstacle
-			colToReflectFrom = Game::Get().tileMap.GetObstacle(nextP.x, nextP.y)->getColl();
+			colToReflectFrom = Game::Get().getTilemap().GetObstacle(nextP.x, nextP.y)->getColl();
 
 			call->Call();
 		}

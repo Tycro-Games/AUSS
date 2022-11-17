@@ -48,27 +48,34 @@ namespace Tmpl8 {
 			reset
 		};
 		//collision detection
-		std::vector<Collider*> colliders;
 		void AddCollider(Collider* col);
 		void AddMoveable(Moveable* col);
 		void RemoveCollider(Collider* col);
 		void RemoveMoveable(Moveable* col);
 		void ChangeGameState(GameState state);
-		GameState currentState;
+		//getters
+		const Tilemap& getTilemap();
+		const GameState getCurrentState();
+		const Player& getPlayer();
+		//this needs to be sorted for the collision checking so no const
+		std::vector<Collider*>& getColliders();
 
-		std::vector<Moveable*> moveablesTile;
-		Tilemap tileMap;
 	private:
-		void ResumeGame();
-		void ExitGame();
 		Surface* screen;
 
+		GameState currentState;
+		Tilemap tileMap;
+		void ResumeGame();
+		void ExitGame();
+
+		std::vector<Collider*> colliders;
+		std::vector<Moveable*> moveablesTile;
 		//MainMenu
 		Cursor cursor;
 		Button playButton;
 		Button exitButton;
 		//actual game
-		Player* player;
+		Player player;
 		Score score;
 		EnemyWaveSpawner* enemySpawner;
 		CollisionDetection* projectileDetection;
@@ -78,9 +85,7 @@ namespace Tmpl8 {
 
 		//consts
 		const float FIRE_SPEED_CHANGE = .1f;
-		const Tmpl8::vec2 START_POS = Tmpl8::vec2(ScreenWidth / 2, ScreenHeight / 2);
-		const Tmpl8::vec2 COL_MIN = Tmpl8::vec2(-33 / 2 - 5, -33 / 2 - 5);
-		const Tmpl8::vec2 COL_MAX = Tmpl8::vec2(33 / 2 + 5, 33 / 2 + 5);
+
 
 	};
 

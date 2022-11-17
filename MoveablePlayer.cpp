@@ -4,8 +4,8 @@
 
 #include <iostream>
 using namespace Tmpl8;
-MoveablePlayer::MoveablePlayer(vec2* pos, Collider* col, Collider* tileMapCol, float speed, float DashSpeed) :
-	Moveable(pos, col, speed),
+MoveablePlayer::MoveablePlayer(vec2* pos, Collider* playerCollider, const Collider* tileMapCol, float speed, float DashSpeed) :
+	Moveable(pos, playerCollider, speed),
 	dashTimer(Timer()),
 	cooldownTimer(Timer()),
 	tileMapCol(tileMapCol)
@@ -23,13 +23,7 @@ MoveablePlayer::MoveablePlayer(vec2* pos, Collider* col, Collider* tileMapCol, f
 MoveablePlayer::~MoveablePlayer()
 {
 }
-void MoveablePlayer::copyInput(MoveablePlayer& p) {
-	p.setDash(startedDashing);
-	p.setDown(down);
-	p.setLeft(left);
-	p.setRight(right);
-	p.setUp(up);
-}
+
 void MoveablePlayer::setUp(bool val)
 {
 	up = val;
@@ -171,7 +165,8 @@ void MoveablePlayer::Update(float deltaTime)
 	float  playerPosOnY = nextPos.y * speed * deltaTime;
 
 	playerPos += nextPos * speed * deltaTime;
-	//tilemap
+	//getTilemap()
+
 	vec2 tilemapPos = *tileMapCol->pos;
 	Collider c = *tileMapCol;
 	tilemapPos += nextPos * (-speed) * deltaTime;
@@ -191,7 +186,7 @@ void MoveablePlayer::Update(float deltaTime)
 
 void MoveablePlayer::MoveTileOrPlayer(vec2& tilemapPos, Collider& c, const vec2& playerPos)
 {
-	//move tilemap if it does not hit the bounds
+	//move getTilemap() if it does not hit the bounds
 	if (Collider::TileMapInGameScreen(tilemapPos, c)) {
 		*tileMapCol->pos = tilemapPos;
 		hasChangedPos = true;
@@ -211,12 +206,12 @@ void MoveablePlayer::MoveTileOrPlayer(vec2& tilemapPos, Collider& c, const vec2&
 
 
 
-bool MoveablePlayer::CheckPositionForCollisions(const vec2& playerPos, Collider& playerCol)
+bool MoveablePlayer::CheckPositionForCollisions(const vec2& playerPos, const Collider& playerCollider)
 {
-	return Game::Get().tileMap.IsFree(playerPos.x + playerCol.min.x, playerPos.y + playerCol.min.y) &&
-		Game::Get().tileMap.IsFree(playerPos.x + playerCol.max.x, playerPos.y + playerCol.min.y) &&
-		Game::Get().tileMap.IsFree(playerPos.x + playerCol.min.x, playerPos.y + playerCol.max.y) &&
-		Game::Get().tileMap.IsFree(playerPos.x + playerCol.max.x, playerPos.y + playerCol.max.y);
+	return Game::Get().getTilemap().IsFree(playerPos.x + playerCollider.min.x, playerPos.y + playerCollider.min.y) &&
+		Game::Get().getTilemap().IsFree(playerPos.x + playerCollider.max.x, playerPos.y + playerCollider.min.y) &&
+		Game::Get().getTilemap().IsFree(playerPos.x + playerCollider.min.x, playerPos.y + playerCollider.max.y) &&
+		Game::Get().getTilemap().IsFree(playerPos.x + playerCollider.max.x, playerPos.y + playerCollider.max.y);
 }
 
 void MoveablePlayer::SetDashPos(::vec2& nextPos)

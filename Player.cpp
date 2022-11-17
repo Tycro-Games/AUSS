@@ -5,36 +5,40 @@
 
 #include <string>
 using namespace Tmpl8;
-Player::Player(Tmpl8::Sprite* sprite, Tmpl8::vec2 pos, Collider co, Collider& tileMapCol, int hp)
+Player::Player(vec2& pos)
 	:
-	Being(sprite, pos, hp),
+	Being(spritePlayerPath, 32, pos, 100),
 	startingPos(pos),
-	col(Collider(co.min, co.max, &startingPos)),
-	tilemapCollider(&tileMapCol),
-	projectileSprite(new Tmpl8::Sprite(new Tmpl8::Surface("assets/OriginalAssets/phaser.tga"), 16))
+	playerCollider(Collider(COL_MIN, COL_MAX, &startingPos)),
+	spawner(-Tmpl8::vec2(rVar.SPRITE_OFFSET / 2, rVar.SPRITE_OFFSET / 2),
+		spriteProjectilePath,
+		spriteExplosionPath)
 
 {
 	lastPos = pos;
-	spawner = new ProjectileSpawner(&this->pos, -Tmpl8::vec2(rVar.SPRITE_OFFSET / 2, rVar.SPRITE_OFFSET / 2),
-		&dirToFace,
-		projectileSprite,
-		new Tmpl8::Sprite(new Tmpl8::Surface("assets/OriginalAssets/smoke.tga"), 10));
 
-	playerMover = new MoveablePlayer(&this->pos, &col, tilemapCollider);
 	timer.init(this, TIME_TO_HIT);
+}
+
+void Player::Init(const Collider& tileMapCollider)
+{
+	tilemapCollider = &tileMapCollider;
+	//spawner depends on the game's object construction
+	spawner.Init();
+
+	playerMover = new MoveablePlayer(&pos, &playerCollider, tilemapCollider);
 }
 
 Player::~Player()
 {
 	delete playerMover;
-	delete spawner;
-	delete projectileSprite;
+
 }
 
 
 void Player::Render(Tmpl8::Surface* screen)
 {
-	spawner->Render(screen);
+	spawner.Render(screen);
 	sprite->SetFrame(frame);
 	//when dashing fade the sprite based on the dash multiplier
 	if (playerMover->IsDashing()) {
@@ -54,9 +58,9 @@ void Player::Render(Tmpl8::Surface* screen)
 
 
 	//debug for player's collider	
-	screen->Box(static_cast<int>(pos.x + col.min.x), static_cast<int>(pos.y + col.min.y), static_cast<int>(pos.x + col.max.x), static_cast<int>(pos.y + col.max.y), 0xffffff);
+	screen->Box(static_cast<int>(pos.x + playerCollider.min.x), static_cast<int>(pos.y + playerCollider.min.y), static_cast<int>(pos.x + playerCollider.max.x), static_cast<int>(pos.y + playerCollider.max.y), 0xffffff);
 	//debug for collision with screen borders
-	screen->Box(static_cast<int>(pos.x + col.min.x * 5), static_cast<int>(pos.y + col.min.y * 5), static_cast<int>(pos.x + col.max.x * 5), static_cast<int>(pos.y + col.max.y * 5), 0xffffff);
+	screen->Box(static_cast<int>(pos.x + playerCollider.min.x * 5), static_cast<int>(pos.y + playerCollider.min.y * 5), static_cast<int>(pos.x + playerCollider.max.x * 5), static_cast<int>(pos.y + playerCollider.max.y * 5), 0xffffff);
 
 	auto inactive = std::string("HP: " + std::to_string(hp));
 
@@ -75,7 +79,7 @@ void Player::Update(float deltaTime)
 		playerMover->MovePlayer();
 	}
 
-	spawner->Update(deltaTime);
+	spawner.Update(deltaTime);
 	timer.Update(deltaTime);
 }
 void Player::TakeDamage(int dg) {
@@ -87,7 +91,7 @@ void Player::TakeDamage(int dg) {
 }
 void Player::Shoot(bool fire)
 {
-	spawner->setFlag(fire);
+	spawner.setFlag(fire);
 }
 void Player::Rotate(int x, int y) {
 	//replace with actual pos of player
@@ -109,7 +113,12 @@ MoveablePlayer* Player::GetMoveable()
 }
 ProjectileSpawner* Player::GetSpawner()
 {
-	return spawner;
+	return &spawner;
+}
+
+const vec2 Player::GetDir() const
+{
+	return dirToFace;
 }
 
 void Player::Die()

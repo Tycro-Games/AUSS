@@ -1,18 +1,23 @@
 
 #include "Entity.h"
-
-Entity::Entity(Tmpl8::Sprite* sprite, Tmpl8::vec2 pos) :
+using namespace Tmpl8;
+Entity::Entity(Sprite* sprite, vec2 pos) :
 	sprite(sprite),
 	pos(pos)
 {}
-Entity::Entity(Tmpl8::Sprite* sprite) :
+Entity::Entity(const std::filesystem::path& spritePath, unsigned int numberOfFrames, vec2 _pos) :
+	sprite(new Sprite(new Surface(spritePath.string().c_str()), numberOfFrames)),
+	pos(_pos)
+{
+}
+Entity::Entity(Sprite* sprite) :
 	sprite(sprite),
-	pos(Tmpl8::vec2(0))
+	pos(vec2(0))
 {}
 
-Entity::Entity(Tmpl8::Surface* sprite, unsigned int numberOfFrames) :
-	sprite(new Tmpl8::Sprite(sprite, numberOfFrames)),
-	pos(Tmpl8::vec2(0))
+Entity::Entity(Surface* sprite, unsigned int numberOfFrames) :
+	sprite(new Sprite(sprite, numberOfFrames)),
+	pos(vec2(0))
 {
 }
 

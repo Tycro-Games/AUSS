@@ -7,7 +7,8 @@ class Projectile;
 class ProjectileSpawner : public Spawner {
 
 public:
-	ProjectileSpawner(Tmpl8::vec2* pos, Tmpl8::vec2 offset, Tmpl8::vec2* dir, Tmpl8::Sprite* toSpawn, Tmpl8::Sprite* explosion);
+	ProjectileSpawner(const Tmpl8::vec2 offset, const std::filesystem::path& _projectileSprite, const  std::filesystem::path& _explosionSprite);
+	void Init();
 	~ProjectileSpawner();
 
 	void ChangeFireSpeed(float speed);
@@ -27,15 +28,14 @@ public:
 private:
 	float fireRate = 1.0f, currentTime, desiredTime;
 
-	Tmpl8::vec2* dir;
-	Tmpl8::vec2 offset;
+	const Tmpl8::vec2 offset;
 
 	pool<Projectile*> poolOfProjectiles;
 
 
 	bool isSpawning = false;
 	//assets for projectiles
-	Tmpl8::Sprite* projectileSprite;//deleted by player
+	Tmpl8::Sprite projectileSprite;
 
 
 	//consts
@@ -44,7 +44,6 @@ private:
 	const float MAX_RATE = 2.0f;
 	const float OFFSET_MULTIPLIER = 10.0f;
 	//direction random
-
 
 	const int MAX_PROJECTILES = 50;
 	const int MAX_EXPLOSIONS = 5;

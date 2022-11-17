@@ -26,13 +26,13 @@ void CollisionDetection::DetectCollisions()
 	//add enemies and projectiles
 
 	//sort on x axis
-	if (Game::Get().colliders.size() == 0)
+	if (Game::Get().getColliders().size() == 0)
 		return;
-	sort(Game::Get().colliders.begin(), Game::Get().colliders.end(), [](const Collider* a, const Collider* b) { return a->pos->x < b->pos->x; });
+	sort(Game::Get().getColliders().begin(), Game::Get().getColliders().end(), [](const Collider* a, const Collider* b) { return a->pos->x < b->pos->x; });
 
-	for (int i = 0; i < Game::Get().Tmpl8::Game::colliders.size(); i++)
+	for (int i = 0; i < Game::Get().Tmpl8::Game::getColliders().size(); i++)
 	{
-		Collider* a = Game::Get().colliders[i];
+		Collider* a = Game::Get().getColliders()[i];
 
 		for (int j = 0; j < activeIntervals.size(); j++) {
 			//possible collision
@@ -60,7 +60,7 @@ void CollisionDetection::DetectCollisions()
 	}
 
 	for (int i = 0; i < allPairs.size(); i += 2) {
-		//trigger the collision flags for the colliders
+		//trigger the collision flags for the getColliders()
 		CheckProjectile(allPairs, i, i + 1);
 
 
