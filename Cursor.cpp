@@ -1,7 +1,7 @@
 #include "Cursor.h"
 using namespace Tmpl8;
-Cursor::Cursor(Tmpl8::Sprite* sprite, Tmpl8::vec2 pos) :
-	Entity(sprite, pos),
+Cursor::Cursor(const std::filesystem::path& spritePath, Tmpl8::vec2 pos) :
+	Entity(spritePath, 1, pos),
 	col(Collider(vec2(12, 12), vec2(13, 13), &this->pos))
 {
 	AddOffset();

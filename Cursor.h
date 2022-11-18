@@ -4,7 +4,7 @@
 class Cursor :public Entity
 {
 public:
-	Cursor(Tmpl8::Sprite* sprite, Tmpl8::vec2 pos = Tmpl8::vec2(0));
+	Cursor(const std::filesystem::path& spritePath, Tmpl8::vec2 pos = Tmpl8::vec2(0));
 	void AddOffset();
 	~Cursor();
 	virtual void Update(float deltaTime) override;

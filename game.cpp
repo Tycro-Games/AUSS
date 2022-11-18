@@ -16,11 +16,12 @@ namespace Tmpl8
 	static Game* gs_Game = nullptr;
 
 	Game::Game() :
-		cursor(new Sprite(new Surface("assets/OriginalAssets/target.tga"), 1)),
+		cursor("assets/OriginalAssets/target.tga", 1),
 		//passes functions as objects
 		playButton("assets/UI/Play_Idle.png", "assets/UI/Play_Pushed.png", vec2(ScreenWidth / 2, ScreenHeight / 2), std::bind(&Game::ResumeGame, this)),
 		exitButton("assets/UI/Cross_Idle.png", "assets/UI/Cross_Pushed.png", vec2(ScreenWidth / 2, ScreenHeight / 2 + 64), std::bind(&Game::ExitGame, this)),
-		screen(nullptr)
+		screen(nullptr),
+		currentState(GameState::game)
 
 
 	{
