@@ -13,10 +13,10 @@ MoveablePlayer::MoveablePlayer(vec2* pos, Collider* playerCollider, const Collid
 {
 	initSpeed = speed;
 	dashSpeed = DashSpeed;
-	//timer init
-	cooldownTimer.init(this, COOLDOWN_DURATION);
+	//timer Init
+	cooldownTimer.Init(this, COOLDOWN_DURATION);
 	cooldownTimer.isUpdateable = false;
-	dashTimer.init(this, DASH_DURATION);
+	dashTimer.Init(this, DASH_DURATION);
 	dashTimer.isUpdateable = false;
 }
 
@@ -158,7 +158,7 @@ void MoveablePlayer::Update(float deltaTime)
 
 	//tile check
 	vec2 playerPos = *pos;
-	Collider playerCol = *col;
+	Collider playerCol = *collider;
 
 
 	float playerPosOnX = nextPos.x * speed * deltaTime;
@@ -231,7 +231,7 @@ void MoveablePlayer::ResetTriggers()
 void MoveablePlayer::MovePlayer()
 {
 	if (canMove) {
-		Collider c = (*col);
+		Collider c = (*collider);
 		if (Collider::TileMapInGameScreen(playerMovement, c * EDGE_DISTANCE))
 			*pos = playerMovement;
 		else {

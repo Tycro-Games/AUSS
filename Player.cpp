@@ -26,7 +26,7 @@ void Player::Init(const Collider& tileMapCollider, const Tmpl8::vec2& _pos)
 
 	lastPos = _pos;
 
-	timer.init(this, TIME_TO_HIT);
+	timer.Init(this, TIME_TO_HIT);
 	spawner.Init();
 	playerMover = new MoveablePlayer(&pos, &playerCollider, tilemapCollider);
 }

@@ -30,7 +30,7 @@ void Score::onNotify(int points, PointTypes event)
 	}
 }
 
-void Score::init()
+void Score::Init()
 {
 	totalScore = 0;
 	currentScore = 0;

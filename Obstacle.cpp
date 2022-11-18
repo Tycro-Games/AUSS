@@ -15,10 +15,10 @@ Obstacle::Obstacle()
 
 Obstacle::~Obstacle()
 {
-	delete col;
+	delete collider;
 }
 
 void Obstacle::Update(float deltaTime)
 {
-	
+
 }

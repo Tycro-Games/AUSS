@@ -8,7 +8,8 @@ using json = nlohmann::json;
 class EnemyWaveSpawner : public Spawner, public Subject, public Callable
 {
 public:
-	EnemyWaveSpawner(Being* player);
+	EnemyWaveSpawner();
+	void Init(Being* _player);
 	~EnemyWaveSpawner();
 	void AddEnemyToPool(Enemy* enemy, bool isDead = false);
 	Enemy* CreateEnemy(EnemyTypes enemyType);
@@ -22,7 +23,6 @@ public:
 	virtual void Render(Tmpl8::Surface* screen) override;
 	// Inherited via Updateable
 	virtual void Update(float deltaTime) override;
-
 
 	bool EnemyWaveSpawner::IsPoolEmpty(pool<Enemy*>& pool);
 	const Tmpl8::vec2 EnemyWaveSpawner::GetPlayerPos()const;

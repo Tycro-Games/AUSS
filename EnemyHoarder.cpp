@@ -86,7 +86,7 @@ void EnemyHoarder::Init(PosDir posDir)
 	dir = posDir.dir;
 	hp = maxHp;
 	mover->SetSpeed(SPEED + randomNumbers.RandomBetweenFloats(-30, 100));
-	rotate.init(rot, randomNumbers.RandomBetweenFloats(0.1f, 0.9f), true);
+	rotate.Init(rot, randomNumbers.RandomBetweenFloats(0.1f, 0.9f), true);
 	rot->Call();
 }
 

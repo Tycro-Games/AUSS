@@ -50,14 +50,12 @@ namespace Tmpl8
 	void Game::Initializations()
 	{
 		//reset the score
-		score.init();
-		tileMap.init();
+		score.Init();
+		tileMap.Init();
 		player.Init(tileMap.GetCol(), vec2(ScreenWidth / 2, ScreenHeight / 2));
+		enemySpawner.Init(&player);;
 
-		//to make it a non pointer
-		enemySpawner = new EnemyWaveSpawner(&player);
 
-		
 	}
 	void Game::ResetGame()
 	{
@@ -84,10 +82,10 @@ namespace Tmpl8
 		renderables.push_back(&tileMap);
 
 
-		updateables.push_back(enemySpawner);
-		renderables.push_back(enemySpawner);
+		updateables.push_back(&enemySpawner);
+		renderables.push_back(&enemySpawner);
 		//assign score
-		AssignSubject(*enemySpawner, score);
+		AssignSubject(enemySpawner, score);
 
 
 		updateables.push_back(&player);
@@ -101,10 +99,6 @@ namespace Tmpl8
 	}
 	void Game::Shutdown()
 	{
-
-
-		delete enemySpawner;
-
 	}
 
 

@@ -10,16 +10,17 @@ public:
 	/// <param name="sprite"></param>
 	/// <param name="pos"></param>
 	/// <param name="speed">speed of the parallax</param>
-	ParallaxProp(Tmpl8::Sprite* sprite, Tmpl8::vec2 pos, float speed = 1.0f);
+	ParallaxProp(const std::filesystem::path& spritePath, const Tmpl8::vec2 pos, float speed = 1.0f);
+	ParallaxProp();
 	~ParallaxProp();
-
+	void Init(const std::filesystem::path& spritePath, unsigned int numberOfFrames, const Tmpl8::vec2 pos, float speed = 1.0f);
 	// Inherited via Entity
 	virtual void Update(float deltaTime) override;
 
 	virtual void Render(Tmpl8::Surface* screen) override;
-	Moveable* getMover() const;
+	Moveable* getMover();
 private:
-	MoveInstance* move;
+	MoveInstance moveInstance;
 
 
 

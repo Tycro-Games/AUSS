@@ -11,16 +11,19 @@ using namespace Tmpl8;
 namespace Tmpl8 {
 	void NotifyUser(const char* s);
 }
-EnemyWaveSpawner::EnemyWaveSpawner(Being* player)
-	:Spawner("assets/OriginalAssets/smoke.tga"),
-	player(player)
+EnemyWaveSpawner::EnemyWaveSpawner()
+	:Spawner("assets/OriginalAssets/smoke.tga")
 {
-	timer.init(this, 1.0f);
-	//enemy prototypes intialization
-	EnemyInit();
-	InitializeSpawners();
-	ReadWaves();
+}
 
+void EnemyWaveSpawner::Init(Being* _player)
+{
+	player = _player;
+	timer.Init(this, 1.0f);
+	//enemy prototypes intialization
+	InitializeSpawners();
+	EnemyInit();
+	ReadWaves();
 }
 
 void EnemyWaveSpawner::EnemyInit()
@@ -64,12 +67,6 @@ void EnemyWaveSpawner::ReadWaves()
 		}
 	}
 
-	/*for (int i = 0; i < wavesInput["waves"].size(); i++) {
-		std::cout << waves[i].weight << "\n";
-		for (int j = 0; j < waves[i].enemiesInWave.size(); j++)
-			std::cout << waves[i].enemiesInWave[j] << " ";
-		std::cout << '\n';
-	}*/
 }
 
 void EnemyWaveSpawner::Call()
@@ -125,7 +122,7 @@ void EnemyWaveSpawner::SpawnCurrentWave() {
 		CheckThePossibleEnemies(weight, possibleEnemies);
 	}
 	//interval for spawninig
-	timer.init(this, .15f, true);
+	timer.Init(this, .15f, true);
 	//spawn enemies in the spawners' positons
 	indexSpawn = 0;
 

@@ -54,8 +54,8 @@ struct Tile
 class Tilemap :public Renderable, public Updateable, public Followable
 {
 public:
+	void Init();
 	Tilemap();
-	void init();
 	~Tilemap();
 
 	// Inherited via Renderable
@@ -89,14 +89,15 @@ public:
 
 	void SetPos(const Tmpl8::vec2 p);
 
-	inline Tmpl8::vec2* GetPos();
-	virtual inline const Tmpl8::vec2 GetOffset() override;
+	Tmpl8::vec2* GetPos();
+	virtual const Tmpl8::vec2 GetOffset() override;
 
 private:
 	void DrawTile(Tmpl8::Surface* screen, int tx, int ty, int x, int y);
 	Tmpl8::vec2 pos;
 	Tmpl8::Surface tileSurface;
-	ParallaxProp* prop = nullptr;
+	ParallaxProp prop;
+	const std::filesystem::path& propSpritePath = "assets/Spaceship-shooter#01/background/Space02.png";
 	//consts
 	const Tile BLK = { false };
 	//corners L=Left R=Right T=Top B=Bottom M=Mid

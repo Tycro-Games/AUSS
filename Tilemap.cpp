@@ -17,12 +17,12 @@ Tilemap::Tilemap() :
 {
 }
 
-void Tilemap::init()
+void Tilemap::Init()
 {
 	lastPos = pos;
-	prop = new ParallaxProp(new Tmpl8::Sprite(new Tmpl8::Surface("assets/Spaceship-shooter#01/background/Space02.png"), 1),
-		Tmpl8::vec2(pos.x - OFFSET_X, pos.y - OFFSET_Y), .5f);
-	Game::Get().AddMoveable(prop->getMover());
+
+	prop.Init(propSpritePath, 1, vec2(pos.x - OFFSET_X, pos.y - OFFSET_Y), .5f);
+	Game::Get().AddMoveable(prop.getMover());
 	//add obstacles
 	bool LastOneIsBlocking = false;
 	for (int y = 0; y < Y_TILES; y++)
@@ -79,13 +79,12 @@ void Tilemap::init()
 
 Tilemap::~Tilemap()
 {
-	delete prop;
 }
 
 void Tilemap::Render(Tmpl8::Surface* screen)
 {
 
-	prop->Render(screen);
+	prop.Render(screen);
 	//24x16 tiles
 	for (int y = 0; y < Y_TILES; y++)
 		for (int x = 0; x < X_TILES; x++)

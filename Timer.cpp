@@ -14,7 +14,7 @@ Timer::Timer()
 	toCall = nullptr;
 }
 
-void Timer::init(Callable* entity, float DesiredTime, bool loop)
+void Timer::Init(Callable* entity, float DesiredTime, bool loop)
 {
 	ResetVar();
 	toCall = entity;

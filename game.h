@@ -77,7 +77,7 @@ namespace Tmpl8 {
 		//actual game
 		Player player;
 		Score score;
-		EnemyWaveSpawner* enemySpawner;
+		EnemyWaveSpawner enemySpawner;
 		CollisionDetection projectileDetection;
 		//update components
 		std::vector<Updateable*> updateables;

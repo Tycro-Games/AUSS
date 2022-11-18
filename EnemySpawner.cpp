@@ -11,7 +11,7 @@ EnemySpawner::EnemySpawner(Tmpl8::vec2& _pos, EnemyWaveSpawner* enemyWave, const
 	move(new MoveInstance(&pos))
 {
 	Game::Get().AddMoveable(move);
-	timer.init(this, timeToSpawn);
+	timer.Init(this, timeToSpawn);
 	timer.isUpdateable = false;
 }
 
@@ -42,7 +42,7 @@ void EnemySpawner::Render(Tmpl8::Surface* screen)
 
 void EnemySpawner::ResetTimer(float timeToSpawn)
 {
-	timer.init(this, timeToSpawn);
+	timer.Init(this, timeToSpawn);
 }
 const vec2& EnemySpawner::GetSpawnerPos() const
 {

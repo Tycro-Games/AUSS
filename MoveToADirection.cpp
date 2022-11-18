@@ -19,7 +19,7 @@ void MoveToADirection::Update(float deltaTime)
 
 	nextP += nextPos;
 
-	if (col->InGameBounds(nextP, (*col))) {
+	if (collider->InGameBounds(nextP, (*collider))) {
 		if (Game::Get().getTilemap().IsFree(nextP.x, nextP.y))
 			(*pos) = nextP;
 		else {
