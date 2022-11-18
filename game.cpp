@@ -16,10 +16,11 @@ namespace Tmpl8
 	static Game* gs_Game = nullptr;
 
 	Game::Game() :
-		cursor(Cursor(new Sprite(new Surface("assets/OriginalAssets/target.tga"), 1))),
+		cursor(new Sprite(new Surface("assets/OriginalAssets/target.tga"), 1)),
 		//passes functions as objects
 		playButton("assets/UI/Play_Idle.png", "assets/UI/Play_Pushed.png", vec2(ScreenWidth / 2, ScreenHeight / 2), std::bind(&Game::ResumeGame, this)),
-		exitButton("assets/UI/Cross_Idle.png", "assets/UI/Cross_Pushed.png", vec2(ScreenWidth / 2, ScreenHeight / 2 + 64), std::bind(&Game::ExitGame, this))
+		exitButton("assets/UI/Cross_Idle.png", "assets/UI/Cross_Pushed.png", vec2(ScreenWidth / 2, ScreenHeight / 2 + 64), std::bind(&Game::ExitGame, this)),
+		screen(nullptr)
 
 
 	{
@@ -53,17 +54,10 @@ namespace Tmpl8
 		tileMap.init();
 		player.Init(tileMap.GetCol(), vec2(ScreenWidth / 2, ScreenHeight / 2));
 
-
-		//static spawner
+		//to make it a non pointer
 		enemySpawner = new EnemyWaveSpawner(&player);
 
-		/*	playButton = new PlayButton(new Sprite(new Surface("assets/UI/Play_Idle.png"), 1), Tmpl8::vec2(ScreenWidth / 2, ScreenHeight / 2),
-				cursor.GetCollider(),
-				new Sprite(new Tmpl8::Surface("assets/UI/Play_Pushed.png"), 1));
-
-			exitButton = new ExitButton(new Sprite(new Surface("assets/UI/Cross_Idle.png"), 1), Tmpl8::vec2(ScreenWidth / 2, ScreenHeight / 2 + 64),
-				cursor.GetCollider(),
-				new Sprite(new Tmpl8::Surface("assets/UI/Cross_Pushed.png"), 1));*/
+		
 	}
 	void Game::ResetGame()
 	{
@@ -99,7 +93,6 @@ namespace Tmpl8
 		updateables.push_back(&player);
 		renderables.push_back(&player);
 
-		projectileDetection = new CollisionDetection();
 
 	}
 	void Game::AssignSubject(Subject& subject, Observer& observer)
@@ -111,7 +104,6 @@ namespace Tmpl8
 
 
 		delete enemySpawner;
-		delete projectileDetection;
 
 	}
 
@@ -124,7 +116,7 @@ namespace Tmpl8
 		switch (currentState)
 		{
 		case GameState::game:
-			projectileDetection->Update(deltaTime);
+			projectileDetection.Update(deltaTime);
 
 			//movement offset
 			for (int i = 0; i < updateables.size(); i++)
