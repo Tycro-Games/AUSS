@@ -2,7 +2,7 @@
 	"waves": [
     {
       "weight":10,
-      "enemy_types":["Hoarder","RUnner"]
+      "enemy_types":["Hoarder","Hoarder"]
     },
 		{
       "weight":4,
