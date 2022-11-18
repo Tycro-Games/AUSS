@@ -8,7 +8,9 @@ using namespace Tmpl8;
 Player::Player() :
 	spawner(-Tmpl8::vec2(rVar.SPRITE_OFFSET / 2, rVar.SPRITE_OFFSET / 2),
 		spriteProjectilePath,
-		spriteExplosionPath)
+		spriteExplosionPath),
+	tilemapCollider(nullptr),
+	playerMover(nullptr)
 {
 
 }
