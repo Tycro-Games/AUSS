@@ -18,7 +18,7 @@ For now it can read waves of enemies and spawn them on the map.(there are two ty
 ## Playable on [itch](https://tycro-games.itch.io/auss)
 
 # Diagram of the code
-!(https://github.com/OneBogdan01/TopDownShooter/blob/master/Diagram/Game.bmp)
+!(https://github.com/OneBogdan01/TopDownShooter/blob/master/Diagram/Game.png)
 
 # License
 This work is licensed under a
