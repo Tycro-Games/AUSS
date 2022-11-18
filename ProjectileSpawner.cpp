@@ -14,7 +14,8 @@ ProjectileSpawner::ProjectileSpawner(const Tmpl8::vec2 offset, const filesystem:
 
 
 {
-
+	desiredTime = 0;
+	currentTime = 0;
 }
 
 void ProjectileSpawner::Init()
@@ -28,8 +29,7 @@ void ProjectileSpawner::Init()
 
 
 	fireRate = FIRE_RATE;
-	desiredTime = 0;
-	currentTime = 0;
+	
 }
 
 void ProjectileSpawner::ChangeFireSpeed(float speed) {

@@ -11,8 +11,8 @@
 class Player :public Being, public Callable, public Followable
 {
 public:
-	Player(Tmpl8::vec2& pos);
-	void Init(const Collider& tilemapCollider);
+	Player();
+	void Init(const Collider& tilemapCollider,const Tmpl8::vec2& pos);
 	~Player();
 	void Render(Tmpl8::Surface* screen);
 	void Update(float deltaTime);

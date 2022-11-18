@@ -5,26 +5,26 @@
 
 #include <string>
 using namespace Tmpl8;
-Player::Player(vec2& pos)
-	:
-	Being(spritePlayerPath, 32, pos, 100),
-	startingPos(pos),
-	playerCollider(Collider(COL_MIN, COL_MAX, &startingPos)),
+Player::Player() :
 	spawner(-Tmpl8::vec2(rVar.SPRITE_OFFSET / 2, rVar.SPRITE_OFFSET / 2),
 		spriteProjectilePath,
 		spriteExplosionPath)
-
 {
-	lastPos = pos;
 
-	timer.init(this, TIME_TO_HIT);
 }
 
-void Player::Init(const Collider& tileMapCollider)
+void Player::Init(const Collider& tileMapCollider, const Tmpl8::vec2& _pos)
 {
+
+	Being::Init(spritePlayerPath, 32, _pos, 100);
+	startingPos = _pos;
+	playerCollider = Collider(COL_MIN, COL_MAX, &startingPos);
+
 	tilemapCollider = &tileMapCollider;
-	//spawner depends on the game's object construction
-	spawner.Init();
+
+	lastPos = _pos;
+
+	timer.init(this, TIME_TO_HIT);
 
 	playerMover = new MoveablePlayer(&pos, &playerCollider, tilemapCollider);
 }

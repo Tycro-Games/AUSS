@@ -19,8 +19,7 @@ namespace Tmpl8
 		cursor(Cursor(new Sprite(new Surface("assets/OriginalAssets/target.tga"), 1))),
 		//passes functions as objects
 		playButton("assets/UI/Play_Idle.png", "assets/UI/Play_Pushed.png", vec2(ScreenWidth / 2, ScreenHeight / 2), std::bind(&Game::ResumeGame, this)),
-		exitButton("assets/UI/Cross_Idle.png", "assets/UI/Cross_Pushed.png", vec2(ScreenWidth / 2, ScreenHeight / 2 + 64), std::bind(&Game::ExitGame, this)),
-		player(vec2(ScreenWidth / 2, ScreenHeight / 2))
+		exitButton("assets/UI/Cross_Idle.png", "assets/UI/Cross_Pushed.png", vec2(ScreenWidth / 2, ScreenHeight / 2 + 64), std::bind(&Game::ExitGame, this))
 
 
 	{
@@ -52,7 +51,7 @@ namespace Tmpl8
 		//reset the score
 		score.init();
 		tileMap.init();
-		player.Init(tileMap.GetCol());
+		player.Init(tileMap.GetCol(), vec2(ScreenWidth / 2, ScreenHeight / 2));
 
 
 		//static spawner

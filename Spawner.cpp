@@ -12,6 +12,9 @@ Spawner::Spawner(const Tmpl8::Sprite& explosion) :
 {
 }
 
+
+
+
 Spawner::~Spawner()
 {
 	if (updateObjects.size() > 0)
