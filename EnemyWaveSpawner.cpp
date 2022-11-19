@@ -15,9 +15,14 @@ EnemyWaveSpawner::EnemyWaveSpawner()
 	:
 	Spawner("assets/OriginalAssets/smoke.tga"),
 	hoarderSprite(new Surface("assets/OriginalAssets/phaser.tga"), 16),
-	runnerSprite(new Surface("assets/OriginalAssets/sniper.tga"), 32)
+	runnerSprite(new Surface("assets/OriginalAssets/sniper.tga"), 32),
+	enemyPrototypes()
+
 
 {
+	player = nullptr;
+	indexSpawn = 0;
+
 }
 
 void EnemyWaveSpawner::Init(Being* _player)
@@ -32,6 +37,13 @@ void EnemyWaveSpawner::Init(Being* _player)
 
 void EnemyWaveSpawner::EnemyInit()
 {
+	//makes sure we have clear arrays
+	for (size_t i = 0; i < NUMBER_OF_ENEMIES; i++) {
+		delete enemyPrototypes[i];
+	}
+	for (auto p : updateObjects)
+		delete p;
+	updateObjects.clear();
 
 	for (int i = 0; i < NUMBER_OF_ENEMIES; i++) {
 		enemyPrototypes[i] = CreateEnemy(allEnemyTypes[i]);
@@ -201,7 +213,6 @@ void EnemyWaveSpawner::Update(float deltaTime)
 void EnemyWaveSpawner::AddEnemyToPool(Enemy* enemy, bool isDead)
 {
 	enemy->SetActive(false);
-	//activeColliders.remove(enemy->getColl());
 	activeColliders.erase(remove(
 		activeColliders.begin()
 		, activeColliders.end(), enemy->getColl())

@@ -54,7 +54,7 @@ struct Tile
 class Tilemap :public Renderable, public Updateable, public Followable
 {
 public:
-	void Init();
+	void Init(const Tmpl8::vec2& _pos);
 	Tilemap();
 	~Tilemap();
 

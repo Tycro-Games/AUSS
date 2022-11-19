@@ -34,6 +34,7 @@ namespace Tmpl8 {
 		void MouseUp(int button);
 		void MouseDown(int button);
 		void MouseMove(int x, int y);
+		void CheckButtons(int x, int y);
 		void KeyUp(SDL_Scancode key);
 		void KeyDown(SDL_Scancode key);
 

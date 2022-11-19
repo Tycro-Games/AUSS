@@ -9,7 +9,7 @@
 using namespace Tmpl8;
 Tilemap::Tilemap() :
 	tileSurface("assets/Spaceship-shooter#01/Wang tiles/02-Craters.png"),
-	pos(Tmpl8::vec2(ScreenWidth / 2, ScreenHeight / 2)),
+	pos(vec2(0)),
 	col(Collider(
 		Tmpl8::vec2(0),
 		Tmpl8::vec2(0),
@@ -18,8 +18,9 @@ Tilemap::Tilemap() :
 {
 }
 
-void Tilemap::Init()
+void Tilemap::Init(const vec2& _pos)
 {
+	pos = _pos;
 	lastPos = pos;
 
 	prop.Init(vec2(pos.x - OFFSET_X, pos.y - OFFSET_Y), .5f);

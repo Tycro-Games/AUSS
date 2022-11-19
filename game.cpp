@@ -46,10 +46,12 @@ namespace Tmpl8
 	}
 	void Game::Initializations()
 	{
+		vec2 center = vec2(ScreenWidth / 2, ScreenHeight / 2);
 		//reset the score
 		score.Init();
-		tileMap.Init();
-		player.Init(tileMap.GetCol(), vec2(ScreenWidth / 2, ScreenHeight / 2));
+
+		tileMap.Init(center);
+		player.Init(tileMap.GetCol(), center);
 		waveSpawner.Init(&player);;
 
 
@@ -62,6 +64,7 @@ namespace Tmpl8
 		Initializations();
 		AddInstancesToUpdates();
 		ChangeGameState(GameState::mainMenu);
+		CheckButtons(cursor.pos.x, cursor.pos.y);
 	}
 	void Game::RemoveAllUpdateables()
 	{
@@ -71,6 +74,7 @@ namespace Tmpl8
 		updateables.clear();
 		renderables.clear();
 	}
+
 	void Game::AddInstancesToUpdates()
 	{
 
@@ -174,10 +178,15 @@ namespace Tmpl8
 			break;
 		case GameState::paused:
 		case GameState::mainMenu:
-			playButton.OnMouseMoved(x, y);
-			exitButton.OnMouseMoved(x, y);
+			CheckButtons(x, y);
 			break;
 		}
+	}
+
+	void Game::CheckButtons(int x, int y)
+	{
+		playButton.OnMouseMoved(x, y);
+		exitButton.OnMouseMoved(x, y);
 	}
 
 	void Game::KeyUp(SDL_Scancode key)
