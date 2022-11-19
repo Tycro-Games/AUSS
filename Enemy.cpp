@@ -1,19 +1,19 @@
 #include "Enemy.h"
 
+using namespace Tmpl8;
+using namespace std;
+
 
 Enemy::Enemy(Tmpl8::vec2 pos, Tmpl8::Sprite* sprite, EnemyWaveSpawner* spawner) :
 	Being(sprite, pos),
 	spawner(spawner),
-	col(),
+	enemyCollider(),
 	dg()
-
 {
-
 }
-
 Enemy::~Enemy()
 {
-	delete col;
+	delete enemyCollider;
 }
 
 

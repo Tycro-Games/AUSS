@@ -12,7 +12,7 @@
 class Spawner : public Updateable, public Renderable
 {
 public:
-	Spawner(const std::filesystem::path& explosion);
+	Spawner(const std::filesystem::path& explosion, unsigned int numberOfFrames = 10);
 	Spawner(const Tmpl8::Sprite& explosion);
 	virtual ~Spawner();
 	void AddExplosionToPool(ExplosionBullet* entity);

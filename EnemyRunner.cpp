@@ -4,7 +4,7 @@ EnemyRunner::EnemyRunner(PosDir posDir, Tmpl8::Sprite* sprite, EnemyWaveSpawner*
 	:Enemy(posDir.pos, sprite, spawner)
 {
 	enemyType = Runner;
-	col = new Collider(0, 0, &pos);
+	enemyCollider = new Collider(0, 0, &pos);
 	mover = new MoveInstance(&this->pos);
 	move = mover;
 }
@@ -16,7 +16,7 @@ EnemyRunner::~EnemyRunner()
 
 void EnemyRunner::Render(Tmpl8::Surface* screen)
 {
-	sprite->Draw(screen, static_cast<int>(pos.x), static_cast<int>(pos.y));
+	sprite.Draw(screen, static_cast<int>(pos.x), static_cast<int>(pos.y));
 }
 
 void EnemyRunner::Update(float deltaTime)
@@ -30,7 +30,7 @@ void EnemyRunner::Die()
 
 Enemy* EnemyRunner::clone()
 {
-	Enemy* enem = new EnemyRunner(PosDir(pos, dir), sprite, spawner);
+	Enemy* enem = new EnemyRunner(PosDir(pos, dir), &sprite, spawner);
 	SetJsonValues(enem);
 	return enem;
 }

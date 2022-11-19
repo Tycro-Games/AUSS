@@ -30,5 +30,5 @@ void Cursor::ChangePosition(int x, int y)
 
 void Cursor::Render(Tmpl8::Surface* screen)
 {
-	sprite->Draw(screen, static_cast<int>(pos.x), static_cast<int>(pos.y));
+	sprite.Draw(screen, static_cast<int>(pos.x), static_cast<int>(pos.y));
 }

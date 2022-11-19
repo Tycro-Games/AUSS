@@ -5,9 +5,9 @@ EnemyHoarder::EnemyHoarder(PosDir posDir, Tmpl8::Sprite* sprite, EnemyWaveSpawne
 {
 	enemyType = Hoarder;
 
-	col = (new Collider(COL_MIN, COL_MAX, &pos));
+	enemyCollider = (new Collider(COL_MIN, COL_MAX, &pos));
 	SetColToEnemyFlag();
-	mover = new MoveToADirection(&pos, &dir, col, this, SPEED);
+	mover = new MoveToADirection(&pos, &dir, enemyCollider, this, SPEED);
 	//as a getter for the base class
 	move = mover;
 
@@ -33,10 +33,10 @@ void EnemyHoarder::Update(float deltaTime)
 
 	rotate.Update(deltaTime);
 	//marked by collision
-	if (col->toDeactivate) {
+	if (enemyCollider->toDeactivate) {
 		TakeDamage(DG_TO_TAKE);
 		std::cout << "took damage\n";
-		col->toDeactivate = false;
+		enemyCollider->toDeactivate = false;
 
 	}
 	else {
@@ -67,8 +67,8 @@ void EnemyHoarder::Render(Tmpl8::Surface* screen)
 {
 	if (!getRenderable())
 		return;
-	sprite->SetFrame(frame);
-	sprite->Draw(screen, static_cast<int>(static_cast<int>(pos.x - rVar.SPRITE_OFFSET / 2)), static_cast<int>(pos.y - rVar.SPRITE_OFFSET / 2));
+	sprite.SetFrame(frame);
+	sprite.Draw(screen, static_cast<int>(static_cast<int>(pos.x - rVar.SPRITE_OFFSET / 2)), static_cast<int>(pos.y - rVar.SPRITE_OFFSET / 2));
 	screen->Box(static_cast<int>(pos.x - rVar.SPRITE_OFFSET / 2),
 		static_cast<int>(pos.y - rVar.SPRITE_OFFSET / 2),
 		static_cast<int>(pos.x + rVar.SPRITE_OFFSET / 2),
@@ -112,7 +112,7 @@ void EnemyHoarder::Call()
 		Collider c = *mover->colToReflectFrom;
 
 
-		rot->Reflect(Collider::GetNormal(c, *col));
+		rot->Reflect(Collider::GetNormal(c, *enemyCollider));
 
 		mover->colToReflectFrom = NULL;
 	}
@@ -130,7 +130,7 @@ void EnemyHoarder::Die()
 
 Enemy* EnemyHoarder::clone()
 {
-	Enemy* enem = new EnemyHoarder(PosDir(pos, dir), sprite, spawner);
+	Enemy* enem = new EnemyHoarder(PosDir(pos, dir), &sprite, spawner);
 	SetJsonValues(enem);
 	return enem;
 }

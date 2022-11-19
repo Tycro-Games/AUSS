@@ -6,6 +6,7 @@
 #include <string>
 using namespace Tmpl8;
 Player::Player() :
+	Being("assets/player.png", 32),
 	spawner(-Tmpl8::vec2(rVar.SPRITE_OFFSET / 2, rVar.SPRITE_OFFSET / 2),
 		spriteProjectilePath,
 		spriteExplosionPath),
@@ -18,7 +19,7 @@ Player::Player() :
 void Player::Init(const Collider& tileMapCollider, const Tmpl8::vec2& _pos)
 {
 
-	Being::Init(spritePlayerPath, 32, _pos, 100);
+	Being::Init(_pos, 100);
 	startingPos = _pos;
 	playerCollider = Collider(COL_MIN, COL_MAX, &startingPos);
 
@@ -41,16 +42,16 @@ Player::~Player()
 void Player::Render(Tmpl8::Surface* screen)
 {
 	spawner.Render(screen);
-	sprite->SetFrame(frame);
+	sprite.SetFrame(frame);
 	//when dashing fade the sprite based on the dash multiplier
 	if (playerMover->IsDashing()) {
-		SpriteTransparency::SetTransperency(sprite, screen,
+		SpriteTransparency::SetTransperency(&sprite, screen,
 			static_cast<int>(pos.x - rVar.SPRITE_OFFSET / 2),
 			static_cast<int>(pos.y - rVar.SPRITE_OFFSET / 2),
 			playerMover->GetDashLinearTime(), frame);
 	}
 	else {
-		SpriteTransparency::SetTransperency(sprite, screen,
+		SpriteTransparency::SetTransperency(&sprite, screen,
 			static_cast<int>(pos.x - rVar.SPRITE_OFFSET / 2),
 			static_cast<int>(pos.y - rVar.SPRITE_OFFSET / 2),
 			1, frame);

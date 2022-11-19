@@ -1,19 +1,19 @@
 #include "Being.h"
-
-Being::Being(Tmpl8::Sprite* sprite, Tmpl8::vec2 pos, int hp)
-	: Entity(sprite, pos),
-	hp(hp)
-{}
+using namespace Tmpl8;
+using namespace std;
 
 Being::Being(const std::filesystem::path& spritePath, unsigned int numberOfFrames, Tmpl8::vec2 pos, int hp)
 	: Entity(spritePath, numberOfFrames, pos),
 	hp(hp)
 {
 }
-
-void Being::Init(const std::filesystem::path& spritePath, unsigned int numberOfFrames, Tmpl8::vec2 _pos, int _hp)
+Being::Being(Tmpl8::Sprite* sprite, Tmpl8::vec2 pos, int hp)
+	: Entity(sprite, pos),
+	hp(hp)
+{}
+void Being::Init(vec2 _pos, int _hp)
 {
-	Entity::Init(spritePath, numberOfFrames, _pos);
+	Entity::Init(_pos);
 	hp = _hp;
 }
 
@@ -22,10 +22,7 @@ void Being::Init(const std::filesystem::path& spritePath, unsigned int numberOfF
 Being::~Being()
 {
 }
-Being::Being()
-{
-	hp = 100;
-}
+
 
 void Being::TakeDamage(int dg)
 {

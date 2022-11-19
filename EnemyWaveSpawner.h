@@ -36,8 +36,8 @@ private:
 	size_t indexSpawn;
 	Timer timer;
 	Being* player;
-	Tmpl8::Sprite* hoarderSprite;
-	Tmpl8::Sprite* runnerSprite;
+	Tmpl8::Sprite hoarderSprite;
+	Tmpl8::Sprite runnerSprite;
 	//Enemy Hoarder
 	pool<Enemy*> poolOfHoarders;
 	//Enemy Runner

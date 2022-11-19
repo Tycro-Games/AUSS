@@ -12,7 +12,7 @@ class Player :public Being, public Callable, public Followable
 {
 public:
 	Player();
-	void Init(const Collider& tilemapCollider,const Tmpl8::vec2& pos);
+	void Init(const Collider& tilemapCollider, const Tmpl8::vec2& pos);
 	~Player();
 	void Render(Tmpl8::Surface* screen);
 	void Update(float deltaTime);
@@ -36,7 +36,6 @@ private:
 	Tmpl8::vec2 dirToFace;
 	Tmpl8::vec2 startingPos;
 	//assets
-	const std::filesystem::path spritePlayerPath = "assets/player.png";
 	const std::filesystem::path spriteProjectilePath = "assets/OriginalAssets/phaser.tga";
 	const std::filesystem::path spriteExplosionPath = "assets/OriginalAssets/smoke.tga";
 	//consts

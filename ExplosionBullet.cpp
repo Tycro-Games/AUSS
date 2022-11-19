@@ -37,7 +37,7 @@ void ExplosionBullet::Update(float deltaTime)
 		currenTime += deltaTime;
 	else {
 		currenTime = 0;
-		frame = (frame + 1) % sprite->Frames();
+		frame = (frame + 1) % sprite.Frames();
 	}
 
 }
@@ -47,8 +47,8 @@ void ExplosionBullet::Render(Surface* screen)
 	if (!getRenderable())
 		return;
 
-	sprite->SetFrame(frame);
-	sprite->Draw(screen, static_cast<int>(pos.x), static_cast<int>(pos.y));
+	sprite.SetFrame(frame);
+	sprite.Draw(screen, static_cast<int>(pos.x), static_cast<int>(pos.y));
 
 
 }

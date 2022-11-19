@@ -2,8 +2,8 @@
 
 using namespace Tmpl8;
 
-Spawner::Spawner(const std::filesystem::path& explosion) :
-	explosionSprite(new Surface(explosion.string().c_str()), 10)
+Spawner::Spawner(const std::filesystem::path& explosion, unsigned int numberOfFrames) :
+	explosionSprite(new Surface(explosion.string().c_str()), numberOfFrames)
 {
 }
 
@@ -19,7 +19,6 @@ Spawner::~Spawner()
 {
 	if (updateObjects.size() > 0)
 		for (size_t i = 0; i < updateObjects.size() - 1; i++) {
-			updateObjects[i]->sprite = nullptr;//the sprite is only a pointer that is cleaned up by sub spawners
 			delete updateObjects[i];
 		}
 }

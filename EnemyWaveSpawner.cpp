@@ -12,7 +12,11 @@ namespace Tmpl8 {
 	void NotifyUser(const char* s);
 }
 EnemyWaveSpawner::EnemyWaveSpawner()
-	:Spawner("assets/OriginalAssets/smoke.tga")
+	:
+	Spawner("assets/OriginalAssets/smoke.tga"),
+	hoarderSprite(new Surface("assets/OriginalAssets/phaser.tga"), 16),
+	runnerSprite(new Surface("assets/OriginalAssets/sniper.tga"), 32)
+
 {
 }
 
@@ -28,8 +32,7 @@ void EnemyWaveSpawner::Init(Being* _player)
 
 void EnemyWaveSpawner::EnemyInit()
 {
-	hoarderSprite = new Sprite(new Surface("assets/OriginalAssets/phaser.tga"), 16);
-	runnerSprite = new Sprite(new Surface("assets/OriginalAssets/sniper.tga"), 32);
+
 	for (int i = 0; i < NUMBER_OF_ENEMIES; i++) {
 		enemyPrototypes[i] = CreateEnemy(allEnemyTypes[i]);
 	}
@@ -89,9 +92,7 @@ EnemyWaveSpawner::~EnemyWaveSpawner()
 	for (size_t i = 0; i < NUMBER_OF_ENEMIES; i++) {
 		delete enemyPrototypes[i];
 	}
-	//deleted by the above statement
-	/*delete hoarderSprite;
-	delete runnerSprite;*/
+
 }
 void EnemyWaveSpawner::PlayerTakesDamage(Enemy* enemy)
 {
@@ -234,7 +235,7 @@ Enemy* EnemyWaveSpawner::CreateEnemy(EnemyTypes enemyType) {
 	{
 	case Hoarder:
 		f.open("json/Hoarder.json");
-		enemy = new EnemyHoarder(PosDir(vec2(0), vec2(0)), hoarderSprite, this);
+		enemy = new EnemyHoarder(PosDir(vec2(0), vec2(0)), &hoarderSprite, this);
 		enemyJson = json::parse(f);
 
 		SetJsonValues(enemy, enemyJson);
@@ -243,7 +244,7 @@ Enemy* EnemyWaveSpawner::CreateEnemy(EnemyTypes enemyType) {
 	case Runner:
 		f.open("json/Runner.json");
 
-		enemy = new EnemyRunner(PosDir(vec2(0), vec2(0)), runnerSprite, this);
+		enemy = new EnemyRunner(PosDir(vec2(0), vec2(0)), &runnerSprite, this);
 		enemyJson = json::parse(f);
 
 		SetJsonValues(enemy, enemyJson);

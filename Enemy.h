@@ -4,8 +4,9 @@
 #include "MoveToADirection.h"
 #include "PosDir.h"
 #include "Wave.h"
-
 #include "EnemyWaveSpawner.h"
+
+#include <filesystem>
 //based on https://gameprogrammingpatterns.com/prototype.html
 class Enemy : public Being
 {
@@ -33,7 +34,7 @@ protected:
 	virtual void ResetEnemy() = 0;
 	EnemyWaveSpawner* spawner;
 	Moveable* move;
-	Collider* col;
+	Collider* enemyCollider;
 	Tmpl8::vec2 dir;
 
 	unsigned int dg;
@@ -43,7 +44,7 @@ protected:
 };
 //inlined functions
 inline void Enemy::SetColToEnemyFlag() {
-	col->type = Collider::Enemy;
+	enemyCollider->type = Collider::Enemy;
 }
 
 inline void Enemy::setDg(unsigned int Dg)
@@ -67,7 +68,7 @@ inline void Enemy::setWeight(unsigned int Weight)
 }
 
 inline Collider* Enemy::getColl() const {
-	return col;
+	return enemyCollider;
 }
 
 inline Moveable* Enemy::getMoveable() const {

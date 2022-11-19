@@ -13,7 +13,8 @@ Tilemap::Tilemap() :
 	col(Collider(
 		Tmpl8::vec2(0),
 		Tmpl8::vec2(0),
-		&pos))
+		&pos)),
+	prop("assets/Spaceship-shooter#01/background/Space02.png")
 {
 }
 
@@ -21,7 +22,7 @@ void Tilemap::Init()
 {
 	lastPos = pos;
 
-	prop.Init(propSpritePath, 1, vec2(pos.x - OFFSET_X, pos.y - OFFSET_Y), .5f);
+	prop.Init(vec2(pos.x - OFFSET_X, pos.y - OFFSET_Y), .5f);
 	Game::Get().AddMoveable(prop.getMover());
 	//add obstacles
 	bool LastOneIsBlocking = false;

@@ -54,7 +54,7 @@ namespace Tmpl8
 		score.Init();
 		tileMap.Init();
 		player.Init(tileMap.GetCol(), vec2(ScreenWidth / 2, ScreenHeight / 2));
-		enemySpawner.Init(&player);;
+		waveSpawner.Init(&player);;
 
 
 	}
@@ -83,10 +83,10 @@ namespace Tmpl8
 		renderables.push_back(&tileMap);
 
 
-		updateables.push_back(&enemySpawner);
-		renderables.push_back(&enemySpawner);
+		updateables.push_back(&waveSpawner);
+		renderables.push_back(&waveSpawner);
 		//assign score
-		AssignSubject(enemySpawner, score);
+		AssignSubject(waveSpawner, score);
 
 
 		updateables.push_back(&player);

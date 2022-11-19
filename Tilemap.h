@@ -97,7 +97,6 @@ private:
 	Tmpl8::vec2 pos;
 	Tmpl8::Surface tileSurface;
 	ParallaxProp prop;
-	const std::filesystem::path& propSpritePath = "assets/Spaceship-shooter#01/background/Space02.png";
 	//consts
 	const Tile BLK = { false };
 	//corners L=Left R=Right T=Top B=Bottom M=Mid
