@@ -21,8 +21,7 @@ namespace Tmpl8
 		playButton("assets/UI/Play_Idle.png", "assets/UI/Play_Pushed.png", vec2(ScreenWidth / 2, ScreenHeight / 2), std::bind(&Game::ResumeGame, this)),
 		exitButton("assets/UI/Cross_Idle.png", "assets/UI/Cross_Pushed.png", vec2(ScreenWidth / 2, ScreenHeight / 2 + 64), std::bind(&Game::ExitGame, this)),
 		screen(nullptr),
-		currentState(GameState::game)
-
+		currentState(GameState::mainMenu)
 
 	{
 		gs_Game = this;
@@ -36,9 +35,6 @@ namespace Tmpl8
 
 	void Game::Init()
 	{
-#ifdef _RELEASE
-		currentState = mainMenu;
-#endif
 #ifdef _DEBUG
 		currentState = GameState::game;
 #endif
