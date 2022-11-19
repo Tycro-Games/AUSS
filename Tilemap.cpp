@@ -22,11 +22,12 @@ void Tilemap::Init(const vec2& _pos)
 {
 	pos = _pos;
 	lastPos = pos;
-
 	prop.Init(vec2(pos.x - OFFSET_X, pos.y - OFFSET_Y), .5f);
 	Game::Get().AddMoveable(prop.getMover());
 	//add obstacles
 	bool LastOneIsBlocking = false;
+	ClearObstacles();
+
 	for (int y = 0; y < Y_TILES; y++)
 		for (int x = 0; x < X_TILES; x++) {
 			int index = x + y * X_TILES;
@@ -81,6 +82,20 @@ void Tilemap::Init(const vec2& _pos)
 
 Tilemap::~Tilemap()
 {
+
+	ClearObstacles();
+}
+
+void Tilemap::ClearObstacles()
+{
+	//set the obstacles to null after delete
+	for (size_t i = 0; i < X_TILES * Y_TILES; i++)
+		if (tiles[i].IsBlocking)
+			tiles[i].obs = nullptr;
+	for (auto p : blockingTiles)
+		delete p, p = nullptr;
+
+	blockingTiles.clear();
 }
 
 void Tilemap::Render(Tmpl8::Surface* screen)

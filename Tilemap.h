@@ -57,7 +57,7 @@ public:
 	void Init(const Tmpl8::vec2& _pos);
 	Tilemap();
 	~Tilemap();
-
+	void ClearObstacles();
 	// Inherited via Renderable
 	virtual void Render(Tmpl8::Surface* screen) override;
 

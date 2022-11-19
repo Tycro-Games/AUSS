@@ -42,16 +42,16 @@ Player::~Player()
 void Player::Render(Tmpl8::Surface* screen)
 {
 	spawner.Render(screen);
-	sprite.SetFrame(frame);
+	sprite->SetFrame(frame);
 	//when dashing fade the sprite based on the dash multiplier
 	if (playerMover->IsDashing()) {
-		SpriteTransparency::SetTransperency(&sprite, screen,
+		SpriteTransparency::SetTransperency(sprite, screen,
 			static_cast<int>(pos.x - rVar.SPRITE_OFFSET / 2),
 			static_cast<int>(pos.y - rVar.SPRITE_OFFSET / 2),
 			playerMover->GetDashLinearTime(), frame);
 	}
 	else {
-		SpriteTransparency::SetTransperency(&sprite, screen,
+		SpriteTransparency::SetTransperency(sprite, screen,
 			static_cast<int>(pos.x - rVar.SPRITE_OFFSET / 2),
 			static_cast<int>(pos.y - rVar.SPRITE_OFFSET / 2),
 			1, frame);

@@ -19,6 +19,7 @@ Spawner::~Spawner()
 {
 	if (updateObjects.size() > 0)
 		for (size_t i = 0; i < updateObjects.size() - 1; i++) {
+			updateObjects[i]->sprite = nullptr;//the sprite is only a pointer that is cleaned up by sub spawners
 			delete updateObjects[i];
 		}
 }

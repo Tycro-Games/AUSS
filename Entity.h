@@ -17,7 +17,7 @@ public:
 	Entity(const std::filesystem::path& spritePath, unsigned int numberOfFrames);
 	void Init(Tmpl8::vec2 pos);
 	virtual ~Entity();
-	Tmpl8::Sprite sprite;
+	Tmpl8::Sprite* sprite;
 	Tmpl8::vec2 pos;
 
 protected:

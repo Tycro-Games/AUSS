@@ -67,8 +67,8 @@ void EnemyHoarder::Render(Tmpl8::Surface* screen)
 {
 	if (!getRenderable())
 		return;
-	sprite.SetFrame(frame);
-	sprite.Draw(screen, static_cast<int>(static_cast<int>(pos.x - rVar.SPRITE_OFFSET / 2)), static_cast<int>(pos.y - rVar.SPRITE_OFFSET / 2));
+	sprite->SetFrame(frame);
+	sprite->Draw(screen, static_cast<int>(static_cast<int>(pos.x - rVar.SPRITE_OFFSET / 2)), static_cast<int>(pos.y - rVar.SPRITE_OFFSET / 2));
 	screen->Box(static_cast<int>(pos.x - rVar.SPRITE_OFFSET / 2),
 		static_cast<int>(pos.y - rVar.SPRITE_OFFSET / 2),
 		static_cast<int>(pos.x + rVar.SPRITE_OFFSET / 2),
@@ -130,7 +130,7 @@ void EnemyHoarder::Die()
 
 Enemy* EnemyHoarder::clone()
 {
-	Enemy* enem = new EnemyHoarder(PosDir(pos, dir), &sprite, spawner);
+	Enemy* enem = new EnemyHoarder(PosDir(pos, dir), sprite, spawner);
 	SetJsonValues(enem);
 	return enem;
 }

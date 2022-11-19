@@ -28,8 +28,8 @@ void ParallaxProp::Update(float deltaTime)
 
 void ParallaxProp::Render(Tmpl8::Surface* screen)
 {
-	sprite.SetFrame(frame);
-	sprite.Draw(screen, static_cast<int>(pos.x), static_cast<int>(pos.y));
+	sprite->SetFrame(frame);
+	sprite->Draw(screen, static_cast<int>(pos.x), static_cast<int>(pos.y));
 }
 
 Moveable* ParallaxProp::getMover()

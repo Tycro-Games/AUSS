@@ -66,8 +66,8 @@ void Projectile::Render(Tmpl8::Surface* screen)
 
 	if (!getRenderable())
 		return;
-	sprite.SetFrame(frame);
-	sprite.Draw(screen, static_cast<int>(pos.x + col->min.x), static_cast<int>(pos.y + col->min.y));
+	sprite->SetFrame(frame);
+	sprite->Draw(screen, static_cast<int>(pos.x + col->min.x), static_cast<int>(pos.y + col->min.y));
 	screen->Box(static_cast<int>(pos.x + col->min.x), static_cast<int>(pos.y + col->min.y), static_cast<int>(pos.x + col->max.x), static_cast<int>(pos.y + col->max.y), 0xff0000);
 }
 
