@@ -44,6 +44,13 @@ void EnemyWaveSpawner::EnemyInit()
 	updateObjects.clear();
 
 	activeColliders.clear();
+	for (int i = 0; i < poolOfHoarders.size(); i++)
+		delete poolOfHoarders[i];
+	poolOfHoarders.clear();
+	for (int i = 0; i < poolOfRunners.size(); i++)
+		delete poolOfRunners[i];
+	poolOfHoarders.clear();
+	Spawner::ResetExplosions();
 	for (size_t i = 0; i < NUMBER_OF_ENEMIES; i++) {
 		delete enemyPrototypes[i];
 	}
@@ -228,6 +235,7 @@ void EnemyWaveSpawner::AddEnemyToPool(Enemy* enemy, bool isDead)
 
 
 	if (isDead) {
+		std::cout << "e mort\n";
 		notify(enemy->getScore(), Additive);
 		if (activeColliders.size() == 0)
 			SpawnCurrentWave();

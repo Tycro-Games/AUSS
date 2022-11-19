@@ -35,7 +35,6 @@ void EnemyHoarder::Update(float deltaTime)
 	//marked by collision
 	if (enemyCollider->toDeactivate) {
 		TakeDamage(DG_TO_TAKE);
-		std::cout << "took damage\n";
 		enemyCollider->toDeactivate = false;
 
 	}
