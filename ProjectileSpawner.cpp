@@ -20,6 +20,17 @@ ProjectileSpawner::ProjectileSpawner(const Tmpl8::vec2 offset, const filesystem:
 
 void ProjectileSpawner::Init()
 {
+	for (size_t i = 0; i < updateObjects.size(); i++)
+		if (updateObjects[i]->isUpdateable)
+			delete updateObjects[i];
+	updateObjects.clear();
+
+	for (size_t i = 0; i < poolOfProjectiles.size(); i++) {
+		delete poolOfProjectiles[i];
+	}
+	poolOfProjectiles.clear();
+
+	Spawner::ResetExplosions();
 	for (int i = 0; i < MAX_PROJECTILES; i++) {
 		CreateMoreProjectiles();
 	}
@@ -28,8 +39,10 @@ void ProjectileSpawner::Init()
 	}
 
 
+
+
 	fireRate = FIRE_RATE;
-	
+
 }
 
 void ProjectileSpawner::ChangeFireSpeed(float speed) {
@@ -46,7 +59,7 @@ void ProjectileSpawner::AddProjectileToPool(Projectile* entity)
 	Game::Get().RemoveCollider(entity->getColl());
 
 	entity->SetActive(false);
-	poolOfProjectiles.AddElement(entity);
+	poolOfProjectiles.push_back(entity);
 
 }
 
@@ -68,10 +81,11 @@ void ProjectileSpawner::CreateMoreProjectiles()
 
 void ProjectileSpawner::SpawnProjectiles()
 {
-	if (poolOfProjectiles.getCount() == 0)
+	if (poolOfProjectiles.size() == 0)
 		CreateMoreProjectiles();
 
-	Projectile* projectile = poolOfProjectiles.PopElement();
+	Projectile* projectile = poolOfProjectiles[poolOfProjectiles.size() - 1];
+	poolOfProjectiles.pop_back();
 
 	vec2 randomDir = GetDirDeviation();
 	vec2 playerPos = Game::Get().getPlayer().pos;
@@ -106,15 +120,15 @@ void ProjectileSpawner::Update(float deltaTime)
 
 void ProjectileSpawner::Render(Tmpl8::Surface* screen)
 {
-	auto inactive = std::string("Bullets left:" + std::to_string(poolOfProjectiles.getCount()));
+	auto inactive = std::string("Bullets left:" + std::to_string(poolOfProjectiles.size()));
 
 	screen->Print(inactive.c_str(), 10, 10, 0x00FF0000);
 
-	auto inactiveB = std::string("Explosions left:" + std::to_string(poolOfExplosions.getCount()));
+	auto inactiveB = std::string("Explosions left:" + std::to_string(poolOfExplosions.size()));
 
 	screen->Print(inactiveB.c_str(), 10, 20, 0x00FF0000);
 
-	auto total = std::string("Objects active:" + std::to_string(updateObjects.size() - poolOfProjectiles.getCount() - poolOfExplosions.getCount()));
+	auto total = std::string("Objects active:" + std::to_string(updateObjects.size() - poolOfProjectiles.size() - poolOfExplosions.size()));
 
 	screen->Print(total.c_str(), 10, 30, 0x00FF0000);
 	auto firerate = std::string("Firerate: " + std::to_string(fireRate));

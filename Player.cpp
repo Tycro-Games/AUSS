@@ -19,7 +19,7 @@ Player::Player() :
 void Player::Init(const Collider& tileMapCollider, const Tmpl8::vec2& _pos)
 {
 
-	Being::Init(_pos, 100);
+	Being::Init(_pos, 2);
 	startingPos = _pos;
 	playerCollider = Collider(COL_MIN, COL_MAX, &startingPos);
 

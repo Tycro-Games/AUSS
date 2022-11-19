@@ -34,7 +34,7 @@ private:
 	const int DG_TO_TAKE = 25;
 	const Tmpl8::vec2 COL_MIN = Tmpl8::vec2(-10, -10);
 	const Tmpl8::vec2 COL_MAX = Tmpl8::vec2(10, 10);
-	const float TIME_TO_ATTACK = 1;
+	const float TIME_TO_ATTACK = 0.25f;
 
 	const float SPEED = 50.0f;
 	const float MAX_DISTANCE_TO_ATTACK = 400.0f;

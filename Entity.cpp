@@ -28,7 +28,7 @@ void Entity::Init(Tmpl8::vec2 _pos)
 
 Entity::~Entity()
 {
-
+	delete sprite;
 }
 
 

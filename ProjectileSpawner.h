@@ -30,9 +30,9 @@ private:
 
 	const Tmpl8::vec2 offset;
 
-	pool<Projectile*> poolOfProjectiles;
+	std::vector<Projectile*> poolOfProjectiles;
 
-
+	bool poolsAreEmpty = true;
 	bool isSpawning = false;
 	//assets for projectiles
 	Tmpl8::Sprite projectileSprite;

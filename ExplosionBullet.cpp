@@ -15,6 +15,7 @@ ExplosionBullet::ExplosionBullet(Sprite* sprite, Spawner* spawner, vec2 pos) :
 
 ExplosionBullet::~ExplosionBullet()
 {
+	sprite = nullptr;//this sprite is deleted by the spawner
 	delete move;
 }
 

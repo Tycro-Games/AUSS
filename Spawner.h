@@ -1,7 +1,6 @@
 #pragma once
 
 #include <vector>
-#include "pool.h"
 
 #include "Entity.h"
 #include "Collider.h"
@@ -13,7 +12,7 @@ class Spawner : public Updateable, public Renderable
 {
 public:
 	Spawner(const std::filesystem::path& explosion, unsigned int numberOfFrames = 10);
-	Spawner(const Tmpl8::Sprite& explosion);
+	Spawner(Tmpl8::Sprite* explosion);
 	virtual ~Spawner();
 	void AddExplosionToPool(ExplosionBullet* entity);
 	void CreateMoreExplosions();
@@ -21,12 +20,13 @@ public:
 	Tmpl8::vec2 GetDirDeviation();
 
 protected:
+	void ResetExplosions();
 	RandomNumbers randomNumbers;
 	//to update
 	std::vector<Entity*> updateObjects;
-	pool<ExplosionBullet*> poolOfExplosions;
+	std::vector<ExplosionBullet*> poolOfExplosions;
 	//assets 
-	Tmpl8::Sprite explosionSprite;
+	Tmpl8::Sprite* explosionSprite;
 
 	float deviationMultiplier = 1.5f;
 

@@ -24,7 +24,7 @@ public:
 	// Inherited via Updateable
 	virtual void Update(float deltaTime) override;
 
-	bool EnemyWaveSpawner::IsPoolEmpty(pool<Enemy*>& pool);
+	bool EnemyWaveSpawner::IsPoolEmpty(const std::vector<Enemy*>& pool);
 	const Tmpl8::vec2 EnemyWaveSpawner::GetPlayerPos()const;
 	EnemyTypes ConvertToEnum(std::string str);
 private:
@@ -39,9 +39,9 @@ private:
 	Tmpl8::Sprite hoarderSprite;
 	Tmpl8::Sprite runnerSprite;
 	//Enemy Hoarder
-	pool<Enemy*> poolOfHoarders;
+	std::vector<Enemy*> poolOfHoarders;
 	//Enemy Runner
-	pool<Enemy*> poolOfRunners;
+	std::vector<Enemy*> poolOfRunners;
 
 	std::vector<Collider*> activeColliders;
 	std::vector<EnemySpawner*> enemySpawners;
@@ -65,8 +65,8 @@ private:
 	virtual void Call() override;
 
 };
-inline bool EnemyWaveSpawner::IsPoolEmpty(pool<Enemy*>& pool) {
-	return pool.getCount() == 0;
+inline bool EnemyWaveSpawner::IsPoolEmpty(const std::vector<Enemy*>& pool) {
+	return pool.size() == 0;
 }
 inline const Tmpl8::vec2 EnemyWaveSpawner::GetPlayerPos() const
 {

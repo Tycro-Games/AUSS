@@ -4,7 +4,7 @@
 #include "Enemy.h"
 using namespace Tmpl8;
 using namespace std;
-EnemySpawner::EnemySpawner(Tmpl8::vec2& _pos, EnemyWaveSpawner* enemyWave, const Sprite& explosion) :
+EnemySpawner::EnemySpawner(Tmpl8::vec2& _pos, EnemyWaveSpawner* enemyWave, Sprite* explosion) :
 	Spawner(explosion),
 	enemyWave(enemyWave),
 	pos(_pos),

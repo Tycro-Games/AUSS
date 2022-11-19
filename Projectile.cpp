@@ -31,6 +31,7 @@ void Projectile::Init(PosDir posDir)
 
 Projectile::~Projectile()
 {
+	sprite = nullptr;//this sprite is deleted by the spawner
 	delete timer;
 	delete mover;
 	delete dir;

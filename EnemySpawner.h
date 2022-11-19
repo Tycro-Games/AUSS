@@ -12,7 +12,7 @@ class EnemySpawner :public Spawner, public Callable
 public:
 	~EnemySpawner();
 	//pos is not a const,because it needs to be modified
-	EnemySpawner(Tmpl8::vec2& pos, EnemyWaveSpawner* _enemyWave, const Tmpl8::Sprite& explosion);
+	EnemySpawner(Tmpl8::vec2& pos, EnemyWaveSpawner* _enemyWave, Tmpl8::Sprite* explosion);
 
 
 
