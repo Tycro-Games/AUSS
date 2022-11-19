@@ -106,7 +106,7 @@ void EnemyWaveSpawner::SpawnCurrentWave() {
 
 	CheckThePossibleEnemies(weight, possibleEnemies);
 
-	while (weight != 0) {
+	while (weight != 0 && possibleEnemies.size() != 0) {
 
 		size_t index;
 		//if there are more than one enemy
