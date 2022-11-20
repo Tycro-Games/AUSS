@@ -64,11 +64,10 @@ namespace Tmpl8
 		Initializations();
 		AddInstancesToUpdates();
 		ChangeGameState(GameState::mainMenu);
-		CheckButtons(cursor.pos.x, cursor.pos.y);
+		CheckButtons(static_cast<int>(cursor.pos.x), static_cast<int>(cursor.pos.y));
 	}
 	void Game::RemoveAllUpdateables()
 	{
-
 		colliders.clear();
 		moveablesTile.clear();
 		updateables.clear();
@@ -278,7 +277,7 @@ namespace Tmpl8
 		return player;
 	}
 
-	std::vector<Collider*>& Game::getColliders()
+	vector<Collider*>& Game::getColliders()
 	{
 		return colliders;
 	}

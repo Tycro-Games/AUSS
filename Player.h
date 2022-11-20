@@ -44,7 +44,7 @@ private:
 	const Tmpl8::vec2 COL_MAX = Tmpl8::vec2(33 / 2 + 5, 33 / 2 + 5);
 	//components
 	const Collider* tilemapCollider;
-	MoveablePlayer* playerMover;
+	MoveablePlayer playerMover;
 	Collider playerCollider;
 	ProjectileSpawner spawner;
 	Timer timer;

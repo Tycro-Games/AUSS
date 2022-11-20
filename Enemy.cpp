@@ -14,7 +14,6 @@ Enemy::Enemy(Tmpl8::vec2 pos, Tmpl8::Sprite* sprite, EnemyWaveSpawner* spawner) 
 Enemy::~Enemy()
 {
 	sprite = nullptr;//this sprite is deleted by the spawner
-	delete enemyCollider;
 }
 
 

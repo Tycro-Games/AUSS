@@ -4,15 +4,35 @@
 
 #include <iostream>
 using namespace Tmpl8;
-MoveablePlayer::MoveablePlayer(vec2* pos, Collider* playerCollider, const Collider* tileMapCol, float speed, float DashSpeed) :
+MoveablePlayer::MoveablePlayer(vec2* pos, Collider* playerCollider, const Collider* tileMapCol, float speed, float _dashSpeed) :
 	Moveable(pos, playerCollider, speed),
-	dashTimer(Timer()),
-	cooldownTimer(Timer()),
 	tileMapCol(tileMapCol)
 
 {
 	initSpeed = speed;
-	dashSpeed = DashSpeed;
+	dashSpeed = _dashSpeed;
+	//timer Init
+	cooldownTimer.Init(this, COOLDOWN_DURATION);
+	cooldownTimer.isUpdateable = false;
+	dashTimer.Init(this, DASH_DURATION);
+	dashTimer.isUpdateable = false;
+}
+
+MoveablePlayer::MoveablePlayer()
+	:
+	Moveable(),
+	tileMapCol(nullptr)
+{
+	initSpeed = 0;
+	dashSpeed = 0;
+}
+
+void MoveablePlayer::Init(Tmpl8::vec2* pos, Collider* col, const Collider* _tileMapCol, float speed, float _dashSpeed)
+{
+	Moveable::Init(pos, col, speed);
+	tileMapCol = _tileMapCol;
+	initSpeed = speed;
+	dashSpeed = _dashSpeed;
 	//timer Init
 	cooldownTimer.Init(this, COOLDOWN_DURATION);
 	cooldownTimer.isUpdateable = false;

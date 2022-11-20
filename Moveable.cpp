@@ -18,10 +18,11 @@ Moveable::Moveable() :
 	speed(0)
 {
 }
-void Moveable::Init(vec2* _pos, Collider* col)
+void Moveable::Init(vec2* _pos, Collider* _col, float speed)
 {
 	pos = _pos;
-	col = col;
+	collider = _col;
+	SetSpeed(speed);
 
 }
 void Moveable::Init(vec2* _pos)

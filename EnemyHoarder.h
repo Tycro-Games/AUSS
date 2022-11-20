@@ -42,12 +42,12 @@ private:
 	Timer attack;
 
 	Timer rotate;
-	MoveToADirection* mover;
+	MoveToADirection mover;
 	RandomNumbers randomNumbers;
 
 	RotationVar rVar = RotationVar(360 / 16.0f, 90.0f, 20.0f);
 
-	EnemyRotator* rot;
+	EnemyRotator rot;
 	// Inherited via Enemy
 	virtual void Die() override;
 

@@ -8,6 +8,8 @@ class MoveablePlayer :public Moveable, public Callable
 {
 public:
 	MoveablePlayer(Tmpl8::vec2* pos, Collider* col, const Collider* tileMapCol, float speed = 70.0f, float dashSpeed = 500);
+	MoveablePlayer();
+	void Init(Tmpl8::vec2* pos, Collider* col, const Collider* tileMapCol, float speed = 70.0f, float dashSpeed = 500);
 	virtual ~MoveablePlayer();
 	virtual void Update(float deltaTime) override;
 	void MoveTileOrPlayer(Tmpl8::vec2& tilemapPos, Collider& c, const Tmpl8::vec2& playerPos);

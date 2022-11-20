@@ -10,8 +10,7 @@ Player::Player() :
 	spawner(-Tmpl8::vec2(rVar.SPRITE_OFFSET / 2, rVar.SPRITE_OFFSET / 2),
 		spriteProjectilePath,
 		spriteExplosionPath),
-	tilemapCollider(nullptr),
-	playerMover(nullptr)
+	tilemapCollider(nullptr)
 {
 
 }
@@ -29,12 +28,11 @@ void Player::Init(const Collider& tileMapCollider, const Tmpl8::vec2& _pos)
 
 	timer.Init(this, TIME_TO_HIT);
 	spawner.Init();
-	playerMover = new MoveablePlayer(&pos, &playerCollider, tilemapCollider);
+	playerMover.Init(&pos, &playerCollider, tilemapCollider);
 }
 
 Player::~Player()
 {
-	delete playerMover;
 
 }
 
@@ -44,11 +42,11 @@ void Player::Render(Tmpl8::Surface* screen)
 	spawner.Render(screen);
 	sprite->SetFrame(frame);
 	//when dashing fade the sprite based on the dash multiplier
-	if (playerMover->IsDashing()) {
+	if (playerMover.IsDashing()) {
 		SpriteTransparency::SetTransperency(sprite, screen,
 			static_cast<int>(pos.x - rVar.SPRITE_OFFSET / 2),
 			static_cast<int>(pos.y - rVar.SPRITE_OFFSET / 2),
-			playerMover->GetDashLinearTime(), frame);
+			playerMover.GetDashLinearTime(), frame);
 	}
 	else {
 		SpriteTransparency::SetTransperency(sprite, screen,
@@ -75,11 +73,11 @@ void Player::Update(float deltaTime)
 {
 
 	//tries to move tilemap
-	playerMover->Update(deltaTime);
+	playerMover.Update(deltaTime);
 	//tilemap is trying to go past the limits
-	if (!playerMover->ChangedPos()) {
+	if (!playerMover.ChangedPos()) {
 		//move the player
-		playerMover->MovePlayer();
+		playerMover.MovePlayer();
 	}
 
 	spawner.Update(deltaTime);
@@ -112,7 +110,7 @@ void Player::Rotate(int x, int y) {
 
 MoveablePlayer* Player::GetMoveable()
 {
-	return playerMover;
+	return &playerMover;
 }
 ProjectileSpawner* Player::GetSpawner()
 {

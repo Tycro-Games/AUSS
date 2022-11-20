@@ -18,11 +18,11 @@ public:
 	void RotateToDirection();
 
 	void Init(PosDir posDir);
-	Collider* getColl() const {
-		return col;
+	Collider* getColl() {
+		return &collider;
 	}
-	Moveable* getMoveable() const {
-		return mover;
+	Moveable* getMoveable() {
+		return &mover;
 	}
 	virtual void Call() override;
 	void ResetBullet();
@@ -30,7 +30,7 @@ public:
 	virtual void Render(Tmpl8::Surface* screen) override;
 
 private:
-	Tmpl8::vec2* dir;
+	Tmpl8::vec2 dir;
 	const int DG = 10;
 	const Tmpl8::vec2 COL_MIN = Tmpl8::vec2(-10, -10);
 	const Tmpl8::vec2 COL_MAX = Tmpl8::vec2(10, 10);
@@ -39,10 +39,10 @@ private:
 	RotationVar rVar = RotationVar(360 / 32.0f, 90.0f, 20.0f);
 
 	ProjectileSpawner* spawner;
-	MoveToADirection* mover;
-	Rotator* rot;
-	Collider* col;
-	Timer* timer;
+	MoveToADirection mover;
+	Collider collider;
+	Timer timer;
+	Rotator rot;
 
 
 

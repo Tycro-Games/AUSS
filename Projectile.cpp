@@ -7,15 +7,15 @@
 
 Projectile::Projectile(PosDir posDir, Tmpl8::Sprite* sprite, ProjectileSpawner* spawner)
 	:Entity(sprite, posDir.pos),
-	col(new Collider(COL_MIN, COL_MAX, &pos)),
+	collider(COL_MIN, COL_MAX, &pos),
 	spawner(spawner),
-	rVar(RotationVar(360 / (static_cast<const float>(sprite->Frames() - 1)), 90.0f, 20.0f))
+	rVar(RotationVar(360 / (static_cast<const float>(sprite->Frames() - 1)), 90.0f, 20.0f)),
+	rot(&pos, &dir, &rVar, &frame, &mover)
 {
-	col->type = Collider::Projectile;
-	dir = new Tmpl8::vec2();
-	timer = new Timer();
-	mover = new MoveToADirection(&pos, dir, col, this, SPEED);
-	rot = new Rotator(&pos, dir, rVar, &frame, mover);
+	collider.type = Collider::Projectile;
+
+	mover.Init(&pos, &dir, &collider, this, SPEED);
+
 
 	Init(posDir);
 }
@@ -23,8 +23,8 @@ void Projectile::Init(PosDir posDir)
 {
 	SetActive(true);
 	pos = posDir.pos;
-	(*dir) = posDir.dir;
-	timer->Init(this, TIME_ALIVE);
+	dir = posDir.dir;
+	timer.Init(this, TIME_ALIVE);
 
 	RotateToDirection();
 }
@@ -32,17 +32,13 @@ void Projectile::Init(PosDir posDir)
 Projectile::~Projectile()
 {
 	sprite = nullptr;//this sprite is deleted by the spawner
-	delete timer;
-	delete mover;
-	delete dir;
-	delete col;
-	delete rot;
+
 }
 
 void Projectile::RotateToDirection()
 {
 	//rotate to the target dir
-	frame = MathFunctions::RotateToDirectionFrames(rVar, *dir);
+	frame = MathFunctions::RotateToDirectionFrames(rVar, dir);
 }
 
 
@@ -54,10 +50,10 @@ void Projectile::Update(float deltaTime)
 	if (!getUpdateable())
 		return;
 
-	if (col->toDeactivate)
+	if (collider.toDeactivate)
 		ResetBullet();
-	mover->Update(deltaTime);
-	timer->Update(deltaTime);
+	mover.Update(deltaTime);
+	timer.Update(deltaTime);
 
 
 }
@@ -68,25 +64,25 @@ void Projectile::Render(Tmpl8::Surface* screen)
 	if (!getRenderable())
 		return;
 	sprite->SetFrame(frame);
-	sprite->Draw(screen, static_cast<int>(pos.x + col->min.x), static_cast<int>(pos.y + col->min.y));
-	screen->Box(static_cast<int>(pos.x + col->min.x), static_cast<int>(pos.y + col->min.y), static_cast<int>(pos.x + col->max.x), static_cast<int>(pos.y + col->max.y), 0xff0000);
+	sprite->Draw(screen, static_cast<int>(pos.x + collider.min.x), static_cast<int>(pos.y + collider.min.y));
+	screen->Box(static_cast<int>(pos.x + collider.min.x), static_cast<int>(pos.y + collider.min.y), static_cast<int>(pos.x + collider.max.x), static_cast<int>(pos.y + collider.max.y), 0xff0000);
 }
 
 void Projectile::Call()
 {
 	//delete if timer is done
-	if (timer->isFinished) {
+	if (timer.isFinished) {
 
 		ResetBullet();
 	}
-	else if (mover->colToReflectFrom != NULL) { //reflect on obstacle
-		Collider c = *mover->colToReflectFrom;
-		rot->Reflect(Collider::GetNormal(c, *col));
+	else if (mover.colToReflectFrom != NULL) { //reflect on obstacle
+		Collider c = *mover.colToReflectFrom;
+		rot.Reflect(Collider::GetNormal(c, collider));
 
-		mover->colToReflectFrom = NULL;
+		mover.colToReflectFrom = NULL;
 	}
 	else //reflect on screen
-		rot->Reflect(Collider::GetNormalEdgeScreen(mover->nextP, *col));
+		rot.Reflect(Collider::GetNormalEdgeScreen(mover.nextP, collider));
 }
 
 
@@ -95,12 +91,12 @@ void Projectile::Call()
 void Projectile::ResetBullet()
 {
 	//trigger the enemy flag for damaging flag
-	if (col->collision)
-		if (col->collision->type == Collider::Enemy)
-			col->collision->toDeactivate = true;
-	col->toDeactivate = false;
-	timer->isFinished = true;
+	if (collider.collision)
+		if (collider.collision->type == Collider::Enemy)
+			collider.collision->toDeactivate = true;
+	collider.toDeactivate = false;
+	timer.isFinished = true;
 	spawner->AddProjectileToPool(this);
-	spawner->SpawnExplosions(pos + col->min);
+	spawner->SpawnExplosions(pos + collider.min);
 
 }

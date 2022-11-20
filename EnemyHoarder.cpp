@@ -1,19 +1,19 @@
 #include "EnemyHoarder.h"
 #include "MathFunctions.h"
-EnemyHoarder::EnemyHoarder(PosDir posDir, Tmpl8::Sprite* sprite, EnemyWaveSpawner* spawner) :
-	Enemy(posDir.pos, sprite, spawner)
+EnemyHoarder::EnemyHoarder(PosDir posDir, Tmpl8::Sprite* sprite, EnemyWaveSpawner* _spawner) :
+	Enemy(posDir.pos, sprite, _spawner)
+
 {
 	enemyType = Hoarder;
-
-	enemyCollider = (new Collider(COL_MIN, COL_MAX, &pos));
+	enemyCollider = Collider(COL_MIN, COL_MAX, &pos);
 	SetColToEnemyFlag();
-	mover = new MoveToADirection(&pos, &dir, enemyCollider, this, SPEED);
+	mover.Init(&pos, &dir, &enemyCollider, this, SPEED);
 	//as a getter for the base class
-	move = mover;
+	move = &mover;
 
 	attack = Timer(this, TIME_TO_ATTACK, true);
 	rotate = Timer();
-	rot = new EnemyRotator(&pos, &dir, rVar, &frame, mover, spawner);
+	rot.Init(&pos, &dir, &rVar, &frame, &mover, spawner);
 
 	Init(posDir);
 }
@@ -22,8 +22,7 @@ EnemyHoarder::EnemyHoarder(PosDir posDir, Tmpl8::Sprite* sprite, EnemyWaveSpawne
 
 EnemyHoarder::~EnemyHoarder()
 {
-	delete mover;
-	delete rot;
+
 }
 
 void EnemyHoarder::Update(float deltaTime)
@@ -33,13 +32,13 @@ void EnemyHoarder::Update(float deltaTime)
 
 	rotate.Update(deltaTime);
 	//marked by collision
-	if (enemyCollider->toDeactivate) {
+	if (enemyCollider.toDeactivate) {
 		TakeDamage(DG_TO_TAKE);
-		enemyCollider->toDeactivate = false;
+		enemyCollider.toDeactivate = false;
 
 	}
 	else {
-		mover->Update(deltaTime);
+		mover.Update(deltaTime);
 
 		dist = MathFunctions::GetDistanceSqr(pos, spawner->GetPlayerPos());
 
@@ -84,9 +83,9 @@ void EnemyHoarder::Init(PosDir posDir)
 	pos = posDir.pos;
 	dir = posDir.dir;
 	hp = maxHp;
-	mover->SetSpeed(SPEED + randomNumbers.RandomBetweenFloats(-30, 100));
-	rotate.Init(rot, randomNumbers.RandomBetweenFloats(0.1f, 0.9f), true);
-	rot->Call();
+	mover.SetSpeed(SPEED + randomNumbers.RandomBetweenFloats(-30, 100));
+	rotate.Init(&rot, randomNumbers.RandomBetweenFloats(0.1f, 0.9f), true);
+	rot.Call();
 }
 
 
@@ -107,17 +106,17 @@ void EnemyHoarder::Call()
 		//moves a bit after atacking
 		ToMove = true;
 	}
-	else if (mover->colToReflectFrom != NULL) {
-		Collider c = *mover->colToReflectFrom;
+	else if (mover.colToReflectFrom != nullptr) {
+		Collider c = *mover.colToReflectFrom;
 
 
-		rot->Reflect(Collider::GetNormal(c, *enemyCollider));
+		rot.Reflect(Collider::GetNormal(c, enemyCollider));
 
-		mover->colToReflectFrom = NULL;
+		mover.colToReflectFrom = nullptr;
 	}
 	//out of bounds
 	else {
-		rot->Reflect(Collider::GetNormalEdgeScreen(mover->nextP, *mover->getColl()));
+		rot.Reflect(Collider::GetNormalEdgeScreen(mover.nextP, *mover.getColl()));
 	}
 
 }

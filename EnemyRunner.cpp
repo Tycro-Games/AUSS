@@ -4,7 +4,7 @@ EnemyRunner::EnemyRunner(PosDir posDir, Tmpl8::Sprite* sprite, EnemyWaveSpawner*
 	:Enemy(posDir.pos, sprite, spawner)
 {
 	enemyType = Runner;
-	enemyCollider = new Collider(0, 0, &pos);
+	enemyCollider = Collider(0, 0, &pos);
 	mover = new MoveInstance(&this->pos);
 	move = mover;
 }

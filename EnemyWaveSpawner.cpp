@@ -166,7 +166,7 @@ void EnemyWaveSpawner::CheckThePossibleEnemies(size_t weight, vector<EnemyTypes>
 			possibleEnemies.push_back(waves[indexWave].enemiesInWave[i]);
 	}
 }
-Enemy* EnemyWaveSpawner::SpawnEnemy(vec2 pos, EnemyTypes enemy)
+void EnemyWaveSpawner::SpawnEnemy(vec2 pos, EnemyTypes enemy)
 {
 	//no more enemies of this type
 	Enemy* enemyToSpawn = nullptr;
@@ -200,7 +200,6 @@ Enemy* EnemyWaveSpawner::SpawnEnemy(vec2 pos, EnemyTypes enemy)
 		Game::Get().AddMoveable(enemyToSpawn->getMoveable());
 
 	}
-	return enemyToSpawn;
 }
 
 void EnemyWaveSpawner::Render(Surface* screen)
@@ -235,7 +234,6 @@ void EnemyWaveSpawner::AddEnemyToPool(Enemy* enemy, bool isDead)
 
 
 	if (isDead) {
-		std::cout << "e mort\n";
 		notify(enemy->getScore(), Additive);
 		if (activeColliders.size() == 0)
 			SpawnCurrentWave();

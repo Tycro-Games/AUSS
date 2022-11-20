@@ -1,19 +1,37 @@
 #include "Rotator.h"
 #include "MathFunctions.h"
-
-Rotator::Rotator(Tmpl8::vec2* pos, Tmpl8::vec2* dir, RotationVar rVar, unsigned int* frame, MoveToADirection* mover) :
-	pos(pos),
-	dir(dir),
-	rVar(rVar),
-	mover(mover),
-	frame(frame)
+using namespace Tmpl8;
+Rotator::Rotator(vec2* _pos, vec2* _dir, RotationVar* _rVar, unsigned int* _frame, MoveToADirection* _mover) :
+	pos(_pos),
+	dir(_dir),
+	rVar(_rVar),
+	mover(_mover),
+	frame(_frame)
 
 {
 
 }
 
+Rotator::Rotator() :
+	pos(nullptr),
+	dir(nullptr),
+	rVar(nullptr),
+	mover(nullptr),
+	frame(0)
+{
+}
 
-void Rotator::RotateToDirection(Tmpl8::vec2 Pos)
+void Rotator::Init(vec2* _pos, vec2* _dir, RotationVar* _rVar, unsigned int* _frame, MoveToADirection* _mover)
+{
+	pos = _pos;
+	dir = _dir;
+	rVar = _rVar;
+	frame = _frame;
+	mover = _mover;
+}
+
+
+void Rotator::RotateToDirection(vec2 Pos)
 {
 
 	//rotate to the target dir
@@ -24,12 +42,12 @@ void Rotator::RotateToDirection(Tmpl8::vec2 Pos)
 
 	MathFunctions::RotateTo(Pos.x, Pos.y, *pos, *dir);
 
-	*frame = MathFunctions::RotateToDirectionFrames(rVar, *dir);
+	*frame = MathFunctions::RotateToDirectionFrames(*rVar, *dir);
 
 }
 
 
-void Rotator::Reflect(const Tmpl8::vec2 normal)
+void Rotator::Reflect(const vec2 normal)
 {
 
 

@@ -19,7 +19,7 @@ public:
 	void setHp(unsigned int);
 	void setScore(unsigned int);
 	void setWeight(unsigned int);
-	Collider* getColl() const;
+	Collider* getColl();
 	Moveable* getMoveable() const;
 	unsigned int getDg() const;
 	unsigned int getHp() const;
@@ -33,8 +33,8 @@ protected:
 	EnemyTypes enemyType;
 	virtual void ResetEnemy() = 0;
 	EnemyWaveSpawner* spawner;
-	Moveable* move;
-	Collider* enemyCollider;
+	Moveable* move;//needs to be set by children of the enemy
+	Collider enemyCollider;
 	Tmpl8::vec2 dir;
 
 	unsigned int dg;
@@ -44,7 +44,7 @@ protected:
 };
 //inlined functions
 inline void Enemy::SetColToEnemyFlag() {
-	enemyCollider->type = Collider::Enemy;
+	enemyCollider.type = Collider::Enemy;
 }
 
 inline void Enemy::setDg(unsigned int Dg)
@@ -67,11 +67,11 @@ inline void Enemy::setWeight(unsigned int Weight)
 	weight = Weight;
 }
 
-inline Collider* Enemy::getColl() const {
-	return enemyCollider;
+inline Collider* Enemy::getColl() {
+	return &enemyCollider;
 }
 
-inline Moveable* Enemy::getMoveable() const {
+inline Moveable* Enemy::getMoveable()const {
 	return move;
 }
 

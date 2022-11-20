@@ -9,6 +9,18 @@ MoveToADirection::MoveToADirection(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Collider*
 	dir->normalize();
 }
 
+MoveToADirection::MoveToADirection()
+	:Moveable()
+{
+}
+
+void MoveToADirection::Init(Tmpl8::vec2* pos, Tmpl8::vec2* _dir, Collider* collider, Callable* _call, float speed)
+{
+	Moveable::Init(pos, collider, speed);
+	dir = _dir;
+	call = _call;
+}
+
 void MoveToADirection::Update(float deltaTime)
 {
 

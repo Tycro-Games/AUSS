@@ -18,7 +18,7 @@ public:
 	void PlayerTakesDamage(Enemy* enemy);
 	void SpawnCurrentWave();
 	void CheckThePossibleEnemies(size_t weight, std::vector<EnemyTypes>& possibleEnemies);
-	Enemy* SpawnEnemy(Tmpl8::vec2, EnemyTypes enemies);
+	void SpawnEnemy(Tmpl8::vec2, EnemyTypes enemies);
 	// Inherited via Renderable
 	virtual void Render(Tmpl8::Surface* screen) override;
 	// Inherited via Updateable

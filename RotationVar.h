@@ -10,4 +10,5 @@ public:
 		SPRITE_OFFSET(spriteOffset)
 	{
 	}
+
 };
