@@ -1,8 +1,8 @@
 #include "Obstacle.h"
 
-Obstacle::Obstacle(Tmpl8::vec2 p, Collider co, size_t index)
+Obstacle::Obstacle(Tmpl8::vec2 p, Collider _collider, size_t index)
 	:pos(p),
-	Moveable(&pos, new Collider(co.min, co.max, &pos))
+	Moveable(&pos, new Collider(_collider.min, _collider.max, &pos))
 
 {
 }

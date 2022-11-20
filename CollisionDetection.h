@@ -20,7 +20,7 @@ public:
 	virtual void Call() override;
 private:
 
-	Timer* timer;
+	Timer timer;
 
 };
 

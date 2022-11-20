@@ -1,17 +1,16 @@
 #include "EnemyRunner.h"
 
 EnemyRunner::EnemyRunner(PosDir posDir, Tmpl8::Sprite* sprite, EnemyWaveSpawner* spawner)
-	:Enemy(posDir.pos, sprite, spawner)
+	:Enemy(posDir.pos, sprite, spawner),
+	mover(&this->pos)
 {
 	enemyType = Runner;
 	enemyCollider = Collider(0, 0, &pos);
-	mover = new MoveInstance(&this->pos);
-	move = mover;
+	move = &mover;
 }
 
 EnemyRunner::~EnemyRunner()
 {
-	delete mover;
 }
 
 void EnemyRunner::Render(Tmpl8::Surface* screen)

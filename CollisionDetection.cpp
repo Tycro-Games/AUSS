@@ -4,14 +4,13 @@ using namespace std;
 using namespace Tmpl8;
 CollisionDetection::CollisionDetection()
 {
-	timer = new Timer(this, .05f, true);
+	timer.Init(this, .05f, true);
 }
 
 
 
 CollisionDetection::~CollisionDetection()
 {
-	delete timer;
 }
 
 //this is what the lambda function does below
@@ -82,7 +81,7 @@ void CollisionDetection::CheckProjectile(vector<Collider*>& allPairs, int i, int
 
 void CollisionDetection::Update(float deltaTime)
 {
-	timer->Update(deltaTime);
+	timer.Update(deltaTime);
 }
 
 

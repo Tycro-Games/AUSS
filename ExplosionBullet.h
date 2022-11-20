@@ -23,7 +23,7 @@ private:
 	int loops = 7;//how many animations
 	Timer timer;
 	Spawner* spawner;
-	MoveInstance* move;
+	MoveInstance move;
 
 
 

@@ -93,7 +93,7 @@ void Tilemap::ClearObstacles()
 		if (tiles[i].IsBlocking)
 			tiles[i].obs = nullptr;
 	for (auto p : blockingTiles)
-		delete p, p = nullptr;
+		delete p;
 
 	blockingTiles.clear();
 }

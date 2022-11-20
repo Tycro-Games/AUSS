@@ -19,7 +19,7 @@ public:
 
 	virtual void ResetEnemy() override;
 private:
-	MoveInstance* mover;
+	MoveInstance mover;
 
 
 };
