@@ -19,9 +19,7 @@ void Being::Init(vec2 _pos, int _hp)
 
 
 
-Being::~Being()
-{
-}
+
 
 
 void Being::TakeDamage(int dg)

@@ -15,7 +15,7 @@ public:
 	void Update(float deltaTime) override;
 
 	void Render(Tmpl8::Surface* screen) override;
-	virtual void Call() override;
+	void Call() override;
 private:
 	float TotalAnimation;
 	float currenTime = 0;

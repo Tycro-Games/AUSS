@@ -5,7 +5,7 @@ class Obstacle :public Moveable
 public:
 	Obstacle(const Tmpl8::vec2, const Collider& col);
 	Obstacle();
-	virtual ~Obstacle() = default;
+	~Obstacle() = default;
 	void Update(float deltaTime) override;
 	void Init(const Tmpl8::vec2, const Collider& col);
 	bool operator==(const Obstacle& ob) {

@@ -62,7 +62,7 @@ private:
 
 
 	// Inherited via Callable
-	virtual void Call() override;
+	void Call() override;
 
 };
 inline bool EnemyWaveSpawner::IsPoolEmpty(const std::vector<Enemy*>& pool) {

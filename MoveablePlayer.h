@@ -67,7 +67,7 @@ private:
 	const float COOLDOWN_DURATION = 0.6f;
 	const float EDGE_DISTANCE = 5.0f;
 	// Inherited via Callable
-	virtual void Call() override;
+	void Call() override;
 
 };
 

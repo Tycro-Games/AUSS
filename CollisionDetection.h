@@ -17,7 +17,7 @@ public:
 
 	void Update(float deltaTime) override;
 	// Inherited via Callable
-	virtual void Call() override;
+	void Call() override;
 private:
 
 	Timer timer;

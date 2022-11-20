@@ -20,7 +20,7 @@ public:
 
 	virtual void ResetEnemy() override;
 
-	virtual void Call() override;
+	void Call() override;
 
 	virtual Enemy* clone() override;
 private:

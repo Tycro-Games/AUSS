@@ -7,7 +7,7 @@ public:
 	~Score();
 
 	// Inherited via Observer
-	virtual void onNotify(int points, PointTypes event) override;
+	void onNotify(int points, PointTypes event) override;
 	void Init();
 	unsigned int getTotal();
 private:
