@@ -1,24 +1,31 @@
 #include "Obstacle.h"
 
-Obstacle::Obstacle(Tmpl8::vec2 p, Collider _collider, size_t index)
+Obstacle::Obstacle(const Tmpl8::vec2 p, const Collider& _collider)
 	:pos(p),
-	Moveable(&pos, new Collider(_collider.min, _collider.max, &pos))
+	obsCollider(_collider.min, _collider.max, &pos),
+	Moveable(&pos, &obsCollider)
 
 {
 }
+
 Obstacle::Obstacle()
 	:pos(Tmpl8::vec2(0)),
-	Moveable(&pos, new Collider(0, 0, &pos))
+	obsCollider(0, 0, &pos),
+	Moveable(&pos, &obsCollider)
 
 {
 }
 
-Obstacle::~Obstacle()
-{
-	delete collider;
-}
+
 
 void Obstacle::Update(float deltaTime)
 {
 
+}
+
+void Obstacle::Init(const Tmpl8::vec2 _pos, const Collider& col)
+{
+	pos = _pos;
+	obsCollider.min = col.min;
+	obsCollider.max = col.max;
 }

@@ -7,9 +7,9 @@ public:
 	Cursor(const std::filesystem::path& spritePath, Tmpl8::vec2 pos = Tmpl8::vec2(0));
 	void AddOffset();
 	~Cursor();
-	virtual void Update(float deltaTime) override;
+	void Update(float deltaTime) override;
 	void ChangePosition(int x, int y);
-	virtual void Render(Tmpl8::Surface* screen) override;
+	void Render(Tmpl8::Surface* screen) override;
 	Collider& GetCollider() {
 		return col;
 	}

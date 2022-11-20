@@ -39,7 +39,7 @@ void EnemyWaveSpawner::Init(Being* _player)
 void EnemyWaveSpawner::EnemyInit()
 {
 	for (size_t i = 0; i < updateObjects.size(); i++)
-		if (updateObjects[i]->isUpdateable)
+		if (updateObjects[i]->getUpdateable())
 			delete updateObjects[i];
 	updateObjects.clear();
 

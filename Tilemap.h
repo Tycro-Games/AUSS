@@ -59,11 +59,11 @@ public:
 	~Tilemap();
 	void ClearObstacles();
 	// Inherited via Renderable
-	virtual void Render(Tmpl8::Surface* screen) override;
+	void Render(Tmpl8::Surface* screen) override;
 
 
 	// Inherited via Updateable
-	virtual void Update(float deltaTime) override;
+	void Update(float deltaTime) override;
 	//Inherited via Followable
 	virtual void ResetOffset() override {
 		lastPos = pos;

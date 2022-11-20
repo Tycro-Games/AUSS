@@ -12,9 +12,9 @@ public:
 
 	virtual ~ExplosionBullet();
 	void Init(Tmpl8::vec2 pos);
-	virtual void Update(float deltaTime) override;
+	void Update(float deltaTime) override;
 
-	virtual void Render(Tmpl8::Surface* screen) override;
+	void Render(Tmpl8::Surface* screen) override;
 	virtual void Call() override;
 private:
 	float TotalAnimation;

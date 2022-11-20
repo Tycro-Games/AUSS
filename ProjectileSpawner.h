@@ -21,8 +21,8 @@ public:
 
 
 	// Inherited via Entity
-	virtual void Update(float deltaTime) override;
-	virtual void Render(Tmpl8::Surface* screen) override;
+	void Update(float deltaTime) override;
+	void Render(Tmpl8::Surface* screen) override;
 
 
 private:

@@ -22,7 +22,7 @@ public:
 	Button(const std::filesystem::path& defaultSprite, const std::filesystem::path& pressedSprite, const Tmpl8::vec2& centerPos, const ButtonPressEvent& ev);
 	//default the deconstructor means that it does not need implementation for the base class
 	virtual ~Button() = default;
-	virtual void Render(Tmpl8::Surface* screen) override;
+	void Render(Tmpl8::Surface* screen) override;
 	//input functions
 	void OnMouseMoved(int x, int y);
 	void OnMouseUp(int button);

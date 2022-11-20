@@ -20,7 +20,7 @@ private:
 	float speedOfParallax;
 
 	// Inherited via Moveable
-	virtual void Update(float deltaTime) override;
+	void Update(float deltaTime) override;
 
 };
 

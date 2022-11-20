@@ -15,7 +15,7 @@ public:
 
 	void CheckProjectile(std::vector<Collider*>& allPairs, int i, int j);
 
-	virtual void Update(float deltaTime) override;
+	void Update(float deltaTime) override;
 	// Inherited via Callable
 	virtual void Call() override;
 private:

@@ -15,8 +15,8 @@ public:
 	EnemySpawner(Tmpl8::vec2& pos, EnemyWaveSpawner* _enemyWave, Tmpl8::Sprite* explosion);
 
 	void SetEnemy(EnemyTypes enemy);
-	virtual void Update(float deltaTime) override;
-	virtual void Render(Tmpl8::Surface* screen) override;
+	void Update(float deltaTime) override;
+	void Render(Tmpl8::Surface* screen) override;
 	//getters
 	const Tmpl8::vec2& GetSpawnerPos() const;
 private:

@@ -14,9 +14,9 @@ public:
 
 	// Inherited via Enemy
 	virtual void Init(PosDir posDir) override;
-	virtual void Update(float deltaTime) override;
+	void Update(float deltaTime) override;
 
-	virtual void Render(Tmpl8::Surface* screen) override;
+	void Render(Tmpl8::Surface* screen) override;
 
 	virtual void ResetEnemy() override;
 

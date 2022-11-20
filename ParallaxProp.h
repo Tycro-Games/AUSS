@@ -14,9 +14,9 @@ public:
 	~ParallaxProp();
 	void Init(const Tmpl8::vec2 pos, float speed = 1.0f);
 	// Inherited via Entity
-	virtual void Update(float deltaTime) override;
+	void Update(float deltaTime) override;
 
-	virtual void Render(Tmpl8::Surface* screen) override;
+	void Render(Tmpl8::Surface* screen) override;
 	Moveable* getMover();
 private:
 	MoveInstance moveInstance;

@@ -21,7 +21,7 @@ ProjectileSpawner::ProjectileSpawner(const Tmpl8::vec2 offset, const filesystem:
 void ProjectileSpawner::Init()
 {
 	for (size_t i = 0; i < updateObjects.size(); i++)
-		if (updateObjects[i]->isUpdateable)
+		if (updateObjects[i]->getUpdateable())
 			delete updateObjects[i];
 	updateObjects.clear();
 

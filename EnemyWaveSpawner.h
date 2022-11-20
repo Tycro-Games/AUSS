@@ -20,9 +20,9 @@ public:
 	void CheckThePossibleEnemies(size_t weight, std::vector<EnemyTypes>& possibleEnemies);
 	void SpawnEnemy(Tmpl8::vec2, EnemyTypes enemies);
 	// Inherited via Renderable
-	virtual void Render(Tmpl8::Surface* screen) override;
+	void Render(Tmpl8::Surface* screen) override;
 	// Inherited via Updateable
-	virtual void Update(float deltaTime) override;
+	void Update(float deltaTime) override;
 
 	bool EnemyWaveSpawner::IsPoolEmpty(const std::vector<Enemy*>& pool);
 	const Tmpl8::vec2 EnemyWaveSpawner::GetPlayerPos()const;

@@ -11,11 +11,16 @@ MoveablePlayer::MoveablePlayer(vec2* pos, Collider* playerCollider, const Collid
 {
 	initSpeed = speed;
 	dashSpeed = _dashSpeed;
+	InitTimers();
+}
+
+void MoveablePlayer::InitTimers()
+{
 	//timer Init
 	cooldownTimer.Init(this, COOLDOWN_DURATION);
-	cooldownTimer.isUpdateable = false;
+	cooldownTimer.setUpdateable(false);
 	dashTimer.Init(this, DASH_DURATION);
-	dashTimer.isUpdateable = false;
+	dashTimer.setUpdateable(false);
 }
 
 MoveablePlayer::MoveablePlayer()
@@ -33,11 +38,8 @@ void MoveablePlayer::Init(Tmpl8::vec2* pos, Collider* col, const Collider* _tile
 	tileMapCol = _tileMapCol;
 	initSpeed = speed;
 	dashSpeed = _dashSpeed;
-	//timer Init
-	cooldownTimer.Init(this, COOLDOWN_DURATION);
-	cooldownTimer.isUpdateable = false;
-	dashTimer.Init(this, DASH_DURATION);
-	dashTimer.isUpdateable = false;
+
+	InitTimers();
 }
 
 MoveablePlayer::~MoveablePlayer()
@@ -73,11 +75,11 @@ void MoveablePlayer::setDash(bool val)
 
 void MoveablePlayer::startDash()
 {
-	if (!dashTimer.isUpdateable && !dashing) {
+	if (!dashTimer.getUpdateable() && !dashing) {
 
 		dashes = 0;
 
-		dashTimer.isUpdateable = true;
+		dashTimer.setUpdateable(true);
 
 		Dashing();
 	}
@@ -102,7 +104,7 @@ bool MoveablePlayer::CanRotate() const
 
 bool MoveablePlayer::IsDashing() const
 {
-	return dashTimer.isUpdateable;
+	return dashTimer.getUpdateable();
 }
 
 bool MoveablePlayer::ChangedPos() const
@@ -114,14 +116,14 @@ void MoveablePlayer::Call()
 {
 
 
-	if (dashTimer.isUpdateable) {
+	if (dashTimer.getUpdateable()) {
 		dashTimer.ResetVar();
-		dashTimer.isUpdateable = false;
+		dashTimer.setUpdateable(false);
 		speed = initSpeed;
 	}
-	else if (cooldownTimer.isUpdateable) {
+	else if (cooldownTimer.getUpdateable()) {
 		cooldownTimer.ResetVar();
-		cooldownTimer.isUpdateable = false;
+		cooldownTimer.setUpdateable(false);
 		dashing = false;
 	}
 
@@ -165,9 +167,9 @@ void MoveablePlayer::Update(float deltaTime)
 	else
 		canRotate = false;
 
-	if (dashTimer.isUpdateable == false && dashing && !startedDashing) {
+	if (dashTimer.getUpdateable() == false && dashing && !startedDashing) {
 		//start the cooldown then the dash is finished
-		cooldownTimer.isUpdateable = true;
+		cooldownTimer.setUpdateable(true);
 	}
 
 	if (dashing && timePassed + deltaTime < DASH_DURATION) {

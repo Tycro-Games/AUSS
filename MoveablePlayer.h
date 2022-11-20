@@ -11,7 +11,8 @@ public:
 	MoveablePlayer();
 	void Init(Tmpl8::vec2* pos, Collider* col, const Collider* tileMapCol, float speed = 70.0f, float dashSpeed = 500);
 	virtual ~MoveablePlayer();
-	virtual void Update(float deltaTime) override;
+
+	void Update(float deltaTime) override;
 	void MoveTileOrPlayer(Tmpl8::vec2& tilemapPos, Collider& c, const Tmpl8::vec2& playerPos);
 	bool CheckPositionForCollisions(const Tmpl8::vec2& playerPos, const Collider& playerCol);
 	void SetDashPos(Tmpl8::vec2& nextPos);
@@ -20,6 +21,7 @@ public:
 	void ClampTheMovementVector(const Collider& c, const Tmpl8::vec2 newVec, Tmpl8::vec2& originalVec, bool& changed);
 	bool CheckVecForOneDir(Tmpl8::vec2& nextPos);
 	void ClampTheMovementVector(const Collider& c, const Tmpl8::vec2 newVec, Tmpl8::vec2& originalVec);
+
 	void setUp(bool val = false);
 	void setDown(bool val = false);
 	void setRight(bool val = false);
@@ -35,14 +37,17 @@ public:
 	bool IsDashing() const;
 	bool ChangedPos() const;
 private:
+	void InitTimers();
 	bool hasChangedPos = false;
 	bool tileDiagonalMoved = false;
 	bool canMove = false;
 	bool canRotate = false;
+	//wasd
 	bool up = false;
 	bool down = false;
 	bool right = false;
 	bool left = false;
+
 	const Collider* tileMapCol;
 	Tmpl8::vec2 playerMovement;
 

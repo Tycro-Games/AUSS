@@ -26,8 +26,8 @@ public:
 	}
 	virtual void Call() override;
 	void ResetBullet();
-	virtual void Update(float deltaTime) override;
-	virtual void Render(Tmpl8::Surface* screen) override;
+	void Update(float deltaTime) override;
+	void Render(Tmpl8::Surface* screen) override;
 
 private:
 	Tmpl8::vec2 dir;

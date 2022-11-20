@@ -9,7 +9,7 @@ public:
 	void Init(Callable* entity, float DesiredTime, bool loop = false);
 	void ResetVar();
 	virtual ~Timer();
-	virtual void Update(float deltaTime) override;
+	void Update(float deltaTime) override;
 	bool isFinished = false;
 	bool FinishedLoop() { return currentTime == 0; };
 private:
