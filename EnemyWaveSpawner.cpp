@@ -106,9 +106,11 @@ void EnemyWaveSpawner::Call()
 		//this must have a size that is bigger than 1
 		vector<EnemySpawner*> possibleSpawners;
 		CheckThePossibleSpawner(possibleSpawners);
+		size_t indexOfSpawner = static_cast<size_t>(randomNumbers.RandomBetweenInts(0, static_cast<int>(possibleSpawners.size())));
 		assert(possibleSpawners.size() > 0);
-		SpawnEnemy(possibleSpawners[(indexOfEnemiesToSpawn) % possibleSpawners.size()]->GetSpawnerPos(), enemiesToSpawn[indexOfEnemiesToSpawn]);
-		std::cout << possibleSpawners.size() << " ";
+		assert(indexOfSpawner < possibleSpawners.size());
+		SpawnEnemy(possibleSpawners[indexOfSpawner]->GetSpawnerPos(), enemiesToSpawn[indexOfEnemiesToSpawn]);
+		std::cout << indexOfSpawner << " ";
 		indexOfEnemiesToSpawn++;
 		//spawned the last enemy of the wave
 		if (enemiesToSpawn.size() == indexOfEnemiesToSpawn) {
