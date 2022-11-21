@@ -69,11 +69,11 @@ void CollisionDetection::DetectCollisions()
 
 void CollisionDetection::CheckProjectile(vector<Collider*>& allPairs, int i, int j)
 {
-	if (allPairs[i]->type == Collider::Projectile) {
+	if (allPairs[i]->type == Collider::Type::Projectile) {
 		allPairs[i]->toDeactivate = true;
 		allPairs[i]->collision = allPairs[i + 1];
 	}
-	if (allPairs[j]->type == Collider::Projectile) {
+	if (allPairs[j]->type == Collider::Type::Projectile) {
 		allPairs[j]->toDeactivate = true;
 		allPairs[j]->collision = allPairs[i];
 	}

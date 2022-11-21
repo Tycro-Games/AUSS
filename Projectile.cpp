@@ -12,7 +12,7 @@ Projectile::Projectile(PosDir posDir, Tmpl8::Sprite* sprite, ProjectileSpawner* 
 	rVar(RotationVar(360 / (static_cast<const float>(sprite->Frames() - 1)), 90.0f, 20.0f)),
 	rot(&pos, &dir, &rVar, &frame, &mover)
 {
-	collider.type = Collider::Projectile;
+	collider.type = Collider::Type::Projectile;
 
 	mover.Init(&pos, &dir, &collider, this, SPEED);
 
@@ -92,7 +92,7 @@ void Projectile::ResetBullet()
 {
 	//trigger the enemy flag for damaging flag
 	if (collider.collision)
-		if (collider.collision->type == Collider::Enemy)
+		if (collider.collision->type == Collider::Type::Enemy)
 			collider.collision->toDeactivate = true;
 	collider.toDeactivate = false;
 	timer.isFinished = true;

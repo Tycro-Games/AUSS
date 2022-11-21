@@ -58,7 +58,7 @@ bool Collider::InGameBounds(Collider& col) {
 	return col.Collides(Game::Get().getTilemap().GetGameBounds());
 }
 //checks with the position parameter
-bool Collider::InGameBounds(vec2& pos, Collider& col)
+bool Collider::InGameBounds(const vec2& pos, Collider& col)
 {
 	return Overlaps(col.At(pos), Game::Get().getTilemap().GetGameBounds());
 
@@ -75,8 +75,5 @@ vec2 Collider::GetNormalEdgeScreen(const vec2& pos, const Collider& col)
 	return normal;
 }
 
-Collider::~Collider()
-{
-}
 
 

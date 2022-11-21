@@ -209,7 +209,7 @@ void MoveablePlayer::Update(float deltaTime)
 void MoveablePlayer::MoveTileOrPlayer(vec2& tilemapPos, Collider& c, const vec2& playerPos)
 {
 	//move getTilemap() if it does not hit the bounds
-	if (Collider::TileMapInGameScreen(tilemapPos, c)) {
+	if (Collider::InGameScreen(tilemapPos, c)) {
 		*tileMapCol->pos = tilemapPos;
 		hasChangedPos = true;
 
@@ -254,7 +254,7 @@ void MoveablePlayer::MovePlayer()
 {
 	if (canMove) {
 		Collider c = (*collider);
-		if (Collider::TileMapInGameScreen(playerMovement, c * EDGE_DISTANCE))
+		if (Collider::InGameScreen(playerMovement, c * EDGE_DISTANCE))
 			*pos = playerMovement;
 		else {
 
@@ -271,9 +271,9 @@ void MoveablePlayer::ClampTheMovementVector(const Collider& c, const vec2 newVec
 		return;
 	::vec2 clampedOnX = vec2(originalVec.x + nextPos.x / 2, originalVec.y);
 	vec2 clampedOnY = vec2(originalVec.x, originalVec.y + nextPos.y / 2);
-	if (Collider::TileMapInGameScreen(clampedOnX, c))
+	if (Collider::InGameScreen(clampedOnX, c))
 		originalVec = clampedOnX, changed = true;
-	else if (Collider::TileMapInGameScreen(clampedOnY, c))
+	else if (Collider::InGameScreen(clampedOnY, c))
 		originalVec = clampedOnY, changed = true;
 }
 bool MoveablePlayer::CheckVecForOneDir(vec2& nextPos)
@@ -300,9 +300,9 @@ void MoveablePlayer::ClampTheMovementVector(const Collider& c, const vec2 newVec
 		clampedOnX = vec2(originalVec.x + nextPos.x, originalVec.y);
 		clampedOnY = vec2(originalVec.x, originalVec.y + nextPos.y);
 	}
-	if (Collider::TileMapInGameScreen(clampedOnX, c))
+	if (Collider::InGameScreen(clampedOnX, c))
 		originalVec = clampedOnX;
-	else if (Collider::TileMapInGameScreen(clampedOnY, c))
+	else if (Collider::InGameScreen(clampedOnY, c))
 		originalVec = clampedOnY;
 }
 

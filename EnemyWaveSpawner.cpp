@@ -16,18 +16,18 @@ EnemyWaveSpawner::EnemyWaveSpawner()
 	Spawner("assets/OriginalAssets/smoke.tga"),
 	hoarderSprite(new Surface("assets/OriginalAssets/phaser.tga"), 16),
 	runnerSprite(new Surface("assets/OriginalAssets/sniper.tga"), 32),
-	enemyPrototypes()
+	enemyPrototypes(),
+	player(nullptr),
+	indexOfEnemiesToSpawn(0)
 
 
 {
-	player = nullptr;
-	indexSpawn = 0;
 
 }
 
 void EnemyWaveSpawner::Init(Being* _player)
 {
-	indexSpawn = 0;
+	indexOfEnemiesToSpawn = 0;
 	player = _player;
 	timer.Init(this, 1.0f);
 	//enemy prototypes intialization
@@ -97,16 +97,21 @@ void EnemyWaveSpawner::ReadWaves()
 	}
 
 }
-
+//spawns enemies at an inverval for random numbers to use time as a seed
 void EnemyWaveSpawner::Call()
 {
 	if (!startedWave)
 		SpawnCurrentWave();
 	else {
-		SpawnEnemy(enemySpawners[(indexSpawn) % enemySpawners.size()]->GetSpawnerPos(), enemiesToSpawn[indexSpawn]);
-		std::cout << indexSpawn << " ";
-		indexSpawn++;
-		if (enemiesToSpawn.size() == indexSpawn) {
+		//this must have a size that is bigger than 1
+		vector<EnemySpawner*> possibleSpawners;
+		CheckThePossibleSpawner(possibleSpawners);
+		assert(possibleSpawners.size() > 0);
+		SpawnEnemy(possibleSpawners[(indexOfEnemiesToSpawn) % possibleSpawners.size()]->GetSpawnerPos(), enemiesToSpawn[indexOfEnemiesToSpawn]);
+		std::cout << possibleSpawners.size() << " ";
+		indexOfEnemiesToSpawn++;
+		//spawned the last enemy of the wave
+		if (enemiesToSpawn.size() == indexOfEnemiesToSpawn) {
 			timer.isFinished = true;
 			startedWave = false;
 		}
@@ -150,9 +155,9 @@ void EnemyWaveSpawner::SpawnCurrentWave() {
 		CheckThePossibleEnemies(weight, possibleEnemies);
 	}
 	//interval for spawninig
-	timer.Init(this, .15f, true);
+	timer.Init(this, SPAWNING_INTERVAL, true);
 	//spawn enemies in the spawners' positons
-	indexSpawn = 0;
+	indexOfEnemiesToSpawn = 0;
 
 
 	std::cout << "index done\n";
@@ -164,6 +169,15 @@ void EnemyWaveSpawner::CheckThePossibleEnemies(size_t weight, vector<EnemyTypes>
 		//checks if the enemy weight is bigger the the weight of the entire wave
 		if (enemyPrototypes[waves[indexWave].enemiesInWave[i]]->getWeight() <= weight)
 			possibleEnemies.push_back(waves[indexWave].enemiesInWave[i]);
+	}
+}
+
+void EnemyWaveSpawner::CheckThePossibleSpawner(vector<EnemySpawner*>& possibleSpawner)
+{
+	possibleSpawner.clear();
+	for (size_t i = 0; i < enemySpawners.size(); i++) {
+		if (!Collider::InGameScreen(enemySpawners[i]->GetSpawnerPos()))
+			possibleSpawner.push_back(enemySpawners[i]);
 	}
 }
 void EnemyWaveSpawner::SpawnEnemy(vec2 pos, EnemyTypes enemy)

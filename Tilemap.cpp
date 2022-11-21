@@ -16,7 +16,6 @@ Tilemap::Tilemap() :
 		&pos)),
 	prop("assets/Spaceship-shooter#01/background/Space02.png")
 {
-	blockingTiles.reserve(20);
 
 }
 

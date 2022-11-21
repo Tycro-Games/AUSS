@@ -39,8 +39,6 @@ void Moveable::Translation(const vec2 translation)
 {
 	*pos += translation;
 }
-Moveable::~Moveable()
-{
-}
+
 
 

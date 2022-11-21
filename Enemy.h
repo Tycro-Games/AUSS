@@ -44,7 +44,7 @@ protected:
 };
 //inlined functions
 inline void Enemy::SetColToEnemyFlag() {
-	enemyCollider.type = Collider::Enemy;
+	enemyCollider.type = Collider::Type::Enemy;
 }
 
 inline void Enemy::setDg(unsigned int Dg)

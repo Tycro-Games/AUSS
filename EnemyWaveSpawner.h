@@ -18,6 +18,8 @@ public:
 	void PlayerTakesDamage(Enemy* enemy);
 	void SpawnCurrentWave();
 	void CheckThePossibleEnemies(size_t weight, std::vector<EnemyTypes>& possibleEnemies);
+	//add all the spawners that are offscreen
+	void CheckThePossibleSpawner(std::vector<EnemySpawner*>& possibleSpawner);
 	void SpawnEnemy(Tmpl8::vec2, EnemyTypes enemies);
 	// Inherited via Renderable
 	void Render(Tmpl8::Surface* screen) override;
@@ -33,7 +35,7 @@ private:
 	void EnemyInit();
 	void InitializeSpawners();
 	void ReadWaves();
-	size_t indexSpawn;
+	size_t indexOfEnemiesToSpawn;
 	Timer timer;
 	Being* player;
 	Tmpl8::Sprite hoarderSprite;
@@ -58,8 +60,8 @@ private:
 	//consts
 	const float SPAWNERS_XPOS_MULTIPLIERS = 0.88f;
 	const float SPAWNERS_YPOS_MULTIPLIERS = 0.83f;
+	const float SPAWNING_INTERVAL = .15f;
 	const std::filesystem::path spriteExplosionPath = "assets/OriginalAssets/smoke.tga";
-
 
 	// Inherited via Callable
 	void Call() override;

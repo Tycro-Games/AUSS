@@ -3,7 +3,7 @@
 struct Collider
 {
 public:
-	enum Type {
+	enum class Type {
 		Projectile,
 		Enemy
 	};
@@ -18,7 +18,7 @@ public:
 	bool operator==(const Collider& collider) {
 
 	}
-	~Collider();
+	~Collider() = default;
 	Type type;
 	Tmpl8::vec2 min, max;
 	Tmpl8::vec2* pos;
@@ -75,14 +75,19 @@ public:
 		return a.min.x <= b.max.x && a.max.x >= b.min.x;
 
 	}
-	static bool Collider::TileMapInGameScreen(Tmpl8::vec2& pos, Collider col)
+	static bool Collider::InGameScreen(const Tmpl8::vec2& pos, const Collider& col)
 	{
 
 		return pos.x + col.min.x >= 0 && pos.y + col.min.y >= 0
 			&& pos.x + col.max.x <= ScreenWidth - 1 && pos.y + col.max.y <= ScreenHeight - 1;
+	}static bool Collider::InGameScreen(const Tmpl8::vec2& pos)
+	{
+
+		return pos.x >= 0 && pos.y >= 0
+			&& pos.x <= ScreenWidth - 1 && pos.y <= ScreenHeight - 1;
 	}
 	static bool Collider::InGameBounds(Collider& col);
-	static bool Collider::InGameBounds(Tmpl8::vec2& pos, Collider& col);
+	static bool Collider::InGameBounds(const Tmpl8::vec2& pos, Collider& col);
 
 
 	static Tmpl8::vec2 Collider::GetNormalEdgeScreen(const Tmpl8::vec2& pos, const Collider& col);
