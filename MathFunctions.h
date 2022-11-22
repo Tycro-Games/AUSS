@@ -2,6 +2,7 @@
 #include "template.h"
 #include <iostream>
 #include "RotationVar.h"
+#include <cassert>
 
 class MathFunctions
 {
@@ -23,14 +24,20 @@ public:
 	{
 		return  (xPos == xpos && yPos == ypos);
 	}
-
+	//source for lerp and inverse lerp https://www.gamedev.net/articles/programming/general-and-gameplay-programming/inverse-lerp-a-super-useful-yet-often-overlooked-function-r5230/
+	//f=0, returns a
+	//f=0.5 returns the middle of a and b
+	//f=1 return b
 	static float Lerp(float a, float b, float f)
 	{
-		return a + f / (b - a);
+		assert(0.0f <= f && f <= 1.0f);
+		return (1.0f - f) * a + b * f;
 	}
+	//returns a number from 0 (when f is a) to 1 (when f is b)
 	static float InverseLerp(float a, float b, float f)
 	{
-		return a + f * (b - a);
+		assert(a <= f && f <= b);
+		return (f - a) / (b - a);
 	}
 
 

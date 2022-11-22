@@ -1,6 +1,9 @@
 #include "EnemyHoarder.h"
 #include "MathFunctions.h"
-EnemyHoarder::EnemyHoarder(PosDir posDir, Tmpl8::Sprite* sprite, EnemyWaveSpawner* _spawner) :
+
+#include "game.h"
+using namespace Tmpl8;
+EnemyHoarder::EnemyHoarder(PosDir posDir, Sprite* sprite, EnemyWaveSpawner* _spawner) :
 	Enemy(posDir.pos, sprite, _spawner)
 
 {
@@ -13,7 +16,7 @@ EnemyHoarder::EnemyHoarder(PosDir posDir, Tmpl8::Sprite* sprite, EnemyWaveSpawne
 
 	attack = Timer(this, TIME_TO_ATTACK, true);
 	rotate = Timer();
-	rot.Init(&pos, &dir, &rVar, &frame, &mover, spawner);
+	rot.Init(&pos, &dir, &rVar, &frame, &mover);
 
 	Init(posDir);
 }
@@ -40,7 +43,7 @@ void EnemyHoarder::Update(float deltaTime)
 	else {
 		mover.Update(deltaTime);
 
-		dist = MathFunctions::GetDistanceSqr(pos, spawner->GetPlayerPos());
+		dist = MathFunctions::GetDistanceSqr(pos, Game::Get().getPlayer().GetPos());
 
 		if (dist > MAX_DISTANCE_TO_PLAYER) {
 			//not in range
@@ -61,7 +64,7 @@ void EnemyHoarder::Update(float deltaTime)
 
 }
 
-void EnemyHoarder::Render(Tmpl8::Surface* screen)
+void EnemyHoarder::Render(Surface* screen)
 {
 	if (!getRenderable())
 		return;

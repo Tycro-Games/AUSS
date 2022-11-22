@@ -53,4 +53,5 @@ private:
 	const int MAX_PROJECTILES = 50;
 	const int MAX_EXPLOSIONS = 5;
 
+
 };

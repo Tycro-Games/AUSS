@@ -1,4 +1,5 @@
 #include "Score.h"
+#include <iostream>
 
 
 
@@ -18,10 +19,11 @@ void Score::onNotify(int points, EventType event)
 	case EventType::EndOfAWave:
 		//this happens on the end of every wave
 		totalScore += static_cast<unsigned int>(currentScore * multiplier);
+		std::cout << "multiplier is :" << multiplier << "and score for this wave is:" << currentScore << '\n';
 		//reset values
 		currentScore = 0;
 		multiplier = 1.0f;
-
+		break;
 	default:
 		break;
 	}

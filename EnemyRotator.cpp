@@ -1,27 +1,25 @@
 #include "EnemyRotator.h"
-
-EnemyRotator::EnemyRotator(Tmpl8::vec2* pos, Tmpl8::vec2* dir, RotationVar* rVar, unsigned int* frame, MoveToADirection* mover, EnemyWaveSpawner* spawner)
-	: Rotator(pos, dir, rVar, frame, mover),
-	spawner(spawner)
+#include "game.h"
+using namespace Tmpl8;
+EnemyRotator::EnemyRotator(vec2* pos, vec2* dir, RotationVar* rVar, unsigned int* frame, MoveToADirection* mover)
+	: Rotator(pos, dir, rVar, frame, mover)
 {
 
 }
 EnemyRotator::EnemyRotator() :
-	Rotator(),
-	spawner(nullptr)
+	Rotator()
 {
 }
-void EnemyRotator::Init(Tmpl8::vec2* pos, Tmpl8::vec2* dir, RotationVar* rVar, unsigned int* frame, MoveToADirection* mover, EnemyWaveSpawner* spawn)
+void EnemyRotator::Init(vec2* pos, vec2* dir, RotationVar* rVar, unsigned int* frame, MoveToADirection* mover)
 {
 	Rotator::Init(pos, dir, rVar, frame, mover);
-	spawner = spawn;
 }
 void EnemyRotator::Call() {
 	RotateToPlayer();
 }
 void EnemyRotator::RotateToPlayer()
 {
-	RotateToDirection(spawner->GetPlayerPos());
+	RotateToDirection(Game::Get().getPlayer().GetPos());
 }
 EnemyRotator::~EnemyRotator()
 {

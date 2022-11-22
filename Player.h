@@ -1,5 +1,5 @@
 #pragma once
-#include "Observer.h"
+#include "Subject.h"
 #include "Being.h"
 #include "ProjectileSpawner.h"
 #include "RotationVar.h"
@@ -8,7 +8,7 @@
 #include "SpriteTransparency.h"
 
 
-class Player :public Being, public Observer, public Callable, public Followable
+class Player :public Being, public Callable, public Followable, public Observer, public Subject
 {
 public:
 	Player();
@@ -31,9 +31,9 @@ public:
 	MoveablePlayer* GetMoveable();
 	ProjectileSpawner* GetSpawner();
 	const Tmpl8::vec2 GetDir() const;
+	const Tmpl8::vec2 GetPos() const;
 
 private:
-
 	RotationVar rVar;
 	Tmpl8::vec2 dirToFace;
 	Tmpl8::vec2 startingPos;

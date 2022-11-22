@@ -17,7 +17,6 @@ EnemyWaveSpawner::EnemyWaveSpawner()
 	hoarderSprite(new Surface("assets/OriginalAssets/phaser.tga"), 16),
 	runnerSprite(new Surface("assets/OriginalAssets/sniper.tga"), 32),
 	enemyPrototypes(),
-	player(nullptr),
 	indexOfEnemiesToSpawn(0)
 
 
@@ -25,11 +24,9 @@ EnemyWaveSpawner::EnemyWaveSpawner()
 
 }
 
-void EnemyWaveSpawner::Init(const Player* _player)
+void EnemyWaveSpawner::Init()
 {
 	indexOfEnemiesToSpawn = 0;
-	player = _player;
-	previousHp = player->GetHp();
 	timer.Init(this, 1.0f);
 	//enemy prototypes intialization
 	EnemyInit();
@@ -108,24 +105,36 @@ void EnemyWaveSpawner::Call()
 		vector<EnemySpawner*> possibleSpawners;
 		CheckThePossibleSpawner(possibleSpawners);
 		size_t indexOfSpawner = static_cast<size_t>(randomNumbers.RandomBetweenInts(0, static_cast<int>(possibleSpawners.size())));
+		//error if the asumption about spawners is not right
 		assert(possibleSpawners.size() > 0);
 		assert(indexOfSpawner < possibleSpawners.size());
+
 		SpawnEnemy(possibleSpawners[indexOfSpawner]->GetSpawnerPos(), enemiesToSpawn[indexOfEnemiesToSpawn]);
-		std::cout << indexOfSpawner << " ";
 		indexOfEnemiesToSpawn++;
 		//spawned the last enemy of the wave
 		if (enemiesToSpawn.size() == indexOfEnemiesToSpawn) {
+			std::cout << "Spawned enemies:" << enemiesToSpawn.size() << '\n';
 			if (!firstWave) {
 				//notify the score 
-				//multiply the score if the player was not hit the previous wave wave
-				if (previousHp == player->GetHp())
+				//multiply the score if the player was not hit the previous wave 
+				if (!playerHasTakenDamage) {
 					notify(1, EventType::BonusConditions);
-				else
-					previousHp = player->GetHp();
-				std::cout << "Double points\n";
-				notify(0, EventType::EndOfAWave);
+					std::cout << "Double points for health\n";
+				}
+				else {
+					playerHasTakenDamage = false;
+				}
+				//number of minimum projectiles
+				int minimumProjectiles = 0;
+				for (auto p : enemiesToSpawn) {
+					minimumProjectiles += (enemyPrototypes[p]->getMaxHp() / enemyPrototypes[p]->DG_TO_TAKE);
+				}
+
+				notify(minimumProjectiles, EventType::EndOfAWave);
 			}
+
 			firstWave = false;
+
 			timer.isFinished = true;
 			startedWave = false;
 		}
@@ -143,6 +152,7 @@ EnemyWaveSpawner::~EnemyWaveSpawner()
 void EnemyWaveSpawner::PlayerTakesDamage(Enemy* enemy)
 {
 	notify(enemy->getDg(), EventType::PlayerTakesDamage);
+	playerHasTakenDamage = true;
 }
 void EnemyWaveSpawner::SpawnCurrentWave() {
 	startedWave = true;
@@ -160,7 +170,6 @@ void EnemyWaveSpawner::SpawnCurrentWave() {
 			index = static_cast<size_t>(randomNumbers.RandomBetweenInts(0, static_cast<int>(possibleEnemies.size())));
 		else
 			index = 0;
-		std::cout << index << ' ';
 		EnemyTypes type = possibleEnemies[index];
 		enemiesToSpawn.push_back(type);
 
@@ -174,7 +183,6 @@ void EnemyWaveSpawner::SpawnCurrentWave() {
 	indexOfEnemiesToSpawn = 0;
 
 
-	std::cout << "wave to spawn enemies\n";
 }
 void EnemyWaveSpawner::CheckThePossibleEnemies(size_t weight, vector<EnemyTypes>& possibleEnemies)
 {

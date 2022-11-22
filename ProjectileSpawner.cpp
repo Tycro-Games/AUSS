@@ -164,5 +164,8 @@ unsigned int ProjectileSpawner::getTotalProjectiles() const
 
 void ProjectileSpawner::ResetWaveProjectiles()
 {
-	waveProjectiles;
+	waveProjectiles = 0;
 }
+
+
+

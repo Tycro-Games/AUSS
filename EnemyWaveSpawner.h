@@ -10,7 +10,7 @@ class EnemyWaveSpawner : public Spawner, public Subject, public Callable
 {
 public:
 	EnemyWaveSpawner();
-	void Init(const Player* _player);
+	void Init();
 	~EnemyWaveSpawner();
 	void AddEnemyToPool(Enemy* enemy, bool isDead = false);
 	Enemy* CreateEnemy(EnemyTypes enemyType);
@@ -28,7 +28,6 @@ public:
 	void Update(float deltaTime) override;
 
 	bool EnemyWaveSpawner::IsPoolEmpty(const std::vector<Enemy*>& pool);
-	const Tmpl8::vec2 EnemyWaveSpawner::GetPlayerPos()const;
 	EnemyTypes ConvertToEnum(std::string str);
 private:
 	bool startedWave = false;
@@ -39,9 +38,7 @@ private:
 	void ReadWaves();
 	size_t indexOfEnemiesToSpawn;
 	Timer timer;
-	const Player* player;
-	int previousHp = -1;
-
+	bool playerHasTakenDamage = false;
 	Tmpl8::Sprite hoarderSprite;
 	Tmpl8::Sprite runnerSprite;
 	//Enemy Hoarder
@@ -74,10 +71,7 @@ private:
 inline bool EnemyWaveSpawner::IsPoolEmpty(const std::vector<Enemy*>& pool) {
 	return pool.size() == 0;
 }
-inline const Tmpl8::vec2 EnemyWaveSpawner::GetPlayerPos() const
-{
-	return player->pos;
-}
+
 
 inline EnemyTypes EnemyWaveSpawner::ConvertToEnum(std::string str)
 {

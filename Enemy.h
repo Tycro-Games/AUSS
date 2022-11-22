@@ -22,11 +22,12 @@ public:
 	Collider* getColl();
 	Moveable* getMoveable() const;
 	unsigned int getDg() const;
-	unsigned int getHp() const;
+	unsigned int getMaxHp() const;
 	unsigned int getScore() const;
 	unsigned int getWeight() const;
 	EnemyTypes GetEnemyType() const;
 
+	const int DG_TO_TAKE = 25;
 protected:
 	void SetColToEnemyFlag();
 	void Enemy::SetJsonValues(Enemy* enem);
@@ -79,7 +80,7 @@ inline unsigned int Enemy::getDg() const {
 	return dg;
 }
 
-inline unsigned int Enemy::getHp() const
+inline unsigned int Enemy::getMaxHp() const
 {
 	return maxHp;
 }

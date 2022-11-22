@@ -18,7 +18,7 @@ Player::Player() :
 void Player::Init(const Collider& tileMapCollider, const Tmpl8::vec2& _pos)
 {
 
-	Being::Init(_pos, 2);
+	Being::Init(_pos, 100);
 	startingPos = _pos;
 	playerCollider = Collider(COL_MIN, COL_MAX, &startingPos);
 
@@ -119,15 +119,28 @@ const vec2 Player::GetDir() const
 	return dirToFace;
 }
 
+const Tmpl8::vec2 Player::GetPos() const
+{
+	return pos;
+}
+
 void Player::onNotify(int points, EventType _event)
 {
+	unsigned int maximumOfProjectiles = points * 4;
+
 	switch (_event)
 	{
-	case EventType::EnemyDeath:
-		break;
-	case EventType::BonusConditions:
-		break;
 	case EventType::EndOfAWave:
+		//points are the minimum number of projectiles
+		//gets a bonus if the accuracy is at least 25%
+		if (spawner.getWaveProjectiles() <= maximumOfProjectiles) {
+			float accuracy = 1.0f - MathFunctions::InverseLerp(static_cast<float>(points), static_cast<float>(maximumOfProjectiles), static_cast<float>(spawner.getWaveProjectiles()));
+			//if there is a high accuracy get extra points
+			if (accuracy > 0.80f)
+				notify(1, EventType::BonusConditions);
+			std::cout << "accuracy for this wave is:" << accuracy << '\n';
+		}
+		spawner.ResetWaveProjectiles();
 		break;
 	case EventType::PlayerTakesDamage:
 		TakeDamage(points);
