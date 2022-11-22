@@ -42,7 +42,10 @@ void ProjectileSpawner::Init()
 
 
 	fireRate = FIRE_RATE;
-
+	desiredTime = 0;
+	currentTime = 0;
+	waveProjectiles = 0;
+	totalProjectiles = 0;
 }
 
 void ProjectileSpawner::ChangeFireSpeed(float speed) {
@@ -92,8 +95,15 @@ void ProjectileSpawner::SpawnProjectiles()
 	vec2 playerDir = Game::Get().getPlayer().GetDir();
 	vec2 randomizedDir = (playerDir + randomDir).normalized();
 	projectile->Init(PosDir{ playerPos + randomizedDir * OFFSET_MULTIPLIER,randomizedDir });
+	AddProjectilesCount();
 	Game::Get().AddCollider(projectile->getColl());
 	Game::Get().AddMoveable(projectile->getMoveable());
+}
+
+void ProjectileSpawner::AddProjectilesCount()
+{
+	totalProjectiles++;
+	waveProjectiles++;
 }
 
 void ProjectileSpawner::setFlag(bool fire)
@@ -140,4 +150,19 @@ void ProjectileSpawner::Render(Tmpl8::Surface* screen)
 	for (int i = 0; i < updateObjects.size(); i++)
 		updateObjects[i]->Render(screen);
 
+}
+
+unsigned int ProjectileSpawner::getWaveProjectiles() const
+{
+	return waveProjectiles;
+}
+
+unsigned int ProjectileSpawner::getTotalProjectiles() const
+{
+	return totalProjectiles;
+}
+
+void ProjectileSpawner::ResetWaveProjectiles()
+{
+	waveProjectiles;
 }

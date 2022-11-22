@@ -1,15 +1,16 @@
 #pragma once
 //based on https://gameprogrammingpatterns.com/observer.html
-enum PointTypes
+enum class EventType
 {
-	Additive,
-	Multiplicative,
-	Total
+	EnemyDeath,
+	BonusConditions,
+	EndOfAWave,
+	PlayerTakesDamage
 
 };
 class Observer
 {
 public:
-	virtual ~Observer() {}
-	virtual void onNotify(int points, PointTypes event) = 0;
+	virtual ~Observer() = default;
+	virtual void onNotify(int points, EventType event) = 0;
 };

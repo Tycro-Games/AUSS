@@ -1,5 +1,5 @@
 #pragma once
-
+#include "Observer.h"
 #include "Being.h"
 #include "ProjectileSpawner.h"
 #include "RotationVar.h"
@@ -8,23 +8,25 @@
 #include "SpriteTransparency.h"
 
 
-class Player :public Being, public Callable, public Followable
+class Player :public Being, public Observer, public Callable, public Followable
 {
 public:
 	Player();
 	void Init(const Collider& tilemapCollider, const Tmpl8::vec2& pos);
-	~Player();
+	~Player() = default;
 	void Render(Tmpl8::Surface* screen);
 	void Update(float deltaTime);
 	void Shoot(bool fire);
 	void Rotate(int x, int y);
-	virtual void Call()override {};
-	virtual void TakeDamage(int) override;
-	virtual void Die() override;
-	virtual const Tmpl8::vec2 GetOffset() override;
-	virtual void ResetOffset() override {
-		lastPos = pos;
-	}
+	//callable
+	void Call()override;
+	//being  override
+	void TakeDamage(int) override;
+	void Die() override;
+	//followable override
+	const Tmpl8::vec2 GetOffset() override;
+	void ResetOffset() override;
+
 	//getters
 	MoveablePlayer* GetMoveable();
 	ProjectileSpawner* GetSpawner();
@@ -49,9 +51,22 @@ private:
 	ProjectileSpawner spawner;
 	Timer timer;
 
+
+
+
+
+	// Inherited via Observer
+	void onNotify(int points, EventType event) override;
+
 };
 inline const Tmpl8::vec2 Player::GetOffset() {
 	return   -pos + lastPos;
+}
+
+inline void Player::ResetOffset()
+{
+	lastPos = pos;
+
 }
 
 

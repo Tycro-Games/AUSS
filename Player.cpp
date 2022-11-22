@@ -31,10 +31,7 @@ void Player::Init(const Collider& tileMapCollider, const Tmpl8::vec2& _pos)
 	playerMover.Init(&pos, &playerCollider, tilemapCollider);
 }
 
-Player::~Player()
-{
 
-}
 
 
 void Player::Render(Tmpl8::Surface* screen)
@@ -120,6 +117,29 @@ ProjectileSpawner* Player::GetSpawner()
 const vec2 Player::GetDir() const
 {
 	return dirToFace;
+}
+
+void Player::onNotify(int points, EventType _event)
+{
+	switch (_event)
+	{
+	case EventType::EnemyDeath:
+		break;
+	case EventType::BonusConditions:
+		break;
+	case EventType::EndOfAWave:
+		break;
+	case EventType::PlayerTakesDamage:
+		TakeDamage(points);
+		break;
+	default:
+		break;
+	}
+}
+
+void Player::Call()
+{
+	//this happens when the temporary invincibility ends
 }
 
 void Player::Die()

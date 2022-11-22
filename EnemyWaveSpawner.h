@@ -3,13 +3,14 @@
 #include "Subject.h"
 #include "Wave.h"
 #include "EnemySpawner.h"
+#include "Player.h"
 class Enemy;
 using json = nlohmann::json;
 class EnemyWaveSpawner : public Spawner, public Subject, public Callable
 {
 public:
 	EnemyWaveSpawner();
-	void Init(Being* _player);
+	void Init(const Player* _player);
 	~EnemyWaveSpawner();
 	void AddEnemyToPool(Enemy* enemy, bool isDead = false);
 	Enemy* CreateEnemy(EnemyTypes enemyType);
@@ -31,13 +32,16 @@ public:
 	EnemyTypes ConvertToEnum(std::string str);
 private:
 	bool startedWave = false;
+	bool firstWave = true;
 	void ThrowError(const char*);
 	void EnemyInit();
 	void InitializeSpawners();
 	void ReadWaves();
 	size_t indexOfEnemiesToSpawn;
 	Timer timer;
-	Being* player;
+	const Player* player;
+	int previousHp = -1;
+
 	Tmpl8::Sprite hoarderSprite;
 	Tmpl8::Sprite runnerSprite;
 	//Enemy Hoarder

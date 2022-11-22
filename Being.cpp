@@ -30,3 +30,8 @@ void Being::TakeDamage(int dg)
 	}
 	//add other effects on hit
 }
+
+int Being::GetHp() const
+{
+	return hp;
+}

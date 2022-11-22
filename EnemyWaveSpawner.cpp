@@ -25,10 +25,11 @@ EnemyWaveSpawner::EnemyWaveSpawner()
 
 }
 
-void EnemyWaveSpawner::Init(Being* _player)
+void EnemyWaveSpawner::Init(const Player* _player)
 {
 	indexOfEnemiesToSpawn = 0;
 	player = _player;
+	previousHp = player->GetHp();
 	timer.Init(this, 1.0f);
 	//enemy prototypes intialization
 	EnemyInit();
@@ -114,6 +115,17 @@ void EnemyWaveSpawner::Call()
 		indexOfEnemiesToSpawn++;
 		//spawned the last enemy of the wave
 		if (enemiesToSpawn.size() == indexOfEnemiesToSpawn) {
+			if (!firstWave) {
+				//notify the score 
+				//multiply the score if the player was not hit the previous wave wave
+				if (previousHp == player->GetHp())
+					notify(1, EventType::BonusConditions);
+				else
+					previousHp = player->GetHp();
+				std::cout << "Double points\n";
+				notify(0, EventType::EndOfAWave);
+			}
+			firstWave = false;
 			timer.isFinished = true;
 			startedWave = false;
 		}
@@ -130,7 +142,7 @@ EnemyWaveSpawner::~EnemyWaveSpawner()
 }
 void EnemyWaveSpawner::PlayerTakesDamage(Enemy* enemy)
 {
-	player->TakeDamage(enemy->getDg());
+	notify(enemy->getDg(), EventType::PlayerTakesDamage);
 }
 void EnemyWaveSpawner::SpawnCurrentWave() {
 	startedWave = true;
@@ -157,12 +169,12 @@ void EnemyWaveSpawner::SpawnCurrentWave() {
 		CheckThePossibleEnemies(weight, possibleEnemies);
 	}
 	//interval for spawninig
-	timer.Init(this, SPAWNING_INTERVAL, true);
+	timer.Init(this, SPAWNING_INTERVAL, true); //spawning interval could be fetched from the json per wave
 	//spawn enemies in the spawners' positons
 	indexOfEnemiesToSpawn = 0;
 
 
-	std::cout << "index done\n";
+	std::cout << "wave to spawn enemies\n";
 }
 void EnemyWaveSpawner::CheckThePossibleEnemies(size_t weight, vector<EnemyTypes>& possibleEnemies)
 {
@@ -250,7 +262,7 @@ void EnemyWaveSpawner::AddEnemyToPool(Enemy* enemy, bool isDead)
 
 
 	if (isDead) {
-		notify(enemy->getScore(), Additive);
+		notify(enemy->getScore(), EventType::EnemyDeath);
 		if (activeColliders.size() == 0)
 			SpawnCurrentWave();
 	}

@@ -3,11 +3,11 @@
 class Score : public Observer
 {
 public:
-	Score();
-	~Score();
+	Score() = default;
+	~Score() = default;
 
 	// Inherited via Observer
-	void onNotify(int points, PointTypes event) override;
+	void onNotify(int points, EventType event) override;
 	void Init();
 	unsigned int getTotal();
 private:

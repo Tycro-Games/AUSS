@@ -46,12 +46,12 @@ namespace Tmpl8
 	}
 	void Game::Initializations()
 	{
-		vec2 center = vec2(ScreenWidth / 2, ScreenHeight / 2);
+		vec2 centerOfTheScreen = vec2(ScreenWidth / 2, ScreenHeight / 2);
 		//reset the score
 		score.Init();
 
-		tileMap.Init(center);
-		player.Init(tileMap.GetCol(), center);
+		tileMap.Init(centerOfTheScreen);
+		player.Init(tileMap.GetCol(), centerOfTheScreen);
 		waveSpawner.Init(&player);;
 
 
@@ -84,9 +84,9 @@ namespace Tmpl8
 
 		updateables.push_back(&waveSpawner);
 		renderables.push_back(&waveSpawner);
-		//assign score
+		//assign subjects to observers
 		AssignSubject(waveSpawner, score);
-
+		AssignSubject(waveSpawner, player);
 
 		updateables.push_back(&player);
 		renderables.push_back(&player);

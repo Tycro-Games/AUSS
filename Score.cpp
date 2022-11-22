@@ -1,30 +1,27 @@
 #include "Score.h"
-#include <iostream>
-Score::Score()
-{
-}
 
-Score::~Score()
-{
-}
 
-void Score::onNotify(int points, PointTypes event)
+
+
+void Score::onNotify(int points, EventType event)
 {
 	switch (event)
 	{
-	case Additive:
+	case EventType::EnemyDeath:
 		//adding points while the wave is running
 		currentScore += points;
 		break;
-	case Multiplicative:
+	case EventType::BonusConditions: //like having a high accuracy or not being hit by enemies for an entire wave
+		//add to the multiplier
 		multiplier += points;
 		break;
-	case Total:
+	case EventType::EndOfAWave:
 		//this happens on the end of every wave
-		totalScore += currentScore + static_cast<unsigned int>(currentScore * multiplier);
+		totalScore += static_cast<unsigned int>(currentScore * multiplier);
 		//reset values
 		currentScore = 0;
 		multiplier = 1.0f;
+
 	default:
 		break;
 	}
@@ -37,7 +34,7 @@ void Score::Init()
 	multiplier = 1.0f;
 }
 
- unsigned int Score::getTotal() 
+unsigned int Score::getTotal()
 {
 	return totalScore + currentScore;
 

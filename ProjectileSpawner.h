@@ -17,18 +17,21 @@ public:
 	void CreateMoreProjectiles();
 
 	void SpawnProjectiles();
+	void AddProjectilesCount();
 	void setFlag(bool fire);
 
 
 	// Inherited via Entity
 	void Update(float deltaTime) override;
 	void Render(Tmpl8::Surface* screen) override;
-
-
-private:
 	float fireRate = 1.0f, currentTime, desiredTime;
 
 	const Tmpl8::vec2 offset;
+
+	unsigned int getWaveProjectiles() const;
+	unsigned int getTotalProjectiles() const;
+	void ResetWaveProjectiles();
+private:
 
 	std::vector<Projectile*> poolOfProjectiles;
 
@@ -36,8 +39,10 @@ private:
 	bool isSpawning = false;
 	//assets for projectiles
 	Tmpl8::Sprite projectileSprite;
-
-
+	//shot in total
+	unsigned int totalProjectiles = 0;
+	//shot int the current wave
+	unsigned int waveProjectiles = 0;
 	//consts
 	const float FIRE_RATE = 0.25f;
 	const float MIN_RATE = 0.2f;

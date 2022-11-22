@@ -8,6 +8,7 @@ public:
 	void Init(Tmpl8::vec2 _pos, int _hp = 100);
 	virtual ~Being() = default;
 	virtual void TakeDamage(int dg);
+	virtual int GetHp()const;
 protected:
 	int hp;
 	virtual void Die() = 0;
