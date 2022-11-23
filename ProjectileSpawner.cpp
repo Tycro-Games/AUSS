@@ -102,7 +102,6 @@ void ProjectileSpawner::SpawnProjectiles()
 
 void ProjectileSpawner::AddProjectilesCount()
 {
-	totalProjectiles++;
 	waveProjectiles++;
 }
 
@@ -164,6 +163,7 @@ unsigned int ProjectileSpawner::getTotalProjectiles() const
 
 void ProjectileSpawner::ResetWaveProjectiles()
 {
+	totalProjectiles += waveProjectiles;
 	waveProjectiles = 0;
 }
 

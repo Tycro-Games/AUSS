@@ -36,7 +36,7 @@ protected:
 	/// </summary>
 	/// <param name="range"></param>
 	/// <returns></returns>
-	bool InRangeToAtackPlayer(float range);
+	bool InRangeToAtackPlayerSquared(float range);
 	void InitEnemy(Moveable& _move);
 	void Enemy::SetJsonValues(Enemy* enem);
 	EnemyTypes enemyType;

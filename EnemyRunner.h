@@ -20,12 +20,11 @@ public:
 
 	virtual void ResetEnemy() override;
 private:
-	//timers
-	Timer rotate;
 
 	MoveToADirection mover;
 	Rotator rot;
-	RotationVar rVar = RotationVar(360 / 16.0f, 90.0f, 20.0f);
+	RotationVar rVar;
+	RandomNumbers randomNumbers;
 
 	//consts
 	const Tmpl8::vec2 COL_MIN = Tmpl8::vec2(-10, -10);

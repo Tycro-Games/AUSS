@@ -68,6 +68,11 @@ namespace Tmpl8
 	}
 	void Game::RemoveAllUpdateables()
 	{
+		RemoveSubject(waveSpawner, player);
+		RemoveSubject(waveSpawner, score);
+		//player can add a multipler to the score
+		RemoveSubject(player, score);
+
 		colliders.clear();
 		moveablesTile.clear();
 		updateables.clear();
@@ -99,6 +104,11 @@ namespace Tmpl8
 	void Game::AssignSubject(Subject& subject, Observer& observer)
 	{
 		subject.addObserver(&observer);
+	}
+	void Game::RemoveSubject(Subject& subject, Observer& observer)
+	{
+		subject.removeObserver(&observer);
+
 	}
 	void Game::Shutdown()
 	{

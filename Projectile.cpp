@@ -75,11 +75,11 @@ void Projectile::Call()
 
 		ResetBullet();
 	}
-	else if (mover.colToReflectFrom != NULL) { //reflect on obstacle
+	else if (mover.colToReflectFrom != nullptr) { //reflect on obstacle
 		Collider c = *mover.colToReflectFrom;
 		rot.Reflect(Collider::GetNormal(c, collider));
 
-		mover.colToReflectFrom = NULL;
+		mover.colToReflectFrom = nullptr;
 	}
 	else //reflect on screen
 		rot.Reflect(Collider::GetNormalEdgeScreen(mover.nextP, collider));

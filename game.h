@@ -27,6 +27,7 @@ namespace Tmpl8 {
 		void AddInstancesToUpdates();
 
 		void AssignSubject(Subject& subject, Observer& observer);
+		void RemoveSubject(Subject& subject, Observer& observer);
 
 
 		//SDL functions

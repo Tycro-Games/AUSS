@@ -15,7 +15,7 @@ public:
 		*dir = MathFunctions::Reflect(*dir, normal);
 
 	}
-	virtual ~MoveToADirection();
+	virtual ~MoveToADirection() = default;
 	Tmpl8::vec2 nextP;
 	Collider* colToReflectFrom = nullptr;
 protected:

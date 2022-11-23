@@ -3,7 +3,8 @@
 
 using namespace Tmpl8;
 EnemyHoarder::EnemyHoarder(PosDir posDir, Sprite* sprite, EnemyWaveSpawner* _spawner) :
-	Enemy(posDir.pos, sprite, _spawner)
+	Enemy(posDir.pos, sprite, _spawner),
+	rVar(RotationVar(360 / (static_cast<const float>(sprite->Frames() - 1)), 90.0f, static_cast<const float>(sprite->GetHeight())))
 
 {
 	enemyType = Hoarder;
@@ -31,8 +32,8 @@ void EnemyHoarder::Update(float deltaTime)
 	CheckForProjectileCollisions();
 
 	mover.Update(deltaTime);
-
-	if (InRangeToAtackPlayer(MAX_DISTANCE_TO_ATTACK)) {
+	InRangeToAtack = InRangeToAtackPlayerSquared(MAX_DISTANCE_TO_ATTACK);
+	if (InRangeToAtack) {
 		attack.Update(deltaTime);
 	}
 
@@ -84,13 +85,13 @@ void EnemyHoarder::ResetEnemy()
 void EnemyHoarder::Call()
 {
 	//ready to atack and in range
-	if (attack.FinishedLoop() && InRangeToAtackPlayer) {
+	if (attack.FinishedLoop() && InRangeToAtack) {
 		spawner->PlayerTakesDamage(this);
 		attack.ResetVar();
 		//moves a bit after atacking
 		ToMove = true;
 	}
-	else if (mover.colToReflectFrom != nullptr) {
+	if (mover.colToReflectFrom != nullptr) {
 		Collider c = *mover.colToReflectFrom;
 
 

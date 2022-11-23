@@ -10,7 +10,9 @@ MoveToADirection::MoveToADirection(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Collider*
 }
 
 MoveToADirection::MoveToADirection()
-	:Moveable()
+	:Moveable(),
+	call(nullptr),
+	dir(nullptr)
 {
 }
 
@@ -48,7 +50,4 @@ void MoveToADirection::Update(float deltaTime)
 
 }
 
-MoveToADirection::~MoveToADirection()
-{
 
-}

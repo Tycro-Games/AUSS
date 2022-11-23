@@ -25,6 +25,7 @@ void Enemy::SetJsonValues(Enemy* enem)
 	enem->setHp(maxHp);
 	enem->setScore(score);
 	enem->setWeight(weight);
+	enem->setDgToTake(dgToTake);
 }
 
 void Enemy::CheckForProjectileCollisions()

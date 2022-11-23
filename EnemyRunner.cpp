@@ -1,14 +1,14 @@
 #include "EnemyRunner.h"
+using namespace Tmpl8;
+EnemyRunner::EnemyRunner(PosDir posDir, Sprite* sprite, EnemyWaveSpawner* spawner)
+	:Enemy(posDir.pos, sprite, spawner),
+	rVar(RotationVar(360 / (static_cast<const float>(sprite->Frames() - 1)), 90.0f, static_cast<const float>(sprite->GetHeight())))
 
-EnemyRunner::EnemyRunner(PosDir posDir, Tmpl8::Sprite* sprite, EnemyWaveSpawner* spawner)
-	:Enemy(posDir.pos, sprite, spawner)
 {
 	enemyType = Runner;
 	enemyCollider = Collider(COL_MIN, COL_MAX, &pos);
 
-	rotate = Timer();
-
-	mover.Init(&pos, &dir, &enemyCollider, this);
+	mover.Init(&pos, &dir, &enemyCollider, this, 200);
 	rot.Init(&pos, &dir, &rVar, &frame, &mover);
 
 	InitEnemy(mover);
@@ -17,24 +17,31 @@ EnemyRunner::EnemyRunner(PosDir posDir, Tmpl8::Sprite* sprite, EnemyWaveSpawner*
 
 
 
-void EnemyRunner::Render(Tmpl8::Surface* screen)
+void EnemyRunner::Render(Surface* screen)
 {
+	if (!getRenderable())
+		return;
 	sprite->SetFrame(frame);
-	sprite->Draw(screen, static_cast<int>(pos.x), static_cast<int>(pos.y));
+	sprite->Draw(screen, static_cast<int>(pos.x + enemyCollider.min.x), static_cast<int>(pos.y + enemyCollider.min.y));
+	screen->Box(static_cast<int>(pos.x + enemyCollider.min.x), static_cast<int>(pos.y + enemyCollider.min.y), static_cast<int>(pos.x + enemyCollider.max.x), static_cast<int>(pos.y + enemyCollider.max.y), 0x00FF00);
+
+
 }
 
 void EnemyRunner::Update(float deltaTime)
 {
 	if (!getUpdateable())
 		return;
-	rotate.Update(deltaTime);
 
 	CheckForProjectileCollisions();
 
 	mover.Update(deltaTime);
 	if (InRangeToAtackPlayerSquared(100)) {
 		spawner->PlayerTakesDamage(this);
-		Die();
+
+		spawner->AddEnemyToPool(this, false);
+		spawner->SpawnExplosions(pos);
+
 	}
 }
 
@@ -56,18 +63,33 @@ void EnemyRunner::Init(PosDir posDir)
 {
 	SetActive(true);
 	pos = posDir.pos;
-	dir = posDir.dir;
-	rotate.Init(this, .5f);
-
+	dir = vec2{ randomNumbers.RandomBetweenFloats(0.1f,1.0f),randomNumbers.RandomBetweenFloats(0.1f,1.0f) };
+	dir.normalized();
+	std::cout << dir.x << " " << dir.y << '\n';
 	hp = maxHp;
+	frame = MathFunctions::RotateToDirectionFrames(rVar, dir);
+
 }
 
 void EnemyRunner::ResetEnemy()
 {
 	spawner->AddEnemyToPool(this, true);
+
 	spawner->SpawnExplosions(pos);
 }
 
 void EnemyRunner::Call()
 {
+	if (mover.colToReflectFrom != nullptr) {
+		Collider c = *mover.colToReflectFrom;
+
+
+		rot.Reflect(Collider::GetNormal(c, enemyCollider));
+
+		mover.colToReflectFrom = nullptr;
+	}
+	//out of bounds
+	else {
+		rot.Reflect(Collider::GetNormalEdgeScreen(mover.nextP, *mover.getColl()));
+	}
 }

@@ -27,7 +27,8 @@ EnemyWaveSpawner::EnemyWaveSpawner()
 void EnemyWaveSpawner::Init()
 {
 	indexOfEnemiesToSpawn = 0;
-	timer.Init(this, 1.0f);
+	firstWave = true;
+	timer.Init(this, 5);
 	//enemy prototypes intialization
 	EnemyInit();
 	InitializeSpawners();

@@ -28,6 +28,7 @@ public:
 private:
 	//movement
 	bool ToMove = false;
+	bool InRangeToAtack = false;
 	//consts
 	const Tmpl8::vec2 COL_MIN = Tmpl8::vec2(-10, -10);
 	const Tmpl8::vec2 COL_MAX = Tmpl8::vec2(10, 10);
@@ -43,7 +44,7 @@ private:
 	MoveToADirection mover;
 	RandomNumbers randomNumbers;
 
-	RotationVar rVar = RotationVar(360 / 16.0f, 90.0f, 20.0f);
+	RotationVar rVar;
 
 	EnemyRotator rot;
 	// Inherited via Enemy
