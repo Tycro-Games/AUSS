@@ -1,4 +1,5 @@
 #include "Enemy.h"
+#include "game.h"
 
 using namespace Tmpl8;
 using namespace std;
@@ -24,5 +25,33 @@ void Enemy::SetJsonValues(Enemy* enem)
 	enem->setHp(maxHp);
 	enem->setScore(score);
 	enem->setWeight(weight);
+}
+
+void Enemy::CheckForProjectileCollisions()
+{
+	//marked by collision
+	if (enemyCollider.toDeactivate) {
+		TakeDamage(dgToTake);
+		enemyCollider.toDeactivate = false;
+	}
+}
+
+bool Enemy::InRangeToAtackPlayerSquared(float range)
+{
+	float dist = MathFunctions::GetDistanceSqr(pos, Game::Get().getPlayer().GetPos());
+
+	if (dist < range) {
+		//in range to atack player
+		return true;
+	}
+
+	return false;
+
+}
+
+void Enemy::InitEnemy(Moveable& _move)
+{
+	enemyCollider.type = Collider::Type::Enemy;
+	move = &_move;
 }
 

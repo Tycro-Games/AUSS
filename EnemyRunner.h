@@ -1,10 +1,11 @@
 #pragma once
 #include "Enemy.h"
-class EnemyRunner :public Enemy
+#include "Rotator.h"
+class EnemyRunner :public Enemy, public Callable
 {
 public:
 	EnemyRunner(PosDir posDir, Tmpl8::Sprite* sprite, EnemyWaveSpawner* spawner);
-	~EnemyRunner();
+	~EnemyRunner() = default;
 
 	void Render(Tmpl8::Surface* screen) override;
 	void Update(float deltaTime) override;
@@ -19,8 +20,20 @@ public:
 
 	virtual void ResetEnemy() override;
 private:
-	MoveInstance mover;
+	//timers
+	Timer rotate;
 
+	MoveToADirection mover;
+	Rotator rot;
+	RotationVar rVar = RotationVar(360 / 16.0f, 90.0f, 20.0f);
+
+	//consts
+	const Tmpl8::vec2 COL_MIN = Tmpl8::vec2(-10, -10);
+	const Tmpl8::vec2 COL_MAX = Tmpl8::vec2(10, 10);
+
+
+	// Inherited via Callable
+	void Call() override;
 
 };
 

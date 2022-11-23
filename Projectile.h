@@ -31,7 +31,6 @@ public:
 
 private:
 	Tmpl8::vec2 dir;
-	const int DG = 10;
 	const Tmpl8::vec2 COL_MIN = Tmpl8::vec2(-10, -10);
 	const Tmpl8::vec2 COL_MAX = Tmpl8::vec2(10, 10);
 	const float SPEED = 250.0f;

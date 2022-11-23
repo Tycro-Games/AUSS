@@ -1,7 +1,6 @@
 #include "EnemyHoarder.h"
 #include "MathFunctions.h"
 
-#include "game.h"
 using namespace Tmpl8;
 EnemyHoarder::EnemyHoarder(PosDir posDir, Sprite* sprite, EnemyWaveSpawner* _spawner) :
 	Enemy(posDir.pos, sprite, _spawner)
@@ -9,24 +8,19 @@ EnemyHoarder::EnemyHoarder(PosDir posDir, Sprite* sprite, EnemyWaveSpawner* _spa
 {
 	enemyType = Hoarder;
 	enemyCollider = Collider(COL_MIN, COL_MAX, &pos);
-	SetColToEnemyFlag();
 	mover.Init(&pos, &dir, &enemyCollider, this, SPEED);
-	//as a getter for the base class
-	move = &mover;
 
 	attack = Timer(this, TIME_TO_ATTACK, true);
 	rotate = Timer();
 	rot.Init(&pos, &dir, &rVar, &frame, &mover);
 
+	InitEnemy(mover);
 	Init(posDir);
 }
 
 
 
-EnemyHoarder::~EnemyHoarder()
-{
 
-}
 
 void EnemyHoarder::Update(float deltaTime)
 {
@@ -34,35 +28,22 @@ void EnemyHoarder::Update(float deltaTime)
 		return;
 
 	rotate.Update(deltaTime);
-	//marked by collision
-	if (enemyCollider.toDeactivate) {
-		TakeDamage(DG_TO_TAKE);
-		enemyCollider.toDeactivate = false;
+	CheckForProjectileCollisions();
 
+	mover.Update(deltaTime);
+
+	if (InRangeToAtackPlayer(MAX_DISTANCE_TO_ATTACK)) {
+		attack.Update(deltaTime);
 	}
-	else {
-		mover.Update(deltaTime);
 
-		dist = MathFunctions::GetDistanceSqr(pos, Game::Get().getPlayer().GetPos());
 
-		if (dist > MAX_DISTANCE_TO_PLAYER) {
-			//not in range
-			InRangeToAtack = false;
-		}
-		else if (dist < MAX_DISTANCE_TO_ATTACK) {
-			//in range to atack player
-			attack.Update(deltaTime);
-			InRangeToAtack = true;
-		}
-		else
-		{
-			InRangeToAtack = false;
-		}
-
-	}
 
 
 }
+
+
+
+
 
 void EnemyHoarder::Render(Surface* screen)
 {
@@ -103,7 +84,7 @@ void EnemyHoarder::ResetEnemy()
 void EnemyHoarder::Call()
 {
 	//ready to atack and in range
-	if (attack.FinishedLoop() && InRangeToAtack) {
+	if (attack.FinishedLoop() && InRangeToAtackPlayer) {
 		spawner->PlayerTakesDamage(this);
 		attack.ResetVar();
 		//moves a bit after atacking

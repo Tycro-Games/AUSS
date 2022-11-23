@@ -127,7 +127,7 @@ void EnemyWaveSpawner::Call()
 				//number of minimum projectiles
 				int minimumProjectiles = 0;
 				for (auto p : enemiesToSpawn) {
-					minimumProjectiles += (enemyPrototypes[p]->getMaxHp() / enemyPrototypes[p]->DG_TO_TAKE);
+					minimumProjectiles += (enemyPrototypes[p]->getMaxHp() / enemyPrototypes[p]->getDgToTake());
 				}
 
 				notify(minimumProjectiles, EventType::EndOfAWave);
@@ -324,6 +324,7 @@ void EnemyWaveSpawner::SetJsonValues(Enemy* enemy, json& enemyJson)
 	enemy->setHp(enemyJson["hp"]);
 	enemy->setScore(enemyJson["score"]);
 	enemy->setWeight(enemyJson["weight"]);
+	enemy->setDgToTake(enemyJson["dgTake"]);
 }
 void EnemyWaveSpawner::CreateMoreEnemies(EnemyTypes enemyType)
 {

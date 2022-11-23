@@ -2,5 +2,6 @@
     "hp":100,
     "dg":25,
     "score":5,
-    "weight":2
+    "weight":2,
+    "dgTake":25
 }

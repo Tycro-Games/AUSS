@@ -16,6 +16,7 @@ namespace Tmpl8 {
 	{
 	public:
 		Game();
+		//this is the singleton pattern from this and Jeremiah: https://gameprogrammingpatterns.com/singleton.html
 		static Game& Get();
 
 		void SetTarget(Surface* surface) { screen = surface; }

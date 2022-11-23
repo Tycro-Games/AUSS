@@ -19,17 +19,25 @@ public:
 	void setHp(unsigned int);
 	void setScore(unsigned int);
 	void setWeight(unsigned int);
+	void setDgToTake(unsigned int);
 	Collider* getColl();
 	Moveable* getMoveable() const;
 	unsigned int getDg() const;
 	unsigned int getMaxHp() const;
 	unsigned int getScore() const;
 	unsigned int getWeight() const;
+	unsigned int getDgToTake() const;
 	EnemyTypes GetEnemyType() const;
 
-	const int DG_TO_TAKE = 25;
 protected:
-	void SetColToEnemyFlag();
+	void CheckForProjectileCollisions();
+	/// <summary>
+	/// range needs to be squaread
+	/// </summary>
+	/// <param name="range"></param>
+	/// <returns></returns>
+	bool InRangeToAtackPlayer(float range);
+	void InitEnemy(Moveable& _move);
 	void Enemy::SetJsonValues(Enemy* enem);
 	EnemyTypes enemyType;
 	virtual void ResetEnemy() = 0;
@@ -42,11 +50,11 @@ protected:
 	unsigned int maxHp;
 	unsigned int weight;
 	unsigned int score;
+	unsigned int dgToTake;
+private:
 };
 //inlined functions
-inline void Enemy::SetColToEnemyFlag() {
-	enemyCollider.type = Collider::Type::Enemy;
-}
+
 
 inline void Enemy::setDg(unsigned int Dg)
 {
@@ -66,6 +74,11 @@ inline void Enemy::setScore(unsigned int Score)
 inline void Enemy::setWeight(unsigned int Weight)
 {
 	weight = Weight;
+}
+
+inline void Enemy::setDgToTake(unsigned int dgTo)
+{
+	dgToTake = dgTo;
 }
 
 inline Collider* Enemy::getColl() {
@@ -92,6 +105,11 @@ inline unsigned int Enemy::getScore() const {
 inline unsigned int Enemy::getWeight() const
 {
 	return weight;
+}
+
+inline unsigned int Enemy::getDgToTake() const
+{
+	return dgToTake;
 }
 
 inline EnemyTypes Enemy::GetEnemyType() const {

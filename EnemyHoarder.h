@@ -10,11 +10,13 @@ class EnemyHoarder :public Enemy, public Callable
 public:
 	EnemyHoarder(PosDir posDir, Tmpl8::Sprite* sprite, EnemyWaveSpawner* spawner);
 
-	~EnemyHoarder();
+	~EnemyHoarder() = default;
 
 	// Inherited via Enemy
 	virtual void Init(PosDir posDir) override;
 	void Update(float deltaTime) override;
+
+
 
 	void Render(Tmpl8::Surface* screen) override;
 
@@ -26,21 +28,18 @@ public:
 private:
 	//movement
 	bool ToMove = false;
-	bool InRangeToAtack = false;
-	float dist;
-	float timeToRotate = 0.1f;
-
 	//consts
 	const Tmpl8::vec2 COL_MIN = Tmpl8::vec2(-10, -10);
 	const Tmpl8::vec2 COL_MAX = Tmpl8::vec2(10, 10);
 	const float TIME_TO_ATTACK = 0.25f;
 
 	const float SPEED = 50.0f;
+	//distance to atack squared so it is more efficient when comparing
 	const float MAX_DISTANCE_TO_ATTACK = 400.0f;
-	const float MAX_DISTANCE_TO_PLAYER = 100.0f;//this is squared so it is more efficient when comparing
+	//timers
 	Timer attack;
-
 	Timer rotate;
+
 	MoveToADirection mover;
 	RandomNumbers randomNumbers;
 
