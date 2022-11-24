@@ -29,6 +29,9 @@ void EnemyWaveSpawner::Init()
 	indexOfEnemiesToSpawn = 0;
 	firstWave = true;
 	timer.Init(this, 1.0f);
+	playerDistanceSqr = Game::Get().getPlayer().GetHalfCollider();
+	//square it
+	playerDistanceSqr *= playerDistanceSqr;
 	//enemy prototypes intialization
 	EnemyInit();
 	InitializeSpawners();
@@ -36,6 +39,15 @@ void EnemyWaveSpawner::Init()
 }
 
 void EnemyWaveSpawner::EnemyInit()
+{
+	ClearVecOfPointers();
+
+	for (size_t i = 0; i < NUMBER_OF_ENEMIES; i++) {
+		enemyPrototypes[i] = CreateEnemy(allEnemyTypes[i]);
+	}
+}
+
+void EnemyWaveSpawner::ClearVecOfPointers()
 {
 	for (size_t i = 0; i < updateObjects.size(); i++)
 		if (updateObjects[i]->getUpdateable())
@@ -48,13 +60,10 @@ void EnemyWaveSpawner::EnemyInit()
 	poolOfHoarders.clear();
 	for (int i = 0; i < poolOfRunners.size(); i++)
 		delete poolOfRunners[i];
-	poolOfHoarders.clear();
+	poolOfRunners.clear();
 	Spawner::ResetExplosions();
 	for (size_t i = 0; i < NUMBER_OF_ENEMIES; i++) {
 		delete enemyPrototypes[i];
-	}
-	for (size_t i = 0; i < NUMBER_OF_ENEMIES; i++) {
-		enemyPrototypes[i] = CreateEnemy(allEnemyTypes[i]);
 	}
 }
 
@@ -144,10 +153,7 @@ void EnemyWaveSpawner::Call()
 
 EnemyWaveSpawner::~EnemyWaveSpawner()
 {
-	for (size_t i = 0; i < NUMBER_OF_ENEMIES; i++) {
-
-		delete enemyPrototypes[i];
-	}
+	ClearVecOfPointers();
 
 }
 void EnemyWaveSpawner::PlayerTakesDamage(Enemy* enemy)
@@ -205,7 +211,6 @@ void EnemyWaveSpawner::CheckThePossibleSpawner(vector<EnemySpawner*>& possibleSp
 }
 void EnemyWaveSpawner::SpawnEnemy(vec2 pos, EnemyTypes enemy)
 {
-	//no more enemies of this type
 	Enemy* enemyToSpawn = nullptr;
 	switch (enemy)
 	{
@@ -222,12 +227,12 @@ void EnemyWaveSpawner::SpawnEnemy(vec2 pos, EnemyTypes enemy)
 		poolOfRunners.pop_back();
 		break;
 	default:
+		ThrowError("could not spawn enemies");
+
 		break;
 	}
-	if (enemy == NUMBER_OF_ENEMIES)
-		ThrowError("enemy spawner was not initialized");
 
-	else if (enemyToSpawn) {
+	if (enemyToSpawn) {
 		activeColliders.push_back(enemyToSpawn->getColl());
 		vec2 randomDir = GetDirDeviation();
 		//set position to the spawner's

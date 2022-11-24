@@ -32,7 +32,8 @@ public:
 	ProjectileSpawner* GetSpawner();
 	const Tmpl8::vec2 GetDir() const;
 	const Tmpl8::vec2 GetPos() const;
-
+	//just returns the x of the max part of the collider
+	const float GetHalfCollider() const;
 private:
 	RotationVar rVar;
 	Tmpl8::vec2 dirToFace;
@@ -42,8 +43,8 @@ private:
 	const std::filesystem::path spriteExplosionPath = "assets/OriginalAssets/smoke.tga";
 	//consts
 	const float TIME_TO_HIT = 2.0f;
-	const Tmpl8::vec2 COL_MIN = Tmpl8::vec2(-33 / 2 - 5, -33 / 2 - 5);
-	const Tmpl8::vec2 COL_MAX = Tmpl8::vec2(33 / 2 + 5, 33 / 2 + 5);
+	const Tmpl8::vec2 COL_MIN = Tmpl8::vec2(-21.5f);
+	const Tmpl8::vec2 COL_MAX = Tmpl8::vec2(21.5f);
 	//components
 	const Collider* tilemapCollider;
 	MoveablePlayer playerMover;
@@ -59,6 +60,9 @@ private:
 	void onNotify(int points, EventType event) override;
 
 };
+inline const float Player::GetHalfCollider()const {
+	return COL_MAX.x;
+}
 inline const Tmpl8::vec2 Player::GetOffset() {
 	return   -pos + lastPos;
 }

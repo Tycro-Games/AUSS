@@ -1,8 +1,10 @@
 #include "EnemyRunner.h"
 using namespace Tmpl8;
-EnemyRunner::EnemyRunner(PosDir posDir, Sprite* sprite, EnemyWaveSpawner* spawner)
-	:Enemy(posDir.pos, sprite, spawner),
-	rVar(RotationVar(360 / (static_cast<const float>(sprite->Frames() - 1)), 90.0f, static_cast<const float>(sprite->GetHeight())))
+EnemyRunner::EnemyRunner(PosDir posDir, Sprite* sprite, EnemyWaveSpawner* _spawner)
+	:Enemy(posDir.pos, sprite, _spawner),
+	rVar(RotationVar(360 / (static_cast<const float>(sprite->Frames() - 1)), 90.0f, static_cast<const float>(sprite->GetHeight()))),
+	MAX_DISTANCE_SQUARED_TO_PLAYER(100.0f + _spawner->getMaxPlayerDistance())
+
 
 {
 	enemyType = Runner;
@@ -36,7 +38,7 @@ void EnemyRunner::Update(float deltaTime)
 	CheckForProjectileCollisions();
 
 	mover.Update(deltaTime);
-	if (InRangeToAtackPlayerSquared(100)) {
+	if (InRangeToAtackPlayerSquared(MAX_DISTANCE_SQUARED_TO_PLAYER)) {
 		spawner->PlayerTakesDamage(this);
 
 		spawner->AddEnemyToPool(this, false);
@@ -64,7 +66,7 @@ void EnemyRunner::Init(PosDir posDir)
 	SetActive(true);
 	pos = posDir.pos;
 	dir = vec2{ randomNumbers.RandomBetweenFloats(0.1f,1.0f),randomNumbers.RandomBetweenFloats(0.1f,1.0f) };
-	dir.normalized();
+	dir.normalize();
 	std::cout << dir.x << " " << dir.y << '\n';
 	hp = maxHp;
 	frame = MathFunctions::RotateToDirectionFrames(rVar, dir);

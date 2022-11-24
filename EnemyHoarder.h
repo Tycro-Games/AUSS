@@ -35,8 +35,7 @@ private:
 	const float TIME_TO_ATTACK = 0.25f;
 
 	const float SPEED = 50.0f;
-	//distance to atack squared so it is more efficient when comparing
-	const float MAX_DISTANCE_TO_ATTACK = 400.0f;
+	const float MAX_DISTANCE_SQUARED_TO_PLAYER;
 	//timers
 	Timer attack;
 	Timer rotate;

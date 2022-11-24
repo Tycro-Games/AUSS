@@ -29,11 +29,16 @@ public:
 
 	bool EnemyWaveSpawner::IsPoolEmpty(const std::vector<Enemy*>& pool);
 	EnemyTypes ConvertToEnum(std::string str);
+	//getters
+
+	//this is the minimum distance to the player added to half of the collider of the enemy using this
+	const float getMaxPlayerDistance()const;
 private:
 	bool startedWave = false;
 	bool firstWave = true;
 	void ThrowError(const char*);
 	void EnemyInit();
+	void ClearVecOfPointers();
 	void InitializeSpawners();
 	void ReadWaves();
 	size_t indexOfEnemiesToSpawn;
@@ -62,6 +67,7 @@ private:
 	const float SPAWNERS_XPOS_MULTIPLIERS = 0.88f;
 	const float SPAWNERS_YPOS_MULTIPLIERS = 0.83f;
 	const float SPAWNING_INTERVAL = .15f;
+	float playerDistanceSqr = 0.0f;
 	const std::filesystem::path spriteExplosionPath = "assets/OriginalAssets/smoke.tga";
 
 	// Inherited via Callable
@@ -83,4 +89,9 @@ inline EnemyTypes EnemyWaveSpawner::ConvertToEnum(std::string str)
 	if (type == NUMBER_OF_ENEMIES)
 		ThrowError(str.c_str());
 	return type;
+}
+
+inline const float EnemyWaveSpawner::getMaxPlayerDistance() const
+{
+	return playerDistanceSqr;
 }

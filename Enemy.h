@@ -51,6 +51,7 @@ protected:
 	unsigned int weight;
 	unsigned int score;
 	unsigned int dgToTake;
+
 private:
 };
 //inlined functions
