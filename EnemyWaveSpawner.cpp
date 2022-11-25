@@ -4,6 +4,7 @@
 
 #include "EnemyHoarder.h"
 #include "EnemyRunner.h"
+#include "EnemyShooter.h"
 
 #include "game.h"
 using namespace std;
@@ -318,6 +319,14 @@ Enemy* EnemyWaveSpawner::CreateEnemy(EnemyTypes enemyType) {
 
 		SetJsonValues(enemy, enemyJson);
 		break;
+	case Shooter:
+		f.open("json/Shooter.json");
+
+		enemy = new EnemyShooter(PosDir(vec2(0), vec2(0)), &runnerSprite, this);
+		enemyJson = json::parse(f);
+
+		SetJsonValues(enemy, enemyJson);
+		break;
 	default:
 		ThrowError("The creation of the enemy has failed");
 		break;
@@ -339,10 +348,14 @@ void EnemyWaveSpawner::CreateMoreEnemies(EnemyTypes enemyType)
 	{
 		//add the json values t
 	case Hoarder:
-		enemy = enemyPrototypes[Hoarder]->clone();
+		enemy = enemyPrototypes[enemyType]->clone();
 		break;
 	case Runner:
-		enemy = enemyPrototypes[Runner]->clone();
+		enemy = enemyPrototypes[enemyType]->clone();
+
+		break;
+	case Shooter:
+		enemy = enemyPrototypes[enemyType]->clone();
 
 		break;
 	default:

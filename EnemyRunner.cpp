@@ -10,7 +10,7 @@ EnemyRunner::EnemyRunner(PosDir posDir, Sprite* sprite, EnemyWaveSpawner* _spawn
 	enemyType = Runner;
 	enemyCollider = Collider(COL_MIN, COL_MAX, &pos);
 
-	mover.Init(&pos, &dir, &enemyCollider, this, 200);
+	mover.Init(&pos, &dir, &enemyCollider, this, SPEED);
 	rot.Init(&pos, &dir, &rVar, &frame, &mover);
 
 	InitEnemy(mover);
@@ -65,9 +65,9 @@ void EnemyRunner::Init(PosDir posDir)
 {
 	SetActive(true);
 	pos = posDir.pos;
+	
 	dir = vec2{ randomNumbers.RandomBetweenFloats(0.1f,1.0f),randomNumbers.RandomBetweenFloats(0.1f,1.0f) };
 	dir.normalize();
-	std::cout << dir.x << " " << dir.y << '\n';
 	hp = maxHp;
 	frame = MathFunctions::RotateToDirectionFrames(rVar, dir);
 

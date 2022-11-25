@@ -50,6 +50,8 @@ private:
 	std::vector<Enemy*> poolOfHoarders;
 	//Enemy Runner
 	std::vector<Enemy*> poolOfRunners;
+	//Enemy Runner
+	std::vector<Enemy*> poolOfShooters;
 
 	std::vector<Collider*> activeColliders;
 	std::vector<EnemySpawner*> enemySpawners;

@@ -30,7 +30,7 @@ private:
 	const Tmpl8::vec2 COL_MIN = Tmpl8::vec2(-10, -10);
 	const Tmpl8::vec2 COL_MAX = Tmpl8::vec2(10, 10);
 	const float MAX_DISTANCE_SQUARED_TO_PLAYER;
-
+	const float SPEED=200.0f;
 
 	// Inherited via Callable
 	void Call() override;
