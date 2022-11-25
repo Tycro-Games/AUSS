@@ -65,7 +65,7 @@ private:
 	size_t wavesCount = 0;
 	//prototypes
 	Enemy* enemyPrototypes[NUMBER_OF_ENEMIES];
-	EnemyTypes allEnemyTypes[NUMBER_OF_ENEMIES] = { Hoarder,Runner };
+	EnemyTypes allEnemyTypes[NUMBER_OF_ENEMIES] = { Hoarder,Runner,Shooter };
 	RandomNumbers randomNumbers;
 	//consts
 	const float SPAWNERS_XPOS_MULTIPLIERS = 0.88f;

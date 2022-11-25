@@ -22,12 +22,12 @@ void EnemyShooter::Update(float deltaTime)
 		return;
 	if (canMove) {
 		mover.Update(deltaTime);
+		timerToMove.Update(deltaTime);
 	}
 	else {
 		//not moving, shoot or something
-	
+		timerToStop.Update(deltaTime);
 	}
-	moveIntervalsTimer.Update(deltaTime);
 }
 
 void EnemyShooter::Render(Tmpl8::Surface* screen)
@@ -61,7 +61,9 @@ void EnemyShooter::Init(PosDir posDir)
 	dir = vec2{ -randomNumbers.RandomBetweenFloats(0.1f,1.0f),randomNumbers.RandomBetweenFloats(0.1f,1.0f) };
 	dir.normalize();
 	hp = maxHp;
-	moveIntervalsTimer.Init(this, MOVE_INTERVAL, true);
+	canMove = false;
+	timerToStop.Init(this, STOP_INTERVAL);
+	timerToMove.isFinished = true;
 }
 
 void EnemyShooter::ResetEnemy()
@@ -89,6 +91,10 @@ void EnemyShooter::Call()
 		std::cout << xPos << " " << yPos << '\n';
 		dir = vec2{ xPos,yPos }.normalized();
 		std::cout << dir.x << " " << dir.y << '\n';
+		timerToStop.Init(this, STOP_INTERVAL);
 
+	}
+	else {
+		timerToMove.Init(this, MOVE_INTERVAL);
 	}
 }

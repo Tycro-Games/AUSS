@@ -368,7 +368,6 @@ void EnemyWaveSpawner::CreateMoreEnemies(EnemyTypes enemyType)
 	Enemy* enemy = nullptr;
 	switch (enemyType)
 	{
-		//add the json values t
 	case Hoarder:
 		enemy = enemyPrototypes[enemyType]->clone();
 		break;
