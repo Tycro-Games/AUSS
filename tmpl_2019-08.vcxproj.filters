@@ -116,6 +116,9 @@
     <ClCompile Include="AABB.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="EnemyShooter.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -256,6 +259,9 @@
     </ClInclude>
     <ClInclude Include="AABB.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyShooter.h">
+      <Filter>Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

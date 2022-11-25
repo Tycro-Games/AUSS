@@ -54,7 +54,7 @@ void EnemyRunner::Die()
 
 Enemy* EnemyRunner::clone()
 {
-	Enemy* enem = new EnemyRunner(PosDir(pos, dir), sprite, spawner);
+	Enemy* enem = new EnemyRunner(PosDir{ pos,dir }, sprite, spawner);
 	SetJsonValues(enem);
 	return enem;
 }
@@ -65,7 +65,7 @@ void EnemyRunner::Init(PosDir posDir)
 {
 	SetActive(true);
 	pos = posDir.pos;
-	
+
 	dir = vec2{ randomNumbers.RandomBetweenFloats(0.1f,1.0f),randomNumbers.RandomBetweenFloats(0.1f,1.0f) };
 	dir.normalize();
 	hp = maxHp;

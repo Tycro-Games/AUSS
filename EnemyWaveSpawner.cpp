@@ -17,6 +17,7 @@ EnemyWaveSpawner::EnemyWaveSpawner()
 	Spawner("assets/OriginalAssets/smoke.tga"),
 	hoarderSprite(new Surface("assets/OriginalAssets/phaser.tga"), 16),
 	runnerSprite(new Surface("assets/OriginalAssets/sniper.tga"), 32),
+	shooterSprite(new Surface("assets/OriginalAssets/sniper.tga"), 32), 
 	enemyPrototypes(),
 	indexOfEnemiesToSpawn(0)
 
@@ -56,16 +57,24 @@ void EnemyWaveSpawner::ClearVecOfPointers()
 	updateObjects.clear();
 
 	activeColliders.clear();
-	for (int i = 0; i < poolOfHoarders.size(); i++)
-		delete poolOfHoarders[i];
-	poolOfHoarders.clear();
-	for (int i = 0; i < poolOfRunners.size(); i++)
-		delete poolOfRunners[i];
-	poolOfRunners.clear();
+
+	ClearPoolOfEnemies(poolOfHoarders);
+	ClearPoolOfEnemies(poolOfRunners);
+	ClearPoolOfEnemies(poolOfShooters);
+
 	Spawner::ResetExplosions();
+
 	for (size_t i = 0; i < NUMBER_OF_ENEMIES; i++) {
 		delete enemyPrototypes[i];
 	}
+}
+
+
+void EnemyWaveSpawner::ClearPoolOfEnemies(vector<Enemy*>& pool)
+{
+	for (int i = 0; i < pool.size(); i++)
+		delete pool[i];
+	pool.clear();
 }
 
 void EnemyWaveSpawner::InitializeSpawners()
@@ -210,6 +219,11 @@ void EnemyWaveSpawner::CheckThePossibleSpawner(vector<EnemySpawner*>& possibleSp
 			possibleSpawner.push_back(enemySpawners[i]);
 	}
 }
+/// <summary>
+/// Spawns an enemy at the pos of the type enemy
+/// </summary>
+/// <param name="pos"></param>
+/// <param name="enemy"></param>
 void EnemyWaveSpawner::SpawnEnemy(vec2 pos, EnemyTypes enemy)
 {
 	Enemy* enemyToSpawn = nullptr;
@@ -217,19 +231,24 @@ void EnemyWaveSpawner::SpawnEnemy(vec2 pos, EnemyTypes enemy)
 	{
 	case Hoarder:
 		if (IsPoolEmpty(poolOfHoarders))
-			CreateMoreEnemies(Hoarder);
+			CreateMoreEnemies(enemy);
 		enemyToSpawn = poolOfHoarders[poolOfHoarders.size() - 1];
 		poolOfHoarders.pop_back();
 		break;
 	case Runner:
 		if (IsPoolEmpty(poolOfRunners))
-			CreateMoreEnemies(Runner);
+			CreateMoreEnemies(enemy);
 		enemyToSpawn = poolOfRunners[poolOfRunners.size() - 1];
 		poolOfRunners.pop_back();
 		break;
+	case Shooter:
+		if (IsPoolEmpty(poolOfShooters))
+			CreateMoreEnemies(enemy);
+		enemyToSpawn = poolOfShooters[poolOfShooters.size() - 1];
+		poolOfShooters.pop_back();
+		break;
 	default:
 		ThrowError("could not spawn enemies");
-
 		break;
 	}
 
@@ -289,6 +308,9 @@ void EnemyWaveSpawner::AddEnemyToPool(Enemy* enemy, bool isDead)
 	case Runner:
 		poolOfRunners.push_back(enemy);
 		break;
+	case Shooter:
+		poolOfShooters.push_back(enemy);
+		break;
 	default:
 		break;
 	}
@@ -322,7 +344,7 @@ Enemy* EnemyWaveSpawner::CreateEnemy(EnemyTypes enemyType) {
 	case Shooter:
 		f.open("json/Shooter.json");
 
-		enemy = new EnemyShooter(PosDir(vec2(0), vec2(0)), &runnerSprite, this);
+		enemy = new EnemyShooter(PosDir(vec2(0), vec2(0)), &shooterSprite, this);
 		enemyJson = json::parse(f);
 
 		SetJsonValues(enemy, enemyJson);

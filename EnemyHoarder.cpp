@@ -21,9 +21,6 @@ EnemyHoarder::EnemyHoarder(PosDir posDir, Sprite* sprite, EnemyWaveSpawner* _spa
 }
 
 
-
-
-
 void EnemyHoarder::Update(float deltaTime)
 {
 	if (!getUpdateable())
@@ -37,10 +34,6 @@ void EnemyHoarder::Update(float deltaTime)
 	if (InRangeToAtack) {
 		attack.Update(deltaTime);
 	}
-
-
-
-
 }
 
 
@@ -114,7 +107,7 @@ void EnemyHoarder::Die()
 
 Enemy* EnemyHoarder::clone()
 {
-	Enemy* enem = new EnemyHoarder(PosDir(pos, dir), sprite, spawner);
+	Enemy* enem = new EnemyHoarder(PosDir{ pos,dir }, sprite, spawner);
 	SetJsonValues(enem);
 	return enem;
 }

@@ -18,13 +18,14 @@ EnemyShooter::EnemyShooter(PosDir posDir, Sprite* _sprite, EnemyWaveSpawner* _sp
 
 void EnemyShooter::Update(float deltaTime)
 {
-	if (!getUpdateable)
+	if (!getUpdateable())
 		return;
 	if (canMove) {
 		mover.Update(deltaTime);
 	}
 	else {
-
+		//not moving, shoot or something
+	
 	}
 	moveIntervalsTimer.Update(deltaTime);
 }
@@ -43,11 +44,14 @@ void EnemyShooter::Render(Tmpl8::Surface* screen)
 
 void EnemyShooter::Die()
 {
+	ResetEnemy();
 }
 
 Enemy* EnemyShooter::clone()
 {
-	return nullptr;
+	Enemy* enem = new EnemyShooter(PosDir{ pos,dir }, sprite, spawner);
+	SetJsonValues(enem);
+	return enem;
 }
 
 void EnemyShooter::Init(PosDir posDir)
@@ -62,11 +66,29 @@ void EnemyShooter::Init(PosDir posDir)
 
 void EnemyShooter::ResetEnemy()
 {
+	spawner->AddEnemyToPool(this, true);
+
+	spawner->SpawnExplosions(pos);
 }
 
 void EnemyShooter::Call()
 {
 	canMove = !canMove;
-	if(canMove)
-		dir = vec2{ randomNumbers.RandomBetweenFloats(0.1f,1.0f),randomNumbers.RandomBetweenFloats(0.1f,1.0f) };
+	if (canMove) {
+		//random negative or positive
+		bool xNegative = randomNumbers.RandomBetweenInts(0, 2) == 1;
+		bool yNegative = randomNumbers.RandomBetweenInts(0, 2) == 1;
+		std::cout << xNegative << " " << yNegative << '\n';
+		//into floats that make the vec2
+		float xPos = randomNumbers.RandomBetweenFloats(0.1f, 1.0f);
+		if (xNegative)
+			xPos *= -1;
+		float yPos = randomNumbers.RandomBetweenFloats(0.1f, 1.0f);
+		if (yNegative)
+			yPos *= -1;
+		std::cout << xPos << " " << yPos << '\n';
+		dir = vec2{ xPos,yPos }.normalized();
+		std::cout << dir.x << " " << dir.y << '\n';
+
+	}
 }

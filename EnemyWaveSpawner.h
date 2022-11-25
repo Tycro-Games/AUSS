@@ -34,18 +34,20 @@ public:
 	//this is the minimum distance to the player added to half of the collider of the enemy using this
 	const float getMaxPlayerDistance()const;
 private:
-	bool startedWave = false;
-	bool firstWave = true;
 	void ThrowError(const char*);
 	void EnemyInit();
 	void ClearVecOfPointers();
 	void InitializeSpawners();
 	void ReadWaves();
+	void ClearPoolOfEnemies(std::vector<Enemy*>& pool);
+	bool startedWave = false;
+	bool firstWave = true;
 	size_t indexOfEnemiesToSpawn;
 	Timer timer;
 	bool playerHasTakenDamage = false;
 	Tmpl8::Sprite hoarderSprite;
 	Tmpl8::Sprite runnerSprite;
+	Tmpl8::Sprite shooterSprite;
 	//Enemy Hoarder
 	std::vector<Enemy*> poolOfHoarders;
 	//Enemy Runner
@@ -84,10 +86,13 @@ inline bool EnemyWaveSpawner::IsPoolEmpty(const std::vector<Enemy*>& pool) {
 inline EnemyTypes EnemyWaveSpawner::ConvertToEnum(std::string str)
 {
 	EnemyTypes type = NUMBER_OF_ENEMIES;
+
 	if (str == "Hoarder")
 		type = Hoarder;
 	else if (str == "Runner")
 		type = Runner;
+	else if (str == "Shooter")
+		type = Shooter;
 	if (type == NUMBER_OF_ENEMIES)
 		ThrowError(str.c_str());
 	return type;

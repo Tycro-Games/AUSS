@@ -240,6 +240,7 @@
     <ClCompile Include="EnemyHoarder.cpp" />
     <ClCompile Include="EnemyRotator.cpp" />
     <ClCompile Include="EnemyRunner.cpp" />
+    <ClCompile Include="EnemyShooter.cpp" />
     <ClCompile Include="EnemySpawner.cpp" />
     <ClCompile Include="EnemyWaveSpawner.cpp" />
     <ClCompile Include="Entity.cpp" />
@@ -291,6 +292,7 @@
     <ClInclude Include="EnemyHoarder.h" />
     <ClInclude Include="EnemyRotator.h" />
     <ClInclude Include="EnemyRunner.h" />
+    <ClInclude Include="EnemyShooter.h" />
     <ClInclude Include="EnemySpawner.h" />
     <ClInclude Include="EnemyWaveSpawner.h" />
     <ClInclude Include="Entity.h" />

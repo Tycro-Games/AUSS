@@ -31,7 +31,7 @@ private:
 	Rotator rot;
 	RotationVar rVar;
 	RandomNumbers randomNumbers;
-	Timer moveIntervals;
+	Timer moveIntervalsTimer;
 
 	// Inherited via Callable
 	void Call() override;
