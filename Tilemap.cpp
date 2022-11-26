@@ -11,8 +11,8 @@ Tilemap::Tilemap() :
 	tileSurface("assets/Spaceship-shooter#01/Wang tiles/02-Craters.png"),
 	pos(vec2(0)),
 	col(Collider(
-		Tmpl8::vec2(0),
-		Tmpl8::vec2(0),
+		vec2(0),
+		vec2(0),
 		&pos)),
 	prop("assets/Spaceship-shooter#01/background/Space02.png")
 {
@@ -35,25 +35,25 @@ void Tilemap::Init(const vec2& _pos)
 
 			if (tiles[index].IsBlocking && tiles[index].obs == nullptr) {
 
-				Tmpl8::vec2 p = Tmpl8::vec2(x * tiles[index].xd + pos.x - static_cast<float>(OFFSET_X),
+				vec2 p = vec2(x * tiles[index].xd + pos.x - static_cast<float>(OFFSET_X),
 					y * tiles[index].yd + pos.y - static_cast<float>(OFFSET_Y));
-				Tmpl8::vec2 offset = Tmpl8::vec2(tiles[index].pivotX, tiles[index].pivotY);
+				vec2 offset = vec2(tiles[index].pivotX, tiles[index].pivotY);
 				p += offset;
 				//add other obstacles
 				int i = x, j = y;
 				float xD = static_cast<float>(tiles[index].xd);
 				float yD = static_cast<float>(tiles[index].yd);
-				Tmpl8::vec2 dimensions = Tmpl8::vec2(xD - tiles[index].dimensionsX, yD - tiles[index].dimensionsY);
+				vec2 dimensions = vec2(xD - tiles[index].dimensionsX, yD - tiles[index].dimensionsY);
 				while (tiles[++i + j * X_TILES].IsBlocking) {
 					xD = static_cast<float>(tiles[i + j * X_TILES].xd);
 					yD = static_cast<float>(tiles[i + j * X_TILES].yd);
-					dimensions += Tmpl8::vec2(xD - tiles[i + j * X_TILES].dimensionsX, 0);
+					dimensions += vec2(xD - tiles[i + j * X_TILES].dimensionsX, 0);
 				}
 				i--;
 				while (tiles[i + (++j) * X_TILES].IsBlocking) {
 					xD = static_cast<float>(tiles[i + j * X_TILES].xd);
 					yD = static_cast<float>(tiles[i + j * X_TILES].yd);
-					dimensions += Tmpl8::vec2(0, yD - tiles[i + j * X_TILES].dimensionsY);
+					dimensions += vec2(0, yD - tiles[i + j * X_TILES].dimensionsY);
 
 				}
 				j--;
@@ -99,7 +99,7 @@ void Tilemap::ClearObstacles()
 	blockingTiles.clear();
 }
 
-void Tilemap::Render(Tmpl8::Surface* screen)
+void Tilemap::Render(Surface* screen)
 {
 
 	prop.Render(screen);
@@ -142,12 +142,12 @@ void Tilemap::Update(float deltaTime)
 
 
 
-void Tilemap::SetPos(const Tmpl8::vec2 p)
+void Tilemap::SetPos(const vec2 p)
 {
 	pos = p;
 }
 
-void Tilemap::DrawTile(Tmpl8::Surface* screen, int tx, int ty, int x, int y)
+void Tilemap::DrawTile(Surface* screen, int tx, int ty, int x, int y)
 {
 	int maxX = x + TILE_SIZE;
 	int maxY = y + TILE_SIZE;
@@ -184,14 +184,14 @@ void Tilemap::DrawTile(Tmpl8::Surface* screen, int tx, int ty, int x, int y)
 
 
 	//draw tile
-	Tmpl8::Pixel* src = tileSurface.GetBuffer() + tx + ty * tileSurface.GetPitch();
-	Tmpl8::Pixel* dst = screen->GetBuffer() + x + y * screen->GetPitch();
+	Pixel* src = tileSurface.GetBuffer() + tx + ty * tileSurface.GetPitch();
+	Pixel* dst = screen->GetBuffer() + x + y * screen->GetPitch();
 
 	for (int i = 0; i < height; i++)
 	{
 		for (int j = 0; j < width; j++) {
 
-			//memcpy(dst, src, sizeof(Tmpl8::Pixel) * width);
+			//memcpy(dst, src, sizeof(Pixel) * width);
 			//check if the pixel we want to copy is opaque
 			if ((src[j] & 0xFF000000) >> 24 == 255)
 				dst[j] = src[j];
@@ -204,7 +204,7 @@ void Tilemap::DrawTile(Tmpl8::Surface* screen, int tx, int ty, int x, int y)
 }
 bool Tilemap::IsFree(float x, float y) const
 {
-	Tmpl8::vec2 targetPos = Tmpl8::vec2(x, y);
+	vec2 targetPos = vec2(x, y);
 	x += OFFSET_X - (pos.x);
 	y += OFFSET_Y - (pos.y);
 	int tx = static_cast<int>(x / TILE_SIZE), ty = static_cast<int>(y / TILE_SIZE);
@@ -217,7 +217,7 @@ bool Tilemap::IsFree(float x, float y) const
 
 bool Tilemap::IsFree(float x, float y, Collider& col) const
 {
-	Tmpl8::vec2 targetPos = Tmpl8::vec2(x, y);
+	vec2 targetPos = vec2(x, y);
 	x += OFFSET_X - (pos.x);
 	y += OFFSET_Y - (pos.y);
 	size_t tx = static_cast<size_t>(x / TILE_SIZE), ty = static_cast<size_t>(y / TILE_SIZE);
