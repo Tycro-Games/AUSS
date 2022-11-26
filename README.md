@@ -1,6 +1,9 @@
 # An Unrealistic Spaceship Simulator
-A top-down shooter made using this [template](https://www.3dgep.com/wp-content/uploads/2019/08/TheTemplate.zip). It is what you can expect from a top down shooter which is structured in waves of enemies. Data can be modified by editing the json files in [this](https://github.com/OneBogdan01/TopDownShooter/tree/master/json) folder. The player can move using WASD, shoot using the left mouse button and dash using spacebar.
-For now it can read waves of enemies and spawn them on the map.
+A top-down shooter made using this [template](https://www.3dgep.com/wp-content/uploads/2019/08/TheTemplate.zip).
+
+This project is a top-down shooter where bullets bounce off the edges of obstacles, edges of the map and shields of enemies. The game is structured in waves of enemies where the player needs to clean the current wave to go to the next one. An interesting feature of the project is that a game designer(or a player) could modify the json files of the project with little to no programming experience, thus, changing the waves of enemies as well as the properties of enemies themselves such as health, speed damage and so on.
+
+Enemies have a little variety in behavior, the wave system uses weight and a list of possible enemies. Every enemy has a specific weight, so a wave could have many combinations of enemies depending on the list. This makes it flexible and gives spawning a little randomization.​
 ## Players can change the waves of enemies by modifying [this](json/enemy_waves.json) json file.
 This library is used for parsing the json files:https://github.com/nlohmann/json
 ### Guideline for modifying the enemy waves:
