@@ -11,6 +11,12 @@ Enemy::Enemy(Tmpl8::vec2 pos, Tmpl8::Sprite* sprite, EnemyWaveSpawner* spawner) 
 	enemyCollider(),
 	dg()
 {
+	enemyType = NUMBER_OF_ENEMIES;
+	setDg(0);
+	setHp(0);
+	setScore(0);
+	setWeight(0);
+	setDgToTake(0);
 }
 Enemy::~Enemy()
 {

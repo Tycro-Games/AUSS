@@ -4,8 +4,10 @@ struct Collider
 {
 public:
 	enum class Type {
+
 		Projectile,
-		Enemy
+		Enemy,
+		Neither
 	};
 	Collider(Tmpl8::vec2 min, Tmpl8::vec2 max);
 	Collider(Tmpl8::vec2 min, Tmpl8::vec2 max, Tmpl8::vec2* pos);

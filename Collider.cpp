@@ -7,6 +7,7 @@ Collider::Collider(vec2 min, vec2 max) :
 	pos(0),
 	collision()
 {
+	type = Type::Neither;
 }
 
 Collider::Collider(vec2 min, vec2 max, vec2* pos) :
@@ -15,6 +16,8 @@ Collider::Collider(vec2 min, vec2 max, vec2* pos) :
 	collision(),
 	pos(pos)
 {
+	type = Type::Neither;
+
 }
 
 Collider::Collider() :
@@ -23,6 +26,8 @@ Collider::Collider() :
 	collision(),
 	pos(0)
 {
+	type = Type::Neither;
+
 }
 vec2 Collider::GetNormal(const Collider& obstacle, const Collider& source)
 {
