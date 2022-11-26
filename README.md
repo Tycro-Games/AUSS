@@ -3,7 +3,7 @@ A top-down shooter made using this [template](https://www.3dgep.com/wp-content/u
 
 This project is a top-down shooter where bullets bounce off the edges of obstacles, edges of the map and shields of enemies. The game is structured in waves of enemies where the player needs to clean the current wave to go to the next one. An interesting feature of the project is that a game designer(or a player) could modify the json files of the project with little to no programming experience, thus, changing the waves of enemies as well as the properties of enemies themselves such as health, speed damage and so on.
 
-Enemies have a little variety in behavior, the wave system uses weight and a list of possible enemies. Every enemy has a specific weight, so a wave could have many combinations of enemies depending on the list. This makes it flexible and gives spawning a little randomization.​
+There are different types of enemies, the wave system uses weight and a list of possible enemies. Every enemy has a specific weight, so a wave could have many combinations of enemies depending on the list. This makes it flexible and gives spawning a little randomization.
 ## Players can change the waves of enemies by modifying [this](json/enemy_waves.json) json file.
 This library is used for parsing the json files:https://github.com/nlohmann/json
 ### Guideline for modifying the enemy waves:
