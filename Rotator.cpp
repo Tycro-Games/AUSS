@@ -31,16 +31,9 @@ void Rotator::Init(vec2* _pos, vec2* _dir, RotationVar* _rVar, unsigned int* _fr
 }
 
 
-void Rotator::RotateToDirection(vec2 Pos)
+void Rotator::RotateToDirection(const vec2& newDir)
 {
-
-	//rotate to the target dir
-	int xPos = static_cast<int>(Pos.x);
-	int yPos = static_cast<int>(Pos.y);
-	int xpos = static_cast<int>(pos->x);
-	int ypos = static_cast<int>(pos->y);
-
-	MathFunctions::RotateTo(Pos.x, Pos.y, *pos, *dir);
+	MathFunctions::RotateToDirection(newDir, *pos, *dir);
 
 	*frame = MathFunctions::RotateToDirectionFrames(*rVar, *dir);
 
@@ -51,6 +44,6 @@ void Rotator::Reflect(const vec2 normal)
 {
 
 
-	mover->OppositeDirection(normal);
+	mover->ReflectDirection(normal);
 	RotateToDirection(*pos + *dir);
 }

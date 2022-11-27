@@ -7,7 +7,7 @@ public:
 	EnemyRotator(Tmpl8::vec2* pos, Tmpl8::vec2* dir, RotationVar* rVar, unsigned int* frame, MoveToADirection* mover);
 	EnemyRotator();
 	void Init(Tmpl8::vec2* pos, Tmpl8::vec2* dir, RotationVar* rVar, unsigned int* frame, MoveToADirection* mover);
-	~EnemyRotator();
+	~EnemyRotator() = default;
 	void RotateToPlayer();
 	void Call() override;
 

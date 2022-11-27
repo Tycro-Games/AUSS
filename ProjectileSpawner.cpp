@@ -67,10 +67,7 @@ void ProjectileSpawner::AddProjectileToPool(Projectile* entity)
 }
 
 
-ProjectileSpawner::~ProjectileSpawner()
-{
 
-}
 
 void ProjectileSpawner::CreateMoreProjectiles()
 {
@@ -90,7 +87,7 @@ void ProjectileSpawner::SpawnProjectiles()
 	Projectile* projectile = poolOfProjectiles[poolOfProjectiles.size() - 1];
 	poolOfProjectiles.pop_back();
 
-	vec2 randomDir = GetDirDeviation();
+	vec2 randomDir = MathFunctions::GetRandomVec2(MIN_DEVIATION, MAX_DEVIATION);
 	vec2 playerPos = Game::Get().getPlayer().pos;
 	vec2 playerDir = Game::Get().getPlayer().GetDir();
 	vec2 randomizedDir = (playerDir + randomDir).normalized();

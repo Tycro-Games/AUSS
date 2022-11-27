@@ -24,17 +24,7 @@ Spawner::~Spawner()
 		}
 	updateObjects.clear();
 }
-Tmpl8::vec2 Spawner::GetDirDeviation()
-{
-	//random direction
-	//static cast is safe
-	float x = randomNumbers.RandomBetweenFloats(MIN_DEVIATION, MAX_DEVIATION);
-	float y = randomNumbers.RandomBetweenFloats(MIN_DEVIATION, MAX_DEVIATION);
-	//adding multiplier
-	x *= deviationMultiplier;
-	y *= deviationMultiplier;
-	return Tmpl8::vec2(x, y);
-}
+
 
 void Spawner::ResetExplosions()
 {

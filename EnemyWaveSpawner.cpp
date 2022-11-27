@@ -17,7 +17,7 @@ EnemyWaveSpawner::EnemyWaveSpawner()
 	Spawner("assets/OriginalAssets/smoke.tga"),
 	hoarderSprite(new Surface("assets/OriginalAssets/phaser.tga"), 16),
 	runnerSprite(new Surface("assets/OriginalAssets/sniper.tga"), 32),
-	shooterSprite(new Surface("assets/OriginalAssets/sniper.tga"), 32), 
+	shooterSprite(new Surface("assets/OriginalAssets/sniper.tga"), 32),
 	enemyPrototypes(),
 	indexOfEnemiesToSpawn(0)
 
@@ -123,7 +123,7 @@ void EnemyWaveSpawner::Call()
 	else {
 		//this must have a size that is bigger than 1
 		vector<EnemySpawner*> possibleSpawners;
-		CheckThePossibleSpawner(possibleSpawners);
+		CheckTheOffscreenSpawners(possibleSpawners);
 		size_t indexOfSpawner = static_cast<size_t>(randomNumbers.RandomBetweenInts(0, static_cast<int>(possibleSpawners.size())));
 		//error if the asumption about spawners is not right
 		assert(possibleSpawners.size() > 0);
@@ -211,7 +211,7 @@ void EnemyWaveSpawner::CheckThePossibleEnemies(size_t weight, vector<EnemyTypes>
 	}
 }
 
-void EnemyWaveSpawner::CheckThePossibleSpawner(vector<EnemySpawner*>& possibleSpawner)
+void EnemyWaveSpawner::CheckTheOffscreenSpawners(vector<EnemySpawner*>& possibleSpawner)
 {
 	possibleSpawner.clear();
 	for (size_t i = 0; i < enemySpawners.size(); i++) {
@@ -254,10 +254,9 @@ void EnemyWaveSpawner::SpawnEnemy(vec2 pos, EnemyTypes enemy)
 
 	if (enemyToSpawn) {
 		activeColliders.push_back(enemyToSpawn->getColl());
-		vec2 randomDir = GetDirDeviation();
 		//set position to the spawner's
 
-		enemyToSpawn->Init(PosDir{ pos ,randomDir });
+		enemyToSpawn->Init(PosDir{ pos ,0 });
 		Game::Get().AddCollider(enemyToSpawn->getColl());
 		Game::Get().AddMoveable(enemyToSpawn->getMoveable());
 

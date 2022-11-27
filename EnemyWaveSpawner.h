@@ -20,7 +20,7 @@ public:
 	void SpawnCurrentWave();
 	void CheckThePossibleEnemies(size_t weight, std::vector<EnemyTypes>& possibleEnemies);
 	//add all the spawners that are offscreen
-	void CheckThePossibleSpawner(std::vector<EnemySpawner*>& possibleSpawner);
+	void CheckTheOffscreenSpawners(std::vector<EnemySpawner*>& possibleSpawner);
 	void SpawnEnemy(Tmpl8::vec2, EnemyTypes enemies);
 	// Inherited via Renderable
 	void Render(Tmpl8::Surface* screen) override;

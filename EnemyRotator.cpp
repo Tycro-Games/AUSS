@@ -21,6 +21,4 @@ void EnemyRotator::RotateToPlayer()
 {
 	RotateToDirection(Game::Get().getPlayer().GetPos());
 }
-EnemyRotator::~EnemyRotator()
-{
-}
+

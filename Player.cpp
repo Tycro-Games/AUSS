@@ -94,13 +94,16 @@ void Player::Shoot(bool fire)
 void Player::Rotate(int x, int y) {
 	//replace with actual pos of player
 
-	MathFunctions::RotateTo(static_cast<float>(x), static_cast<float>(y), pos, dirToFace);
+	MathFunctions::RotateToDirection(
+		vec2{ static_cast<float>(x),static_cast<float>(y) },
+		pos,
+		dirToFace);
 
 
-	float angle = MathFunctions::GetDirInAnglesPos(dirToFace);
+	float angle = MathFunctions::GetDirInAnglesPositive(dirToFace);
 	//calculate the frame we need to switch for the corresponding angle
 	angle += rVar.OFFSET_SPRITE;
-	angle = static_cast<float>(fmod(angle, 360));
+	angle = fmodf(angle, 360);
 	frame = static_cast<int>(angle / rVar.ANGLE_SIZE);
 
 }

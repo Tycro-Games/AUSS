@@ -232,10 +232,6 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="CollisionDetection.cpp" />
-    <ClCompile Include="dynamic_array.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyHoarder.cpp" />
     <ClCompile Include="EnemyRotator.cpp" />
@@ -248,10 +244,6 @@
     <ClCompile Include="Cursor.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="MathFunctions.cpp" />
-    <ClCompile Include="MergeSort.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="Moveable.cpp" />
     <ClCompile Include="MoveablePlayer.cpp" />
     <ClCompile Include="MoveInstance.cpp" />
@@ -261,10 +253,6 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="pool.cpp" />
     <ClCompile Include="Projectile.cpp" />
-    <ClCompile Include="QuickSort.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="RandomNumbers.cpp" />
     <ClCompile Include="ProjectileSpawner.cpp" />
     <ClCompile Include="Rotator.cpp" />
@@ -284,10 +272,6 @@
     <ClInclude Include="Callable.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="CollisionDetection.h" />
-    <ClInclude Include="dynamic_array.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClInclude>
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyHoarder.h" />
     <ClInclude Include="EnemyRotator.h" />
@@ -301,10 +285,6 @@
     <ClInclude Include="Cursor.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="MathFunctions.h" />
-    <ClInclude Include="MergeSort.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClInclude>
     <ClInclude Include="Moveable.h" />
     <ClInclude Include="MoveablePlayer.h" />
     <ClInclude Include="MoveInstance.h" />
@@ -316,10 +296,6 @@
     <ClInclude Include="pool.h" />
     <ClInclude Include="PosDir.h" />
     <ClInclude Include="Projectile.h" />
-    <ClInclude Include="QuickSort.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClInclude>
     <ClInclude Include="RandomNumbers.h" />
     <ClInclude Include="Renderable.h" />
     <ClInclude Include="RotationVar.h" />

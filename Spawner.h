@@ -17,7 +17,6 @@ public:
 	void AddExplosionToPool(ExplosionBullet* entity);
 	void CreateMoreExplosions();
 	void SpawnExplosions(Tmpl8::vec2 pos);
-	Tmpl8::vec2 GetDirDeviation();
 
 protected:
 	void ResetExplosions();
@@ -28,7 +27,6 @@ protected:
 	//assets 
 	Tmpl8::Sprite* explosionSprite;
 
-	float deviationMultiplier = 1.5f;
 
 	//consts
 	const float OFFSET = 20.0f;

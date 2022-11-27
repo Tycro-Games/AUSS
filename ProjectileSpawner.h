@@ -9,7 +9,7 @@ class ProjectileSpawner : public Spawner {
 public:
 	ProjectileSpawner(const Tmpl8::vec2 offset, const std::filesystem::path& _projectileSprite, const  std::filesystem::path& _explosionSprite);
 	void Init();
-	~ProjectileSpawner();
+	~ProjectileSpawner() = default;
 
 	void ChangeFireSpeed(float speed);
 	void AddProjectileToPool(Projectile* entity);

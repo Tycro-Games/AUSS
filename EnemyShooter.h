@@ -27,6 +27,8 @@ private:
 	const float MAX_DISTANCE_SQUARED_TO_PLAYER;
 	const float MOVE_INTERVAL = 0.5f;
 	const float STOP_INTERVAL = 3.0f;
+	const float MIN_DEVIATION = 0.1f;
+	const float MAX_DEVIATION = 1.0f;
 	//components
 	MoveToADirection mover;
 	Rotator rot;

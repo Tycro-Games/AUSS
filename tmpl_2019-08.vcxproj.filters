@@ -35,12 +35,6 @@
     <ClCompile Include="CollisionDetection.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="QuickSort.cpp">
-      <Filter>Algorithms</Filter>
-    </ClCompile>
-    <ClCompile Include="MergeSort.cpp">
-      <Filter>Algorithms</Filter>
-    </ClCompile>
     <ClCompile Include="Button.cpp">
       <Filter>UI</Filter>
     </ClCompile>
@@ -110,9 +104,6 @@
     <ClCompile Include="EnemyRunner.cpp">
       <Filter>Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="dynamic_array.cpp">
-      <Filter>DataStructures</Filter>
-    </ClCompile>
     <ClCompile Include="AABB.cpp">
       <Filter>Components</Filter>
     </ClCompile>
@@ -169,12 +160,6 @@
     </ClInclude>
     <ClInclude Include="CollisionDetection.h">
       <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="QuickSort.h">
-      <Filter>Algorithms</Filter>
-    </ClInclude>
-    <ClInclude Include="MergeSort.h">
-      <Filter>Algorithms</Filter>
     </ClInclude>
     <ClInclude Include="Button.h">
       <Filter>UI</Filter>
@@ -253,9 +238,6 @@
     </ClInclude>
     <ClInclude Include="Wave.h">
       <Filter>Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="dynamic_array.h">
-      <Filter>DataStructures</Filter>
     </ClInclude>
     <ClInclude Include="AABB.h">
       <Filter>Components</Filter>

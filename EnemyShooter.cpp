@@ -58,8 +58,8 @@ void EnemyShooter::Init(PosDir posDir)
 {
 	SetActive(true);
 	pos = posDir.pos;
-	dir = vec2{ -randomNumbers.RandomBetweenFloats(0.1f,1.0f),randomNumbers.RandomBetweenFloats(0.1f,1.0f) };
-	dir.normalize();
+	dir = MathFunctions::GetRandomVec2(MIN_DEVIATION, MAX_DEVIATION).normalized();
+
 	hp = maxHp;
 	canMove = false;
 	timerToStop.Init(this, STOP_INTERVAL);
@@ -78,19 +78,8 @@ void EnemyShooter::Call()
 	canMove = !canMove;
 	if (canMove) {
 		//random negative or positive
-		bool xNegative = randomNumbers.RandomBetweenInts(0, 2) == 1;
-		bool yNegative = randomNumbers.RandomBetweenInts(0, 2) == 1;
-		std::cout << xNegative << " " << yNegative << '\n';
-		//into floats that make the vec2
-		float xPos = randomNumbers.RandomBetweenFloats(0.1f, 1.0f);
-		if (xNegative)
-			xPos *= -1;
-		float yPos = randomNumbers.RandomBetweenFloats(0.1f, 1.0f);
-		if (yNegative)
-			yPos *= -1;
-		std::cout << xPos << " " << yPos << '\n';
-		dir = vec2{ xPos,yPos }.normalized();
-		std::cout << dir.x << " " << dir.y << '\n';
+
+		dir = MathFunctions::GetRandomVec2(MIN_DEVIATION, MAX_DEVIATION);
 		timerToStop.Init(this, STOP_INTERVAL);
 
 	}
