@@ -33,7 +33,7 @@ private:
 	Tmpl8::vec2 dir;
 	const Tmpl8::vec2 COL_MIN = Tmpl8::vec2(-10, -10);
 	const Tmpl8::vec2 COL_MAX = Tmpl8::vec2(10, 10);
-	const float SPEED = 250.0f;
+	const float SPEED = 400.0f;
 	const float TIME_ALIVE = 10.0f;
 	RotationVar rVar = RotationVar(360 / 32.0f, 90.0f, 20.0f);
 

@@ -4,6 +4,7 @@
 #include "Wave.h"
 #include "EnemySpawner.h"
 #include "Player.h"
+#include "PosDir.h"
 class Enemy;
 using json = nlohmann::json;
 class EnemyWaveSpawner : public Spawner, public Subject, public Callable
@@ -21,7 +22,7 @@ public:
 	void CheckThePossibleEnemies(size_t weight, std::vector<EnemyTypes>& possibleEnemies);
 	//add all the spawners that are offscreen
 	void CheckTheOffscreenSpawners(std::vector<EnemySpawner*>& possibleSpawner);
-	void SpawnEnemy(Tmpl8::vec2, EnemyTypes enemies);
+	void SpawnEnemy(PosDir posDir, EnemyTypes enemies);
 	// Inherited via Renderable
 	void Render(Tmpl8::Surface* screen) override;
 	// Inherited via Updateable
@@ -70,7 +71,7 @@ private:
 	//consts
 	const float SPAWNERS_XPOS_MULTIPLIERS = 0.88f;
 	const float SPAWNERS_YPOS_MULTIPLIERS = 0.83f;
-	const float SPAWNING_INTERVAL = .15f;
+	const float SPAWNING_INTERVAL = .3f;
 	float playerDistanceSqr = 0.0f;
 	const std::filesystem::path spriteExplosionPath = "assets/OriginalAssets/smoke.tga";
 

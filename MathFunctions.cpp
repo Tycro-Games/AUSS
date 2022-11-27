@@ -30,6 +30,13 @@ float MathFunctions::GetDirInAngles(vec2 dir)
 
 	return angle;
 }
+vec2 MathFunctions::GetVec2FromAngle(float angle)
+{
+	//conversion to radians
+	angle = angle * PI / 180;
+
+	return vec2{ round(sin(angle)) ,round(cos(angle)) };
+}
 float MathFunctions::GetDistance(vec2 pos1, vec2 pos2) {
 	float dx = pos2.x - pos1.x;
 	float dy = pos2.y - pos1.y;
@@ -93,7 +100,6 @@ vec2 MathFunctions::GetRandomVec2(const float min, const float max, const float 
 	//random signs
 	bool xNegative = randomNumbers.RandomBetweenInts(0, 2) == 1;
 	bool yNegative = randomNumbers.RandomBetweenInts(0, 2) == 1;
-	std::cout << xNegative << " " << yNegative << '\n';
 	//into floats that make the vec2
 	float x = randomNumbers.RandomBetweenFloats(min, max);
 	if (xNegative)

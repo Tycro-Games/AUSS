@@ -66,7 +66,7 @@ void EnemyRunner::Init(PosDir posDir)
 	SetActive(true);
 	pos = posDir.pos;
 
-	dir = MathFunctions::GetRandomVec2(MIN_DEVIATION, MAX_DEVIATION).normalized();
+	dir = posDir.dir;
 
 	hp = maxHp;
 	frame = MathFunctions::RotateToDirectionFrames(rVar, dir);

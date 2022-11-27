@@ -26,7 +26,7 @@ void Player::Init(const Collider& tileMapCollider, const Tmpl8::vec2& _pos)
 
 	lastPos = _pos;
 
-	timer.Init(this, TIME_TO_HIT);
+	cooldownForDamage.Init(this, TIME_TO_HIT);
 	spawner.Init();
 	playerMover.Init(&pos, &playerCollider, tilemapCollider);
 }
@@ -78,12 +78,12 @@ void Player::Update(float deltaTime)
 	}
 
 	spawner.Update(deltaTime);
-	timer.Update(deltaTime);
+	cooldownForDamage.Update(deltaTime);
 }
 void Player::TakeDamage(int dg) {
-	if (timer.isFinished) {
+	if (cooldownForDamage.isFinished) {
 		Being::TakeDamage(dg);
-		timer.ResetVar();
+		cooldownForDamage.ResetVar();
 	}
 
 }

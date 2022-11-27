@@ -28,9 +28,7 @@ void Timer::ResetVar()
 	currentTime = 0.0f;
 }
 
-Timer::~Timer()
-{
-}
+
 
 void Timer::Update(float deltaTime)
 {

@@ -129,7 +129,7 @@ void EnemyWaveSpawner::Call()
 		assert(possibleSpawners.size() > 0);
 		assert(indexOfSpawner < possibleSpawners.size());
 
-		SpawnEnemy(possibleSpawners[indexOfSpawner]->GetSpawnerPos(), enemiesToSpawn[indexOfEnemiesToSpawn]);
+		SpawnEnemy(PosDir{ possibleSpawners[indexOfSpawner]->GetSpawnerPos() ,0 }, enemiesToSpawn[indexOfEnemiesToSpawn]);
 		indexOfEnemiesToSpawn++;
 		//spawned the last enemy of the wave
 		if (enemiesToSpawn.size() == indexOfEnemiesToSpawn) {
@@ -219,12 +219,7 @@ void EnemyWaveSpawner::CheckTheOffscreenSpawners(vector<EnemySpawner*>& possible
 			possibleSpawner.push_back(enemySpawners[i]);
 	}
 }
-/// <summary>
-/// Spawns an enemy at the pos of the type enemy
-/// </summary>
-/// <param name="pos"></param>
-/// <param name="enemy"></param>
-void EnemyWaveSpawner::SpawnEnemy(vec2 pos, EnemyTypes enemy)
+void EnemyWaveSpawner::SpawnEnemy(PosDir posDir, EnemyTypes enemy)
 {
 	Enemy* enemyToSpawn = nullptr;
 	switch (enemy)
@@ -256,7 +251,7 @@ void EnemyWaveSpawner::SpawnEnemy(vec2 pos, EnemyTypes enemy)
 		activeColliders.push_back(enemyToSpawn->getColl());
 		//set position to the spawner's
 
-		enemyToSpawn->Init(PosDir{ pos ,0 });
+		enemyToSpawn->Init(posDir);
 		Game::Get().AddCollider(enemyToSpawn->getColl());
 		Game::Get().AddMoveable(enemyToSpawn->getMoveable());
 

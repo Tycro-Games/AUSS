@@ -8,7 +8,7 @@ public:
 	Timer();
 	void Init(Callable* entity, float DesiredTime, bool loop = false);
 	void ResetVar();
-	virtual ~Timer();
+	~Timer() = default;
 	void Update(float deltaTime) override;
 	bool isFinished = false;
 	bool FinishedLoop() { return currentTime == 0; };
