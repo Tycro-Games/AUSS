@@ -34,8 +34,8 @@ vec2 MathFunctions::GetVec2FromAngle(float angle)
 {
 	//conversion to radians
 	angle = angle * PI / 180;
-
-	return vec2{ round(sin(angle)) ,round(cos(angle)) };
+	//the coordonate system has up as negative
+	return vec2{ round(cos(angle)) ,-round(sin(angle)) };
 }
 float MathFunctions::GetDistance(vec2 pos1, vec2 pos2) {
 	float dx = pos2.x - pos1.x;
