@@ -17,8 +17,11 @@ This library is used for parsing the json files:https://github.com/nlohmann/json
 
 ## Enemy Types:
 - Runner
+  - behaves like a projectile, but it only damages the player on contact
 - Hoarder
+  - goes in the direction of the player, it reflects on obstacles, it tends to be pretty fast and moves past the player, it also damages it on contact
 - Shooter
+  - tries to stay in the center of the screen, while shooting runners around it, it also reflects on obstacles
 
 ## Playable on [itch](https://tycro-games.itch.io/auss)
 
