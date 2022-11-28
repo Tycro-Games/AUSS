@@ -4,14 +4,9 @@ using namespace std;
 using namespace Tmpl8;
 CollisionDetection::CollisionDetection()
 {
-	timer.Init(this, .05f, true);
+	timer.Init(bind(&CollisionDetection::DetectCollisions, this), .05f, true);
 }
 
-
-
-CollisionDetection::~CollisionDetection()
-{
-}
 
 //this is what the lambda function does below
 //bool CompareXPositions(Collider* a, Collider* b) {
@@ -85,8 +80,5 @@ void CollisionDetection::Update(float deltaTime)
 }
 
 
-void CollisionDetection::Call()
-{
-	DetectCollisions();
-}
+
 

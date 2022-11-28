@@ -1,7 +1,7 @@
 #pragma once
 #include "Enemy.h"
 #include "Rotator.h"
-class EnemyRunner :public Enemy, public Callable
+class EnemyRunner :public Enemy
 {
 public:
 	EnemyRunner(PosDir posDir, Tmpl8::Sprite* sprite, EnemyWaveSpawner* spawner);
@@ -35,7 +35,7 @@ private:
 	const float MAX_DEVIATION = 0.25f;
 
 	// Inherited via Callable
-	void Call() override;
+	void Call();
 
 };
 

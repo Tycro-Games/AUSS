@@ -26,7 +26,7 @@ void Player::Init(const Collider& tileMapCollider, const Tmpl8::vec2& _pos)
 
 	lastPos = _pos;
 
-	cooldownForDamage.Init(this, TIME_TO_HIT);
+	cooldownForDamage.Init(std::bind(&Player::Call, this), TIME_TO_HIT);
 	spawner.Init();
 	playerMover.Init(&pos, &playerCollider, tilemapCollider);
 }

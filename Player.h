@@ -8,7 +8,7 @@
 #include "SpriteTransparency.h"
 
 
-class Player :public Being, public Callable, public Followable, public Observer, public Subject
+class Player :public Being, public Followable, public Observer, public Subject
 {
 public:
 	Player();
@@ -19,7 +19,7 @@ public:
 	void Shoot(bool fire);
 	void Rotate(int x, int y);
 	//callable
-	void Call()override;
+	void Call();
 	//being  override
 	void TakeDamage(int) override;
 	void Die() override;

@@ -8,7 +8,7 @@
 #include "Rotator.h"
 
 class ProjectileSpawner;
-class Projectile :public Callable, public Entity
+class Projectile : public Entity
 {
 
 public:
@@ -24,7 +24,7 @@ public:
 	Moveable* getMoveable() {
 		return &mover;
 	}
-	void Call() override;
+	void Call();
 	void ResetBullet();
 	void Update(float deltaTime) override;
 	void Render(Tmpl8::Surface* screen) override;

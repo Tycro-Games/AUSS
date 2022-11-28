@@ -131,9 +131,6 @@
     <ClInclude Include="Entity.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="Callable.h">
-      <Filter>Interfaces</Filter>
-    </ClInclude>
     <ClInclude Include="Being.h">
       <Filter>Interfaces</Filter>
     </ClInclude>

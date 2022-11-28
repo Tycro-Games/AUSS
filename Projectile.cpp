@@ -14,7 +14,7 @@ Projectile::Projectile(PosDir posDir, Tmpl8::Sprite* sprite, ProjectileSpawner* 
 {
 	collider.type = Collider::Type::Projectile;
 
-	mover.Init(&pos, &dir, &collider, this, SPEED);
+	mover.Init(&pos, &dir, &collider, std::bind(&Projectile::Call, this), SPEED);
 
 
 	Init(posDir);
@@ -24,7 +24,7 @@ void Projectile::Init(PosDir posDir)
 	SetActive(true);
 	pos = posDir.pos;
 	dir = posDir.dir;
-	timer.Init(this, TIME_ALIVE);
+	timer.Init(std::bind(&Projectile::ResetBullet, this), TIME_ALIVE);
 
 	RotateToDirection();
 }
@@ -70,12 +70,9 @@ void Projectile::Render(Tmpl8::Surface* screen)
 
 void Projectile::Call()
 {
-	//delete if timer is done
-	if (timer.isFinished) {
 
-		ResetBullet();
-	}
-	else if (mover.colToReflectFrom != nullptr) { //reflect on obstacle
+
+	if (mover.colToReflectFrom != nullptr) { //reflect on obstacle
 		Collider c = *mover.colToReflectFrom;
 		rot.Reflect(Collider::GetNormal(c, collider));
 

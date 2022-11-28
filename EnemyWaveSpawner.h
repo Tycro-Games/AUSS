@@ -7,7 +7,7 @@
 #include "PosDir.h"
 class Enemy;
 using json = nlohmann::json;
-class EnemyWaveSpawner : public Spawner, public Subject, public Callable
+class EnemyWaveSpawner : public Spawner, public Subject
 {
 public:
 	EnemyWaveSpawner();
@@ -75,8 +75,7 @@ private:
 	float playerDistanceSqr = 0.0f;
 	const std::filesystem::path spriteExplosionPath = "assets/OriginalAssets/smoke.tga";
 
-	// Inherited via Callable
-	void Call() override;
+	void Call();
 
 };
 inline bool EnemyWaveSpawner::IsPoolEmpty(const std::vector<Enemy*>& pool) {

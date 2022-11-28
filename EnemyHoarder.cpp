@@ -10,9 +10,9 @@ EnemyHoarder::EnemyHoarder(PosDir posDir, Sprite* sprite, EnemyWaveSpawner* _spa
 {
 	enemyType = Hoarder;
 	enemyCollider = Collider(COL_MIN, COL_MAX, &pos);
-	mover.Init(&pos, &dir, &enemyCollider, this, SPEED);
+	mover.Init(&pos, &dir, &enemyCollider, std::bind(&EnemyHoarder::Call, this), SPEED);
 
-	attack = Timer(this, TIME_TO_ATTACK, true);
+	attack = Timer(std::bind(&EnemyHoarder::AtackPlayer, this), TIME_TO_ATTACK, true);
 	rotate = Timer();
 	rot.Init(&pos, &dir, &rVar, &frame, &mover);
 
@@ -63,7 +63,7 @@ void EnemyHoarder::Init(PosDir posDir)
 	dir = posDir.dir;
 	hp = maxHp;
 	mover.SetSpeed(SPEED + randomNumbers.RandomBetweenFloats(-30, 100));
-	rotate.Init(&rot, randomNumbers.RandomBetweenFloats(0.1f, 0.9f), true);
+	rotate.Init(std::bind(&EnemyRotator::Call, &rot), randomNumbers.RandomBetweenFloats(0.1f, 0.9f), true);
 	rot.Call();
 }
 
@@ -78,13 +78,6 @@ void EnemyHoarder::ResetEnemy()
 
 void EnemyHoarder::Call()
 {
-	//ready to atack and in range
-	if (attack.FinishedLoop() && InRangeToAtack) {
-		spawner->PlayerTakesDamage(this);
-		attack.ResetVar();
-		//moves a bit after atacking
-		ToMove = true;
-	}
 	if (mover.colToReflectFrom != nullptr) {
 		Collider c = *mover.colToReflectFrom;
 
@@ -98,6 +91,14 @@ void EnemyHoarder::Call()
 		rot.Reflect(Collider::GetNormalEdgeScreen(mover.nextP, *mover.getColl()));
 	}
 
+}
+
+void EnemyHoarder::AtackPlayer()
+{
+	if (InRangeToAtack) {
+		spawner->PlayerTakesDamage(this);
+		attack.ResetVar();
+	}
 }
 
 void EnemyHoarder::Die()

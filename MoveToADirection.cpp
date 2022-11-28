@@ -1,7 +1,7 @@
 #include "MoveToADirection.h"
 #include "game.h"
 using namespace Tmpl8;
-MoveToADirection::MoveToADirection(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Collider* col, Callable* call, float speed) :
+MoveToADirection::MoveToADirection(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Collider* col, const Event& call, float speed) :
 	Moveable(pos, col, speed),
 	dir(dir),
 	call(call)
@@ -11,12 +11,12 @@ MoveToADirection::MoveToADirection(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Collider*
 
 MoveToADirection::MoveToADirection()
 	:Moveable(),
-	call(nullptr),
+	call(),
 	dir(nullptr)
 {
 }
 
-void MoveToADirection::Init(Tmpl8::vec2* pos, Tmpl8::vec2* _dir, Collider* collider, Callable* _call, float speed)
+void MoveToADirection::Init(Tmpl8::vec2* pos, Tmpl8::vec2* _dir, Collider* collider, const Event& _call, float speed)
 {
 	Moveable::Init(pos, collider, speed);
 	dir = _dir;
@@ -40,11 +40,12 @@ void MoveToADirection::Update(float deltaTime)
 			//reflect on obstacle
 			colToReflectFrom = Game::Get().getTilemap().GetObstacle(nextP.x, nextP.y)->getColl();
 
-			call->Call();
+			call();
 		}
 	}
 	else {
-		call->Call();
+		//reflect on edge
+		call();
 	}
 
 

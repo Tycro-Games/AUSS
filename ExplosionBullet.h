@@ -5,7 +5,7 @@
 #include "MoveInstance.h"
 class Spawner;
 
-class ExplosionBullet : public Entity, public Callable
+class ExplosionBullet : public Entity
 {
 public:
 	ExplosionBullet(Tmpl8::Sprite* sprite, Spawner* spawner, Tmpl8::vec2 pos);
@@ -15,7 +15,7 @@ public:
 	void Update(float deltaTime) override;
 
 	void Render(Tmpl8::Surface* screen) override;
-	void Call() override;
+	void Call();
 private:
 	float TotalAnimation;
 	float currenTime = 0;

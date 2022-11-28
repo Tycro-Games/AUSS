@@ -4,13 +4,13 @@
 #include "Collider.h"
 #include "Moveable.h"
 #include "Timer.h"
-class MoveablePlayer :public Moveable, public Callable
+class MoveablePlayer :public Moveable
 {
 public:
 	MoveablePlayer(Tmpl8::vec2* pos, Collider* col, const Collider* tileMapCol, float speed = 70.0f, float dashSpeed = 500);
 	MoveablePlayer();
 	void Init(Tmpl8::vec2* pos, Collider* col, const Collider* tileMapCol, float speed = 70.0f, float dashSpeed = 500);
-	virtual ~MoveablePlayer();
+	~MoveablePlayer() = default;
 
 	void Update(float deltaTime) override;
 	void MoveTileOrPlayer(Tmpl8::vec2& tilemapPos, Collider& c, const Tmpl8::vec2& playerPos);
@@ -65,9 +65,10 @@ private:
 	//consts
 	const float DASH_DURATION = 0.45f;
 	const float COOLDOWN_DURATION = 0.6f;
-	const float EDGE_DISTANCE = 5.0f;
-	// Inherited via Callable
-	void Call() override;
+	const float EDGE_DISTANCE = 4.0f;
+	//timers functions
+	void EndCooldown();
+	void EndDash();
 
 };
 

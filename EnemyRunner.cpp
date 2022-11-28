@@ -2,7 +2,7 @@
 using namespace Tmpl8;
 EnemyRunner::EnemyRunner(PosDir posDir, Sprite* sprite, EnemyWaveSpawner* _spawner)
 	:Enemy(posDir.pos, sprite, _spawner),
-	rVar(RotationVar(360 / (static_cast<const float>(sprite->Frames() - 1)), 90.0f, static_cast<const float>(sprite->GetHeight()))),
+	rVar(RotationVar(360 / (static_cast<const float>(sprite->Frames())), 90.0f, static_cast<const float>(sprite->GetHeight()))),
 	MAX_DISTANCE_SQUARED_TO_PLAYER(100.0f + _spawner->getMaxPlayerDistance())
 
 
@@ -10,7 +10,7 @@ EnemyRunner::EnemyRunner(PosDir posDir, Sprite* sprite, EnemyWaveSpawner* _spawn
 	enemyType = Runner;
 	enemyCollider = Collider(COL_MIN, COL_MAX, &pos);
 
-	mover.Init(&pos, &dir, &enemyCollider, this, SPEED);
+	mover.Init(&pos, &dir, &enemyCollider, std::bind(&EnemyRunner::Call, this), SPEED);
 	rot.Init(&pos, &dir, &rVar, &frame, &mover);
 
 	InitEnemy(mover);

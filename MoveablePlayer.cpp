@@ -17,9 +17,9 @@ MoveablePlayer::MoveablePlayer(vec2* pos, Collider* playerCollider, const Collid
 void MoveablePlayer::InitTimers()
 {
 	//timer Init
-	cooldownTimer.Init(this, COOLDOWN_DURATION);
+	cooldownTimer.Init(std::bind(&MoveablePlayer::EndCooldown, this), COOLDOWN_DURATION);
 	cooldownTimer.setUpdateable(false);
-	dashTimer.Init(this, DASH_DURATION);
+	dashTimer.Init(std::bind(&MoveablePlayer::EndDash, this), DASH_DURATION);
 	dashTimer.setUpdateable(false);
 }
 
@@ -42,9 +42,7 @@ void MoveablePlayer::Init(Tmpl8::vec2* pos, Collider* col, const Collider* _tile
 	InitTimers();
 }
 
-MoveablePlayer::~MoveablePlayer()
-{
-}
+
 
 void MoveablePlayer::setUp(bool val)
 {
@@ -112,21 +110,20 @@ bool MoveablePlayer::ChangedPos() const
 	return hasChangedPos;
 }
 
-void MoveablePlayer::Call()
+void MoveablePlayer::EndCooldown()
 {
 
+	cooldownTimer.ResetVar();
+	cooldownTimer.setUpdateable(false);
+	dashing = false;
 
-	if (dashTimer.getUpdateable()) {
-		dashTimer.ResetVar();
-		dashTimer.setUpdateable(false);
-		speed = initSpeed;
-	}
-	else if (cooldownTimer.getUpdateable()) {
-		cooldownTimer.ResetVar();
-		cooldownTimer.setUpdateable(false);
-		dashing = false;
-	}
+}
 
+void MoveablePlayer::EndDash()
+{
+	dashTimer.ResetVar();
+	dashTimer.setUpdateable(false);
+	speed = initSpeed;
 }
 
 
@@ -266,10 +263,10 @@ void MoveablePlayer::MovePlayer()
 void MoveablePlayer::ClampTheMovementVector(const Collider& c, const vec2 newVec, vec2& originalVec, bool& changed)
 {
 	//try to move the player only on one axis
-	::vec2 nextPos = (newVec - originalVec);
+	vec2 nextPos = (newVec - originalVec);
 	if (CheckVecForOneDir(nextPos))
 		return;
-	::vec2 clampedOnX = vec2(originalVec.x + nextPos.x / 2, originalVec.y);
+	vec2 clampedOnX = vec2(originalVec.x + nextPos.x / 2, originalVec.y);
 	vec2 clampedOnY = vec2(originalVec.x, originalVec.y + nextPos.y / 2);
 	if (Collider::InGameScreen(clampedOnX, c))
 		originalVec = clampedOnX, changed = true;

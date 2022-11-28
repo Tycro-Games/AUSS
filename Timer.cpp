@@ -1,7 +1,7 @@
 #include "Timer.h"
 
-Timer::Timer(Callable* entity, float DesiredTime, bool loop) :
-	toCall(entity),
+Timer::Timer(const Event& evt, float DesiredTime, bool loop) :
+	toCall(evt),
 
 	loop(loop)
 {
@@ -14,10 +14,10 @@ Timer::Timer()
 	toCall = nullptr;
 }
 
-void Timer::Init(Callable* entity, float DesiredTime, bool loop)
+void Timer::Init(const Event& evt, float DesiredTime, bool loop)
 {
 	ResetVar();
-	toCall = entity;
+	toCall = evt;
 	desiredTime = DesiredTime;
 	this->loop = loop;
 }
@@ -43,6 +43,6 @@ void Timer::Update(float deltaTime)
 			currentTime = 0;
 		else
 			isFinished = true;
-		toCall->Call();
+		toCall();
 	}
 }

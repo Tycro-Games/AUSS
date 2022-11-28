@@ -30,7 +30,7 @@ void EnemyWaveSpawner::Init()
 {
 	indexOfEnemiesToSpawn = 0;
 	firstWave = true;
-	timer.Init(this, 1.0f);
+	timer.Init(bind(&EnemyWaveSpawner::Call, this), 1.0f);
 	playerDistanceSqr = Game::Get().getPlayer().GetHalfCollider();
 	//square it
 	playerDistanceSqr *= playerDistanceSqr;
@@ -195,7 +195,7 @@ void EnemyWaveSpawner::SpawnCurrentWave() {
 		CheckThePossibleEnemies(weight, possibleEnemies);
 	}
 	//interval for spawninig
-	timer.Init(this, SPAWNING_INTERVAL, true); //spawning interval could be fetched from the json per wave
+	timer.Init(bind(&EnemyWaveSpawner::Call, this), SPAWNING_INTERVAL, true); //spawning interval could be fetched from the json per wave
 	//spawn enemies in the spawners' positons
 	indexOfEnemiesToSpawn = 0;
 

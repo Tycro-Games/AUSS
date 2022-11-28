@@ -1,7 +1,7 @@
 #pragma once
 #include "Enemy.h"
 #include "Rotator.h"
-class EnemyShooter : public Enemy, public Callable
+class EnemyShooter : public Enemy
 {
 public:
 	EnemyShooter(PosDir posDir, Tmpl8::Sprite* sprite, EnemyWaveSpawner* _spawner);
@@ -25,8 +25,8 @@ private:
 	const Tmpl8::vec2 COL_MIN = Tmpl8::vec2(-10, -10);
 	const Tmpl8::vec2 COL_MAX = Tmpl8::vec2(10, 10);
 	const float MOVE_INTERVAL = 0.5f;
-	const float STOP_INTERVAL = 3.0f;
-	const float SPAWN_INTERVAL = 0.2f;
+	const float STOP_INTERVAL = 1.0f;
+	const float SPAWN_INTERVAL = 0.5f;
 	//direction randomzation
 	const float MIN_DEVIATION = 0.1f;
 	const float MAX_DEVIATION = 1.0f;
@@ -43,7 +43,9 @@ private:
 
 	float angleToSpawn = 0;
 
-	// Inherited via Callable
-	void Call() override;
+	void StartMovement();
+	void SpawnRunner();
+	void StopMovement();
+	void Move();
 
 };

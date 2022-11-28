@@ -30,12 +30,17 @@ float MathFunctions::GetDirInAngles(vec2 dir)
 
 	return angle;
 }
-vec2 MathFunctions::GetVec2FromAngle(float angle)
+vec2 MathFunctions::GetVec2FromAngle(float angle, bool clockWise)
 {
 	//conversion to radians
 	angle = angle * PI / 180;
 	//the coordonate system has up as negative
-	return vec2{ round(cos(angle)) ,-round(sin(angle)) };
+	if (!clockWise)
+		return vec2{ round(cos(angle)) ,-round(sin(angle)) };
+	else {
+		return vec2{ round(cos(angle)) ,round(sin(angle)) };
+
+	}
 }
 float MathFunctions::GetDistance(vec2 pos1, vec2 pos2) {
 	float dx = pos2.x - pos1.x;
@@ -78,10 +83,10 @@ void MathFunctions::RotateToDirection(const vec2& newDirection, const vec2& pos,
 
 }
 
-int MathFunctions::RotateToDirectionFrames(RotationVar rVar, vec2 dir)
+unsigned int MathFunctions::RotateToDirectionFrames(const RotationVar& rVar, const vec2& dir)
 {
-	//rotate to the target dir and return the corresponding frame
-	return static_cast<int>(fmod(MathFunctions::GetDirInAnglesPositive(dir) + rVar.OFFSET_SPRITE, 360) / rVar.ANGLE_SIZE);
+	//return the corresponding frame
+	return static_cast<unsigned int>(fmod(MathFunctions::GetDirInAnglesPositive(dir) + rVar.OFFSET_SPRITE, 360) / rVar.ANGLE_SIZE);
 }
 
 float MathFunctions::DashFunction(float x)

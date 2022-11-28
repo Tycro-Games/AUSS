@@ -9,12 +9,12 @@ class MathFunctions
 public:
 	static float GetDirInAnglesPositive(Tmpl8::vec2 dir);
 	static float GetDirInAngles(Tmpl8::vec2 dir);
-	static Tmpl8::vec2 GetVec2FromAngle(float angle);
+	static Tmpl8::vec2 GetVec2FromAngle(float angle, bool clockWise = false);
 	static Tmpl8::vec2 Reflect(Tmpl8::vec2 dir, Tmpl8::vec2 norm);
 	//x y coordonates, pos current postion, dir modified by reference
 	static void RotateToDirection(const Tmpl8::vec2& newDir, const Tmpl8::vec2& pos, Tmpl8::vec2& dir);
 	//helper function for rotating sprites
-	static int  RotateToDirectionFrames(RotationVar, Tmpl8::vec2);
+	static unsigned int  RotateToDirectionFrames(const RotationVar&, const Tmpl8::vec2&);
 	//the distance between 2 points
 	static float GetDistance(Tmpl8::vec2 pos1, Tmpl8::vec2 pos2);
 	//the distance between 2 points without taking the square root

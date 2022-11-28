@@ -5,7 +5,7 @@
 
 
 
-class EnemyHoarder :public Enemy, public Callable
+class EnemyHoarder :public Enemy
 {
 public:
 	EnemyHoarder(PosDir posDir, Tmpl8::Sprite* sprite, EnemyWaveSpawner* spawner);
@@ -16,18 +16,14 @@ public:
 	virtual void Init(PosDir posDir) override;
 	void Update(float deltaTime) override;
 
-
-
 	void Render(Tmpl8::Surface* screen) override;
 
-	virtual void ResetEnemy() override;
+	void ResetEnemy() override;
 
-	void Call() override;
+	void Call();
 
-	virtual Enemy* clone() override;
+	Enemy* clone() override;
 private:
-	//movement
-	bool ToMove = false;
 	bool InRangeToAtack = false;
 	//consts
 	const Tmpl8::vec2 COL_MIN = Tmpl8::vec2(-10, -10);
@@ -47,9 +43,7 @@ private:
 
 	EnemyRotator rot;
 	// Inherited via Enemy
-	virtual void Die() override;
-
-
-
+	void Die() override;
+	void AtackPlayer();
 };
 

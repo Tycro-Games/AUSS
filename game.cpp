@@ -18,8 +18,8 @@ namespace Tmpl8
 	Game::Game() :
 		cursor("assets/OriginalAssets/target.tga", 1),
 		//passes functions as objects
-		playButton("assets/UI/Play_Idle.png", "assets/UI/Play_Pushed.png", vec2(ScreenWidth / 2, ScreenHeight / 2), std::bind(&Game::ResumeGame, this)),
-		exitButton("assets/UI/Cross_Idle.png", "assets/UI/Cross_Pushed.png", vec2(ScreenWidth / 2, ScreenHeight / 2 + 64), std::bind(&Game::ExitGame, this)),
+		playButton("assets/UI/Play_Idle.png", "assets/UI/Play_Pushed.png", vec2(ScreenWidth / 2, ScreenHeight / 2), bind(&Game::ResumeGame, this)),
+		exitButton("assets/UI/Cross_Idle.png", "assets/UI/Cross_Pushed.png", vec2(ScreenWidth / 2, ScreenHeight / 2 + 64), bind(&Game::ExitGame, this)),
 		screen(nullptr),
 		currentState(GameState::mainMenu)
 

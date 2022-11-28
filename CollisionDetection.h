@@ -4,20 +4,18 @@
 
 #include <algorithm>
 #include <vector>
-class CollisionDetection :public Updateable, public Callable
+class CollisionDetection :public Updateable
 {
 public:
 
 	CollisionDetection();
 
-	~CollisionDetection();
+	~CollisionDetection() = default;
 	void DetectCollisions();
 
 	void CheckProjectile(std::vector<Collider*>& allPairs, int i, int j);
 
 	void Update(float deltaTime) override;
-	// Inherited via Callable
-	void Call() override;
 private:
 
 	Timer timer;

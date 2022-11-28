@@ -1,12 +1,15 @@
 #pragma once
 #include "Updateable.h"
-#include "Callable.h"
+
+#include <functional>
+using Event = std::function<void()>;
+
 class Timer :public Updateable {
 	// Inherited via Updateable
 public:
-	Timer(Callable* entity, float DesiredTime, bool loop = false);
+	Timer(const Event& entity, float DesiredTime, bool loop = false);
 	Timer();
-	void Init(Callable* entity, float DesiredTime, bool loop = false);
+	void Init(const Event& entity, float DesiredTime, bool loop = false);
 	void ResetVar();
 	~Timer() = default;
 	void Update(float deltaTime) override;
@@ -17,5 +20,6 @@ private:
 	float desiredTime = 1.0f;
 	bool loop = false;
 
-	Callable* toCall;
+	Event toCall;
+
 };
