@@ -206,24 +206,28 @@ namespace Tmpl8
 
 		switch (key)
 		{
-		case(SDL_SCANCODE_W):
+		case SDL_SCANCODE_W:
 			player.GetMoveable()->setUp();
 
 			break;
-		case(SDL_SCANCODE_S):
+		case SDL_SCANCODE_S:
 			player.GetMoveable()->setDown();
 
 			break;
-		case(SDL_SCANCODE_D):
+		case SDL_SCANCODE_D:
 			player.GetMoveable()->setRight();
 
 			break;
-		case(SDL_SCANCODE_A):
+		case SDL_SCANCODE_A:
 			player.GetMoveable()->setLeft();
 
 			break;
-		case (SDL_SCANCODE_SPACE):
+		case SDL_SCANCODE_SPACE:
 			player.GetMoveable()->setDash();
+
+			break;
+		case SDL_SCANCODE_LSHIFT:
+			isPressingLeftMouse = false;
 
 			break;
 		default:
@@ -235,7 +239,7 @@ namespace Tmpl8
 		switch (key)
 		{
 			//dash
-		case (SDL_SCANCODE_SPACE):
+		case SDL_SCANCODE_SPACE:
 			player.GetMoveable()->setDash(true);
 			break;
 
@@ -259,6 +263,10 @@ namespace Tmpl8
 			break;
 		case SDL_SCANCODE_DOWN:
 			player.GetSpawner()->ChangeFireSpeed(-FIRE_SPEED_CHANGE);
+			break;
+		case SDL_SCANCODE_LSHIFT:
+			isPressingLeftMouse = true;
+
 			break;
 		case SDL_SCANCODE_ESCAPE:
 			if (currentState == GameState::game) {
