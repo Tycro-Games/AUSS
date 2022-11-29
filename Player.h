@@ -43,8 +43,8 @@ private:
 	const std::filesystem::path spriteExplosionPath = "assets/OriginalAssets/smoke.tga";
 	//consts
 	const float TIME_TO_HIT = 0.25f;
-	const Tmpl8::vec2 COL_MIN = Tmpl8::vec2(-21.5f);
-	const Tmpl8::vec2 COL_MAX = Tmpl8::vec2(21.5f);
+	const Tmpl8::vec2 COL_MIN = Tmpl8::vec2(-21.0f);
+	const Tmpl8::vec2 COL_MAX = Tmpl8::vec2(21.0f);
 	//components
 	const Collider* tilemapCollider;
 	MoveablePlayer playerMover;
