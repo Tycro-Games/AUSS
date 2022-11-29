@@ -206,6 +206,7 @@ void Tilemap::DrawTile(Surface* screen, int tx, int ty, int x, int y)
 bool Tilemap::IsFree(float x, float y) const
 {
 	vec2 targetPos = vec2(x, y);
+	//apply offset
 	x += OFFSET_X - (pos.x);
 	y += OFFSET_Y - (pos.y);
 	int tx = static_cast<int>(x / TILE_SIZE), ty = static_cast<int>(y / TILE_SIZE);

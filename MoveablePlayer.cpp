@@ -31,14 +31,16 @@ MoveablePlayer::MoveablePlayer()
 	dashSpeed = 0;
 }
 
-void MoveablePlayer::Init(vec2* pos, Collider* col, const Collider* _tileMapCol, float speed, float _dashSpeed)
+void MoveablePlayer::Init(vec2* pos, Collider* col, const Collider* _tileMapCol, float _speed, float _dashSpeed)
 {
-	Moveable::Init(pos, col, speed);
+	Moveable::Init(pos, col, _speed);
 	tileMapCol = _tileMapCol;
 	dashSpeed = _dashSpeed;
-	initSpeed = speed;
-
+	initSpeed = _speed;
+	speed = _speed;
 	InitTimers();
+	lastTilemapPos = { 0 };
+	dashing = false;
 }
 void MoveablePlayer::EndCooldown()
 {
@@ -60,8 +62,6 @@ void MoveablePlayer::EndDash()
 	dashTimer.ResetVar();
 	dashTimer.setUpdateable(false);
 	speed = initSpeed;
-	//start the cooldown
-	cooldownTimer.setUpdateable(true);
 }
 
 
@@ -99,35 +99,35 @@ void MoveablePlayer::Update(float deltaTime)
 
 	//tile check
 	vec2 playerPos = *pos;
-	const Collider playerCol = *collider;
 	playerPos += nextPos * speed * deltaTime;
 
 
 	const float playerPosOnX = nextPos.x * speed * deltaTime;
 	const float  playerPosOnY = nextPos.y * speed * deltaTime;
 
-
+	//tile movement
 	vec2 tilemapPos = *tileMapCol->pos;
-	const Collider c = *tileMapCol;
 	tilemapPos += nextPos * (-speed) * deltaTime;
 
 
-	if (CheckPositionForCollisions(playerPos, playerCol)) {
-		MoveTileOrPlayer(tilemapPos, c, playerPos);
+	if (CheckPositionForCollisions(playerPos, *collider)) {
+		MoveTileOrPlayer(tilemapPos, *tileMapCol, playerPos);
 	}
-	else {
+	else if (nextPos.x != 0 && nextPos.y != 0) {
 		//moving diagonally and hitting an obstacle
-		if (nextPos.x != 0 && nextPos.y != 0) {
-			if (CheckPositionForCollisions((*pos) + vec2(0, playerPosOnY), playerCol)) {
-				MoveTileOrPlayer((*c.pos) - vec2(0, playerPosOnY), c, (*pos) + vec2(0, playerPosOnY));
-			}
-			else if (CheckPositionForCollisions((*pos) + vec2(playerPosOnX, 0), playerCol)) {
-				MoveTileOrPlayer((*c.pos) - vec2(playerPosOnX, 0), c, (*pos) + vec2(playerPosOnX, 0));
-			}
+		if (CheckPositionForCollisions((*pos) + vec2(0, playerPosOnY), *collider)) {
+			std::cout << "OnY\n";
+			MoveTileOrPlayer((*tileMapCol->pos) - vec2(0, playerPosOnY), *tileMapCol, (*pos) + vec2(0, playerPosOnY));
+
+		}
+		else if (CheckPositionForCollisions((*pos) + vec2(playerPosOnX, 0), *collider)) {
+			MoveTileOrPlayer((*tileMapCol->pos) - vec2(playerPosOnX, 0), *tileMapCol, (*pos) + vec2(playerPosOnX, 0));
+			std::cout << "OnX\n";
+
 		}
 	}
-
 }
+
 
 void MoveablePlayer::StartDashing(vec2& nextPos, float deltaTime)
 {
@@ -136,13 +136,12 @@ void MoveablePlayer::StartDashing(vec2& nextPos, float deltaTime)
 		//the player will no longer rotate while dashing
 		canRotate = true;
 		if (startedDashing) {
-			dir = nextPos;
 			if (!dashTimer.getUpdateable() && !dashing) {
+				dir = nextPos;
 				dashes = 0;
 				dashTimer.setUpdateable(true);
 				dashing = true;
 				timePassed = 0;
-				speed = dashSpeed;
 			}
 		}
 	}
@@ -155,7 +154,7 @@ void MoveablePlayer::StartDashing(vec2& nextPos, float deltaTime)
 	}
 	if (dashing && timePassed + deltaTime < DASH_DURATION) {
 		timePassed += deltaTime;
-		SetDashPos(nextPos);//this value is from the function graph
+		SetDashPos(nextPos);
 	}
 
 }
@@ -168,7 +167,6 @@ void MoveablePlayer::MoveTileOrPlayer(const vec2& tilemapPos, const Collider& c,
 	if (Collider::InGameScreen(tilemapPos, c)) {
 		*tileMapCol->pos = tilemapPos;
 		hasChangedPos = true;
-
 	}
 	else
 	{
@@ -178,7 +176,6 @@ void MoveablePlayer::MoveTileOrPlayer(const vec2& tilemapPos, const Collider& c,
 		//player can move
 		canMove = true;
 		playerMovement = playerPos;
-
 	}
 
 }

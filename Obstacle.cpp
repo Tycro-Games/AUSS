@@ -15,6 +15,7 @@ Obstacle::Obstacle()
 	Moveable(&pos, &obsCollider)
 
 {
+	obsCollider.type = Collider::Type::Obstacle;
 }
 
 

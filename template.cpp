@@ -11,7 +11,7 @@
 #endif
 
 //#define FULLSCREEN
-#define ADVANCEDGL
+//#define ADVANCEDGL
 
 #include "game.h"
 
@@ -300,7 +300,8 @@ void swap()
 
 int main(int argc, char** argv)
 {
-
+	//vsyinc
+	//SDL_SetHintWithPriority(SDL_HINT_RENDER_VSYNC, "0", SDL_HINT_OVERRIDE);
 #ifdef _MSC_VER
 #ifdef _DEBUG
 	if (!redirectIO())
