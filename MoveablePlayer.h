@@ -10,7 +10,7 @@ class MoveablePlayer :public Moveable
 public:
 	MoveablePlayer(Tmpl8::vec2* pos, Collider* col, const Collider* tileMapCol, float speed = 70.0f, float dashSpeed = 500);
 	MoveablePlayer();
-	void Init(Tmpl8::vec2* pos, Collider* col, const Collider* tileMapCol, float speed = 70.0f, float dashSpeed = 4000);
+	void Init(Tmpl8::vec2* pos, Collider* col, const Collider* tileMapCol, float speed = 70.0f, float dashSpeed = 5000);
 	~MoveablePlayer() = default;
 
 	void Update(float deltaTime) override;

@@ -116,13 +116,11 @@ void MoveablePlayer::Update(float deltaTime)
 	else if (nextPos.x != 0 && nextPos.y != 0) {
 		//moving diagonally and hitting an obstacle
 		if (CheckPositionForCollisions((*pos) + vec2(0, playerPosOnY), *collider)) {
-			std::cout << "OnY\n";
 			MoveTileOrPlayer((*tileMapCol->pos) - vec2(0, playerPosOnY), *tileMapCol, (*pos) + vec2(0, playerPosOnY));
 
 		}
 		else if (CheckPositionForCollisions((*pos) + vec2(playerPosOnX, 0), *collider)) {
 			MoveTileOrPlayer((*tileMapCol->pos) - vec2(playerPosOnX, 0), *tileMapCol, (*pos) + vec2(playerPosOnX, 0));
-			std::cout << "OnX\n";
 
 		}
 	}
@@ -142,6 +140,7 @@ void MoveablePlayer::StartDashing(vec2& nextPos, float deltaTime)
 				dashTimer.setUpdateable(true);
 				dashing = true;
 				timePassed = 0;
+				speed = dashSpeed;
 			}
 		}
 	}
@@ -163,7 +162,7 @@ void MoveablePlayer::StartDashing(vec2& nextPos, float deltaTime)
 void MoveablePlayer::MoveTileOrPlayer(const vec2& tilemapPos, const Collider& c, const vec2& playerPos)
 {
 	diagonalMovement = false;
-	//move getTilemap() if it does not hit the bounds
+	//move if it does not hit the bounds
 	if (Collider::InGameScreen(tilemapPos, c)) {
 		*tileMapCol->pos = tilemapPos;
 		hasChangedPos = true;
