@@ -20,7 +20,7 @@ public:
 	//the distance between 2 points without taking the square root
 	static float GetDistanceSqr(Tmpl8::vec2 pos1, Tmpl8::vec2 pos2);
 	///should receive a number between 0 and 1
-	static float DashFunction(float);
+	static float DashFunction(const float);
 	static Tmpl8::vec2 GetRandomVec2(const float min, const float max, const float deviationMultiplier = 1.5f);
 
 	//source for lerp and inverse lerp https://www.gamedev.net/articles/programming/general-and-gameplay-programming/inverse-lerp-a-super-useful-yet-often-overlooked-function-r5230/

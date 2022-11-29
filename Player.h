@@ -52,10 +52,6 @@ private:
 	ProjectileSpawner spawner;
 	Timer cooldownForDamage;
 
-
-
-
-
 	// Inherited via Observer
 	void onNotify(int points, EventType event) override;
 

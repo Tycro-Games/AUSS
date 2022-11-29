@@ -4,14 +4,14 @@ using namespace Tmpl8;
 MoveToADirection::MoveToADirection(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Collider* col, const Event& call, float speed) :
 	Moveable(pos, col, speed),
 	dir(dir),
-	call(call)
+	reflect(call)
 {
 	dir->normalize();
 }
 
 MoveToADirection::MoveToADirection()
 	:Moveable(),
-	call(),
+	reflect(),
 	dir(nullptr)
 {
 }
@@ -20,7 +20,7 @@ void MoveToADirection::Init(Tmpl8::vec2* pos, Tmpl8::vec2* _dir, Collider* colli
 {
 	Moveable::Init(pos, collider, speed);
 	dir = _dir;
-	call = _call;
+	reflect = _call;
 }
 
 void MoveToADirection::Update(float deltaTime)
@@ -40,12 +40,12 @@ void MoveToADirection::Update(float deltaTime)
 			//reflect on obstacle
 			colToReflectFrom = Game::Get().getTilemap().GetObstacle(nextP.x, nextP.y)->getColl();
 
-			call();
+			reflect();
 		}
 	}
 	else {
 		//reflect on edge
-		call();
+		reflect();
 	}
 
 

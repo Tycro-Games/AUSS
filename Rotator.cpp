@@ -30,20 +30,25 @@ void Rotator::Init(vec2* _pos, vec2* _dir, RotationVar* _rVar, unsigned int* _fr
 	mover = _mover;
 }
 
+void Rotator::Init(Tmpl8::vec2* _pos, Tmpl8::vec2* _dir, MoveToADirection* _mover)
+{
+	pos = _pos;
+	dir = _dir;
+	mover = _mover;
+}
+
 
 void Rotator::RotateToDirection(const vec2& newDir)
 {
 	MathFunctions::RotateToDirection(newDir, *pos, *dir);
-
-	*frame = MathFunctions::RotateToDirectionFrames(*rVar, *dir);
+	if (frame)
+		*frame = MathFunctions::RotateToDirectionFrames(*rVar, *dir);
 
 }
 
 
 void Rotator::Reflect(const vec2 normal)
 {
-
-
 	mover->ReflectDirection(normal);
 	RotateToDirection(*pos + *dir);
 }

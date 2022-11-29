@@ -89,13 +89,11 @@ unsigned int MathFunctions::RotateToDirectionFrames(const RotationVar& rVar, con
 	return static_cast<unsigned int>(fmod(MathFunctions::GetDirInAnglesPositive(dir) + rVar.OFFSET_SPRITE, 360) / rVar.ANGLE_SIZE);
 }
 
-float MathFunctions::DashFunction(float x)
+float MathFunctions::DashFunction(const float x)
 {
-	if (x >= 0 && x <= 1)
-		return -4 * ((x - .5f) * (x - .5f)) + x / 8 + .875f;//this look like a parabola 
-	else {
-		return 1;
-	}
+	assert(x <= 1 && x >= 0);
+	return -4 * ((x - .5f) * (x - .5f)) + x / 8 + .875f;//this look like a parabola 
+
 }
 
 vec2 MathFunctions::GetRandomVec2(const float min, const float max, const float deviationMultiplier)

@@ -10,9 +10,9 @@ public:
 	Moveable();
 	void Init(Tmpl8::vec2* pos, Collider* col, float speed = 1.0f);
 	void Init(Tmpl8::vec2* pos);
-	virtual ~Moveable()=default;
+	virtual ~Moveable() = default;
 	void Update(float deltaTime) = 0;
-	void SetSpeed(float);
+	void SetSpeed(const float);
 	const float GetSpeed();
 	virtual void Translation(const Tmpl8::vec2);
 	Collider* getColl() const {

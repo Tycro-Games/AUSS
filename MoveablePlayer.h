@@ -2,8 +2,9 @@
 
 
 #include "Collider.h"
-#include "Moveable.h"
 #include "Timer.h"
+#include "MoveToADirection.h"
+#include "Rotator.h"
 class MoveablePlayer :public Moveable
 {
 public:
@@ -13,33 +14,65 @@ public:
 	~MoveablePlayer() = default;
 
 	void Update(float deltaTime) override;
-	void MoveTileOrPlayer(Tmpl8::vec2& tilemapPos, Collider& c, const Tmpl8::vec2& playerPos);
-	bool CheckPositionForCollisions(const Tmpl8::vec2& playerPos, const Collider& playerCol);
-	void SetDashPos(Tmpl8::vec2& nextPos);
-	void ResetTriggers();
 	void MovePlayer();
-	void ClampTheMovementVector(const Collider& c, const Tmpl8::vec2 newVec, Tmpl8::vec2& originalVec, bool& changed);
-	bool CheckVecForOneDir(Tmpl8::vec2& nextPos);
-	void ClampTheMovementVector(const Collider& c, const Tmpl8::vec2 newVec, Tmpl8::vec2& originalVec);
 
-	void setUp(bool val = false);
-	void setDown(bool val = false);
-	void setRight(bool val = false);
-	void setLeft(bool val = false);
-	void setDash(bool val = false);
+	void setUp(bool val = false)
+	{
+		up = val;
+	}
+	void setDown(bool val = false)
+	{
+		down = val;
+	}
+	void setRight(bool val = false)
+	{
+		right = val;
+	}
+	void setLeft(bool val = false)
+	{
+		left = val;
+	}
+	void setDash(bool val = false)
+	{
+		startedDashing = val;
+	}
 
-	void startDash();
 
-	void Dashing();
 
-	float GetDashLinearTime() const;
-	bool CanRotate()const;
-	bool IsDashing() const;
-	bool ChangedPos() const;
+	float GetDashLinearTime() const
+	{
+		return linearT;
+	}
+	bool CanRotate()const
+	{
+		return canRotate;
+	}
+	bool IsDashing() const
+	{
+		return dashTimer.getUpdateable();
+	}
+	bool ChangedPos() const
+	{
+		return hasChangedPos;
+	}
 private:
+	void ClampTheMovementVector(const Collider& c, const Tmpl8::vec2 newVec, Tmpl8::vec2& originalVec, const float multiplier = 0.5f);
+	bool CheckVecForOneDir(const Tmpl8::vec2& nextPos) const
+	{
+
+		return nextPos.x == 0 || nextPos.y == 0;
+
+
+	}
+	void ResetTriggers();
+	void SetDashPos(Tmpl8::vec2& nextP);
+	void StartDashing(Tmpl8::vec2& nextPos, float deltaTime);
+	void MoveTileOrPlayer(const Tmpl8::vec2& tilemapPos, const Collider& c, const Tmpl8::vec2& playerPos);
+	bool CheckPositionForCollisions(const Tmpl8::vec2& playerPos, const Collider& playerCollider)const;
+
 	void InitTimers();
 	bool hasChangedPos = false;
-	bool tileDiagonalMoved = false;
+	bool diagonalMovement = false;
 	bool canMove = false;
 	bool canRotate = false;
 	//wasd
@@ -54,14 +87,17 @@ private:
 	//dash
 	Timer dashTimer;
 	Timer cooldownTimer;
-	Tmpl8::vec2 dashDir = { 0 };
+	Tmpl8::vec2 nextPos = { 0 };
+	Tmpl8::vec2 lastTilemapPos = { 0 };
+	Tmpl8::vec2 dir;
 	bool dashing = false;
 	bool startedDashing = false;
 	int dashes = 0;
-	float initSpeed;
+	float initSpeed = 0.0f;
 	float dashSpeed;
 	float timePassed = 0.0f;
 	float linearT = 0.0f;
+
 	//consts
 	const float DASH_DURATION = 0.45f;
 	const float COOLDOWN_DURATION = 0.6f;

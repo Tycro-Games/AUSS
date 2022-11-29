@@ -14,13 +14,13 @@ public:
 		*dir = MathFunctions::Reflect(*dir, normal);
 
 	}
-	virtual ~MoveToADirection() = default;
+	~MoveToADirection() = default;
 	Tmpl8::vec2 nextP;
 	Collider* colToReflectFrom = nullptr;
 protected:
 	const float desiredTime = 1.5f;
 	Tmpl8::vec2* dir;
-	Event call;
+	Event reflect;
 
 
 };

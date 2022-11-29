@@ -70,8 +70,6 @@ void Projectile::Render(Tmpl8::Surface* screen)
 
 void Projectile::Call()
 {
-
-
 	if (mover.colToReflectFrom != nullptr) { //reflect on obstacle
 		Collider c = *mover.colToReflectFrom;
 		rot.Reflect(Collider::GetNormal(c, collider));

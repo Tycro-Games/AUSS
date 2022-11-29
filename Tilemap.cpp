@@ -58,6 +58,7 @@ void Tilemap::Init(const vec2& _pos)
 				}
 				j--;
 
+
 				tiles[index].obs = new Obstacle(p, Collider(0, dimensions));
 				for (int l = x; l <= i; l++) {
 					for (int m = y; m <= j; m++) {

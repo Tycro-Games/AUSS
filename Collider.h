@@ -7,7 +7,8 @@ public:
 
 		Projectile,
 		Enemy,
-		Neither
+		Obstacle,
+		Nothing
 	};
 	Collider(Tmpl8::vec2 min, Tmpl8::vec2 max);
 	Collider(Tmpl8::vec2 min, Tmpl8::vec2 max, Tmpl8::vec2* pos);

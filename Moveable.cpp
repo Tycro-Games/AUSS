@@ -29,7 +29,7 @@ void Moveable::Init(vec2* _pos)
 {
 	pos = _pos;
 }
-void Moveable::SetSpeed(float s) {
+void Moveable::SetSpeed(const float s) {
 	speed = s;
 }
 const float Moveable::GetSpeed() {
