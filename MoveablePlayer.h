@@ -97,8 +97,8 @@ private:
 	float linearT = 0.0f;
 
 	//consts
-	const float DASH_DURATION = 0.2f;
-	const float COOLDOWN_DURATION = 0.1f;
+	const float DASH_DURATION = 0.4f;
+	const float COOLDOWN_DURATION = 0.6f;
 	const float EDGE_DISTANCE = 4.0f;
 	//timers functions
 	void EndCooldown();

@@ -97,7 +97,7 @@ void MoveablePlayer::Update(float deltaTime)
 	std::cout << playerPos.x << ' ' << playerPos.y << '\n';
 
 
-	const float playerPosOnX = nextPos.x * speed * deltaTime;
+	const float  playerPosOnX = nextPos.x * speed * deltaTime;
 	const float  playerPosOnY = nextPos.y * speed * deltaTime;
 
 	//tile movement
@@ -109,25 +109,28 @@ void MoveablePlayer::Update(float deltaTime)
 	if (tilemap.IsFreeTile(playerPos, *collider)) {
 		MoveTileOrPlayer(tilemapPos, *tileMapCol, playerPos);
 	}
+	//player moves diagonally
 	else if (nextPos.x != 0 && nextPos.y != 0) {
 		//moving diagonally and hitting an obstacle
-		if (tilemap.IsFreeTile((*pos) + vec2(0, playerPosOnY), *collider)) {
+		vec2 yClamped = (*pos) + vec2(0, playerPosOnY);
+		vec2 xClamped = (*pos) + vec2(playerPosOnX, 0);
+		if (tilemap.IsFreeTile(yClamped, *collider)) {
 
-			MoveTileOrPlayer((*tileMapCol->pos) - vec2(0, playerPosOnY), *tileMapCol, (*pos) + vec2(0, playerPosOnY));
+			MoveTileOrPlayer((*tileMapCol->pos) - vec2(0, playerPosOnY), *tileMapCol, yClamped);
 			if (dashTimer.getUpdateable()) {
 				//change dash direction
 				dashDir = vec2{ 0,playerPosOnY }.normalized();
 			}
 		}
-		else if (tilemap.IsFreeTile((*pos) + vec2(playerPosOnX, 0), *collider)) {
-			MoveTileOrPlayer((*tileMapCol->pos) - vec2(playerPosOnX, 0), *tileMapCol, (*pos) + vec2(playerPosOnX, 0));
+		else if (tilemap.IsFreeTile(xClamped, *collider)) {
+			MoveTileOrPlayer((*tileMapCol->pos) - vec2(playerPosOnX, 0), *tileMapCol, xClamped);
 			if (dashTimer.getUpdateable()) {
 				//change dash direction
 				dashDir = vec2{ playerPosOnX,0 }.normalized();
 			}
-
 		}
 	}
+
 
 }
 
@@ -201,7 +204,6 @@ void MoveablePlayer::MovePlayer()
 	Collider c = (*collider);
 	if (Collider::InGameScreen(playerMovement, c * EDGE_DISTANCE)) {
 		*pos = playerMovement;
-		std::cout << pos->x << ' ' << pos->y << '\n';
 	}
 	else {
 		//tilemap cannot move anymore so only the player moves
