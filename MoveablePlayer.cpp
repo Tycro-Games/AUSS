@@ -128,8 +128,7 @@ void MoveablePlayer::Update(float deltaTime)
 
 		}
 	}
-	//player saved position
-	playerMovement = playerPos;
+
 }
 
 
@@ -177,6 +176,8 @@ void MoveablePlayer::MoveTileOrPlayer(const vec2& tilemapPos, const Collider& c,
 		//this could also move the player so we need to limit the speed
 		lastTilemapPos = tilemapPos - (*tileMapCol->pos);
 		ClampTheMovementVector(c, tilemapPos, *tileMapCol->pos);
+		//player saved position
+		playerMovement = playerPos;
 	}
 
 
@@ -199,7 +200,7 @@ void MoveablePlayer::MovePlayer()
 {
 	Collider c = (*collider);
 	if (Collider::InGameScreen(playerMovement, c * EDGE_DISTANCE)) {
- 		*pos = playerMovement;
+		*pos = playerMovement;
 		std::cout << pos->x << ' ' << pos->y << '\n';
 	}
 	else {
