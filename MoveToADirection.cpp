@@ -34,7 +34,7 @@ void MoveToADirection::Update(float deltaTime)
 	nextP += nextPos;
 
 	if (collider->InGameBounds(nextP, (*collider))) {
-		if (Game::Get().getTilemap().IsFree(nextP.x, nextP.y))
+		if (Game::Get().getTilemap().IsFreeTile(nextP.x, nextP.y))
 			(*pos) = nextP;
 		else {
 			//reflect on obstacle

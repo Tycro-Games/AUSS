@@ -55,6 +55,7 @@ void MoveablePlayer::EndDash()
 {
 	dashTimer.ResetVar();
 	dashTimer.setUpdateable(false);
+	cooldownTimer.setUpdateable(true);
 	speed = initSpeed;
 }
 
@@ -63,8 +64,7 @@ void MoveablePlayer::Update(float deltaTime)
 {
 	ResetTriggers();
 
-	cooldownTimer.Update(deltaTime);
-	dashTimer.Update(deltaTime);
+
 
 
 	nextPos = { 0 };
@@ -87,7 +87,8 @@ void MoveablePlayer::Update(float deltaTime)
 		nextPos.normalize();
 
 	//dashing
-	StartDashing(nextPos, deltaTime);
+
+	Dash(nextPos, deltaTime);
 
 	//collision checking
 
@@ -105,19 +106,19 @@ void MoveablePlayer::Update(float deltaTime)
 
 	const Tilemap& tilemap = Game::Get().getTilemap();
 
-	if (tilemap.IsFree(playerPos, *collider)) {
+	if (tilemap.IsFreeTile(playerPos, *collider)) {
 		MoveTileOrPlayer(tilemapPos, *tileMapCol, playerPos);
 	}
 	else if (nextPos.x != 0 && nextPos.y != 0) {
 		//moving diagonally and hitting an obstacle
-		if (tilemap.IsFree((*pos) + vec2(0, playerPosOnY), *collider)) {
+		if (tilemap.IsFreeTile((*pos) + vec2(0, playerPosOnY), *collider)) {
 			MoveTileOrPlayer((*tileMapCol->pos) - vec2(0, playerPosOnY), *tileMapCol, (*pos) + vec2(0, playerPosOnY));
 			if (dashTimer.getUpdateable()) {
 				//change dash direction
 				dashDir = vec2{ 0,playerPosOnY }.normalized();
 			}
 		}
-		else if (tilemap.IsFree((*pos) + vec2(playerPosOnX, 0), *collider)) {
+		else if (tilemap.IsFreeTile((*pos) + vec2(playerPosOnX, 0), *collider)) {
 			MoveTileOrPlayer((*tileMapCol->pos) - vec2(playerPosOnX, 0), *tileMapCol, (*pos) + vec2(playerPosOnX, 0));
 			if (dashTimer.getUpdateable()) {
 				//change dash direction
@@ -129,34 +130,34 @@ void MoveablePlayer::Update(float deltaTime)
 }
 
 
-void MoveablePlayer::StartDashing(vec2& nextPos, float deltaTime)
+void MoveablePlayer::Dash(vec2& nextPos, float deltaTime)
 {
 	//at least a movement key is pressed
-	if (nextPos.x != 0 || nextPos.y != 0) {
-		//the player will no longer rotate while dashing
-		canRotate = true;
-		if (startedDashing) {
-			if (!dashTimer.getUpdateable() && !dashing) {
-				dashDir = nextPos;
-				dashes = 0;
-				dashTimer.setUpdateable(true);
-				dashing = true;
-				timePassed = 0;
-				speed = dashSpeed;
-			}
+	if (startedDashing && (nextPos.x != 0 || nextPos.y != 0)) {
+
+		if (!dashTimer.getUpdateable() && !dashing) {
+			dashDir = nextPos;
+			dashes = 0;
+			dashTimer.setUpdateable(true);
+			dashing = true;
+			timePassed = 0;
+
+			//the player will no longer rotate while dashing
+			canRotate = true;
 		}
+
 	}
 	else
 		canRotate = false;
-
-	if (dashTimer.getUpdateable() == false && dashing && !startedDashing) {
-		//start the cooldown then the dash is finished
-		cooldownTimer.setUpdateable(true);
+	if (dashTimer.getUpdateable()) {
+		if (timePassed + deltaTime <= DASH_DURATION) {
+			timePassed += deltaTime;
+			SetDashPos(nextPos);
+		}
 	}
-	if (dashing && timePassed + deltaTime < DASH_DURATION) {
-		timePassed += deltaTime;
-		SetDashPos(nextPos);
-	}
+	dashTimer.Update(deltaTime);
+	if (!startedDashing)
+		cooldownTimer.Update(deltaTime);
 
 }
 

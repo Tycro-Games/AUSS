@@ -78,10 +78,10 @@ public:
 	/// <returns></returns>
 	inline Collider GetGameBounds() const;
 
-	bool IsFree(float x, float y) const;
-	bool IsFree(const Tmpl8::vec2&, const Collider& collider) const;
+	bool IsFreeTile(float x, float y) const;
+	bool IsFreeTile(const Tmpl8::vec2&, const Collider& collider) const;
 	//returns the collider at the coordonates x and y in the col variable
-	bool IsFree(float x, float y, Collider& col) const;
+	bool IsFreeTile(float x, float y, Collider& col) const;
 
 	const Obstacle* GetObstacle(float x, float y) const;
 

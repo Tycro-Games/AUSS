@@ -66,7 +66,7 @@ private:
 	}
 	void ResetTriggers();
 	void SetDashPos(Tmpl8::vec2& nextP);
-	void StartDashing(Tmpl8::vec2& nextPos, float deltaTime);
+	void Dash(Tmpl8::vec2& nextPos, float deltaTime);
 	void MoveTileOrPlayer(const Tmpl8::vec2& tilemapPos, const Collider& c, const Tmpl8::vec2& playerPos);
 
 	void InitTimers();
