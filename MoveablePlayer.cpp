@@ -63,12 +63,7 @@ void MoveablePlayer::EndDash()
 void MoveablePlayer::Update(float deltaTime)
 {
 	ResetTriggers();
-
-
-
-
 	nextPos = { 0 };
-
 
 	if (up) {
 		nextPos.y--;
@@ -87,7 +82,6 @@ void MoveablePlayer::Update(float deltaTime)
 		nextPos.normalize();
 
 	//dashing
-
 	Dash(nextPos, deltaTime);
 
 	//collision checking

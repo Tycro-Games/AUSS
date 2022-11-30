@@ -213,12 +213,10 @@ bool Tilemap::IsFreeTile(float x, float y) const
 }
 bool Tilemap::IsFreeTile(const Tmpl8::vec2& _pos, const Collider& col) const
 {
-	vec2 targetPos = _pos;
-	//apply offset
-	if (IsFreeTile(targetPos.x + col.min.x, targetPos.y + col.min.y) &&
-		IsFreeTile(targetPos.x + col.max.x, targetPos.y + col.min.y) &&
-		IsFreeTile(targetPos.x + col.min.x, targetPos.y + col.max.y) &&
-		IsFreeTile(targetPos.x + col.max.x, targetPos.y + col.max.y))
+	if (IsFreeTile(_pos.x + col.min.x, _pos.y + col.min.y) &&
+		IsFreeTile(_pos.x + col.max.x, _pos.y + col.min.y) &&
+		IsFreeTile(_pos.x + col.min.x, _pos.y + col.max.y) &&
+		IsFreeTile(_pos.x + col.max.x, _pos.y + col.max.y))
 		return true;
 	return false;
 }
