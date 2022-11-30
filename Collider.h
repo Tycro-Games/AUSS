@@ -66,13 +66,15 @@ public:
 	/// <returns></returns>
 	static bool Contains(const Collider& a, const Tmpl8::vec2& b) {
 
-		return a.min.x + a.pos->x < b.x&& a.min.y + a.pos->y < b.y
-			&& b.x < a.max.x + a.pos->x && b.y < a.max.y + a.pos->y;
+		return a.min.x + a.pos->x <= b.x && a.min.y + a.pos->y <= b.y
+			&& b.x <= a.max.x + a.pos->x && b.y <= a.max.y + a.pos->y;
+
 
 	}static bool CollidesY(const Collider& a, const Collider& b) {
 		return a.min.y < b.max.y&& a.max.y > b.min.y;
 
 	}
+
 	static bool CollidesX(const Collider& a, const Collider& b) {
 
 		return a.min.x < b.max.x&& a.max.x > b.min.x;

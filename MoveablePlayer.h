@@ -53,7 +53,7 @@ public:
 	}
 	bool ChangedPos() const
 	{
-		return hasChangedPos;
+		return tilemapMovesOnly;
 	}
 private:
 	void ClampTheMovementVector(const Collider& c, const Tmpl8::vec2 newVec, Tmpl8::vec2& originalVec, const float multiplier = 0.5f);
@@ -70,9 +70,8 @@ private:
 	void MoveTileOrPlayer(const Tmpl8::vec2& tilemapPos, const Collider& c, const Tmpl8::vec2& playerPos);
 
 	void InitTimers();
-	bool hasChangedPos = false;
+	bool tilemapMovesOnly = false;
 	bool diagonalMovement = false;
-	bool canMove = false;
 	bool canRotate = false;
 	//wasd
 	bool up = false;
@@ -98,8 +97,8 @@ private:
 	float linearT = 0.0f;
 
 	//consts
-	const float DASH_DURATION = 0.4f;
-	const float COOLDOWN_DURATION = 0.6f;
+	const float DASH_DURATION = 0.2f;
+	const float COOLDOWN_DURATION = 0.1f;
 	const float EDGE_DISTANCE = 4.0f;
 	//timers functions
 	void EndCooldown();

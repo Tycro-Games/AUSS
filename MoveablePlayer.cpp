@@ -80,7 +80,11 @@ void MoveablePlayer::Update(float deltaTime)
 	//if the player goes on a diagonal the vector will not have a maginitude of 1
 	if (nextPos.length() > 0)
 		nextPos.normalize();
-
+	else {
+		//no movement
+		tilemapMovesOnly = true;
+		return;
+	}
 	//dashing
 	Dash(nextPos, deltaTime);
 
@@ -88,7 +92,9 @@ void MoveablePlayer::Update(float deltaTime)
 
 	//tile check
 	vec2 playerPos = *pos;
+	std::cout << playerPos.x << ' ' << playerPos.y << '\n';
 	playerPos += nextPos * speed * deltaTime;
+	std::cout << playerPos.x << ' ' << playerPos.y << '\n';
 
 
 	const float playerPosOnX = nextPos.x * speed * deltaTime;
@@ -106,6 +112,7 @@ void MoveablePlayer::Update(float deltaTime)
 	else if (nextPos.x != 0 && nextPos.y != 0) {
 		//moving diagonally and hitting an obstacle
 		if (tilemap.IsFreeTile((*pos) + vec2(0, playerPosOnY), *collider)) {
+
 			MoveTileOrPlayer((*tileMapCol->pos) - vec2(0, playerPosOnY), *tileMapCol, (*pos) + vec2(0, playerPosOnY));
 			if (dashTimer.getUpdateable()) {
 				//change dash direction
@@ -121,6 +128,8 @@ void MoveablePlayer::Update(float deltaTime)
 
 		}
 	}
+	//player saved position
+	playerMovement = playerPos;
 }
 
 
@@ -158,21 +167,18 @@ void MoveablePlayer::Dash(vec2& nextPos, float deltaTime)
 
 void MoveablePlayer::MoveTileOrPlayer(const vec2& tilemapPos, const Collider& c, const vec2& playerPos)
 {
-	diagonalMovement = false;
 	//move if it does not hit the bounds
 	if (Collider::InGameScreen(tilemapPos, c)) {
 		*tileMapCol->pos = tilemapPos;
-		hasChangedPos = true;
+		tilemapMovesOnly = true;
 	}
 	else
 	{
 		//this could also move the player so we need to limit the speed
 		lastTilemapPos = tilemapPos - (*tileMapCol->pos);
 		ClampTheMovementVector(c, tilemapPos, *tileMapCol->pos);
-		//player can move
-		canMove = true;
-		playerMovement = playerPos;
 	}
+
 
 }
 void MoveablePlayer::SetDashPos(vec2& nextPos)
@@ -184,38 +190,40 @@ void MoveablePlayer::SetDashPos(vec2& nextPos)
 
 void MoveablePlayer::ResetTriggers()
 {
+	tilemapMovesOnly = false;
+	diagonalMovement = false;
 
-	canMove = false;
-	hasChangedPos = false;
 }
 
 void MoveablePlayer::MovePlayer()
 {
-	if (canMove) {
-		Collider c = (*collider);
-		if (Collider::InGameScreen(playerMovement, c * EDGE_DISTANCE))
-			*pos = playerMovement;
-		else {
-			//tilemap cannot move anymore so only the player moves
-			float spe = 1.0f;
-			if (diagonalMovement) {
+	Collider c = (*collider);
+	if (Collider::InGameScreen(playerMovement, c * EDGE_DISTANCE)) {
+ 		*pos = playerMovement;
+		std::cout << pos->x << ' ' << pos->y << '\n';
+	}
+	else {
+		//tilemap cannot move anymore so only the player moves
+		float spe = 1.0f;
+		if (diagonalMovement) {
 
-				//if the tile has also moved half the speed
-				spe = 0.5f;
-			}
-
-			ClampTheMovementVector(c, playerMovement, *pos, spe);
-			if (diagonalMovement)//movement on the edges of the map
-			{
-				//move the tilemap again
-				ClampTheMovementVector(*tileMapCol, lastTilemapPos + *tileMapCol->pos, *tileMapCol->pos);
-				if (!diagonalMovement)//player shoud move again
-					ClampTheMovementVector(c, playerMovement, *pos, spe);
-
-
-			}
-			diagonalMovement = false;
+			//if the tile has also moved half the speed
+			spe = 0.5f;
 		}
+
+		ClampTheMovementVector(c, playerMovement, *pos, spe);
+		if (diagonalMovement)//movement on the edges of the map
+		{
+			//move the tilemap again
+			ClampTheMovementVector(*tileMapCol, lastTilemapPos + *tileMapCol->pos, *tileMapCol->pos);
+			if (!diagonalMovement)//player shoud move again
+				ClampTheMovementVector(c, playerMovement, *pos, spe);
+
+
+		}
+		//std::cout << pos->x << ' ' << pos->y << '\n';
+
+		diagonalMovement = false;
 	}
 }
 

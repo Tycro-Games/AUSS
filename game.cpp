@@ -81,6 +81,7 @@ namespace Tmpl8
 
 	void Game::AddInstancesToUpdates()
 	{
+		updateables.push_back(&player);
 
 
 		updateables.push_back(&tileMap);
@@ -96,7 +97,6 @@ namespace Tmpl8
 		//player can add a multipler to the score
 		AssignSubject(player, score);
 
-		updateables.push_back(&player);
 		renderables.push_back(&player);
 
 
