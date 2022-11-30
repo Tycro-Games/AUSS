@@ -35,8 +35,8 @@ public:
 		return Collides(this->At(*pos), col);
 	}
 	static bool Collides(const Collider& a, const Collider& b) {
-		return a.min.x < b.max.x&& a.max.x > b.min.x &&
-			a.min.y < b.max.y&& a.max.y > b.min.y;
+		return a.min.x <= b.max.x && a.max.x >= b.min.x &&
+			a.min.y <= b.max.y && a.max.y >= b.min.y;
 	}
 	/// <summary>
 	/// Checks if a is completely inside b
@@ -64,13 +64,19 @@ public:
 	/// <param name="a"> collider to check</param>
 	/// <param name="b">the point that may be inside the collider</param>
 	/// <returns></returns>
-	static bool Contains(const Collider& a, const Tmpl8::vec2& b) {
-
-		return a.min.x + a.pos->x <= b.x && a.min.y + a.pos->y <= b.y
-			&& b.x <= a.max.x + a.pos->x && b.y <= a.max.y + a.pos->y;
-
-
-	}static bool CollidesY(const Collider& a, const Collider& b) {
+	static bool Contains(const Collider& a, Tmpl8::vec2& b) {
+		/*float xP = round(b.x);
+		float yP = round(b.y);
+		float Left = round(a.min.x + a.pos->x);
+		float Right = round(a.max.x + a.pos->x);
+		float Up = round(a.min.y + a.pos->y);
+		float Down = round(a.max.y + a.pos->y);
+		return xP >= Left && yP >= Up
+			&& xP <= Right - 1 && yP <= Down - 1;*/
+		return a.min.x + a.pos->x < b.x&& a.min.y + a.pos->y < b.y
+			&& b.x < a.max.x + a.pos->x && b.y < a.max.y + a.pos->y;
+	}
+	static bool CollidesY(const Collider& a, const Collider& b) {
 		return a.min.y < b.max.y&& a.max.y > b.min.y;
 
 	}

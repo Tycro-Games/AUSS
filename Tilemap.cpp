@@ -211,12 +211,12 @@ bool Tilemap::IsFreeTile(float x, float y) const
 		return false;
 	return true;
 }
-bool Tilemap::IsFreeTile(const Tmpl8::vec2& _pos, const Collider& col) const
+bool Tilemap::IsFreeTile(const Tmpl8::vec2& _pos, const Collider& collider) const
 {
-	if (IsFreeTile(_pos.x + col.min.x, _pos.y + col.min.y) &&
-		IsFreeTile(_pos.x + col.max.x, _pos.y + col.min.y) &&
-		IsFreeTile(_pos.x + col.min.x, _pos.y + col.max.y) &&
-		IsFreeTile(_pos.x + col.max.x, _pos.y + col.max.y))
+	if (IsFreeTile(_pos.x + collider.min.x, _pos.y + collider.min.y) &&
+		IsFreeTile(_pos.x + collider.max.x, _pos.y + collider.min.y) &&
+		IsFreeTile(_pos.x + collider.min.x, _pos.y + collider.max.y) &&
+		IsFreeTile(_pos.x + collider.max.x, _pos.y + collider.max.y))
 		return true;
 	return false;
 }
