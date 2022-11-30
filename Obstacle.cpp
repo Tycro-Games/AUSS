@@ -1,9 +1,10 @@
 #include "Obstacle.h"
 
 Obstacle::Obstacle(const Tmpl8::vec2 p, const Collider& _collider)
-	:pos(p),
-	obsCollider(_collider.min, _collider.max, &pos),
-	Moveable(&pos, &obsCollider)
+	:
+	Moveable(&pos, &obsCollider),
+	pos(p),
+	obsCollider(_collider.min, _collider.max, &pos)
 
 {
 	obsCollider.type = Collider::Type::Obstacle;
