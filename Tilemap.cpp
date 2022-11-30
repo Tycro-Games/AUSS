@@ -76,12 +76,6 @@ void Tilemap::Init(const vec2& _pos)
 
 		}
 }
-
-
-
-
-
-
 Tilemap::~Tilemap()
 {
 
@@ -205,6 +199,7 @@ void Tilemap::DrawTile(Surface* screen, int tx, int ty, int x, int y)
 }
 bool Tilemap::IsFree(float x, float y) const
 {
+
 	vec2 targetPos = vec2(x, y);
 	//apply offset
 	x += OFFSET_X - (pos.x);
@@ -215,6 +210,17 @@ bool Tilemap::IsFree(float x, float y) const
 		Collider::Contains(*tiles[tx + ty * X_TILES].obs->getColl(), targetPos))
 		return false;
 	return true;
+}
+bool Tilemap::IsFree(const Tmpl8::vec2& _pos, const Collider& col) const
+{
+	vec2 targetPos = _pos;
+	//apply offset
+	if (IsFree(targetPos.x + col.min.x, targetPos.y + col.min.y) &&
+		IsFree(targetPos.x + col.max.x, targetPos.y + col.min.y) &&
+		IsFree(targetPos.x + col.min.x, targetPos.y + col.max.y) &&
+		IsFree(targetPos.x + col.max.x, targetPos.y + col.max.y))
+		return true;
+	return false;
 }
 
 bool Tilemap::IsFree(float x, float y, Collider& col) const

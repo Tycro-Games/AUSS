@@ -10,7 +10,7 @@ class MoveablePlayer :public Moveable
 public:
 	MoveablePlayer(Tmpl8::vec2* pos, Collider* col, const Collider* tileMapCol, float speed = 70.0f, float dashSpeed = 500);
 	MoveablePlayer();
-	void Init(Tmpl8::vec2* pos, Collider* col, const Collider* tileMapCol, float speed = 70.0f, float dashSpeed = 5000);
+	void Init(Tmpl8::vec2* pos, Collider* col, const Collider* tileMapCol, float speed = 70.0f, float dashSpeed = 500);
 	~MoveablePlayer() = default;
 
 	void Update(float deltaTime) override;
@@ -68,7 +68,6 @@ private:
 	void SetDashPos(Tmpl8::vec2& nextP);
 	void StartDashing(Tmpl8::vec2& nextPos, float deltaTime);
 	void MoveTileOrPlayer(const Tmpl8::vec2& tilemapPos, const Collider& c, const Tmpl8::vec2& playerPos);
-	bool CheckPositionForCollisions(const Tmpl8::vec2& playerPos, const Collider& playerCollider)const;
 
 	void InitTimers();
 	bool hasChangedPos = false;
@@ -89,7 +88,7 @@ private:
 	Timer cooldownTimer;
 	Tmpl8::vec2 nextPos = { 0 };
 	Tmpl8::vec2 lastTilemapPos = { 0 };
-	Tmpl8::vec2 dir;
+	Tmpl8::vec2 dashDir;
 	bool dashing = false;
 	bool startedDashing = false;
 	int dashes = 0;
@@ -99,7 +98,7 @@ private:
 	float linearT = 0.0f;
 
 	//consts
-	const float DASH_DURATION = 0.1f;
+	const float DASH_DURATION = 0.9f;
 	const float COOLDOWN_DURATION = 0.6f;
 	const float EDGE_DISTANCE = 4.0f;
 	//timers functions

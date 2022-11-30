@@ -50,13 +50,7 @@ void MoveablePlayer::EndCooldown()
 	dashing = false;
 
 }
-bool MoveablePlayer::CheckPositionForCollisions(const Tmpl8::vec2& playerPos, const Collider& playerCollider) const {
-	const Tilemap& tilemap = Game::Get().getTilemap();
-	return tilemap.IsFree(playerPos.x + playerCollider.min.x, playerPos.y + playerCollider.min.y) &&
-		tilemap.IsFree(playerPos.x + playerCollider.max.x, playerPos.y + playerCollider.min.y) &&
-		tilemap.IsFree(playerPos.x + playerCollider.min.x, playerPos.y + playerCollider.max.y) &&
-		tilemap.IsFree(playerPos.x + playerCollider.max.x, playerPos.y + playerCollider.max.y);
-}
+
 void MoveablePlayer::EndDash()
 {
 	dashTimer.ResetVar();
@@ -109,18 +103,26 @@ void MoveablePlayer::Update(float deltaTime)
 	vec2 tilemapPos = *tileMapCol->pos;
 	tilemapPos += nextPos * (-speed) * deltaTime;
 
+	const Tilemap& tilemap = Game::Get().getTilemap();
 
-	if (CheckPositionForCollisions(playerPos, *collider)) {
+	if (tilemap.IsFree(playerPos, *collider)) {
 		MoveTileOrPlayer(tilemapPos, *tileMapCol, playerPos);
 	}
 	else if (nextPos.x != 0 && nextPos.y != 0) {
 		//moving diagonally and hitting an obstacle
-		if (CheckPositionForCollisions((*pos) + vec2(0, playerPosOnY), *collider)) {
+		if (tilemap.IsFree((*pos) + vec2(0, playerPosOnY), *collider)) {
 			MoveTileOrPlayer((*tileMapCol->pos) - vec2(0, playerPosOnY), *tileMapCol, (*pos) + vec2(0, playerPosOnY));
-
+			if (dashTimer.getUpdateable()) {
+				//change dash direction
+				dashDir = vec2{ 0,playerPosOnY }.normalized();
+			}
 		}
-		else if (CheckPositionForCollisions((*pos) + vec2(playerPosOnX, 0), *collider)) {
+		else if (tilemap.IsFree((*pos) + vec2(playerPosOnX, 0), *collider)) {
 			MoveTileOrPlayer((*tileMapCol->pos) - vec2(playerPosOnX, 0), *tileMapCol, (*pos) + vec2(playerPosOnX, 0));
+			if (dashTimer.getUpdateable()) {
+				//change dash direction
+				dashDir = vec2{ playerPosOnX,0 }.normalized();
+			}
 
 		}
 	}
@@ -135,7 +137,7 @@ void MoveablePlayer::StartDashing(vec2& nextPos, float deltaTime)
 		canRotate = true;
 		if (startedDashing) {
 			if (!dashTimer.getUpdateable() && !dashing) {
-				dir = nextPos;
+				dashDir = nextPos;
 				dashes = 0;
 				dashTimer.setUpdateable(true);
 				dashing = true;
@@ -181,8 +183,8 @@ void MoveablePlayer::MoveTileOrPlayer(const vec2& tilemapPos, const Collider& c,
 void MoveablePlayer::SetDashPos(vec2& nextPos)
 {
 	linearT = timePassed / DASH_DURATION;
-	nextPos = dir;
-	nextPos *= MathFunctions::DashFunction(linearT);
+	nextPos = dashDir;
+	speed = dashSpeed * MathFunctions::DashFunction(linearT);
 }
 
 void MoveablePlayer::ResetTriggers()
@@ -199,14 +201,16 @@ void MoveablePlayer::MovePlayer()
 		if (Collider::InGameScreen(playerMovement, c * EDGE_DISTANCE))
 			*pos = playerMovement;
 		else {
-			//tile cannot move anymore so only the player moves
+			//tilemap cannot move anymore so only the player moves
 			float spe = 1.0f;
-			//if the tile has also moved half the speed
-			if (diagonalMovement)
+			if (diagonalMovement) {
+
+				//if the tile has also moved half the speed
 				spe = 0.5f;
+			}
 
 			ClampTheMovementVector(c, playerMovement, *pos, spe);
-			if (diagonalMovement)
+			if (diagonalMovement)//movement on the edges of the map
 			{
 				//move the tilemap again
 				ClampTheMovementVector(*tileMapCol, lastTilemapPos + *tileMapCol->pos, *tileMapCol->pos);
@@ -224,13 +228,15 @@ void MoveablePlayer::ClampTheMovementVector(const Collider& c, const vec2 newVec
 {
 	//try to move the player only on one axis
 	vec2 nextPos = newVec - originalVec;
+
 	if (CheckVecForOneDir(nextPos))
 		return;
-
+	vec2 orginalPos = originalVec;
 	vec2 clampedOnX = vec2(originalVec.x + nextPos.x * multiplier, originalVec.y);
 	vec2 clampedOnY = vec2(originalVec.x, originalVec.y + nextPos.y * multiplier);
 	if (Collider::InGameScreen(clampedOnX, c))
 		originalVec = clampedOnX, diagonalMovement = true;
 	else if (Collider::InGameScreen(clampedOnY, c))
 		originalVec = clampedOnY, diagonalMovement = true;
+
 }

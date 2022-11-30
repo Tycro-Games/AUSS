@@ -20,7 +20,7 @@ void Player::Init(const Collider& tileMapCollider, const Tmpl8::vec2& _pos)
 
 	Being::Init(_pos, 100);
 	startingPos = _pos;
-	playerCollider = Collider(COL_MIN, COL_MAX, &startingPos);
+	playerCollider = Collider(COL_MIN, COL_MAX, &pos);
 
 	tilemapCollider = &tileMapCollider;
 
