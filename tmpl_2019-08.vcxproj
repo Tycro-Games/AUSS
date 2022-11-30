@@ -232,6 +232,7 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="CollisionDetection.cpp" />
+    <ClCompile Include="Curve.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyHoarder.cpp" />
     <ClCompile Include="EnemyRotator.cpp" />
@@ -271,6 +272,7 @@
     <ClInclude Include="Button.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="CollisionDetection.h" />
+    <ClInclude Include="Curve.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyHoarder.h" />
     <ClInclude Include="EnemyRotator.h" />

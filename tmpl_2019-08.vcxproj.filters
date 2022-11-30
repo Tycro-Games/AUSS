@@ -110,6 +110,7 @@
     <ClCompile Include="EnemyShooter.cpp">
       <Filter>Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="Curve.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -242,6 +243,7 @@
     <ClInclude Include="EnemyShooter.h">
       <Filter>Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="Curve.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="template code">
