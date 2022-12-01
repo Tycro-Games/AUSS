@@ -7,7 +7,7 @@
 #include "Rotator.h"
 #include "Curve.h"
 constexpr const float DASH_SPEED = 500.0f;
-constexpr float SPEED = 70.0f;
+constexpr float SPEED = 100.0f;
 
 class MoveablePlayer :public Moveable
 {
@@ -21,7 +21,6 @@ public:
 	~MoveablePlayer() = default;
 
 	void Update(float deltaTime) override;
-	void MovePlayer(const Tmpl8::vec2& playerMovement);
 
 	void setUp(bool val = false)
 	{
@@ -68,16 +67,10 @@ public:
 		return tilemapMovesOnly;
 	}
 private:
-	void ClampTheMovementVector(const Collider& c, const Tmpl8::vec2 newVec, Tmpl8::vec2& originalVec, const float multiplier = 0.5f);
 	bool CheckVecForOneDir(const Tmpl8::vec2& nextPos) const
 	{
-
 		return nextPos.x == 0 || nextPos.y == 0;
-
-
 	}
-	void ResetTriggers();
-	void SetDashPos(Tmpl8::vec2& nextP);
 	void MoveTileOrPlayer(const Tmpl8::vec2& tilemapPos, const Collider& c, const Tmpl8::vec2& playerPos);
 
 	void InitTimers();
@@ -91,12 +84,9 @@ private:
 	bool left = false;
 
 	const Collider* tileMapCol;
-	Tmpl8::vec2 playerMovement;
-
 	//dash
 	Timer cooldownTimer;
 	Tmpl8::vec2 nextPos = { 0 };
-	Tmpl8::vec2 lastTilemapPos = { 0 };
 	bool dashing = false;
 	int dashes = 0;
 
