@@ -71,11 +71,7 @@ void Player::Update(float deltaTime)
 
 	//tries to move tilemap
 	playerMover.Update(deltaTime);
-	//tilemap is trying to go past the limits
-	if (!playerMover.ChangedPos()) {
-		//move the player
-		playerMover.MovePlayer();
-	}
+
 
 	spawner.Update(deltaTime);
 	cooldownForDamage.Update(deltaTime);

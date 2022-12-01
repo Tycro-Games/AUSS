@@ -89,10 +89,11 @@ unsigned int MathFunctions::RotateToDirectionFrames(const RotationVar& rVar, con
 	return static_cast<unsigned int>(fmod(MathFunctions::GetDirInAnglesPositive(dir) + rVar.OFFSET_SPRITE, 360) / rVar.ANGLE_SIZE);
 }
 
-float MathFunctions::DashFunction(const float x)
+float MathFunctions::DashFunction( float x)
 {
-	assert(x <= 1 && x >= 0);
+	x = Clamp(x, 0.0f, 1.0f);
 	return -4 * ((x - .5f) * (x - .5f)) + x / 8 + .875f;//this look like a parabola 
+
 
 }
 

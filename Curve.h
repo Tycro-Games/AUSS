@@ -1,42 +1,46 @@
 #pragma once
 #include <functional>
-
+//made by Jeremiah!!
 class Curve final
 {
 public:
-    explicit Curve(std::function<float(float)> func, float scale = 1.0f);
+	explicit Curve(std::function<float(float)> func, float scale = 1.0f);
 
-    /**
-     * Evalaluate the curve and return the evaluated value.
-     */
-    float evaluate(float x);
+	/**
+	 * Evalaluate the curve and return the evaluated value.
+	 */
+	float evaluate(float x);
 
-    /**
-     * Check if we are at the end of the curve.
-     */
-    bool isAtEnd() const
-    {
-        return currentValue >= 1.0f;
-    }
+	/**
+	 * Check if we are at the end of the curve.
+	 */
+	bool isAtEnd() const
+	{
+		return currentValue >= 1.0f;
+	}
 
-    void reset()
-    {
-        currentValue = 0.0f;
-    }
+	void reset()
+	{
+		currentValue = 0.0f;
+	}
 
-    float getScale() const
-    {
-        return scaleValue;
-    }
+	float getScale() const
+	{
+		return scaleValue;
+	}
+	float getCurrentValue() const
+	{
+		return currentValue;
+	}
 
-    float setScale(float scale)
-    {
-        scaleValue = scale;
-    }
+	float setScale(float scale)
+	{
+		scaleValue = scale;
+	}
 
 private:
-    float currentValue = 0.0f;
-    float scaleValue = 1.0f;
+	float currentValue = 0.0f;
+	float scaleValue = 1.0f;
 
-    std::function<float(float)> parametricCurve;
+	std::function<float(float)> parametricCurve;
 };

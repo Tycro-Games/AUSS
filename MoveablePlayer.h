@@ -5,16 +5,23 @@
 #include "Timer.h"
 #include "MoveToADirection.h"
 #include "Rotator.h"
+#include "Curve.h"
+constexpr const float DASH_SPEED = 500.0f;
+constexpr float SPEED = 70.0f;
+
 class MoveablePlayer :public Moveable
 {
+	//consts
+	const float DASH_DURATION = 0.4f;
+	const float COOLDOWN_DURATION = 0.6f;
+	const float EDGE_DISTANCE = 4.0f;
 public:
-	MoveablePlayer(Tmpl8::vec2* pos, Collider* col, const Collider* tileMapCol, float speed = 70.0f, float dashSpeed = 500);
 	MoveablePlayer();
-	void Init(Tmpl8::vec2* pos, Collider* col, const Collider* tileMapCol, float speed = 70.0f, float dashSpeed = 500);
+	void Init(Tmpl8::vec2* pos, Collider* col, const Collider* tileMapCol, float speed = SPEED, float dashSpeed = DASH_SPEED);
 	~MoveablePlayer() = default;
 
 	void Update(float deltaTime) override;
-	void MovePlayer();
+	void MovePlayer(const Tmpl8::vec2& playerMovement);
 
 	void setUp(bool val = false)
 	{
@@ -34,14 +41,19 @@ public:
 	}
 	void setDash(bool val = false)
 	{
-		startedDashing = val;
+		if (val && dashCurve.isAtEnd() && !cooldownTimer.getUpdateable()) {
+			dashCurve.reset();
+			dashing = true;
+			cooldownTimer.ResetVar();
+			cooldownTimer.setUpdateable(true);
+		}
 	}
 
 
 
 	float GetDashLinearTime() const
 	{
-		return linearT;
+		return dashCurve.getCurrentValue();
 	}
 	bool CanRotate()const
 	{
@@ -49,7 +61,7 @@ public:
 	}
 	bool IsDashing() const
 	{
-		return dashTimer.getUpdateable();
+		return dashing;
 	}
 	bool ChangedPos() const
 	{
@@ -66,7 +78,6 @@ private:
 	}
 	void ResetTriggers();
 	void SetDashPos(Tmpl8::vec2& nextP);
-	void Dash(Tmpl8::vec2& nextPos, float deltaTime);
 	void MoveTileOrPlayer(const Tmpl8::vec2& tilemapPos, const Collider& c, const Tmpl8::vec2& playerPos);
 
 	void InitTimers();
@@ -83,26 +94,16 @@ private:
 	Tmpl8::vec2 playerMovement;
 
 	//dash
-	Timer dashTimer;
 	Timer cooldownTimer;
 	Tmpl8::vec2 nextPos = { 0 };
 	Tmpl8::vec2 lastTilemapPos = { 0 };
-	Tmpl8::vec2 dashDir;
 	bool dashing = false;
-	bool startedDashing = false;
 	int dashes = 0;
-	float initSpeed = 0.0f;
-	float dashSpeed;
-	float timePassed = 0.0f;
-	float linearT = 0.0f;
 
-	//consts
-	const float DASH_DURATION = 0.4f;
-	const float COOLDOWN_DURATION = 0.6f;
-	const float EDGE_DISTANCE = 4.0f;
+
 	//timers functions
 	void EndCooldown();
-	void EndDash();
 
+	Curve dashCurve;
 };
 
