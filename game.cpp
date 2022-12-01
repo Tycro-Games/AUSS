@@ -87,7 +87,7 @@ namespace Tmpl8
 		renderables.push_back(&tileMap);
 
 
-		//updateables.push_back(&waveSpawner);
+		updateables.push_back(&waveSpawner);
 		renderables.push_back(&waveSpawner);
 		//assign subjects to observers
 		//order is important because player has to also sent events to score

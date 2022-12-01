@@ -1,5 +1,5 @@
 #pragma once
-//based on this tutorial https://www.youtube.com/watch?v=eED4bSkYCB8, sweep and prune
+//based on this tutorial https://www.youtube.com/watch?v=eED4bSkYCB8 and https://github.com/YulyaLesheva/Sweep-And-Prune-algorithm, sweep and prune
 #include "Projectile.h"
 
 #include <algorithm>

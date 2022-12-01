@@ -86,7 +86,6 @@ private:
 	const Collider* tileMapCol;
 	//dash
 	Timer cooldownTimer;
-	Tmpl8::vec2 nextPos = { 0 };
 	bool dashing = false;
 	int dashes = 0;
 

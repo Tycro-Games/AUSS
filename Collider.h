@@ -18,9 +18,7 @@ public:
 		max *= multiplier;
 		return Collider(min, max);
 	}
-	bool operator==(const Collider& collider) {
 
-	}
 	~Collider() = default;
 	Type type;
 	Tmpl8::vec2 min, max;
@@ -73,7 +71,7 @@ public:
 		float Down = round(a.max.y + a.pos->y);
 		return xP >= Left && yP >= Up
 			&& xP <= Right - 1 && yP <= Down - 1;*/
- 		return a.min.x + a.pos->x < b.x&& a.min.y + a.pos->y < b.y
+		return a.min.x + a.pos->x < b.x&& a.min.y + a.pos->y < b.y
 			&& b.x < a.max.x + a.pos->x && b.y < a.max.y + a.pos->y;
 	}
 	static bool CollidesY(const Collider& a, const Collider& b) {
