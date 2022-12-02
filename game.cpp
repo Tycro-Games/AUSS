@@ -44,6 +44,8 @@ namespace Tmpl8
 
 		AddInstancesToUpdates();
 	}
+	const float angle = 235;
+	Collider col;
 	void Game::Initializations()
 	{
 		vec2 centerOfTheScreen = vec2(ScreenWidth / 2, ScreenHeight / 2);
@@ -54,6 +56,9 @@ namespace Tmpl8
 		player.Init(tileMap.GetCol(), centerOfTheScreen);
 		waveSpawner.Init();
 
+		/*col = Collider({ 250 + MathFunctions::GetVec2FromAngle(angle).x * 100,250 + MathFunctions::GetVec2FromAngle(angle).y * 100 }, { 0,0 }, new vec2{ 250,250 });
+		col.type = Collider::Type::Projectile;*/
+		//AddCollider(&col);
 
 	}
 	void Game::ResetGame()
@@ -120,6 +125,7 @@ namespace Tmpl8
 		deltaTime /= 1000.0f; //make time into seconds
 		screen->Clear(0);
 
+
 		switch (currentState)
 		{
 		case GameState::game:
@@ -143,6 +149,14 @@ namespace Tmpl8
 			//rendering
 			for (int i = 0; i < renderables.size(); i++)
 				renderables[i]->Render(screen);
+			//https://matthew-brett.github.io/teaching/rotation_2d.html
+			//x1 and y1 are 250 and 250 
+
+			//screen->Line(250, 250, 350 + cos(angle) * 250 - sin(angle) * 250, 300 + sin(angle) * 250 + cos(angle) * 250, 0xFF00FF);
+			screen->Line(250, 250, 350, 250, 0xFFFFFF);
+			screen->Line(250, 250, 250 + MathFunctions::GetVec2FromAngle(angle).x * 100, 250 + MathFunctions::GetVec2FromAngle(angle).y * 100, 0xFF00FF);
+			//screen->Line(250, 250, 250 + cos(45) * 250 - sin(45) * 250, 250 + sin(45) * 250 + cos(45) * 250, 0xFF00FF);
+
 			screen->Print(std::to_string(score.getTotal()).c_str(), ScreenWidth - 30, 20, 0x00FF00);
 			break;
 		case GameState::mainMenu:

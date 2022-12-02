@@ -110,7 +110,9 @@
     <ClCompile Include="EnemyShooter.cpp">
       <Filter>Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="Curve.cpp" />
+    <ClCompile Include="Curve.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -243,7 +245,9 @@
     <ClInclude Include="EnemyShooter.h">
       <Filter>Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="Curve.h" />
+    <ClInclude Include="Curve.h">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="template code">
