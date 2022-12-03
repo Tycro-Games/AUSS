@@ -34,11 +34,12 @@ vec2 MathFunctions::GetVec2FromAngle(float angle, bool clockWise)
 {
 	//conversion to radians
 	angle = angle * PI / 180;
+
 	//the coordonate system has up as negative
 	if (!clockWise)
-		return vec2{ round(cos(angle)) ,-round(sin(angle)) };
+		return vec2{ (cos(angle)) ,-(sin(angle)) };
 	else {
-		return vec2{ round(cos(angle)) ,round(sin(angle)) };
+		return vec2{ (cos(angle)) ,(sin(angle)) };
 
 	}
 }
@@ -89,7 +90,7 @@ unsigned int MathFunctions::RotateToDirectionFrames(const RotationVar& rVar, con
 	return static_cast<unsigned int>(fmod(MathFunctions::GetDirInAnglesPositive(dir) + rVar.OFFSET_SPRITE, 360) / rVar.ANGLE_SIZE);
 }
 
-float MathFunctions::DashFunction( float x)
+float MathFunctions::DashFunction(float x)
 {
 	x = Clamp(x, 0.0f, 1.0f);
 	return -4 * ((x - .5f) * (x - .5f)) + x / 8 + .875f;//this look like a parabola 
