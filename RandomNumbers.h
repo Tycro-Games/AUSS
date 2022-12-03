@@ -10,7 +10,7 @@ public:
 	void SetSeed(int);
 	float RandomBetweenFloats(float, float);
 	int RandomBetweenInts(int, int);
-	int RandomMinusPlusSign();
+	float RandomMinusPlusSign();
 	RandomNumbers();
 	~RandomNumbers() = default;
 

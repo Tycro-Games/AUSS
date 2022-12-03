@@ -34,16 +34,13 @@ void EnemyRunner::Update(float deltaTime)
 {
 	if (!getUpdateable())
 		return;
-
+	deathTimer.Update(deltaTime);
 	CheckForProjectileCollisions();
 
 	mover.Update(deltaTime);
 	if (InRangeToAtackPlayerSquared(MAX_DISTANCE_SQUARED_TO_PLAYER)) {
 		spawner->PlayerTakesDamage(this);
-
-		spawner->AddEnemyToPool(this, false);
-		spawner->SpawnExplosions(pos);
-
+		Die();
 	}
 }
 
@@ -67,7 +64,7 @@ void EnemyRunner::Init(PosDir posDir)
 	pos = posDir.pos;
 
 	dir = posDir.dir;
-
+	deathTimer.Init(std::bind(&EnemyRunner::Die, this), TIME_ALIVE);
 	hp = maxHp;
 	frame = MathFunctions::RotateToDirectionFrames(rVar, dir);
 
@@ -75,7 +72,8 @@ void EnemyRunner::Init(PosDir posDir)
 
 void EnemyRunner::ResetEnemy()
 {
-	spawner->AddEnemyToPool(this, true);
+	//runners do not give points
+	spawner->AddEnemyToPool(this);
 
 	spawner->SpawnExplosions(pos);
 }

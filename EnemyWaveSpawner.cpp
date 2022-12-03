@@ -130,10 +130,10 @@ void EnemyWaveSpawner::Call()
 		assert(indexOfSpawner < possibleSpawners.size());
 
 		SpawnEnemy(PosDir{ possibleSpawners[indexOfSpawner]->GetSpawnerPos() ,0 }, enemiesToSpawn[indexOfEnemiesToSpawn]);
+		std::cout << "Spawned enemies:" << enemiesToSpawn[indexOfEnemiesToSpawn] << '\n';
 		indexOfEnemiesToSpawn++;
 		//spawned the last enemy of the wave
 		if (enemiesToSpawn.size() == indexOfEnemiesToSpawn) {
-			std::cout << "Spawned enemies:" << enemiesToSpawn.size() << '\n';
 			if (!firstWave) {
 				//notify the score 
 				//multiply the score if the player was not hit the previous wave 
@@ -280,7 +280,7 @@ void EnemyWaveSpawner::Update(float deltaTime)
 }
 
 
-void EnemyWaveSpawner::AddEnemyToPool(Enemy* enemy, bool isDead)
+void EnemyWaveSpawner::AddEnemyToPool(Enemy* enemy, bool getPoints)
 {
 	enemy->SetActive(false);
 	activeColliders.erase(remove(
@@ -289,11 +289,11 @@ void EnemyWaveSpawner::AddEnemyToPool(Enemy* enemy, bool isDead)
 		, activeColliders.end());
 
 
-	if (isDead) {
+	if (getPoints) {
 		notify(enemy->getScore(), EventType::EnemyDeath);
-		if (activeColliders.size() == 0)
-			SpawnCurrentWave();
 	}
+	if (activeColliders.size() == 0)
+		SpawnCurrentWave();
 	switch (enemy->GetEnemyType())
 	{
 	case Hoarder:

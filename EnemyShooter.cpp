@@ -91,14 +91,13 @@ void EnemyShooter::StartMovement()
 
 void EnemyShooter::SpawnRunner()
 {
-	int sign = randomNumbers.RandomMinusPlusSign();
+	float sign = randomNumbers.RandomMinusPlusSign();
 	vec2 direction = (MathFunctions::GetVec2FromRadians(angleToSpawn * PI / 180 * sign)).normalized();
 	spawner->SpawnEnemy(PosDir{
 		pos ,
 		direction },
 		Runner);
 	angleToSpawn = fmodf(angleToSpawn + STEP_ANGLE * sign, 360);
-	std::cout << angleToSpawn << '\n';
 }
 
 void EnemyShooter::StopMovement()

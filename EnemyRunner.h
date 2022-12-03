@@ -25,7 +25,7 @@ private:
 	Rotator rot;
 	RotationVar rVar;
 	RandomNumbers randomNumbers;
-
+	Timer deathTimer;
 	//consts
 	const Tmpl8::vec2 COL_MIN = Tmpl8::vec2(-10, -10);
 	const Tmpl8::vec2 COL_MAX = Tmpl8::vec2(10, 10);
@@ -33,6 +33,7 @@ private:
 	const float SPEED = 200.0f;
 	const float MIN_DEVIATION = 0.1f;
 	const float MAX_DEVIATION = 0.25f;
+	const float TIME_ALIVE = 10.0f;
 
 	// Inherited via Callable
 	void Call();

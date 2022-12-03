@@ -29,18 +29,13 @@ int RandomNumbers::RandomBetweenInts(int l, int h)
 /// </summary>
 /// <param name="val"></param>
 /// <returns></returns>
-int RandomNumbers::RandomMinusPlusSign()
+float RandomNumbers::RandomMinusPlusSign()
 {
 
-	int val = rand() % 3 - 1;
-	if (!val)
-		val += 1;
-	if (val < 0)
-		return (rand() & 1) == 0 ? val : abs(val);
-	else {
-		return (rand() & 1) == 0 ? -val : val;
+	float val = rand() % 3 - 1;
 
-	}
+	return val;
+
 }
 
 RandomNumbers::RandomNumbers()
