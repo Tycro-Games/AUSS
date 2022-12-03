@@ -96,7 +96,7 @@ void Player::Rotate(int x, int y) {
 		dirToFace);
 
 
-	float angle = MathFunctions::GetDirInAnglesPositive(dirToFace);
+	float angle = MathFunctions::GetDirInDegreesPositive(dirToFace);
 	//calculate the frame we need to switch for the corresponding angle
 	angle += rVar.OFFSET_SPRITE;
 	angle = fmodf(angle, 360);

@@ -149,7 +149,6 @@ namespace Tmpl8
 			//rendering
 			for (int i = 0; i < renderables.size(); i++)
 				renderables[i]->Render(screen);
-			std::cout << angle << '\n';
 
 
 			screen->Line(pos.x - cos((angle + 90) * PI / 180) * 100,
@@ -204,7 +203,7 @@ namespace Tmpl8
 
 			player.Rotate(x, y);
 
-			angle = MathFunctions::GetDirInAnglesPositive({ player.GetDir().x ,player.GetDir().y });
+			angle = MathFunctions::GetDirInDegreesPositive({ player.GetDir().x ,player.GetDir().y });
 			break;
 		case GameState::paused:
 		case GameState::mainMenu:

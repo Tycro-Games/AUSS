@@ -7,9 +7,9 @@
 class MathFunctions
 {
 public:
-	static float GetDirInAnglesPositive(Tmpl8::vec2 dir);
-	static float GetDirInAngles(Tmpl8::vec2 dir);
-	static Tmpl8::vec2 GetVec2FromAngle(float angle, bool clockWise = false);
+	static float GetDirInDegreesPositive(Tmpl8::vec2 dir);
+	static float GetDirInDegrees(Tmpl8::vec2 dir);
+	static Tmpl8::vec2 GetVec2FromRadians(float angle);
 	static Tmpl8::vec2 Reflect(Tmpl8::vec2 dir, Tmpl8::vec2 norm);
 	//x y coordonates, pos current postion, dir modified by reference
 	static void RotateToDirection(const Tmpl8::vec2& newDir, const Tmpl8::vec2& pos, Tmpl8::vec2& dir);

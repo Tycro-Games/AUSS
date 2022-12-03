@@ -91,7 +91,7 @@ void EnemyShooter::StartMovement()
 
 void EnemyShooter::SpawnRunner()
 {
-	vec2 direction = (MathFunctions::GetVec2FromAngle(angleToSpawn)).normalized();
+	vec2 direction = (MathFunctions::GetVec2FromRadians(angleToSpawn * PI / 180)).normalized();
 	spawner->SpawnEnemy(PosDir{
 		pos ,
 		direction },

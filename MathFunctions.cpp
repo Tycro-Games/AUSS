@@ -6,7 +6,7 @@ using namespace Tmpl8;
 /// </summary>
 /// <param name="dir"></param>
 /// <returns></returns>
-float MathFunctions::GetDirInAnglesPositive(vec2 dir)
+float MathFunctions::GetDirInDegreesPositive(vec2 dir)
 {
 	float angle = atan2(dir.y, dir.x);//return angle in radians
 
@@ -22,7 +22,7 @@ float MathFunctions::GetDirInAnglesPositive(vec2 dir)
 /// </summary>
 /// <param name="dir"></param>
 /// <returns></returns>
-float MathFunctions::GetDirInAngles(vec2 dir)
+float MathFunctions::GetDirInDegrees(vec2 dir)
 {
 	float angle = atan2(dir.y, dir.x);//return angle in radians
 
@@ -30,18 +30,16 @@ float MathFunctions::GetDirInAngles(vec2 dir)
 
 	return angle;
 }
-vec2 MathFunctions::GetVec2FromAngle(float angle, bool clockWise)
+/// <summary>
+/// get a vec2 from an angle expressed in radians
+/// </summary>
+/// <param name="angle"></param>
+/// <param name="clockWise"></param>
+/// <returns></returns>
+vec2 MathFunctions::GetVec2FromRadians(float angle)
 {
-	//conversion to radians
-	angle = angle * PI / 180;
-
 	//the coordonate system has up as negative
-	if (!clockWise)
-		return vec2{ (cos(angle)) ,-(sin(angle)) };
-	else {
-		return vec2{ (cos(angle)) ,(sin(angle)) };
-
-	}
+	return vec2{ (cos(angle)) ,-(sin(angle)) };
 }
 float MathFunctions::GetDistance(vec2 pos1, vec2 pos2) {
 	float dx = pos2.x - pos1.x;
@@ -87,7 +85,7 @@ void MathFunctions::RotateToDirection(const vec2& newDirection, const vec2& pos,
 unsigned int MathFunctions::RotateToDirectionFrames(const RotationVar& rVar, const vec2& dir)
 {
 	//return the corresponding frame
-	return static_cast<unsigned int>(fmod(MathFunctions::GetDirInAnglesPositive(dir) + rVar.OFFSET_SPRITE, 360) / rVar.ANGLE_SIZE);
+	return static_cast<unsigned int>(fmod(MathFunctions::GetDirInDegreesPositive(dir) + rVar.OFFSET_SPRITE, 360) / rVar.ANGLE_SIZE);
 }
 
 float MathFunctions::DashFunction(float x)
