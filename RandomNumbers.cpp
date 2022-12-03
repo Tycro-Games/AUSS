@@ -1,5 +1,5 @@
 #include "RandomNumbers.h"
-
+#include <iostream>
 void RandomNumbers::SetSeed()
 {
 	srand(static_cast<unsigned int>(time(0)));
@@ -24,12 +24,26 @@ int RandomNumbers::RandomBetweenInts(int l, int h)
 {
 	return l + (rand()) % (h - l);
 }
+/// <summary>
+/// should be a non zero real number
+/// </summary>
+/// <param name="val"></param>
+/// <returns></returns>
+int RandomNumbers::RandomMinusPlusSign()
+{
+
+	int val = rand() % 3 - 1;
+	if (!val)
+		val += 1;
+	if (val < 0)
+		return (rand() & 1) == 0 ? val : abs(val);
+	else {
+		return (rand() & 1) == 0 ? -val : val;
+
+	}
+}
 
 RandomNumbers::RandomNumbers()
 {
 	SetSeed();
-}
-
-RandomNumbers::~RandomNumbers()
-{
 }
