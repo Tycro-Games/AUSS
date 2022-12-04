@@ -78,6 +78,9 @@ public:
 		return a.min.y < b.max.y&& a.max.y > b.min.y;
 
 	}
+	//based on https://www.youtube.com/watch?v=3vONlLYtHUE&t=0s
+	static bool ClipLine(bool clipX, const Collider& rectangle, const Tmpl8::vec2& v0, const Tmpl8::vec2& v1, float& low, float& high);
+	static bool LineRectangleIntersection(const Tmpl8::vec2& v0, const Tmpl8::vec2& v1, const Collider& rect, Tmpl8::vec2& outputIntersection, float& outpuFraction);
 
 	static bool CollidesX(const Collider& a, const Collider& b) {
 

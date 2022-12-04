@@ -125,6 +125,9 @@ namespace Tmpl8
 		screen->Clear(0);
 
 		vec2 pos = { 250,400 };
+		float flow = 0;
+		vec2 v0 = { 0 };
+		vec2 v1 = { 0 };
 
 		switch (currentState)
 		{
@@ -150,13 +153,16 @@ namespace Tmpl8
 			for (int i = 0; i < renderables.size(); i++)
 				renderables[i]->Render(screen);
 
+			v0 = { pos.x - cos((angle + 90) * PI / 180) * 100,
+					pos.y - sin((angle + 90) * PI / 180) * 100 };
+			v1 = { pos.x + cos((angle + 90) * PI / 180) * 100,
+				pos.y + sin((angle + 90) * PI / 180) * 100 };
+			screen->Line(v0.x, v0.y, v1.x, v1.y, 0xFF00FF);
 
-			screen->Line(pos.x - cos((angle + 90) * PI / 180) * 100,
-				pos.y - sin((angle + 90) * PI / 180) * 100,
-				pos.x + cos((angle + 90) * PI / 180) * 100,
-				pos.y + sin((angle + 90) * PI / 180) * 100, 0xFF00FF);
-			screen->Line(pos.x, pos.y, pos.x + cos(angle * PI / 180) * 100, pos.y + sin(angle * PI / 180) * 100, 0xFF00FF);
-
+			for (int i = 0; i < colliders.size(); i++) {
+				if (Collider::LineRectangleIntersection(v0, v1, colliders[i]->At(*colliders[i]->pos), pos, flow))
+					std::cout << " COLLISION'\n";
+			}
 
 			screen->Print(std::to_string(score.getTotal()).c_str(), ScreenWidth - 30, 20, 0x00FF00);
 			break;
