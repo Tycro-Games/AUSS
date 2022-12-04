@@ -79,7 +79,27 @@ public:
 
 	}
 	//based on https://www.youtube.com/watch?v=3vONlLYtHUE&t=0s
-	static bool ClipLine(bool clipX, const Collider& rectangle, const Tmpl8::vec2& v0, const Tmpl8::vec2& v1, float& low, float& high);
+
+	/// <summary>
+	/// Clips the line with the rectangle on one axis trying to determine the interval where the intersection happens
+	/// </summary>
+	/// <param name="clipX">is the flag for choosing the axis</param>
+	/// <param name="rectangle">is collider that we are checking</param>
+	/// <param name="v0">is the start of the lin</param>
+	/// <param name="v1">is the end of the line</param>
+	/// <param name="low">is the lower part of the interval</param>
+	/// <param name="high">is the higher part of the interval</param>
+	/// <returns></returns>
+	static bool ClipLineOnOneAxis(bool clipX, const Collider& rectangle, const Tmpl8::vec2& v0, const Tmpl8::vec2& v1, float& low, float& high);
+	/// <summary>
+	/// Determines if the line is intersecting with the box
+	/// </summary>
+	/// <param name="v0">is the start of the line</param>
+	/// <param name="v1">is the end of the line</param>
+	/// <param name="rect">is collider that we are checking</param>
+	/// <param name="outputPointOfIntersection">is the returning point where the intersection happened</param>
+	/// <param name="outpuFraction">is the fraction that defines the point of intersection between the two points of the line</param>
+	/// <returns></returns>
 	static bool LineRectangleIntersection(const Tmpl8::vec2& v0, const Tmpl8::vec2& v1, const Collider& rect, Tmpl8::vec2& outputIntersection, float& outpuFraction);
 
 	static bool CollidesX(const Collider& a, const Collider& b) {
