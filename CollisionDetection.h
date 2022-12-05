@@ -13,7 +13,7 @@ public:
 	~CollisionDetection() = default;
 	void DetectCollisions();
 
-	void CheckProjectile(std::vector<Collider*>& allPairs, int i, int j);
+	void CheckPair(const std::vector<Collider*>& allPairs, size_t i, size_t j);
 
 	void Update(float deltaTime) override;
 private:

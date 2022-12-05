@@ -53,16 +53,14 @@ void CollisionDetection::DetectCollisions()
 		activeIntervals.push_back(a);
 	}
 
-	for (int i = 0; i < allPairs.size(); i += 2) {
+	for (size_t i = 0; i < allPairs.size(); i += 2) {
 		//trigger the collision flags for the getColliders()
-		CheckProjectile(allPairs, i, i + 1);
-
-
+		CheckPair(allPairs, i, i + 1);
 	}
 
 }
 
-void CollisionDetection::CheckProjectile(vector<Collider*>& allPairs, int i, int j)
+void CollisionDetection::CheckPair(const vector<Collider*>& allPairs, size_t i, size_t  j)
 {
 	if (allPairs[i]->type == Collider::Type::Projectile) {
 		allPairs[i]->toDeactivate = true;

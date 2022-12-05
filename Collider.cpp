@@ -81,9 +81,10 @@ bool Collider::ClipLineOnOneAxis(bool clipX, const Collider& rectangle, const Tm
 	//clamp the values to the intersection interval
 	low = std::max(dLow, low);
 	high = std::min(dHigh, high);
-	if (low > high)//no collision
-		return false;
-	return true;
+
+	//no collision
+
+	return !(low > high);
 }
 
 bool Collider::LineRectangleIntersection(const Tmpl8::vec2& v0, const Tmpl8::vec2& v1, const Collider& rect, Tmpl8::vec2& outputPointOfIntersection, float& outpuFraction)

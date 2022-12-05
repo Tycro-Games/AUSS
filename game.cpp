@@ -160,8 +160,9 @@ namespace Tmpl8
 			screen->Line(v0.x, v0.y, v1.x, v1.y, 0xFF00FF);
 
 			for (int i = 0; i < colliders.size(); i++) {
-				if (Collider::LineRectangleIntersection(v0, v1, colliders[i]->At(*colliders[i]->pos), pos, flow))
-					std::cout << " COLLISION'\n";
+				if (colliders[i]->type == Collider::Type::Projectile)
+					if (Collider::LineRectangleIntersection(v0, v1, colliders[i]->At(*colliders[i]->pos), pos, flow))
+						colliders[i]->toDeactivate = true;
 			}
 
 			screen->Print(std::to_string(score.getTotal()).c_str(), ScreenWidth - 30, 20, 0x00FF00);

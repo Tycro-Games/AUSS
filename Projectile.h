@@ -24,7 +24,7 @@ public:
 	Moveable* getMoveable() {
 		return &mover;
 	}
-	void Call();
+	void Reflect();
 	void ResetBullet();
 	void Update(float deltaTime) override;
 	void Render(Tmpl8::Surface* screen) override;

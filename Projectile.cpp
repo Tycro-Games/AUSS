@@ -14,7 +14,7 @@ Projectile::Projectile(PosDir posDir, Tmpl8::Sprite* sprite, ProjectileSpawner* 
 {
 	collider.type = Collider::Type::Projectile;
 
-	mover.Init(&pos, &dir, &collider, std::bind(&Projectile::Call, this), SPEED);
+	mover.Init(&pos, &dir, &collider, std::bind(&Projectile::Reflect, this), SPEED);
 
 
 	Init(posDir);
@@ -68,7 +68,7 @@ void Projectile::Render(Tmpl8::Surface* screen)
 	screen->Box(static_cast<int>(pos.x + collider.min.x), static_cast<int>(pos.y + collider.min.y), static_cast<int>(pos.x + collider.max.x), static_cast<int>(pos.y + collider.max.y), 0xff0000);
 }
 
-void Projectile::Call()
+void Projectile::Reflect()
 {
 	if (mover.colToReflectFrom != nullptr) { //reflect on obstacle
 		Collider c = *mover.colToReflectFrom;
