@@ -113,6 +113,9 @@
     <ClCompile Include="Curve.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="EnemyShielder.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -247,6 +250,9 @@
     </ClInclude>
     <ClInclude Include="Curve.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyShielder.h">
+      <Filter>Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

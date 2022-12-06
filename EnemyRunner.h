@@ -10,16 +10,15 @@ public:
 	void Render(Tmpl8::Surface* screen) override;
 	void Update(float deltaTime) override;
 
-	// Inherited via Enemy
-	virtual void Die() override;
 
-	virtual Enemy* clone() override;
+	Enemy* clone() override;
 
 
-	virtual void Init(PosDir) override;
+	void Init(PosDir) override;
 
-	virtual void ResetEnemy() override;
 private:
+	void Die() override;
+	void ResetEnemy() override;
 
 	MoveToADirection mover;
 	Rotator rot;
@@ -35,8 +34,7 @@ private:
 	const float MAX_DEVIATION = 0.25f;
 	const float TIME_ALIVE = 10.0f;
 
-	// Inherited via Callable
-	void Call();
+	void Reflect();
 
 };
 

@@ -18,7 +18,7 @@ public:
 	void SetJsonValues(Enemy* enemy, json& enemyJson);
 	void CreateMoreEnemies(EnemyTypes enemy);
 	void PlayerTakesDamage(Enemy* enemy);
-	void SpawnCurrentWave();
+	void GetEnemiesForCurrentWave();
 	void CheckThePossibleEnemies(size_t weight, std::vector<EnemyTypes>& possibleEnemies);
 	//add all the spawners that are offscreen
 	void CheckTheOffscreenSpawners(std::vector<EnemySpawner*>& possibleSpawner);
@@ -30,7 +30,6 @@ public:
 
 	bool EnemyWaveSpawner::IsPoolEmpty(const std::vector<Enemy*>& pool);
 	EnemyTypes ConvertToEnum(std::string str);
-	//getters
 
 	//this is the minimum distance to the player added to half of the collider of the enemy using this
 	const float getMaxPlayerDistance()const;
@@ -49,12 +48,15 @@ private:
 	Tmpl8::Sprite hoarderSprite;
 	Tmpl8::Sprite runnerSprite;
 	Tmpl8::Sprite shooterSprite;
+	Tmpl8::Sprite shielderSprite;
 	//Enemy Hoarder
 	std::vector<Enemy*> poolOfHoarders;
 	//Enemy Runner
 	std::vector<Enemy*> poolOfRunners;
-	//Enemy Runner
+	//Enemy Shooter
 	std::vector<Enemy*> poolOfShooters;
+	//Enemy Shielder
+	std::vector<Enemy*> poolOfShielders;
 
 	std::vector<Collider*> activeColliders;
 	std::vector<EnemySpawner*> enemySpawners;
@@ -65,8 +67,7 @@ private:
 	size_t indexWave = 0;
 	size_t wavesCount = 0;
 	//prototypes
-	Enemy* enemyPrototypes[NUMBER_OF_ENEMIES];
-	EnemyTypes allEnemyTypes[NUMBER_OF_ENEMIES] = { Hoarder,Runner,Shooter };
+	Enemy* enemyPrototypes[NUMBER_OF_ENEMIES] = {};
 	RandomNumbers randomNumbers;
 	//consts
 	const float SPAWNERS_XPOS_MULTIPLIERS = 0.88f;
@@ -75,7 +76,7 @@ private:
 	float playerDistanceSqr = 0.0f;
 	const std::filesystem::path spriteExplosionPath = "assets/OriginalAssets/smoke.tga";
 
-	void Call();
+	void SpawnCurrentWave();
 
 };
 inline bool EnemyWaveSpawner::IsPoolEmpty(const std::vector<Enemy*>& pool) {
@@ -93,6 +94,8 @@ inline EnemyTypes EnemyWaveSpawner::ConvertToEnum(std::string str)
 		type = Runner;
 	else if (str == "Shooter")
 		type = Shooter;
+	else if (str == "Shielder")
+		type = Shielder;
 	if (type == NUMBER_OF_ENEMIES)
 		ThrowError(str.c_str());
 	return type;

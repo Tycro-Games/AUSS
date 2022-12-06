@@ -5,6 +5,7 @@
 #include "EnemyHoarder.h"
 #include "EnemyRunner.h"
 #include "EnemyShooter.h"
+#include "EnemyShielder.h"
 
 #include "game.h"
 using namespace std;
@@ -18,10 +19,8 @@ EnemyWaveSpawner::EnemyWaveSpawner()
 	hoarderSprite(new Surface("assets/OriginalAssets/phaser.tga"), 16),
 	runnerSprite(new Surface("assets/OriginalAssets/sniper.tga"), 32),
 	shooterSprite(new Surface("assets/OriginalAssets/sniper.tga"), 32),
-	enemyPrototypes(),
+	shielderSprite(new Surface("assets/OriginalAssets/sniper.tga"), 32),
 	indexOfEnemiesToSpawn(0)
-
-
 {
 
 }
@@ -30,7 +29,7 @@ void EnemyWaveSpawner::Init()
 {
 	indexOfEnemiesToSpawn = 0;
 	firstWave = true;
-	timer.Init(bind(&EnemyWaveSpawner::Call, this), 1.0f);
+	timer.Init(bind(&EnemyWaveSpawner::SpawnCurrentWave, this), 1.0f);
 	playerDistanceSqr = Game::Get().getPlayer().GetHalfCollider();
 	//square it
 	playerDistanceSqr *= playerDistanceSqr;
@@ -44,8 +43,8 @@ void EnemyWaveSpawner::EnemyInit()
 {
 	ClearVecOfPointers();
 
-	for (size_t i = 0; i < NUMBER_OF_ENEMIES; i++) {
-		enemyPrototypes[i] = CreateEnemy(allEnemyTypes[i]);
+	for (size_t i = 0; i < (NUMBER_OF_ENEMIES); i++) {
+		enemyPrototypes[i] = CreateEnemy(static_cast<EnemyTypes>(i));
 	}
 }
 
@@ -61,10 +60,11 @@ void EnemyWaveSpawner::ClearVecOfPointers()
 	ClearPoolOfEnemies(poolOfHoarders);
 	ClearPoolOfEnemies(poolOfRunners);
 	ClearPoolOfEnemies(poolOfShooters);
+	ClearPoolOfEnemies(poolOfShielders);
 
 	Spawner::ResetExplosions();
 
-	for (size_t i = 0; i < NUMBER_OF_ENEMIES; i++) {
+	for (size_t i = 0; i < (NUMBER_OF_ENEMIES); i++) {
 		delete enemyPrototypes[i];
 	}
 }
@@ -116,21 +116,21 @@ void EnemyWaveSpawner::ReadWaves()
 
 }
 //spawns enemies at an inverval for random numbers to use time as a seed
-void EnemyWaveSpawner::Call()
+void EnemyWaveSpawner::SpawnCurrentWave()
 {
 	if (!startedWave)
-		SpawnCurrentWave();
+		GetEnemiesForCurrentWave();
 	else {
 		//this must have a size that is bigger than 1
 		vector<EnemySpawner*> possibleSpawners;
 		CheckTheOffscreenSpawners(possibleSpawners);
 		size_t indexOfSpawner = static_cast<size_t>(randomNumbers.RandomBetweenInts(0, static_cast<int>(possibleSpawners.size())));
 		//error if the asumption about spawners is not right
-		assert(possibleSpawners.size() > 0);
-		assert(indexOfSpawner < possibleSpawners.size());
+		assert(possibleSpawners.size() > 0 &&
+			indexOfSpawner < possibleSpawners.size());
 
 		SpawnEnemy(PosDir{ possibleSpawners[indexOfSpawner]->GetSpawnerPos() ,0 }, enemiesToSpawn[indexOfEnemiesToSpawn]);
-		std::cout << "Spawned enemies:" << enemiesToSpawn[indexOfEnemiesToSpawn] << '\n';
+		std::cout << "Spawned enemies:" << (enemiesToSpawn[indexOfEnemiesToSpawn]) << '\n';
 		indexOfEnemiesToSpawn++;
 		//spawned the last enemy of the wave
 		if (enemiesToSpawn.size() == indexOfEnemiesToSpawn) {
@@ -171,14 +171,15 @@ void EnemyWaveSpawner::PlayerTakesDamage(Enemy* enemy)
 	notify(enemy->getDg(), EventType::PlayerTakesDamage);
 	playerHasTakenDamage = true;
 }
-void EnemyWaveSpawner::SpawnCurrentWave() {
+void EnemyWaveSpawner::GetEnemiesForCurrentWave() {
 	startedWave = true;
 	int weight = waves[indexWave].weight;
 	enemiesToSpawn.clear();
 	vector<EnemyTypes>possibleEnemies;
 
 	CheckThePossibleEnemies(weight, possibleEnemies);
-
+	if (possibleEnemies.size() == 0)
+		ThrowError("Too small weight for spawning any enemies");
 	while (weight != 0 && possibleEnemies.size() != 0) {
 
 		size_t index;
@@ -194,8 +195,8 @@ void EnemyWaveSpawner::SpawnCurrentWave() {
 		//recheck the possible enemies
 		CheckThePossibleEnemies(weight, possibleEnemies);
 	}
-	//interval for spawninig
-	timer.Init(bind(&EnemyWaveSpawner::Call, this), SPAWNING_INTERVAL, true); //spawning interval could be fetched from the json per wave
+	//interval for spawning
+	timer.Init(bind(&EnemyWaveSpawner::SpawnCurrentWave, this), SPAWNING_INTERVAL, true); //spawning interval could be fetched from the json per wave
 	//spawn enemies in the spawners' positons
 	indexOfEnemiesToSpawn = 0;
 
@@ -241,6 +242,12 @@ void EnemyWaveSpawner::SpawnEnemy(PosDir posDir, EnemyTypes enemy)
 			CreateMoreEnemies(enemy);
 		enemyToSpawn = poolOfShooters[poolOfShooters.size() - 1];
 		poolOfShooters.pop_back();
+		break;
+	case Shielder:
+		if (IsPoolEmpty(poolOfShielders))
+			CreateMoreEnemies(enemy);
+		enemyToSpawn = poolOfShielders[poolOfShielders.size() - 1];
+		poolOfShielders.pop_back();
 		break;
 	default:
 		ThrowError("could not spawn enemies");
@@ -293,7 +300,7 @@ void EnemyWaveSpawner::AddEnemyToPool(Enemy* enemy, bool getPoints)
 		notify(enemy->getScore(), EventType::EnemyDeath);
 	}
 	if (activeColliders.size() == 0)
-		SpawnCurrentWave();
+		GetEnemiesForCurrentWave();
 	switch (enemy->GetEnemyType())
 	{
 	case Hoarder:
@@ -304,6 +311,9 @@ void EnemyWaveSpawner::AddEnemyToPool(Enemy* enemy, bool getPoints)
 		break;
 	case Shooter:
 		poolOfShooters.push_back(enemy);
+		break;
+	case Shielder:
+		poolOfShielders.push_back(enemy);
 		break;
 	default:
 		break;
@@ -317,6 +327,7 @@ Enemy* EnemyWaveSpawner::CreateEnemy(EnemyTypes enemyType) {
 	std::ifstream f;
 	json enemyJson;
 	Enemy* enemy = nullptr;
+
 	switch (enemyType)
 	{
 	case Hoarder:
@@ -343,6 +354,14 @@ Enemy* EnemyWaveSpawner::CreateEnemy(EnemyTypes enemyType) {
 
 		SetJsonValues(enemy, enemyJson);
 		break;
+	case Shielder:
+		f.open("json/Shielder.json");
+
+		enemy = new EnemyShielder(PosDir(vec2(0), vec2(0)), &shielderSprite, this);
+		enemyJson = json::parse(f);
+
+		SetJsonValues(enemy, enemyJson);
+		break;
 	default:
 		ThrowError("The creation of the enemy has failed");
 		break;
@@ -360,24 +379,11 @@ void EnemyWaveSpawner::SetJsonValues(Enemy* enemy, json& enemyJson)
 void EnemyWaveSpawner::CreateMoreEnemies(EnemyTypes enemyType)
 {
 	Enemy* enemy = nullptr;
-	switch (enemyType)
-	{
-	case Hoarder:
-		enemy = enemyPrototypes[enemyType]->clone();
-		break;
-	case Runner:
-		enemy = enemyPrototypes[enemyType]->clone();
 
-		break;
-	case Shooter:
+	if (enemyType < NUMBER_OF_ENEMIES && enemyType >= Hoarder)
 		enemy = enemyPrototypes[enemyType]->clone();
-
-		break;
-	default:
+	else
 		ThrowError("The creation of the enemy has failed");
-		break;
-	}
-
 	updateObjects.push_back(enemy);
 
 	AddEnemyToPool(enemy);

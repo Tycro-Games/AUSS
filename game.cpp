@@ -152,7 +152,7 @@ namespace Tmpl8
 			//rendering
 			for (int i = 0; i < renderables.size(); i++)
 				renderables[i]->Render(screen);
-
+			//Line thingy
 			v0 = { pos.x - cos((angle + 90) * PI / 180) * 100,
 					pos.y - sin((angle + 90) * PI / 180) * 100 };
 			v1 = { pos.x + cos((angle + 90) * PI / 180) * 100,

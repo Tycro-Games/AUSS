@@ -1,18 +1,16 @@
-#include "EnemyHoarder.h"
-#include "MathFunctions.h"
+#include "EnemyShielder.h"
 
-using namespace Tmpl8;
-EnemyHoarder::EnemyHoarder(PosDir posDir, Sprite* sprite, EnemyWaveSpawner* _spawner) :
+EnemyShielder::EnemyShielder(PosDir posDir, Tmpl8::Sprite* sprite, EnemyWaveSpawner* _spawner) :
 	Enemy(posDir.pos, sprite, _spawner),
 	rVar(RotationVar(360 / (static_cast<const float>(sprite->Frames() - 1)), 90.0f, static_cast<const float>(sprite->GetHeight()))),
 	MAX_DISTANCE_SQUARED_TO_PLAYER(100.0f + _spawner->getMaxPlayerDistance())
 
 {
-	enemyType = Hoarder;
+	enemyType = Shielder;
 	enemyCollider = Collider(COL_MIN, COL_MAX, &pos);
-	mover.Init(&pos, &dir, &enemyCollider, std::bind(&EnemyHoarder::Reflect, this), SPEED);
+	mover.Init(&pos, &dir, &enemyCollider, std::bind(&EnemyShielder::Reflect, this), SPEED);
 
-	attack = Timer(std::bind(&EnemyHoarder::AtackPlayer, this), TIME_TO_ATTACK, true);
+	attack = Timer(std::bind(&EnemyShielder::AtackPlayer, this), TIME_TO_ATTACK, true);
 	rotate = Timer();
 	rot.Init(&pos, &dir, &rVar, &frame, &mover);
 
@@ -20,8 +18,7 @@ EnemyHoarder::EnemyHoarder(PosDir posDir, Sprite* sprite, EnemyWaveSpawner* _spa
 	Init(posDir);
 }
 
-
-void EnemyHoarder::Update(float deltaTime)
+void EnemyShielder::Update(float deltaTime)
 {
 	if (!getUpdateable())
 		return;
@@ -35,48 +32,7 @@ void EnemyHoarder::Update(float deltaTime)
 		attack.Update(deltaTime);
 	}
 }
-
-
-
-
-
-void EnemyHoarder::Render(Surface* screen)
-{
-	if (!getRenderable())
-		return;
-	sprite->SetFrame(frame);
-	sprite->Draw(screen, static_cast<int>(static_cast<int>(pos.x - rVar.SPRITE_OFFSET / 2)), static_cast<int>(pos.y - rVar.SPRITE_OFFSET / 2));
-	screen->Box(static_cast<int>(pos.x - rVar.SPRITE_OFFSET / 2),
-		static_cast<int>(pos.y - rVar.SPRITE_OFFSET / 2),
-		static_cast<int>(pos.x + rVar.SPRITE_OFFSET / 2),
-		static_cast<int>(pos.y + rVar.SPRITE_OFFSET / 2), 0xffff);
-
-}
-
-
-
-void EnemyHoarder::Init(PosDir posDir)
-{
-
-	SetActive(true);
-	pos = posDir.pos;
-	dir = posDir.dir;
-	hp = maxHp;
-	mover.SetSpeed(SPEED + randomNumbers.RandomBetweenFloats(-30, 100));
-	rotate.Init(std::bind(&EnemyRotator::Call, &rot), randomNumbers.RandomBetweenFloats(0.1f, 0.9f), true);
-	rot.Call();
-}
-
-
-
-void EnemyHoarder::ResetEnemy()
-{
-
-	spawner->AddEnemyToPool(this, true);
-	spawner->SpawnExplosions(pos);
-}
-
-void EnemyHoarder::Reflect()
+void EnemyShielder::Reflect()
 {
 	if (mover.colToReflectFrom != nullptr) {
 		Collider c = *mover.colToReflectFrom;
@@ -92,8 +48,7 @@ void EnemyHoarder::Reflect()
 	}
 
 }
-
-void EnemyHoarder::AtackPlayer()
+void EnemyShielder::AtackPlayer()
 {
 	if (InRangeToAtack) {
 		spawner->PlayerTakesDamage(this);
@@ -101,14 +56,43 @@ void EnemyHoarder::AtackPlayer()
 	}
 }
 
-void EnemyHoarder::Die()
+void EnemyShielder::Render(Tmpl8::Surface* screen)
+{
+	if (!getRenderable())
+		return;
+	sprite->SetFrame(frame);
+	sprite->Draw(screen, static_cast<int>(static_cast<int>(pos.x - rVar.SPRITE_OFFSET / 2)), static_cast<int>(pos.y - rVar.SPRITE_OFFSET / 2));
+	screen->Box(static_cast<int>(pos.x - rVar.SPRITE_OFFSET / 2),
+		static_cast<int>(pos.y - rVar.SPRITE_OFFSET / 2),
+		static_cast<int>(pos.x + rVar.SPRITE_OFFSET / 2),
+		static_cast<int>(pos.y + rVar.SPRITE_OFFSET / 2), 0xff00ff);
+}
+
+void EnemyShielder::Die()
 {
 	ResetEnemy();
 }
 
-Enemy* EnemyHoarder::clone()
+Enemy* EnemyShielder::clone()
 {
-	Enemy* enem = new EnemyHoarder(PosDir{ pos,dir }, sprite, spawner);
+	Enemy* enem = new EnemyShielder(PosDir{ pos,dir }, sprite, spawner);
 	SetJsonValues(enem);
 	return enem;
+}
+
+void EnemyShielder::Init(PosDir posDir)
+{
+	SetActive(true);
+	pos = posDir.pos;
+	dir = posDir.dir;
+	hp = maxHp;
+	mover.SetSpeed(SPEED + randomNumbers.RandomBetweenFloats(-30, 100));
+	rotate.Init(std::bind(&EnemyRotator::Call, &rot), randomNumbers.RandomBetweenFloats(0.1f, 0.9f), true);
+	rot.Call();
+}
+
+void EnemyShielder::ResetEnemy()
+{
+	spawner->AddEnemyToPool(this, true);
+	spawner->SpawnExplosions(pos);
 }

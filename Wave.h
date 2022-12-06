@@ -1,10 +1,11 @@
 #pragma once
 #include <vector>
-enum  EnemyTypes
+enum EnemyTypes//ADD CLASS here
 {
 	Hoarder,
 	Runner,
 	Shooter,
+	Shielder,
 	NUMBER_OF_ENEMIES
 };
 struct Wave

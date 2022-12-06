@@ -1,30 +1,24 @@
 #pragma once
-#include "EnemyRotator.h"
 #include "Enemy.h"
-
-
-
-class EnemyHoarder :public Enemy
+#include "EnemyRotator.h"
+class EnemyShielder : public Enemy
 {
 public:
-	EnemyHoarder(PosDir posDir, Tmpl8::Sprite* sprite, EnemyWaveSpawner* spawner);
+	EnemyShielder(PosDir posDir, Tmpl8::Sprite* sprite, EnemyWaveSpawner* _spawner);
+	~EnemyShielder() = default;
 
-	~EnemyHoarder() = default;
-
-	void Init(PosDir posDir) override;
 	void Update(float deltaTime) override;
-
+	void AtackPlayer();
 	void Render(Tmpl8::Surface* screen) override;
-
-
+	void Init(PosDir) override;
 	Enemy* clone() override;
 private:
 	void Reflect();
 	void ResetEnemy() override;
 	void Die() override;
-	void AtackPlayer();
 
 	bool InRangeToAtack = false;
+
 	//consts
 	const Tmpl8::vec2 COL_MIN = Tmpl8::vec2(-10, -10);
 	const Tmpl8::vec2 COL_MAX = Tmpl8::vec2(10, 10);
