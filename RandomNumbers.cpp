@@ -32,7 +32,7 @@ int RandomNumbers::RandomBetweenInts(int l, int h)
 float RandomNumbers::RandomMinusPlusSign()
 {
 
-	float val = rand() % 3 - 1;
+	float val = static_cast<float>(rand() % 3 - 1);
 
 	return val;
 
