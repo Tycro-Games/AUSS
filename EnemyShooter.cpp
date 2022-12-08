@@ -9,7 +9,7 @@ EnemyShooter::EnemyShooter(PosDir posDir, Sprite* _sprite, EnemyWaveSpawner* _sp
 	enemyType = Shooter;
 	enemyCollider = Collider(COL_MIN, COL_MAX, &pos);
 
-	mover.Init(&pos, &dir, &enemyCollider, std::bind(&EnemyShooter::Move, this), 300);
+	mover.Init(&pos, &dir, &enemyCollider, std::bind(&EnemyShooter::Reflect, this), 300);
 
 	InitEnemy(mover);
 	Init(posDir);
@@ -26,7 +26,7 @@ void EnemyShooter::Update(float deltaTime)
 		timerToMove.Update(deltaTime);
 	}
 	else {
-		//not moving, shoot or something
+		//not moving, shoot
 		timerToStop.Update(deltaTime);
 		timerToSpawn.Update(deltaTime);
 	}
@@ -91,14 +91,10 @@ void EnemyShooter::StartMovement()
 
 void EnemyShooter::SpawnRunner()
 {
-	float sign = randomNumbers.RandomMinusPlusSign();
-	vec2 direction = (MathFunctions::GetVec2FromRadians(angleToSpawn * PI / 180 * sign)).normalized();
-	spawner->SpawnEnemy(PosDir{
-		pos ,
-		direction },
-		Runner);
-	angleToSpawn = fmodf(angleToSpawn + STEP_ANGLE * sign, 360);
+	Enemy::SpawnEnemy(randomNumbers.RandomMinusPlusSign(), angleToSpawn, Runner, STEP_ANGLE);
 }
+
+
 
 void EnemyShooter::StopMovement()
 {
@@ -106,7 +102,7 @@ void EnemyShooter::StopMovement()
 	timerToStop.ResetVar();
 }
 
-void EnemyShooter::Move()
+void EnemyShooter::Reflect()
 {
 	//reflect on obstacle
 	if (mover.colToReflectFrom != nullptr) {

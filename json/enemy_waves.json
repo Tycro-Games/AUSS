@@ -2,7 +2,7 @@
 	"waves": [
     {
       "weight":7,
-      "enemy_types":["Shielder"]
+      "enemy_types":["Shooter"]
     },
 		{
       "weight":20,

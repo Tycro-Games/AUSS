@@ -15,6 +15,24 @@ public:
 	virtual ~Enemy();
 	virtual Enemy* clone() = 0;
 	virtual void Init(PosDir) = 0;
+	/// <summary>
+	/// Spawns a runner
+	/// </summary>
+	/// <param name="sign"></param>
+	/// <param name="degreesToSpawn"></param>
+	/// <param name="stepDegrees">how many degrees will the degreesToSpawn will be modified</param>
+
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="sign">a -1 or +1 that dictates the direction in the trigonometric </param>
+	/// <param name="degreesToSpawn">degrees that make up the vec2</param>
+	/// <param name="enemy"></param>
+	/// <param name="stepDegrees"></param>
+	void SpawnEnemy(const float sign, float& degreesToSpawn, EnemyTypes enemy, const float stepDegrees = 45.0f);
+
+
+
 	void setDg(unsigned int);
 	void setHp(unsigned int);
 	void setScore(unsigned int);

@@ -32,7 +32,7 @@ public:
 	EnemyTypes ConvertToEnum(std::string str);
 
 	//this is the minimum distance to the player added to half of the collider of the enemy using this
-	const float getMaxPlayerDistance()const;
+	const float getMaxPlayerDistanceSquared()const;
 private:
 	void ThrowError(const char*);
 	void EnemyInit();
@@ -101,7 +101,7 @@ inline EnemyTypes EnemyWaveSpawner::ConvertToEnum(std::string str)
 	return type;
 }
 
-inline const float EnemyWaveSpawner::getMaxPlayerDistance() const
+inline const float EnemyWaveSpawner::getMaxPlayerDistanceSquared() const
 {
 	return playerDistanceSqr;
 }

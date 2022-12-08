@@ -23,6 +23,16 @@ Enemy::~Enemy()
 	sprite = nullptr;//this sprite is deleted by the spawner
 }
 
+void Enemy::SpawnEnemy(const float sign, float& degreesToSpawn, EnemyTypes enemy, const float stepDegrees)
+{
+	vec2 direction = (MathFunctions::GetVec2FromRadians(degreesToSpawn * PI / 180 * sign)).normalized();
+	spawner->SpawnEnemy(PosDir{
+		pos ,
+		direction },
+		enemy);
+	degreesToSpawn = fmodf(degreesToSpawn + stepDegrees * sign, 360);
+}
+
 
 
 void Enemy::SetJsonValues(Enemy* enem)

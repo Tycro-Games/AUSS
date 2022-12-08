@@ -5,7 +5,7 @@ using namespace Tmpl8;
 EnemyHoarder::EnemyHoarder(PosDir posDir, Sprite* sprite, EnemyWaveSpawner* _spawner) :
 	Enemy(posDir.pos, sprite, _spawner),
 	rVar(RotationVar(360 / (static_cast<const float>(sprite->Frames() - 1)), 90.0f, static_cast<const float>(sprite->GetHeight()))),
-	MAX_DISTANCE_SQUARED_TO_PLAYER(100.0f + _spawner->getMaxPlayerDistance())
+	MAX_DISTANCE_SQUARED_TO_PLAYER(100.0f + _spawner->getMaxPlayerDistanceSquared())
 
 {
 	enemyType = Hoarder;
@@ -63,8 +63,8 @@ void EnemyHoarder::Init(PosDir posDir)
 	dir = posDir.dir;
 	hp = maxHp;
 	mover.SetSpeed(SPEED + randomNumbers.RandomBetweenFloats(-30, 100));
-	rotate.Init(std::bind(&EnemyRotator::Call, &rot), randomNumbers.RandomBetweenFloats(0.1f, 0.9f), true);
-	rot.Call();
+	rotate.Init(std::bind(&EnemyRotator::RotateToPlayer, &rot), randomNumbers.RandomBetweenFloats(0.1f, 0.9f), true);
+	rot.RotateToPlayer();
 }
 
 

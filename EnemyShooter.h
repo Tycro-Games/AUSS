@@ -7,7 +7,6 @@ public:
 	EnemyShooter(PosDir posDir, Tmpl8::Sprite* sprite, EnemyWaveSpawner* _spawner);
 	~EnemyShooter() = default;
 
-	// Inherited via Enemy
 	void Update(float deltaTime) override;
 
 	void Render(Tmpl8::Surface* screen) override;
@@ -46,6 +45,6 @@ private:
 	void StartMovement();
 	void SpawnRunner();
 	void StopMovement();
-	void Move();
+	void Reflect();
 
 };
