@@ -92,15 +92,11 @@ void ProjectileSpawner::SpawnProjectiles()
 	vec2 playerDir = Game::Get().getPlayer().GetDir();
 	vec2 randomizedDir = (playerDir + randomDir).normalized();
 	projectile->Init(PosDir{ playerPos + randomizedDir * OFFSET_MULTIPLIER,randomizedDir });
-	AddProjectilesCount();
+	waveProjectiles++;
 	Game::Get().AddCollider(projectile->getColl());
 	Game::Get().AddMoveable(projectile->getMoveable());
 }
 
-void ProjectileSpawner::AddProjectilesCount()
-{
-	waveProjectiles++;
-}
 
 void ProjectileSpawner::setFlag(bool fire)
 {
@@ -126,6 +122,17 @@ void ProjectileSpawner::Update(float deltaTime)
 
 void ProjectileSpawner::Render(Tmpl8::Surface* screen)
 {
+	
+	auto firerate = std::string("Firerate: " + std::to_string(fireRate));
+
+	screen->Print(firerate.c_str(), 10, 60, 0x00FF0000);
+
+	screen->Print("Use up arrow and down arrow to adjust the firerate", 10, 70, 0x00FF0000);
+	screen->Print("Use space bar to dash", 10, 80, 0x00FF0000);
+	
+	for (int i = 0; i < updateObjects.size(); i++)
+		updateObjects[i]->Render(screen);
+#ifdef _DEBUG
 	auto inactive = std::string("Bullets left:" + std::to_string(poolOfProjectiles.size()));
 
 	screen->Print(inactive.c_str(), 10, 10, 0x00FF0000);
@@ -137,15 +144,7 @@ void ProjectileSpawner::Render(Tmpl8::Surface* screen)
 	auto total = std::string("Objects active:" + std::to_string(updateObjects.size() - poolOfProjectiles.size() - poolOfExplosions.size()));
 
 	screen->Print(total.c_str(), 10, 30, 0x00FF0000);
-	auto firerate = std::string("Firerate: " + std::to_string(fireRate));
-
-	screen->Print(firerate.c_str(), 10, 60, 0x00FF0000);
-
-	screen->Print("Use up arrow and down arrow to adjust the firerate", 10, 70, 0x00FF0000);
-	screen->Print("Use space bar to dash", 10, 80, 0x00FF0000);
-	for (int i = 0; i < updateObjects.size(); i++)
-		updateObjects[i]->Render(screen);
-
+#endif
 }
 
 unsigned int ProjectileSpawner::getWaveProjectiles() const

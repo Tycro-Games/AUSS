@@ -45,7 +45,7 @@ public:
 	unsigned int getScore() const;
 	unsigned int getWeight() const;
 	unsigned int getDgToTake() const;
-	EnemyTypes GetEnemyType() const;
+	EnemyTypes getEnemyType() const;
 
 protected:
 	void CheckForProjectileCollisions();
@@ -131,7 +131,7 @@ inline unsigned int Enemy::getDgToTake() const
 	return dgToTake;
 }
 
-inline EnemyTypes Enemy::GetEnemyType() const {
+inline EnemyTypes Enemy::getEnemyType() const {
 	return enemyType;
 }
 

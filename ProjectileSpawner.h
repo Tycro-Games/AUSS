@@ -17,7 +17,6 @@ public:
 	void CreateMoreProjectiles();
 
 	void SpawnProjectiles();
-	void AddProjectilesCount();
 	void setFlag(bool fire);
 
 

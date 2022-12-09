@@ -125,7 +125,8 @@ const Tmpl8::vec2 Player::GetPos() const
 
 void Player::onNotify(int points, EventType _event)
 {
-	unsigned int maximumOfProjectiles = points * 4;
+	
+	const unsigned int maximumOfProjectiles = points * 4;
 
 	switch (_event)
 	{

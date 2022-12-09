@@ -30,8 +30,8 @@ protected:
 
 	//consts
 	const float OFFSET = 20.0f;
-	const float MIN_DEVIATION = -.1f;
-	const float MAX_DEVIATION = .1f;
+	const float MIN_DEVIATION = -.05f;
+	const float MAX_DEVIATION = .05f;
 private:
 
 };

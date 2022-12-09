@@ -27,6 +27,7 @@ EnemyWaveSpawner::EnemyWaveSpawner()
 
 void EnemyWaveSpawner::Init()
 {
+	minimumProjectiles = 0;
 	indexOfEnemiesToSpawn = 0;
 	firstWave = true;
 	timer.Init(bind(&EnemyWaveSpawner::SpawnCurrentWave, this), 1.0f);
@@ -145,12 +146,9 @@ void EnemyWaveSpawner::SpawnCurrentWave()
 					playerHasTakenDamage = false;
 				}
 				//number of minimum projectiles
-				int minimumProjectiles = 0;
-				for (auto p : enemiesToSpawn) {
-					minimumProjectiles += (enemyPrototypes[p]->getMaxHp() / enemyPrototypes[p]->getDgToTake());
-				}
 
 				notify(minimumProjectiles, EventType::EndOfAWave);
+				minimumProjectiles = 0;
 			}
 
 			firstWave = false;
@@ -255,6 +253,10 @@ void EnemyWaveSpawner::SpawnEnemy(PosDir posDir, EnemyTypes enemy)
 	}
 
 	if (enemyToSpawn) {
+		if (enemyToSpawn->getEnemyType() != EnemyTypes::Runner) {//runner has a predefined lifetime
+			minimumProjectiles += enemyToSpawn->getMaxHp() / enemyToSpawn->getDgToTake();
+			std::cout << "min proje" << minimumProjectiles << "\n";
+		}
 		activeColliders.push_back(enemyToSpawn->getColl());
 		//set position to the spawner's
 
@@ -301,7 +303,7 @@ void EnemyWaveSpawner::AddEnemyToPool(Enemy* enemy, bool getPoints)
 	}
 	if (activeColliders.size() == 0)
 		GetEnemiesForCurrentWave();
-	switch (enemy->GetEnemyType())
+	switch (enemy->getEnemyType())
 	{
 	case Hoarder:
 		poolOfHoarders.push_back(enemy);

@@ -66,6 +66,7 @@ private:
 	Wave waves[10000];
 	size_t indexWave = 0;
 	size_t wavesCount = 0;
+	unsigned int minimumProjectiles = 0;
 	//prototypes
 	Enemy* enemyPrototypes[NUMBER_OF_ENEMIES] = {};
 	RandomNumbers randomNumbers;

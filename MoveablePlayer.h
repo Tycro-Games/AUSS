@@ -48,8 +48,6 @@ public:
 		}
 	}
 
-
-
 	float GetDashLinearTime() const
 	{
 		return dashCurve.getCurrentValue();
