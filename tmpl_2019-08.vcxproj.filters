@@ -116,6 +116,9 @@
     <ClCompile Include="EnemyShielder.cpp">
       <Filter>Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="ShieldLine.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -253,6 +256,9 @@
     </ClInclude>
     <ClInclude Include="EnemyShielder.h">
       <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="ShieldLine.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

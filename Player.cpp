@@ -77,7 +77,7 @@ void Player::Update(float deltaTime)
 	cooldownForDamage.Update(deltaTime);
 }
 void Player::TakeDamage(int dg) {
-	if (cooldownForDamage.isFinished) {
+	if (cooldownForDamage.isFinished && !playerMover.IsDashing()) {
 		Being::TakeDamage(dg);
 		cooldownForDamage.ResetVar();
 	}

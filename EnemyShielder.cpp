@@ -1,10 +1,10 @@
 #include "EnemyShielder.h"
-
+#include "game.h"
+using namespace Tmpl8;
 EnemyShielder::EnemyShielder(PosDir posDir, Tmpl8::Sprite* sprite, EnemyWaveSpawner* _spawner) :
 	Enemy(posDir.pos, sprite, _spawner),
 	rVar(RotationVar(360 / (static_cast<const float>(sprite->Frames() - 1)), 90.0f, static_cast<const float>(sprite->GetHeight()))),
 	MAX_DISTANCE_SQUARED_TO_PLAYER(100.0f + _spawner->getMaxPlayerDistanceSquared())
-
 {
 	enemyType = Shielder;
 	enemyCollider = Collider(COL_MIN, COL_MAX, &pos);
@@ -25,6 +25,7 @@ void EnemyShielder::Update(float deltaTime)
 		return;
 
 	rotateTimer.Update(deltaTime);
+	spawnTimer.Update(deltaTime);
 	CheckForProjectileCollisions();
 
 	mover.Update(deltaTime);
@@ -32,10 +33,19 @@ void EnemyShielder::Update(float deltaTime)
 	if (InRangeToAtack) {
 		attackTimer.Update(deltaTime);
 	}
+	shieldLine.UpdateLine(pos + dir * LINE_OFFSET, MathFunctions::GetDirInDegreesPositive(dir), LINE_SIZE);
+	shieldLine.CheckCollisionProjectiles();
 }
 void EnemyShielder::SpawnEnemies()
 {
 	//call enemy spawn enemies
+	angleToSpawn = MathFunctions::GetDirInDegreesPositive(dir) ;
+	Enemy::SpawnEnemy(1, angleToSpawn, Hoarder, STEP_ANGLE);
+	Enemy::SpawnEnemy(1, angleToSpawn, Runner, STEP_ANGLE);
+	Enemy::SpawnEnemy(1, angleToSpawn, Runner, STEP_ANGLE);
+	Enemy::SpawnEnemy(1, angleToSpawn, Runner, STEP_ANGLE);
+	
+
 }
 void EnemyShielder::Reflect()
 {
@@ -72,6 +82,11 @@ void EnemyShielder::Render(Tmpl8::Surface* screen)
 		static_cast<int>(pos.y - rVar.SPRITE_OFFSET / 2),
 		static_cast<int>(pos.x + rVar.SPRITE_OFFSET / 2),
 		static_cast<int>(pos.y + rVar.SPRITE_OFFSET / 2), 0xff00ff);
+
+	float angle = MathFunctions::GetDirInDegreesPositive(dir);
+
+
+	shieldLine.Render(screen);
 }
 
 void EnemyShielder::Die()
@@ -95,7 +110,7 @@ void EnemyShielder::Init(PosDir posDir)
 
 
 	mover.SetSpeed(SPEED + randomNumbers.RandomBetweenFloats(-30, 100));
-	rotateTimer.Init(std::bind(&EnemyRotator::RotateToPlayer, &rot), randomNumbers.RandomBetweenFloats(0.1f, 0.9f), true);
+	rotateTimer.Init(std::bind(&EnemyRotator::RotateToPlayer, &rot), randomNumbers.RandomBetweenFloats(0.04f, 0.1f), true);
 	spawnTimer.Init(std::bind(&EnemyShielder::SpawnEnemies, this), SPAWN_INTERVAL, true);
 
 

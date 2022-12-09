@@ -60,7 +60,7 @@ public:
 	}
 	bool IsDashing() const
 	{
-		return dashing;
+		return !dashCurve.isAtEnd();
 	}
 	bool ChangedPos() const
 	{
