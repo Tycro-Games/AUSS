@@ -145,10 +145,7 @@ void EnemyWaveSpawner::SpawnCurrentWave()
 				else {
 					playerHasTakenDamage = false;
 				}
-				//number of minimum projectiles
-
-				notify(minimumProjectiles, EventType::EndOfAWave);
-				minimumProjectiles = 0;
+				
 			}
 
 			firstWave = false;
@@ -301,8 +298,13 @@ void EnemyWaveSpawner::AddEnemyToPool(Enemy* enemy, bool getPoints)
 	if (getPoints) {
 		notify(enemy->getScore(), EventType::EnemyDeath);
 	}
-	if (activeColliders.size() == 0)
+	if (activeColliders.size() == 0) {
+		//number of minimum projectiles
+
+		notify(minimumProjectiles, EventType::EndOfAWave);
+		minimumProjectiles = 0;
 		GetEnemiesForCurrentWave();
+	}
 	switch (enemy->getEnemyType())
 	{
 	case Hoarder:
