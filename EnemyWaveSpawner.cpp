@@ -299,10 +299,12 @@ void EnemyWaveSpawner::AddEnemyToPool(Enemy* enemy, bool getPoints)
 		notify(enemy->getScore(), EventType::EnemyDeath);
 	}
 	if (activeColliders.size() == 0) {
-		//number of minimum projectiles
+		if (enemiesToSpawn.size() == indexOfEnemiesToSpawn) {
+			//number of minimum projectiles
 
-		notify(minimumProjectiles, EventType::EndOfAWave);
-		minimumProjectiles = 0;
+			notify(minimumProjectiles, EventType::EndOfAWave);
+			minimumProjectiles = 0;
+		}
 		GetEnemiesForCurrentWave();
 	}
 	switch (enemy->getEnemyType())
