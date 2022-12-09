@@ -6,18 +6,21 @@
 #include "MoveToADirection.h"
 #include "Rotator.h"
 #include "Curve.h"
-constexpr const float DASH_SPEED = 600.0f;
-constexpr float SPEED = 125.0f;
+
 
 class MoveablePlayer :public Moveable
 {
 	//consts
-	const float DASH_DURATION = 0.3f;
-	const float COOLDOWN_DURATION = 0.6f;
-	const float EDGE_DISTANCE = 4.0f;
+
+	//json set
+	float DASH_SPEED;
+	float SPEED;
+	float DASH_DURATION;
+	float COOLDOWN_DURATION;
+	float EDGE_DISTANCE;
 public:
 	MoveablePlayer();
-	void Init(Tmpl8::vec2* pos, Collider* col, const Collider* tileMapCol, float speed = SPEED, float dashSpeed = DASH_SPEED);
+	void Init(Tmpl8::vec2* pos, Collider* col, const Collider* tileMapCol);
 	~MoveablePlayer() = default;
 
 	void Update(float deltaTime) override;

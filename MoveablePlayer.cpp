@@ -3,6 +3,8 @@
 #include "game.h"
 
 #include <iostream>
+#include <fstream>
+#include "nlohmann_json/single_include/nlohmann/json.hpp"
 using namespace Tmpl8;
 
 
@@ -18,16 +20,28 @@ MoveablePlayer::MoveablePlayer()
 	Moveable(),
 	tileMapCol(nullptr),
 	//lambda expression here, assigns a copy of this function to the dash curve
-	dashCurve([](float x) {return MathFunctions::DashFunction(x); }, DASH_DURATION)
+	dashCurve([](float x) {return MathFunctions::DashFunction(x); })
+
 {
+	//reading speed values
+	std::ifstream f("json/PlayerMovement.json");
+	json wavesInput = json::parse(f);
+
+	SPEED = wavesInput["speed"];
+	DASH_SPEED = wavesInput["dashSpeed"];
+	DASH_DURATION = wavesInput["dashDuration"];
+	COOLDOWN_DURATION = wavesInput["cooldownDuration"];
+	EDGE_DISTANCE = wavesInput["edgeDistance"];
+
+	dashCurve.setScale(DASH_DURATION);
 	dashCurve.evaluate(1);//set it at the end
+
 }
 
-void MoveablePlayer::Init(vec2* pos, Collider* col, const Collider* _tileMapCol, float _speed, float _dashSpeed)
+void MoveablePlayer::Init(vec2* pos, Collider* col, const Collider* _tileMapCol)
 {
-	Moveable::Init(pos, col, _speed);
+	Moveable::Init(pos, col, SPEED);
 	tileMapCol = _tileMapCol;
-	speed = _speed;
 	InitTimers();
 	dashing = false;
 }

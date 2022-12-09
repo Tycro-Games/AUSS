@@ -1,0 +1,7 @@
+{
+    "speed":250,
+    "dashSpeed":600,
+    "dashDuration":0.3,
+    "cooldownDuration":0.6,
+    "edgeDistance":4.0
+}

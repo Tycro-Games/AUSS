@@ -4,7 +4,7 @@
 class Curve final
 {
 public:
-	explicit Curve(std::function<float(float)> func, float scale = 1.0f);
+	explicit Curve(std::function<float(float)> func);
 
 	/**
 	 * Evalaluate the curve and return the evaluated value.
@@ -33,7 +33,7 @@ public:
 		return currentValue;
 	}
 
-	float setScale(float scale)
+	void setScale(float scale)
 	{
 		scaleValue = scale;
 	}

@@ -1,7 +1,7 @@
 #include "Curve.h"
 
-Curve::Curve(std::function<float(float)> func, float scale)
-	: scaleValue{ scale }
+Curve::Curve(std::function<float(float)> func)
+	: scaleValue{ 0 }
 	, parametricCurve{ std::move(func) }
 {}
 
