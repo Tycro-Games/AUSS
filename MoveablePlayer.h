@@ -6,13 +6,13 @@
 #include "MoveToADirection.h"
 #include "Rotator.h"
 #include "Curve.h"
-constexpr const float DASH_SPEED = 500.0f;
-constexpr float SPEED = 100.0f;
+constexpr const float DASH_SPEED = 600.0f;
+constexpr float SPEED = 125.0f;
 
 class MoveablePlayer :public Moveable
 {
 	//consts
-	const float DASH_DURATION = 0.4f;
+	const float DASH_DURATION = 0.3f;
 	const float COOLDOWN_DURATION = 0.6f;
 	const float EDGE_DISTANCE = 4.0f;
 public:
