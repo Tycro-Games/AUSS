@@ -58,7 +58,7 @@ void Player::Render(Tmpl8::Surface* screen)
 	//debug for player's collider	
 	screen->Box(static_cast<int>(pos.x + playerCollider.min.x), static_cast<int>(pos.y + playerCollider.min.y), static_cast<int>(pos.x + playerCollider.max.x), static_cast<int>(pos.y + playerCollider.max.y), 0xffffff);
 	//debug for collision with screen borders
-	screen->Box(static_cast<int>(pos.x + playerCollider.min.x * 5), static_cast<int>(pos.y + playerCollider.min.y * 5), static_cast<int>(pos.x + playerCollider.max.x * 5), static_cast<int>(pos.y + playerCollider.max.y * 5), 0xffffff);
+	screen->Box(static_cast<int>(pos.x + playerCollider.min.x * playerMover.GetEdgeBorderDistance()), static_cast<int>(pos.y + playerCollider.min.y * playerMover.GetEdgeBorderDistance()), static_cast<int>(pos.x + playerCollider.max.x * playerMover.GetEdgeBorderDistance()), static_cast<int>(pos.y + playerCollider.max.y * playerMover.GetEdgeBorderDistance()), 0xffffff);
 
 	auto inactive = std::string("HP: " + std::to_string(hp));
 

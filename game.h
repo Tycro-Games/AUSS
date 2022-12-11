@@ -8,12 +8,14 @@
 #include "Tilemap.h"
 
 #include <SDL_Scancode.h>
-#include "Score.h"
-namespace Tmpl8 {
 
+#include "Score.h"
+
+namespace Tmpl8 {
 	class Surface;
 	class Game
 	{
+
 	public:
 		Game();
 		//this is the singleton pattern from this and Jeremiah: https://gameprogrammingpatterns.com/singleton.html

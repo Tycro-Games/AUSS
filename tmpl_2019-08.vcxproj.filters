@@ -119,6 +119,9 @@
     <ClCompile Include="ShieldLine.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="AudioPlayer.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -258,6 +261,9 @@
       <Filter>Enemy</Filter>
     </ClInclude>
     <ClInclude Include="ShieldLine.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioPlayer.h">
       <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>

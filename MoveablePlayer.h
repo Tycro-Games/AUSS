@@ -50,7 +50,9 @@ public:
 			cooldownTimer.setUpdateable(true);
 		}
 	}
-
+	float GetEdgeBorderDistance() const {
+		return EDGE_DISTANCE;
+	}
 	float GetDashLinearTime() const
 	{
 		return dashCurve.getCurrentValue();

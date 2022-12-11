@@ -2,7 +2,6 @@
 #include <iostream>
 #include <string>
 
-#include "surface.h"
 #include "template.h"
 
 #include "MathFunctions.h"
@@ -10,10 +9,12 @@
 #include <SDL_events.h>
 #include <filesystem>
 #include <functional>
+#include "AudioPlayer.h"
 using namespace std;
 namespace Tmpl8
 {
 	static Game* gs_Game = nullptr;
+	AudioPlayer audioPlayer;
 
 	Game::Game() :
 		cursor("assets/OriginalAssets/target.tga", 1),
@@ -111,6 +112,7 @@ namespace Tmpl8
 	}
 	void Game::Shutdown()
 	{
+
 	}
 
 
@@ -119,7 +121,7 @@ namespace Tmpl8
 		deltaTime /= 1000.0f; //make time into seconds
 		screen->Clear(0);
 
-	
+
 		switch (currentState)
 		{
 		case GameState::game:
@@ -143,7 +145,7 @@ namespace Tmpl8
 			//rendering
 			for (int i = 0; i < renderables.size(); i++)
 				renderables[i]->Render(screen);
-			
+
 			screen->Print(std::to_string(score.getTotal()).c_str(), ScreenWidth - 30, 20, 0x00FF00);
 			break;
 		case GameState::mainMenu:
@@ -313,7 +315,7 @@ namespace Tmpl8
 	{
 		if (Game::Get().isPressingLeftMouse)
 		{
-			SDL_Event quit;
+			SDL_Event quit{};
 			quit.type = SDL_QUIT;
 			SDL_PushEvent(&quit);
 		}
