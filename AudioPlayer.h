@@ -9,10 +9,21 @@ namespace Tmpl8 {
 	public:
 		AudioPlayer();
 		~AudioPlayer();
-		void PlaySound();
+		void PlaySound(SoundID id);
 		void PlayMusic();
 		void PauseMusic();
+		void SwitchMute();
+		bool IsMuted()const;
+
 	private:
+		enum class channels {
+			shootings,
+			explosions,
+			spawnings,
+			misc,
+			UI,
+		};
+		bool mute = false;
 		//The music that will be played
 		Mix_Music* menuMusic = nullptr;
 		Mix_Music* gameMusic = nullptr;

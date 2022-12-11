@@ -11,7 +11,8 @@
 #include <functional>
 enum class ButtonState {
 	Default,
-	Hover
+	Hover,
+	Disabled
 };
 //writing that var name is equivalent to the boiler plate on the right side
 using ButtonPressEvent = std::function<void()>;
@@ -29,6 +30,12 @@ public:
 
 	ButtonState GetState()const {
 		return state;
+	}
+	void Enable() {
+		state = ButtonState::Default;
+	}
+	void Disable() {
+		state = ButtonState::Disabled;
 	}
 private:
 	//the variables need to be declared in the order they are constructed in the initializer list

@@ -20,11 +20,14 @@ namespace Tmpl8
 		//passes functions as objects
 		playButton("assets/UI/Play_Idle.png", "assets/UI/Play_Pushed.png", vec2(ScreenWidth / 2, ScreenHeight / 2), bind(&Game::ResumeGame, this)),
 		exitButton("assets/UI/Cross_Idle.png", "assets/UI/Cross_Pushed.png", vec2(ScreenWidth / 2, ScreenHeight / 2 + 64), bind(&Game::ExitGame, this)),
+		muteButton("assets/UI/Mute_Idle.png", "assets/UI/Mute_Pushed.png", vec2(ScreenWidth / 2, ScreenHeight / 2 + 128), bind(&Game::MuteSound, this)),
+		volumeButton("assets/UI/Volume_2_Idle.png", "assets/UI/Volume_2_Pushed.png", vec2(ScreenWidth / 2, ScreenHeight / 2 + 128), bind(&Game::MuteSound, this)),
 		screen(nullptr),
 		audioPlayer(nullptr),
 		currentState(GameState::mainMenu)
 
 	{
+		muteButton.Disable();
 		gs_Game = this;
 
 	}
@@ -122,7 +125,7 @@ namespace Tmpl8
 	{
 		deltaTime /= 1000.0f; //make time into seconds
 		screen->Clear(0);
-
+		changedVolumeButtons = false;
 
 		switch (currentState)
 		{
@@ -156,6 +159,8 @@ namespace Tmpl8
 			//pause stuff menu
 			playButton.Render(screen);
 			exitButton.Render(screen);
+			muteButton.Render(screen);
+			volumeButton.Render(screen);
 			break;
 		case GameState::reset:
 			ResetGame();
@@ -175,6 +180,8 @@ namespace Tmpl8
 		case GameState::paused:
 			playButton.OnMouseUp(button);
 			exitButton.OnMouseUp(button);
+			muteButton.OnMouseUp(button);
+			volumeButton.OnMouseUp(button);
 			break;
 		}
 		isPressingLeftMouse = false;
@@ -205,6 +212,8 @@ namespace Tmpl8
 	{
 		playButton.OnMouseMoved(x, y);
 		exitButton.OnMouseMoved(x, y);
+		muteButton.OnMouseMoved(x, y);
+		volumeButton.OnMouseMoved(x, y);
 	}
 
 	void Game::KeyUp(SDL_Scancode key)
@@ -280,11 +289,17 @@ namespace Tmpl8
 				//need update the cursor movement for the buttons
 				playButton.OnMouseMoved(static_cast<int>(cursor.pos.x), static_cast<int>(cursor.pos.y));
 				exitButton.OnMouseMoved(static_cast<int>(cursor.pos.x), static_cast<int>(cursor.pos.y));
+				muteButton.OnMouseMoved(static_cast<int>(cursor.pos.x), static_cast<int>(cursor.pos.y));
+				volumeButton.OnMouseMoved(static_cast<int>(cursor.pos.x), static_cast<int>(cursor.pos.y));
 			}
 			break;
 		default:
 			break;
 		}
+	}
+	void Game::PlaySound(SoundID id)
+	{
+		audioPlayer->PlaySound(id);
 	}
 	void Game::PlayMusic()
 	{
@@ -336,6 +351,25 @@ namespace Tmpl8
 			SDL_PushEvent(&quit);
 		}
 	}
+	void Game::MuteSound()
+	{
+		if (changedVolumeButtons)
+			return;
+		if (audioPlayer->IsMuted()) {
+			muteButton.Disable();
+			volumeButton.Enable();
+			volumeButton.OnMouseMoved(static_cast<int>(cursor.pos.x), static_cast<int>(cursor.pos.y));
+		}
+		else {
+			volumeButton.Disable();
+			muteButton.Enable();
+			muteButton.OnMouseMoved(static_cast<int>(cursor.pos.x), static_cast<int>(cursor.pos.y));
+		}
+		changedVolumeButtons = true;
+		audioPlayer->SwitchMute();
+
+	}
+
 	void Game::AddCollider(Collider* col)
 	{
 		colliders.push_back(col);

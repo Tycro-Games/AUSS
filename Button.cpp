@@ -1,5 +1,5 @@
 #include "Button.h"
-
+#include "game.h"
 using namespace Tmpl8;
 using namespace std;
 Button::Button(const filesystem::path& _defaultSprite, const filesystem::path& _pressedSprite, const vec2& _centerPos, const ButtonPressEvent& ev)
@@ -21,6 +21,8 @@ Button::Button(const filesystem::path& _defaultSprite, const filesystem::path& _
 }
 void Button::Render(Surface* screen)
 {
+	if (state == ButtonState::Disabled)
+		return;
 	switch (state)
 	{
 	case ButtonState::Default:
@@ -30,15 +32,22 @@ void Button::Render(Surface* screen)
 		pressedSprite.Draw(screen, offsetX, offsetY);
 		break;
 
+
 	}
 }
 
 void Button::OnMouseMoved(int x, int y)
 {
+	if (ButtonState::Disabled == state)
+		return;
+
+
+
 	mousePos = vec2{ static_cast<float>(x),static_cast<float>(y) };
 
 	if (aabb.isColliding(mousePos)) {
 		state = ButtonState::Hover;
+		Tmpl8::Game::Get().PlaySound(SoundID::hoverUI);
 	}
 	else {
 		state = ButtonState::Default;
@@ -52,6 +61,8 @@ void Button::OnMouseUp(int button)
 
 	case ButtonState::Hover:
 		onPress();
+		Tmpl8::Game::Get().PlaySound(SoundID::clickUI);
+
 		break;
 
 

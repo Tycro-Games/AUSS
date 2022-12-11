@@ -1,5 +1,6 @@
 #include "MathFunctions.h"
 #include "RandomNumbers.h"
+#include <algorithm>
 using namespace Tmpl8;
 /// <summary>
 /// clamped direction to positive degrees
@@ -115,5 +116,13 @@ vec2 MathFunctions::GetRandomVec2(const float min, const float max, const float 
 	y *= deviationMultiplier;
 	return vec2(x, y);
 }
+
+float MathFunctions::InverseLerp(float a, float b, float f)
+{
+	f = std::clamp(f, a, b);
+
+	return (f - a) / (b - a);
+}
+
 
 

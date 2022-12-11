@@ -108,6 +108,7 @@ void ProjectileSpawner::Update(float deltaTime)
 
 	if (currentTime >= desiredTime) {
 		if (isSpawning) {
+			Game::Get().PlaySound(SoundID::playerShooting);
 			SpawnProjectiles();
 			desiredTime = currentTime + fireRate;
 		}
@@ -122,14 +123,14 @@ void ProjectileSpawner::Update(float deltaTime)
 
 void ProjectileSpawner::Render(Tmpl8::Surface* screen)
 {
-	
+
 	auto firerate = std::string("Firerate: " + std::to_string(fireRate));
 
 	screen->Print(firerate.c_str(), 10, 60, 0x00FF0000);
 
 	screen->Print("Use up arrow and down arrow to adjust the firerate", 10, 70, 0x00FF0000);
 	screen->Print("Use space bar to dash", 10, 80, 0x00FF0000);
-	
+
 	for (int i = 0; i < updateObjects.size(); i++)
 		updateObjects[i]->Render(screen);
 #ifdef _DEBUG

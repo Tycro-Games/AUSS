@@ -44,7 +44,7 @@ namespace Tmpl8 {
 		void KeyUp(SDL_Scancode key);
 		void KeyDown(SDL_Scancode key);
 		//audio playing
-		void PlaySound();
+		void PlaySound(SoundID id);
 		void PlayMusic();
 		void StopMusic();
 		bool isPressingLeftMouse = false;
@@ -78,13 +78,16 @@ namespace Tmpl8 {
 		Tilemap tileMap;
 		void ResumeGame();
 		void ExitGame();
-
+		void MuteSound();
+		bool changedVolumeButtons = false;
 		std::vector<Collider*> colliders;
 		std::vector<Moveable*> moveablesTile;
 		//MainMenu
 		Cursor cursor;
 		Button playButton;
 		Button exitButton;
+		Button muteButton;
+		Button volumeButton;
 		//actual game
 		Player player;
 		Score score;

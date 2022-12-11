@@ -33,11 +33,8 @@ public:
 		return (1.0f - f) * a + b * f;
 	}
 	//returns a number from 0 (when f is a) to 1 (when f is b)
-	static float InverseLerp(float a, float b, float f)
-	{
-		assert(a <= f && f <= b);
-		return (f - a) / (b - a);
-	}
+	static float InverseLerp(float a, float b, float f);
+
 
 
 };
