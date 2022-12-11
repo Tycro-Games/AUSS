@@ -20,6 +20,8 @@
 #include "template.h"
 #include <corecrt_math.h>
 #include <SDL.h>
+//audio mixer
+#include "AudioPlayer.h"
 #include "surface.h"
 #include <cstdio>
 #include <iostream>
@@ -177,6 +179,7 @@ static bool firstframe = true;
 
 
 Surface* surface = 0;
+AudioPlayer* audioPlayer = 0;
 Game* game = 0;
 SDL_Window* window = 0;
 
@@ -314,7 +317,8 @@ int main(int argc, char** argv)
 	//init video and audio
 	SDL_Init(SDL_INIT_VIDEO);
 	SDL_Init(SDL_INIT_AUDIO);
-
+	//init mixer
+	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
 
 
 #ifdef ADVANCEDGL
@@ -338,9 +342,12 @@ int main(int argc, char** argv)
 	SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	SDL_Texture* frameBuffer = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, ScreenWidth, ScreenHeight);
 #endif
+	//init audio player
+	audioPlayer = new AudioPlayer();
 
 	int exitapp = 0;
 	game = new Game();
+	game->SetAudio(audioPlayer);
 	game->SetTarget(surface);
 	timer t;
 	t.reset();
@@ -417,6 +424,8 @@ int main(int argc, char** argv)
 		}
 	}
 	game->Shutdown();
+	delete audioPlayer;
+	Mix_Quit();
 	SDL_Quit();
 	return 0;
 }

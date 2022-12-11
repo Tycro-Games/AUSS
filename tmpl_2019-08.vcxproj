@@ -271,6 +271,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AABB.h" />
+    <ClInclude Include="AudioID.h" />
     <ClInclude Include="AudioPlayer.h" />
     <ClInclude Include="Being.h" />
     <ClInclude Include="Button.h" />

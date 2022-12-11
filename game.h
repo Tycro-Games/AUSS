@@ -10,9 +10,10 @@
 #include <SDL_Scancode.h>
 
 #include "Score.h"
-
+#include "AudioID.h"
 namespace Tmpl8 {
 	class Surface;
+	class AudioPlayer;
 	class Game
 	{
 
@@ -22,6 +23,7 @@ namespace Tmpl8 {
 		static Game& Get();
 
 		void SetTarget(Surface* surface) { screen = surface; }
+		void SetAudio(AudioPlayer* audio) { audioPlayer = audio; }
 		void Init();
 		void Initializations();
 		void ResetGame();
@@ -41,7 +43,10 @@ namespace Tmpl8 {
 		void CheckButtons(int x, int y);
 		void KeyUp(SDL_Scancode key);
 		void KeyDown(SDL_Scancode key);
-
+		//audio playing
+		void PlaySound();
+		void PlayMusic();
+		void StopMusic();
 		bool isPressingLeftMouse = false;
 		//switching between game states
 		enum class GameState
@@ -67,6 +72,7 @@ namespace Tmpl8 {
 
 	private:
 		Surface* screen;
+		AudioPlayer* audioPlayer;
 
 		GameState currentState;
 		Tilemap tileMap;

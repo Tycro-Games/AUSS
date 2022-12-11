@@ -1,24 +1,34 @@
 #include "AudioPlayer.h"
-AudioPlayer::AudioPlayer()
-{
-	//init mixer audio
-	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
+namespace Tmpl8 {
+	AudioPlayer::AudioPlayer()
+	{
+		menuMusic = Mix_LoadMUS("assets/Sounds&Music/music.wav");
+		gameMusic = Mix_LoadMUS("assets/Sounds&Music/gameMusic.wav");
+		playerShootingSound = Mix_LoadWAV("assets/Sounds&Music/playerShooting.wav");
 
+	}
 
-	music = Mix_LoadMUS("assets/Sounds&Music/music.wav");
-	playerShootingSound = Mix_LoadWAV("assets/Sounds&Music/playerShooting.wav");
-	//-1 means loop 
-	Mix_PlayMusic(music, -1);
-}
+	AudioPlayer::~AudioPlayer()
+	{
+		//free memory
+		Mix_FreeMusic(menuMusic);
+		Mix_FreeMusic(gameMusic);
 
-AudioPlayer::~AudioPlayer()
-{
-	//free memory
-	Mix_FreeMusic(music);
+		Mix_FreeChunk(playerShootingSound);
+	}
+	void AudioPlayer::PlaySound()
+	{
+	}
+	void AudioPlayer::PlayMusic()
+	{
+		if (Mix_PlayingMusic() == 0)
+			Mix_PlayMusic(gameMusic, -1);
+		else
+			Mix_ResumeMusic();
 
-	Mix_FreeChunk(playerShootingSound);
-	Mix_Quit();
-}
-void AudioPlayer::PlaySound()
-{
-}
+	}
+	void AudioPlayer::PauseMusic()
+	{
+		Mix_PauseMusic();
+	}
+};

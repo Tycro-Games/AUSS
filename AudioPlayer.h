@@ -1,15 +1,23 @@
 #pragma once
 #include <SDL_mixer.h>
-class AudioPlayer
-{
-public:
-	AudioPlayer();
-	~AudioPlayer();
-	void PlaySound();
-private:
-	//The music that will be played
-	Mix_Music* music = nullptr;
+#include "AudioID.h"
 
-	//sounds that will be played
-	Mix_Chunk* playerShootingSound = nullptr;
-};
+
+namespace Tmpl8 {
+	class AudioPlayer
+	{
+	public:
+		AudioPlayer();
+		~AudioPlayer();
+		void PlaySound();
+		void PlayMusic();
+		void PauseMusic();
+	private:
+		//The music that will be played
+		Mix_Music* menuMusic = nullptr;
+		Mix_Music* gameMusic = nullptr;
+
+		//sounds that will be played
+		Mix_Chunk* playerShootingSound = nullptr;
+	};
+}

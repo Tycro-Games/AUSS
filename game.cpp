@@ -14,7 +14,6 @@ using namespace std;
 namespace Tmpl8
 {
 	static Game* gs_Game = nullptr;
-	AudioPlayer audioPlayer;
 
 	Game::Game() :
 		cursor("assets/OriginalAssets/target.tga", 1),
@@ -22,6 +21,7 @@ namespace Tmpl8
 		playButton("assets/UI/Play_Idle.png", "assets/UI/Play_Pushed.png", vec2(ScreenWidth / 2, ScreenHeight / 2), bind(&Game::ResumeGame, this)),
 		exitButton("assets/UI/Cross_Idle.png", "assets/UI/Cross_Pushed.png", vec2(ScreenWidth / 2, ScreenHeight / 2 + 64), bind(&Game::ExitGame, this)),
 		screen(nullptr),
+		audioPlayer(nullptr),
 		currentState(GameState::mainMenu)
 
 	{
@@ -36,8 +36,10 @@ namespace Tmpl8
 
 	void Game::Init()
 	{
+		ChangeGameState(GameState::mainMenu);
+
 #ifdef _DEBUG
-		currentState = GameState::game;
+		ChangeGameState(GameState::game);
 #endif
 
 		Initializations();
@@ -284,9 +286,23 @@ namespace Tmpl8
 			break;
 		}
 	}
+	void Game::PlayMusic()
+	{
+		audioPlayer->PlayMusic();
+	}
+	void Game::StopMusic()
+	{
+		audioPlayer->PauseMusic();
+	}
 	void Game::ChangeGameState(GameState state)
 	{
 		currentState = state;
+		if (state == GameState::game)
+			PlayMusic();
+		else
+		{
+			StopMusic();
+		}
 	}
 	const Tilemap& Game::getTilemap()
 	{
@@ -308,12 +324,12 @@ namespace Tmpl8
 	}
 	void Game::ResumeGame()
 	{
-		Game::Get().isPressingLeftMouse = false;
-		Game::Get().currentState = Game::GameState::game;
+		isPressingLeftMouse = false;
+		ChangeGameState(GameState::game);
 	}
 	void Game::ExitGame()
 	{
-		if (Game::Get().isPressingLeftMouse)
+		if (isPressingLeftMouse)
 		{
 			SDL_Event quit{};
 			quit.type = SDL_QUIT;

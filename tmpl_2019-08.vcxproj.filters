@@ -266,6 +266,9 @@
     <ClInclude Include="AudioPlayer.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="AudioID.h">
+      <Filter>DataStructures</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="template code">
