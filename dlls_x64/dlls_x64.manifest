@@ -9,4 +9,6 @@
 	<file name="glew32.dll"/>
 	<file name="SDL2.dll"/>
 	<file name="ucrtbased.dll"/>
+	<file name="SDL2_mixer.dll"/>
+
 </assembly>
