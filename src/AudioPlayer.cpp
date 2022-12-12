@@ -3,9 +3,9 @@
 namespace Tmpl8 {
 	AudioPlayer::AudioPlayer()
 	{
-		menuMusic = Mix_LoadMUS("assets/Sounds&Music/music.wav");
-		gameMusic = Mix_LoadMUS("assets/Sounds&Music/gameMusic.wav");
-		playerShootingSound = Mix_LoadWAV("assets/Sounds&Music/playerShoot.wav");
+		menuMusic = Mix_LoadMUS("src/assets/Sounds&Music/music.wav");
+		gameMusic = Mix_LoadMUS("src/assets/Sounds&Music/gameMusic.wav");
+		playerShootingSound = Mix_LoadWAV("src/assets/Sounds&Music/playerShoot.wav");
 
 	}
 

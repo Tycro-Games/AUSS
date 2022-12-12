@@ -39,9 +39,9 @@ private:
 	RotationVar rVar;
 	Tmpl8::vec2 dirToFace;
 	Tmpl8::vec2 startingPos;
-	//assets
-	const std::filesystem::path spriteProjectilePath = "assets/OriginalAssets/phaser.tga";
-	const std::filesystem::path spriteExplosionPath = "assets/OriginalAssets/smoke.tga";
+	//src/assets
+	const std::filesystem::path spriteProjectilePath = "src/assets/OriginalAssets/phaser.tga";
+	const std::filesystem::path spriteExplosionPath = "src/assets/OriginalAssets/smoke.tga";
 	//consts
 	const float TIME_TO_HIT = 0.5f;
 	const Tmpl8::vec2 COL_MIN = Tmpl8::vec2(-21.0f);

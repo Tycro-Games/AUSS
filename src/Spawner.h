@@ -24,7 +24,7 @@ protected:
 	//to update
 	std::vector<Entity*> updateObjects;
 	std::vector<ExplosionBullet*> poolOfExplosions;
-	//assets 
+	//src/assets 
 	Tmpl8::Sprite* explosionSprite;
 
 

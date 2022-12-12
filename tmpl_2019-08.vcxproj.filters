@@ -1,284 +1,284 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="game.cpp" />
-    <ClCompile Include="surface.cpp">
+    <ClCompile Include="src\game.cpp" />
+    <ClCompile Include="src\surface.cpp">
       <Filter>template code</Filter>
     </ClCompile>
-    <ClCompile Include="template.cpp">
+    <ClCompile Include="src\template.cpp">
       <Filter>template code</Filter>
     </ClCompile>
-    <ClCompile Include="Projectile.cpp">
+    <ClCompile Include="src\Projectile.cpp">
       <Filter>Projectiles</Filter>
     </ClCompile>
-    <ClCompile Include="Entity.cpp">
+    <ClCompile Include="src\Entity.cpp">
       <Filter>Interfaces</Filter>
     </ClCompile>
-    <ClCompile Include="Being.cpp">
+    <ClCompile Include="src\Being.cpp">
       <Filter>Interfaces</Filter>
     </ClCompile>
-    <ClCompile Include="Timer.cpp">
+    <ClCompile Include="src\Timer.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="Moveable.cpp">
+    <ClCompile Include="src\Moveable.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="Collider.cpp">
+    <ClCompile Include="src\Collider.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="MathFunctions.cpp">
+    <ClCompile Include="src\MathFunctions.cpp">
       <Filter>Math</Filter>
     </ClCompile>
-    <ClCompile Include="Cursor.cpp">
+    <ClCompile Include="src\Cursor.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="CollisionDetection.cpp">
+    <ClCompile Include="src\CollisionDetection.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="Button.cpp">
+    <ClCompile Include="src\Button.cpp">
       <Filter>UI</Filter>
     </ClCompile>
-    <ClCompile Include="RandomNumbers.cpp">
+    <ClCompile Include="src\RandomNumbers.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="MoveablePlayer.cpp">
+    <ClCompile Include="src\MoveablePlayer.cpp">
       <Filter>Player</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
+    <ClCompile Include="src\Player.cpp">
       <Filter>Player</Filter>
     </ClCompile>
-    <ClCompile Include="ExplosionBullet.cpp">
+    <ClCompile Include="src\ExplosionBullet.cpp">
       <Filter>Projectiles</Filter>
     </ClCompile>
-    <ClCompile Include="EnemySpawner.cpp">
+    <ClCompile Include="src\EnemySpawner.cpp">
       <Filter>Spawner</Filter>
     </ClCompile>
-    <ClCompile Include="Spawner.cpp">
+    <ClCompile Include="src\Spawner.cpp">
       <Filter>Spawner</Filter>
     </ClCompile>
-    <ClCompile Include="ProjectileSpawner.cpp">
+    <ClCompile Include="src\ProjectileSpawner.cpp">
       <Filter>Spawner</Filter>
     </ClCompile>
-    <ClCompile Include="pool.cpp">
+    <ClCompile Include="src\pool.cpp">
       <Filter>DataStructures</Filter>
     </ClCompile>
-    <ClCompile Include="MoveToADirection.cpp">
+    <ClCompile Include="src\MoveToADirection.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyHoarder.cpp">
+    <ClCompile Include="src\EnemyHoarder.cpp">
       <Filter>Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy.cpp">
+    <ClCompile Include="src\Enemy.cpp">
       <Filter>Interfaces</Filter>
     </ClCompile>
-    <ClCompile Include="Rotator.cpp">
+    <ClCompile Include="src\Rotator.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="Tilemap.cpp">
+    <ClCompile Include="src\Tilemap.cpp">
       <Filter>Tilemap</Filter>
     </ClCompile>
-    <ClCompile Include="Obstacle.cpp">
+    <ClCompile Include="src\Obstacle.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="MoveInstance.cpp">
+    <ClCompile Include="src\MoveInstance.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyRotator.cpp">
+    <ClCompile Include="src\EnemyRotator.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="SpriteTransparency.cpp">
+    <ClCompile Include="src\SpriteTransparency.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="ParallaxProp.cpp">
+    <ClCompile Include="src\ParallaxProp.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyWaveSpawner.cpp">
+    <ClCompile Include="src\EnemyWaveSpawner.cpp">
       <Filter>Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="Score.cpp">
+    <ClCompile Include="src\Score.cpp">
       <Filter>Player</Filter>
     </ClCompile>
-    <ClCompile Include="Subject.cpp">
+    <ClCompile Include="src\Subject.cpp">
       <Filter>Interfaces</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyRunner.cpp">
+    <ClCompile Include="src\EnemyRunner.cpp">
       <Filter>Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="AABB.cpp">
+    <ClCompile Include="src\AABB.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyShooter.cpp">
+    <ClCompile Include="src\EnemyShooter.cpp">
       <Filter>Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="Curve.cpp">
+    <ClCompile Include="src\Curve.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyShielder.cpp">
+    <ClCompile Include="src\EnemyShielder.cpp">
       <Filter>Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="ShieldLine.cpp">
+    <ClCompile Include="src\ShieldLine.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="AudioPlayer.cpp">
+    <ClCompile Include="src\AudioPlayer.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="ClippedSprite.cpp">
+    <ClCompile Include="src\ClippedSprite.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="HealthBar.cpp">
+    <ClCompile Include="src\HealthBar.cpp">
       <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="game.h" />
-    <ClInclude Include="surface.h">
+    <ClInclude Include="src\game.h" />
+    <ClInclude Include="src\surface.h">
       <Filter>template code</Filter>
     </ClInclude>
-    <ClInclude Include="template.h">
+    <ClInclude Include="src\template.h">
       <Filter>template code</Filter>
     </ClInclude>
-    <ClInclude Include="Updateable.h">
+    <ClInclude Include="src\Updateable.h">
       <Filter>Updating</Filter>
     </ClInclude>
-    <ClInclude Include="Renderable.h">
+    <ClInclude Include="src\Renderable.h">
       <Filter>Updating</Filter>
     </ClInclude>
-    <ClInclude Include="Projectile.h">
+    <ClInclude Include="src\Projectile.h">
       <Filter>Projectiles</Filter>
     </ClInclude>
-    <ClInclude Include="Entity.h">
+    <ClInclude Include="src\Entity.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="Being.h">
+    <ClInclude Include="src\Being.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="RotationVar.h">
+    <ClInclude Include="src\RotationVar.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="Timer.h">
+    <ClInclude Include="src\Timer.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="Moveable.h">
+    <ClInclude Include="src\Moveable.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="Collider.h">
+    <ClInclude Include="src\Collider.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="MathFunctions.h">
+    <ClInclude Include="src\MathFunctions.h">
       <Filter>Math</Filter>
     </ClInclude>
-    <ClInclude Include="Cursor.h">
+    <ClInclude Include="src\Cursor.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="PosDir.h">
+    <ClInclude Include="src\PosDir.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="CollisionDetection.h">
+    <ClInclude Include="src\CollisionDetection.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="Button.h">
+    <ClInclude Include="src\Button.h">
       <Filter>UI</Filter>
     </ClInclude>
-    <ClInclude Include="RandomNumbers.h">
+    <ClInclude Include="src\RandomNumbers.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="MoveablePlayer.h">
+    <ClInclude Include="src\MoveablePlayer.h">
       <Filter>Player</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
+    <ClInclude Include="src\Player.h">
       <Filter>Player</Filter>
     </ClInclude>
-    <ClInclude Include="ExplosionBullet.h">
+    <ClInclude Include="src\ExplosionBullet.h">
       <Filter>Projectiles</Filter>
     </ClInclude>
-    <ClInclude Include="EnemySpawner.h">
+    <ClInclude Include="src\EnemySpawner.h">
       <Filter>Spawner</Filter>
     </ClInclude>
-    <ClInclude Include="Spawner.h">
+    <ClInclude Include="src\Spawner.h">
       <Filter>Spawner</Filter>
     </ClInclude>
-    <ClInclude Include="ProjectileSpawner.h">
+    <ClInclude Include="src\ProjectileSpawner.h">
       <Filter>Spawner</Filter>
     </ClInclude>
-    <ClInclude Include="pool.h">
+    <ClInclude Include="src\pool.h">
       <Filter>DataStructures</Filter>
     </ClInclude>
-    <ClInclude Include="MoveToADirection.h">
+    <ClInclude Include="src\MoveToADirection.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyHoarder.h">
+    <ClInclude Include="src\EnemyHoarder.h">
       <Filter>Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy.h">
+    <ClInclude Include="src\Enemy.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="Rotator.h">
+    <ClInclude Include="src\Rotator.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="Tilemap.h">
+    <ClInclude Include="src\Tilemap.h">
       <Filter>Tilemap</Filter>
     </ClInclude>
-    <ClInclude Include="Obstacle.h">
+    <ClInclude Include="src\Obstacle.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="MoveInstance.h">
+    <ClInclude Include="src\MoveInstance.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyRotator.h">
+    <ClInclude Include="src\EnemyRotator.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="SpriteTransparency.h">
+    <ClInclude Include="src\SpriteTransparency.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="ParallaxProp.h">
+    <ClInclude Include="src\ParallaxProp.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="Followable.h">
+    <ClInclude Include="src\Followable.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyWaveSpawner.h">
+    <ClInclude Include="src\EnemyWaveSpawner.h">
       <Filter>Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="Score.h">
+    <ClInclude Include="src\Score.h">
       <Filter>Player</Filter>
     </ClInclude>
-    <ClInclude Include="Observer.h">
+    <ClInclude Include="src\Observer.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="Subject.h">
+    <ClInclude Include="src\Subject.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyRunner.h">
+    <ClInclude Include="src\EnemyRunner.h">
       <Filter>Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="Wave.h">
+    <ClInclude Include="src\Wave.h">
       <Filter>Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="AABB.h">
+    <ClInclude Include="src\AABB.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyShooter.h">
+    <ClInclude Include="src\EnemyShooter.h">
       <Filter>Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="Curve.h">
+    <ClInclude Include="src\Curve.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyShielder.h">
+    <ClInclude Include="src\EnemyShielder.h">
       <Filter>Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="ShieldLine.h">
+    <ClInclude Include="src\ShieldLine.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="AudioPlayer.h">
+    <ClInclude Include="src\AudioPlayer.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="AudioID.h">
+    <ClInclude Include="src\AudioID.h">
       <Filter>DataStructures</Filter>
     </ClInclude>
-    <ClInclude Include="ClippedSprite.h">
+    <ClInclude Include="src\ClippedSprite.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="HealthBar.h">
+    <ClInclude Include="src\HealthBar.h">
       <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
@@ -329,7 +329,6 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <None Include="enemy_waves.json" />
     <None Include="schema.json" />
   </ItemGroup>
 </Project>
