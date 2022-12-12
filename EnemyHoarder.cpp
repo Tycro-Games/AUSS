@@ -46,11 +46,12 @@ void EnemyHoarder::Render(Surface* screen)
 		return;
 	sprite->SetFrame(frame);
 	sprite->Draw(screen, static_cast<int>(static_cast<int>(pos.x - rVar.SPRITE_OFFSET / 2)), static_cast<int>(pos.y - rVar.SPRITE_OFFSET / 2));
+#ifdef _DEBUG
 	screen->Box(static_cast<int>(pos.x - rVar.SPRITE_OFFSET / 2),
 		static_cast<int>(pos.y - rVar.SPRITE_OFFSET / 2),
 		static_cast<int>(pos.x + rVar.SPRITE_OFFSET / 2),
 		static_cast<int>(pos.y + rVar.SPRITE_OFFSET / 2), 0xffff);
-
+#endif
 }
 
 

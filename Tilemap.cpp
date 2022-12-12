@@ -117,12 +117,12 @@ void Tilemap::Render(Surface* screen)
 				y * tiles[index].yd + static_cast<int>(pos.y) - OFFSET_Y);
 		}
 	//debug
-
+#ifdef _DEBUG
 	for (int i = 0; i < blockingTiles.size(); i++) {
 		Collider c = *blockingTiles[i]->getColl();
 		screen->Box(static_cast<int>(c.min.x + c.pos->x), static_cast<int>(c.min.y + c.pos->y), static_cast<int>(c.max.x + c.pos->x), static_cast<int>(c.max.y + c.pos->y), 0xFF0000);
 	}
-#ifdef _DEBUG
+
 	auto posText = std::string(std::to_string(pos.x) + " " + std::to_string(pos.y));
 	screen->Print(posText.c_str(), 200, 10, 0xFF0000);
 #endif

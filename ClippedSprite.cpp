@@ -15,7 +15,7 @@ void ClippedSprite::DrawSprite(Tmpl8::Surface* screen, Tmpl8::Surface& sprite, f
 	Pixel* dst = screen->GetBuffer() + x + y * screen->GetPitch();
 
 	int height = sprite.GetHeight();
-	int width = MathFunctions::Lerp(0, sprite.GetWidth(), linearF);
+	int width = static_cast<int>(MathFunctions::Lerp(0.0f, static_cast<float>(sprite.GetWidth()), linearF));
 	for (int i = 0; i < height; i++)
 	{
 		for (int j = 0; j < width; j++) {

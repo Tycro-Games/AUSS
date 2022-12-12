@@ -65,7 +65,9 @@ void Projectile::Render(Tmpl8::Surface* screen)
 		return;
 	sprite->SetFrame(frame);
 	sprite->Draw(screen, static_cast<int>(pos.x + collider.min.x), static_cast<int>(pos.y + collider.min.y));
+#ifdef _DEBUG
 	screen->Box(static_cast<int>(pos.x + collider.min.x), static_cast<int>(pos.y + collider.min.y), static_cast<int>(pos.x + collider.max.x), static_cast<int>(pos.y + collider.max.y), 0xff0000);
+#endif
 }
 
 void Projectile::Reflect()

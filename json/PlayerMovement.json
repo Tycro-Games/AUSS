@@ -3,5 +3,5 @@
     "dashSpeed":600,
     "dashDuration":0.3,
     "cooldownDuration":0.6,
-    "edgeDistance":10.0
+    "edgeDistance":12.0
 }

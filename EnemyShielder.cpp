@@ -39,12 +39,12 @@ void EnemyShielder::Update(float deltaTime)
 void EnemyShielder::SpawnEnemies()
 {
 	//call enemy spawn enemies
-	angleToSpawn = MathFunctions::GetDirInDegreesPositive(dir) ;
+	angleToSpawn = MathFunctions::GetDirInDegreesPositive(dir);
 	Enemy::SpawnEnemy(1, angleToSpawn, Hoarder, STEP_ANGLE);
 	Enemy::SpawnEnemy(1, angleToSpawn, Runner, STEP_ANGLE);
 	Enemy::SpawnEnemy(1, angleToSpawn, Runner, STEP_ANGLE);
 	Enemy::SpawnEnemy(1, angleToSpawn, Runner, STEP_ANGLE);
-	
+
 
 }
 void EnemyShielder::Reflect()
@@ -78,11 +78,12 @@ void EnemyShielder::Render(Tmpl8::Surface* screen)
 		return;
 	sprite->SetFrame(frame);
 	sprite->Draw(screen, static_cast<int>(static_cast<int>(pos.x - rVar.SPRITE_OFFSET / 2)), static_cast<int>(pos.y - rVar.SPRITE_OFFSET / 2));
+#ifdef _DEBUG
 	screen->Box(static_cast<int>(pos.x - rVar.SPRITE_OFFSET / 2),
 		static_cast<int>(pos.y - rVar.SPRITE_OFFSET / 2),
 		static_cast<int>(pos.x + rVar.SPRITE_OFFSET / 2),
 		static_cast<int>(pos.y + rVar.SPRITE_OFFSET / 2), 0xff00ff);
-
+#endif
 	float angle = MathFunctions::GetDirInDegreesPositive(dir);
 
 

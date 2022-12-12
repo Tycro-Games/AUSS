@@ -145,7 +145,7 @@ void EnemyWaveSpawner::SpawnCurrentWave()
 				else {
 					playerHasTakenDamage = false;
 				}
-				
+
 			}
 
 			firstWave = false;
@@ -268,7 +268,9 @@ void EnemyWaveSpawner::Render(Surface* screen)
 {
 	for (int i = 0; i < enemySpawners.size(); i++) {
 		enemySpawners[i]->Render(screen);
+#ifdef _DEBUG
 		screen->Box(static_cast<int>(enemySpawners[i]->GetSpawnerPos().x), static_cast<int>(enemySpawners[i]->GetSpawnerPos().y), static_cast<int>(enemySpawners[i]->GetSpawnerPos().x) + 5, static_cast<int>(enemySpawners[i]->GetSpawnerPos().y) + 5, 0xFF0000);
+#endif
 	}
 
 	for (int i = 0; i < updateObjects.size(); i++)

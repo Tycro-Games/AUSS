@@ -59,13 +59,13 @@ void Player::Render(Tmpl8::Surface* screen)
 
 
 
-
+#ifdef _DEBUG
 	//debug for player's collider	
 	screen->Box(static_cast<int>(pos.x + playerCollider.min.x), static_cast<int>(pos.y + playerCollider.min.y), static_cast<int>(pos.x + playerCollider.max.x), static_cast<int>(pos.y + playerCollider.max.y), 0xffffff);
 	//debug for collision with screen borders
 	screen->Box(static_cast<int>(pos.x + playerCollider.min.x * playerMover.GetEdgeBorderDistance()), static_cast<int>(pos.y + playerCollider.min.y * playerMover.GetEdgeBorderDistance()), static_cast<int>(pos.x + playerCollider.max.x * playerMover.GetEdgeBorderDistance()), static_cast<int>(pos.y + playerCollider.max.y * playerMover.GetEdgeBorderDistance()), 0xffffff);
+#endif
 
-	
 
 }
 

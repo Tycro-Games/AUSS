@@ -39,8 +39,9 @@ void EnemyShooter::Render(Tmpl8::Surface* screen)
 	if (!getRenderable())
 		return;
 	sprite->Draw(screen, static_cast<int>(pos.x + enemyCollider.min.x), static_cast<int>(pos.y + enemyCollider.min.y));
+#ifdef _DEBUG
 	screen->Box(static_cast<int>(pos.x + enemyCollider.min.x), static_cast<int>(pos.y + enemyCollider.min.y), static_cast<int>(pos.x + enemyCollider.max.x), static_cast<int>(pos.y + enemyCollider.max.y), 0x00FFF0);
-
+#endif
 
 
 }
