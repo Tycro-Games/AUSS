@@ -5,7 +5,8 @@
 #include "RotationVar.h"
 #include "MoveablePlayer.h"
 #include "Tilemap.h"
-#include "SpriteTransparency.h"
+#include "ClippedSprite.h"
+#include "HealthBar.h"
 
 
 class Player :public Being, public Followable, public Observer, public Subject
@@ -51,7 +52,7 @@ private:
 	Collider playerCollider;
 	ProjectileSpawner spawner;
 	Timer cooldownForDamage;
-
+	HealthBar hpBar;
 	// Inherited via Observer
 	void onNotify(int points, EventType event) override;
 

@@ -122,6 +122,12 @@
     <ClCompile Include="AudioPlayer.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="ClippedSprite.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="HealthBar.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -268,6 +274,12 @@
     </ClInclude>
     <ClInclude Include="AudioID.h">
       <Filter>DataStructures</Filter>
+    </ClInclude>
+    <ClInclude Include="ClippedSprite.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="HealthBar.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

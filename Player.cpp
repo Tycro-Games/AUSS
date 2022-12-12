@@ -4,13 +4,15 @@
 #include "Rotator.h"
 
 #include <string>
+#include "SpriteTransparency.h"
 using namespace Tmpl8;
 Player::Player() :
 	Being("assets/player.png", 32),
 	spawner(-Tmpl8::vec2(rVar.SPRITE_OFFSET / 2, rVar.SPRITE_OFFSET / 2),
 		spriteProjectilePath,
 		spriteExplosionPath),
-	tilemapCollider(nullptr)
+	tilemapCollider(nullptr),
+	hpBar()
 {
 
 }
@@ -19,6 +21,8 @@ void Player::Init(const Collider& tileMapCollider, const Tmpl8::vec2& _pos)
 {
 
 	Being::Init(_pos, 100);
+	addObserver(&hpBar);
+	hpBar.Init();
 	startingPos = _pos;
 	playerCollider = Collider(COL_MIN, COL_MAX, &pos);
 
@@ -37,6 +41,7 @@ void Player::Init(const Collider& tileMapCollider, const Tmpl8::vec2& _pos)
 void Player::Render(Tmpl8::Surface* screen)
 {
 	spawner.Render(screen);
+	hpBar.Draw(screen);
 	sprite->SetFrame(frame);
 	//when dashing fade the sprite based on the dash multiplier
 	if (playerMover.IsDashing()) {
@@ -60,9 +65,7 @@ void Player::Render(Tmpl8::Surface* screen)
 	//debug for collision with screen borders
 	screen->Box(static_cast<int>(pos.x + playerCollider.min.x * playerMover.GetEdgeBorderDistance()), static_cast<int>(pos.y + playerCollider.min.y * playerMover.GetEdgeBorderDistance()), static_cast<int>(pos.x + playerCollider.max.x * playerMover.GetEdgeBorderDistance()), static_cast<int>(pos.y + playerCollider.max.y * playerMover.GetEdgeBorderDistance()), 0xffffff);
 
-	auto inactive = std::string("HP: " + std::to_string(hp));
-
-	screen->Print(inactive.c_str(), 10, 40, 0xFF0000);
+	
 
 }
 
@@ -79,6 +82,7 @@ void Player::Update(float deltaTime)
 void Player::TakeDamage(int dg) {
 	if (cooldownForDamage.isFinished && !playerMover.IsDashing()) {
 		Being::TakeDamage(dg);
+		notify(hp, EventType::PlayerTakesDamage);
 		cooldownForDamage.ResetVar();
 	}
 
@@ -158,7 +162,7 @@ void Player::Call()
 void Player::Die()
 {
 	std::cout << "RESET GAME";
-
+	removeObserver(&hpBar);
 	Game::Get().ChangeGameState(Tmpl8::Game::GameState::reset);
 }
 

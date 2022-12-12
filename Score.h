@@ -15,10 +15,6 @@ private:
 	unsigned int currentScore = 0;
 	float multiplier = 1.0f;
 
-
-
-
-
 };
 
 

@@ -231,6 +231,7 @@
     <ClCompile Include="AudioPlayer.cpp" />
     <ClCompile Include="Being.cpp" />
     <ClCompile Include="Button.cpp" />
+    <ClCompile Include="ClippedSprite.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="CollisionDetection.cpp" />
     <ClCompile Include="Curve.cpp" />
@@ -246,6 +247,7 @@
     <ClCompile Include="ExplosionBullet.cpp" />
     <ClCompile Include="Cursor.cpp" />
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="HealthBar.cpp" />
     <ClCompile Include="MathFunctions.cpp" />
     <ClCompile Include="Moveable.cpp" />
     <ClCompile Include="MoveablePlayer.cpp" />
@@ -275,6 +277,7 @@
     <ClInclude Include="AudioPlayer.h" />
     <ClInclude Include="Being.h" />
     <ClInclude Include="Button.h" />
+    <ClInclude Include="ClippedSprite.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="CollisionDetection.h" />
     <ClInclude Include="Curve.h" />
@@ -291,6 +294,7 @@
     <ClInclude Include="Followable.h" />
     <ClInclude Include="Cursor.h" />
     <ClInclude Include="game.h" />
+    <ClInclude Include="HealthBar.h" />
     <ClInclude Include="MathFunctions.h" />
     <ClInclude Include="Moveable.h" />
     <ClInclude Include="MoveablePlayer.h" />

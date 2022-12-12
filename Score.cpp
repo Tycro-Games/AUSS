@@ -4,9 +4,9 @@
 
 
 
-void Score::onNotify(int points, EventType event)
+void Score::onNotify(int points, EventType eventt)
 {
-	switch (event)
+	switch (eventt)
 	{
 	case EventType::EnemyDeath:
 		//adding points while the wave is running

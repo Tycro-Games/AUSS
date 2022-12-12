@@ -12,5 +12,5 @@ class Observer
 {
 public:
 	virtual ~Observer() = default;
-	virtual void onNotify(int points, EventType event) = 0;
+	virtual void onNotify(int points, EventType eventt) = 0;
 };
