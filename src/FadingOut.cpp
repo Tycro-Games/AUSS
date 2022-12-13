@@ -16,7 +16,7 @@ void FadingOut::FadeOut()
 
 void FadingOut::Draw(Tmpl8::Surface* screen)
 {
-	spriteTransparency.SetTransperency(&sp, screen, 0, 0, linerF, 1);
+	spriteTransparency.SetTransperency(&sp, screen, 0, 0, linerF, 0);
 }
 
 void FadingOut::Update(float deltaTime)
