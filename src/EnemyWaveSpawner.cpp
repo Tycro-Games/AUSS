@@ -132,7 +132,7 @@ void EnemyWaveSpawner::SpawnCurrentWave()
 			indexOfSpawner < possibleSpawners.size());
 
 		SpawnEnemy(PosDir{ possibleSpawners[indexOfSpawner]->GetSpawnerPos() ,0 }, enemiesToSpawn[indexOfEnemiesToSpawn]);
-		std::cout << "Spawned enemies:" << (enemiesToSpawn[indexOfEnemiesToSpawn]) << '\n';
+		std::cout << "Enemy count:" << enemiesToSpawn.size() << '\n';
 		indexOfEnemiesToSpawn++;
 		//spawned the last enemy of the wave
 		if (enemiesToSpawn.size() == indexOfEnemiesToSpawn) {
@@ -240,9 +240,9 @@ void EnemyWaveSpawner::SpawnEnemy(PosDir posDir, EnemyTypes enemy)
 	}
 
 	if (enemyToSpawn) {
-		if (enemyToSpawn->getEnemyType() != EnemyTypes::Runner) {//runner has a predefined lifetime
+		if (enemyToSpawn->getEnemyType() != EnemyTypes::Runner) {//runner shas a predefined lifetime
 			minimumProjectiles += enemyToSpawn->getMaxHp() / enemyToSpawn->getDgToTake();
-			std::cout << "min proje" << minimumProjectiles << "\n";
+			std::cout << "Perfect count for projectiles:" << minimumProjectiles << "\n";
 		}
 		activeColliders.push_back(enemyToSpawn->getColl());
 		//set position to the spawner's

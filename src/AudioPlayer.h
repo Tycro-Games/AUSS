@@ -12,6 +12,7 @@ namespace Tmpl8 {
 		void PlaySound(SoundID id);
 		void PlayMusic();
 		void PauseMusic();
+		void StopMusic();
 		void SwitchMute();
 		bool IsMuted()const;
 
@@ -30,5 +31,7 @@ namespace Tmpl8 {
 
 		//sounds that will be played
 		Mix_Chunk* playerShootingSound = nullptr;
+		//in miliseconds
+		const int FADE_OUT_MUSIC = 500;
 	};
 }

@@ -31,6 +31,7 @@ namespace Tmpl8
 		muteButton.Disable();
 		gs_Game = this;
 
+
 	}
 
 	Game& Game::Get()
@@ -318,6 +319,10 @@ namespace Tmpl8
 	{
 		audioPlayer->PauseMusic();
 	}
+	void Game::ResetMusic()
+	{
+		audioPlayer->StopMusic();
+	}
 	void Game::ChangeGameState(GameState state)
 	{
 		currentState = state;
@@ -336,7 +341,7 @@ namespace Tmpl8
 
 			break;
 		case Tmpl8::Game::GameState::reset:
-			StopMusic();
+			ResetMusic();
 			fadeInOut.Init();
 			break;
 		default:

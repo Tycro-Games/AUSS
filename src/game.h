@@ -48,6 +48,7 @@ namespace Tmpl8 {
 		void PlaySound(SoundID id);
 		void PlayMusic();
 		void StopMusic();
+		void ResetMusic();
 		bool isPressingLeftMouse = false;
 		//switching between game states
 		enum class GameState
