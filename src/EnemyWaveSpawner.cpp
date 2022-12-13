@@ -15,11 +15,11 @@ namespace Tmpl8 {
 }
 EnemyWaveSpawner::EnemyWaveSpawner()
 	:
-	Spawner("src/assets/OriginalAssets/smoke.tga"),
-	hoarderSprite(new Surface("src/assets/OriginalAssets/phaser.tga"), 16),
-	runnerSprite(new Surface("src/assets/OriginalAssets/sniper.tga"), 32),
-	shooterSprite(new Surface("src/assets/OriginalAssets/sniper.tga"), 32),
-	shielderSprite(new Surface("src/assets/OriginalAssets/sniper.tga"), 32),
+	Spawner("assets/OriginalAssets/smoke.tga"),
+	hoarderSprite(new Surface("assets/OriginalAssets/phaser.tga"), 16),
+	runnerSprite(new Surface("assets/OriginalAssets/sniper.tga"), 32),
+	shooterSprite(new Surface("assets/OriginalAssets/sniper.tga"), 32),
+	shielderSprite(new Surface("assets/OriginalAssets/sniper.tga"), 32),
 	indexOfEnemiesToSpawn(0)
 {
 

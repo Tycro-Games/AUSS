@@ -36,7 +36,7 @@ private:
 
 	bool poolsAreEmpty = true;
 	bool isSpawning = false;
-	//src/assets for projectiles
+	//assets for projectiles
 	Tmpl8::Sprite projectileSprite;
 	//shot in total
 	unsigned int totalProjectiles = 0;

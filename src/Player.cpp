@@ -7,7 +7,7 @@
 #include "SpriteTransparency.h"
 using namespace Tmpl8;
 Player::Player() :
-	Being("src/assets/player.png", 32),
+	Being("assets/player.png", 32),
 	spawner(-Tmpl8::vec2(rVar.SPRITE_OFFSET / 2, rVar.SPRITE_OFFSET / 2),
 		spriteProjectilePath,
 		spriteExplosionPath),

@@ -13,7 +13,7 @@ public:
 	void Update(float deltaTime);
 	void Init();
 private:
-	const std::filesystem::path spritePath = "src/assets/UI/FadeSprite.png";
+	const std::filesystem::path spritePath = "assets/UI/FadeSprite.png";
 	Tmpl8::Sprite sp;
 	Timer fadeOut;
 	Event toCall;

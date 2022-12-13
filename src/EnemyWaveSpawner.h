@@ -1,6 +1,6 @@
 #pragma once
-#include "nlohmann_json/single_include/nlohmann/json.hpp"
 #include "Subject.h"
+#include "nlohmann_json/single_include/nlohmann/json.hpp"
 #include "Wave.h"
 #include "EnemySpawner.h"
 #include "Player.h"
@@ -75,7 +75,7 @@ private:
 	const float SPAWNERS_YPOS_MULTIPLIERS = 0.6f;
 	const float SPAWNING_INTERVAL = .3f;
 	float playerDistanceSqr = 0.0f;
-	const std::filesystem::path spriteExplosionPath = "src/assets/OriginalAssets/smoke.tga";
+	const std::filesystem::path spriteExplosionPath = "assets/OriginalAssets/smoke.tga";
 
 	void SpawnCurrentWave();
 

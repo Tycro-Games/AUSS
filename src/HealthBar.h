@@ -13,8 +13,8 @@ public:
 	void Draw(Tmpl8::Surface* screen);
 	void onNotify(int points, EventType eventt) override;
 private:
-	const std::filesystem::path barPath = "src/assets/Hearts/PNG/health_bar/health_bar.png";
-	const std::filesystem::path decorationPath = "src/assets/Hearts/PNG/health_bar/health_bar_decoration.png";
+	const std::filesystem::path barPath = "assets/Hearts/PNG/health_bar/health_bar.png";
+	const std::filesystem::path decorationPath = "assets/Hearts/PNG/health_bar/health_bar_decoration.png";
 	Tmpl8::Sprite bar;
 	Tmpl8::Sprite decoration;
 	ClippedSprite clipSprite;

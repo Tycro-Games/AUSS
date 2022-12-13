@@ -8,13 +8,13 @@
 #include <cassert>
 using namespace Tmpl8;
 Tilemap::Tilemap() :
-	tileSurface("src/assets/Spaceship-shooter#01/Wang tiles/02-Craters.png"),
+	tileSurface("assets/Spaceship-shooter#01/Wang tiles/02-Craters.png"),
 	pos(vec2(0)),
 	col(Collider(
 		vec2(0),
 		vec2(0),
 		&pos)),
-	prop("src/assets/Spaceship-shooter#01/background/Space02.png")
+	prop("assets/Spaceship-shooter#01/background/Space02.png")
 {
 
 }

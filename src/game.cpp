@@ -16,12 +16,12 @@ namespace Tmpl8
 	static Game* gs_Game = nullptr;
 
 	Game::Game() :
-		cursor("src/assets/OriginalAssets/target.tga", 1),
+		cursor("assets/OriginalAssets/target.tga", 1),
 		//passes functions as objects
-		playButton("src/assets/UI/Play_Idle.png", "src/assets/UI/Play_Pushed.png", vec2(ScreenWidth / 2, ScreenHeight / 2), bind(&Game::ResumeGame, this)),
-		exitButton("src/assets/UI/Cross_Idle.png", "src/assets/UI/Cross_Pushed.png", vec2(ScreenWidth / 2, ScreenHeight / 2 + 64), bind(&Game::ExitGame, this)),
-		muteButton("src/assets/UI/Mute_Idle.png", "src/assets/UI/Mute_Pushed.png", vec2(ScreenWidth / 2, ScreenHeight / 2 + 128), bind(&Game::MuteSound, this)),
-		volumeButton("src/assets/UI/Volume_2_Idle.png", "src/assets/UI/Volume_2_Pushed.png", vec2(ScreenWidth / 2, ScreenHeight / 2 + 128), bind(&Game::MuteSound, this)),
+		playButton("assets/UI/Play_Idle.png", "assets/UI/Play_Pushed.png", vec2(ScreenWidth / 2, ScreenHeight / 2), bind(&Game::ResumeGame, this)),
+		exitButton("assets/UI/Cross_Idle.png", "assets/UI/Cross_Pushed.png", vec2(ScreenWidth / 2, ScreenHeight / 2 + 64), bind(&Game::ExitGame, this)),
+		muteButton("assets/UI/Mute_Idle.png", "assets/UI/Mute_Pushed.png", vec2(ScreenWidth / 2, ScreenHeight / 2 + 128), bind(&Game::MuteSound, this)),
+		volumeButton("assets/UI/Volume_2_Idle.png", "assets/UI/Volume_2_Pushed.png", vec2(ScreenWidth / 2, ScreenHeight / 2 + 128), bind(&Game::MuteSound, this)),
 		screen(nullptr),
 		audioPlayer(nullptr),
 		currentState(GameState::mainMenu),
@@ -199,17 +199,18 @@ namespace Tmpl8
 	}
 	void Game::MouseMove(int x, int y)
 	{
-		cursor.ChangePosition(x, y);
 
 		switch (currentState)
 		{
 		case GameState::game:
+			cursor.ChangePosition(x, y);
 
 			player.Rotate(x, y);
 
 			break;
 		case GameState::paused:
 		case GameState::mainMenu:
+			cursor.ChangePosition(x, y);
 
 			CheckButtons(x, y);
 			break;
