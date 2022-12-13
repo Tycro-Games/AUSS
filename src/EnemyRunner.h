@@ -26,8 +26,8 @@ private:
 	RandomNumbers randomNumbers;
 	Timer deathTimer;
 	//consts
-	const Tmpl8::vec2 COL_MIN = Tmpl8::vec2(-10, -10);
-	const Tmpl8::vec2 COL_MAX = Tmpl8::vec2(10, 10);
+	const Tmpl8::vec2 COL_MIN = Tmpl8::vec2(-16.5, -16.5);
+	const Tmpl8::vec2 COL_MAX = Tmpl8::vec2(16.5, 16.5);
 	const float MAX_DISTANCE_SQUARED_TO_PLAYER;
 	const float SPEED = 200.0f;
 	const float MIN_DEVIATION = 0.1f;

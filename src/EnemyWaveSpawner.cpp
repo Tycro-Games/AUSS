@@ -16,10 +16,10 @@ namespace Tmpl8 {
 EnemyWaveSpawner::EnemyWaveSpawner()
 	:
 	Spawner("assets/OriginalAssets/smoke.tga"),
-	hoarderSprite(new Surface("assets/OriginalAssets/phaser.tga"), 16),
-	runnerSprite(new Surface("assets/OriginalAssets/sniper.tga"), 32),
-	shooterSprite(new Surface("assets/OriginalAssets/sniper.tga"), 32),
-	shielderSprite(new Surface("assets/OriginalAssets/sniper.tga"), 32),
+	hoarderSprite(new Surface("assets/hoarder.png"), 32),
+	runnerSprite(new Surface("assets/runner.png"), 32),
+	shooterSprite(new Surface("assets/shooter.png"), 1),
+	shielderSprite(new Surface("assets/shielder.png"), 1),
 	indexOfEnemiesToSpawn(0)
 {
 

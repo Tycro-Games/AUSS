@@ -26,8 +26,8 @@ private:
 
 	bool InRangeToAtack = false;
 	//consts
-	const Tmpl8::vec2 COL_MIN = Tmpl8::vec2(-10, -10);
-	const Tmpl8::vec2 COL_MAX = Tmpl8::vec2(10, 10);
+	const Tmpl8::vec2 COL_MIN = Tmpl8::vec2(-16.5, -16.5);
+	const Tmpl8::vec2 COL_MAX = Tmpl8::vec2(16.5, 16.5);
 	const float TIME_TO_ATTACK = 0.25f;
 
 	const float SPEED = 50.0f;
