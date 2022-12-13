@@ -71,8 +71,8 @@ private:
 	Enemy* enemyPrototypes[NUMBER_OF_ENEMIES] = {};
 	RandomNumbers randomNumbers;
 	//consts
-	const float SPAWNERS_XPOS_MULTIPLIERS = 0.73f;
-	const float SPAWNERS_YPOS_MULTIPLIERS = 0.6f;
+	const float SPAWNERS_XPOS_MULTIPLIERS = 0.7f;
+	const float SPAWNERS_YPOS_MULTIPLIERS = 0.55f;
 	const float SPAWNING_INTERVAL = .3f;
 	float playerDistanceSqr = 0.0f;
 	const std::filesystem::path spriteExplosionPath = "assets/OriginalAssets/smoke.tga";

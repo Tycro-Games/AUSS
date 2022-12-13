@@ -56,7 +56,7 @@ protected:
 	EnemyWaveSpawner* spawner;
 	Moveable* move;//needs to be set by children of the enemy
 	Collider enemyCollider;
-	Tmpl8::vec2 dir;
+	Tmpl8::vec2 dir = { 0 };
 
 	unsigned int dg;
 	unsigned int maxHp;

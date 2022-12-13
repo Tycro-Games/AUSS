@@ -63,8 +63,12 @@ void EnemyRunner::Init(PosDir posDir)
 {
 	SetActive(true);
 	pos = posDir.pos;
-
-	dir = posDir.dir;
+	if (posDir.dir.length() > 0)
+		dir = posDir.dir;
+	else {
+		dir = MathFunctions::GetRandomVec2(0.1f, 1.0f).normalized();
+	}
+	
 	deathTimer.Init(std::bind(&EnemyRunner::Die, this), TIME_ALIVE);
 	hp = maxHp;
 	frame = MathFunctions::RotateToDirectionFrames(rVar, dir);
