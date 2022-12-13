@@ -28,6 +28,7 @@ EnemyWaveSpawner::EnemyWaveSpawner()
 void EnemyWaveSpawner::Init()
 {
 	minimumProjectiles = 0;
+	bonusWeight = 0;
 	indexOfEnemiesToSpawn = 0;
 	firstWave = true;
 	timer.Init(bind(&EnemyWaveSpawner::SpawnCurrentWave, this), 1.0f);
@@ -135,18 +136,7 @@ void EnemyWaveSpawner::SpawnCurrentWave()
 		indexOfEnemiesToSpawn++;
 		//spawned the last enemy of the wave
 		if (enemiesToSpawn.size() == indexOfEnemiesToSpawn) {
-			if (!firstWave) {
-				//notify the score 
-				//multiply the score if the player was not hit the previous wave 
-				if (!playerHasTakenDamage) {
-					notify(1, EventType::BonusConditions);
-					std::cout << "Double points for health\n";
-				}
-				else {
-					playerHasTakenDamage = false;
-				}
 
-			}
 
 			firstWave = false;
 
@@ -300,10 +290,18 @@ void EnemyWaveSpawner::AddEnemyToPool(Enemy* enemy, bool getPoints)
 	if (getPoints) {
 		notify(enemy->getScore(), EventType::EnemyDeath);
 	}
-	if (activeColliders.size() == 0) {
+	if (activeColliders.size() == 0) {//signal ending of this wave
 		if (enemiesToSpawn.size() == indexOfEnemiesToSpawn) {
+			//multiply the score if the player was not hit the previous wave 
+			if (!playerHasTakenDamage) {
+				notify(1, EventType::BonusConditions);
+				std::cout << "Double points for health\n";
+			}
+			else {
+				playerHasTakenDamage = false;
+			}
+			//notify the score 
 			//number of minimum projectiles
-
 			notify(minimumProjectiles, EventType::EndOfAWave);
 			minimumProjectiles = 0;
 		}
