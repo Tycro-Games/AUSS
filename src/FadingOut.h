@@ -2,14 +2,12 @@
 #include "SpriteTransparency.h"
 #include "Timer.h"
 #include <filesystem>
-constexpr float FADE_IN = 2.0f;
-constexpr float FADE_OUT = 5.0f;
-class FadeInOut
+constexpr float FADE_OUT = 0.7f;
+class FadingOut
 {
 public:
-	FadeInOut(const Event& ev);
-	~FadeInOut() = default;
-	void FadeIn();
+	FadingOut(const Event& ev);
+	~FadingOut() = default;
 	void FadeOut();
 	void Draw(Tmpl8::Surface* screen);
 	void Update(float deltaTime);
@@ -17,7 +15,6 @@ public:
 private:
 	const std::filesystem::path spritePath = "src/assets/UI/FadeSprite.png";
 	Tmpl8::Sprite sp;
-	Timer fadeIn;
 	Timer fadeOut;
 	Event toCall;
 	SpriteTransparency spriteTransparency;

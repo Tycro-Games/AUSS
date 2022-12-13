@@ -167,12 +167,12 @@ namespace Tmpl8
 			//rendering
 			for (int i = 0; i < renderables.size(); i++)
 				renderables[i]->Render(screen);
+			//pause stuff menu
 			fadeInOut.Update(deltaTime);
 			fadeInOut.Draw(screen);
 
 			break;
-		default:
-			break;
+
 		}
 		cursor.Render(screen);
 	}
@@ -199,17 +199,17 @@ namespace Tmpl8
 	}
 	void Game::MouseMove(int x, int y)
 	{
+		cursor.ChangePosition(x, y);
+
 		switch (currentState)
 		{
 		case GameState::game:
-			cursor.ChangePosition(x, y);
 
 			player.Rotate(x, y);
 
 			break;
 		case GameState::paused:
 		case GameState::mainMenu:
-			cursor.ChangePosition(x, y);
 
 			CheckButtons(x, y);
 			break;

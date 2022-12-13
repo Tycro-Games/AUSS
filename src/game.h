@@ -11,7 +11,7 @@
 
 #include "Score.h"
 #include "AudioID.h"
-#include "FadeInOut.h"
+#include "FadingOut.h"
 namespace Tmpl8 {
 	class Surface;
 	class AudioPlayer;
@@ -89,7 +89,7 @@ namespace Tmpl8 {
 		Button exitButton;
 		Button muteButton;
 		Button volumeButton;
-		FadeInOut fadeInOut;
+		FadingOut fadeInOut;
 		//actual game
 		Player player;
 		Score score;
