@@ -128,6 +128,7 @@
     <ClCompile Include="src\HealthBar.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="src\FadeInOut.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\game.h" />
@@ -281,6 +282,7 @@
     <ClInclude Include="src\HealthBar.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="src\FadeInOut.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="template code">

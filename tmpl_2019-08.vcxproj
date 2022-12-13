@@ -254,6 +254,7 @@
     <ClCompile Include="src\Entity.cpp" />
     <ClCompile Include="src\ExplosionBullet.cpp" />
     <ClCompile Include="src\Cursor.cpp" />
+    <ClCompile Include="src\FadeInOut.cpp" />
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\HealthBar.cpp" />
     <ClCompile Include="src\MathFunctions.cpp" />
@@ -299,6 +300,7 @@
     <ClInclude Include="src\EnemyWaveSpawner.h" />
     <ClInclude Include="src\Entity.h" />
     <ClInclude Include="src\ExplosionBullet.h" />
+    <ClInclude Include="src\FadeInOut.h" />
     <ClInclude Include="src\Followable.h" />
     <ClInclude Include="src\Cursor.h" />
     <ClInclude Include="src\game.h" />

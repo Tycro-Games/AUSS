@@ -24,7 +24,8 @@ namespace Tmpl8
 		volumeButton("src/assets/UI/Volume_2_Idle.png", "src/assets/UI/Volume_2_Pushed.png", vec2(ScreenWidth / 2, ScreenHeight / 2 + 128), bind(&Game::MuteSound, this)),
 		screen(nullptr),
 		audioPlayer(nullptr),
-		currentState(GameState::mainMenu)
+		currentState(GameState::mainMenu),
+		fadeInOut(std::bind(&Game::ResetGame, this))
 
 	{
 		muteButton.Disable();
@@ -163,7 +164,12 @@ namespace Tmpl8
 			volumeButton.Render(screen);
 			break;
 		case GameState::reset:
-			ResetGame();
+			//rendering
+			for (int i = 0; i < renderables.size(); i++)
+				renderables[i]->Render(screen);
+			fadeInOut.Update(deltaTime);
+			fadeInOut.Draw(screen);
+
 			break;
 		default:
 			break;
@@ -193,16 +199,18 @@ namespace Tmpl8
 	}
 	void Game::MouseMove(int x, int y)
 	{
-		cursor.ChangePosition(x, y);
 		switch (currentState)
 		{
 		case GameState::game:
+			cursor.ChangePosition(x, y);
 
 			player.Rotate(x, y);
 
 			break;
 		case GameState::paused:
 		case GameState::mainMenu:
+			cursor.ChangePosition(x, y);
+
 			CheckButtons(x, y);
 			break;
 		}
@@ -312,12 +320,29 @@ namespace Tmpl8
 	void Game::ChangeGameState(GameState state)
 	{
 		currentState = state;
-		if (state == GameState::game)
-			PlayMusic();
-		else
+		switch (state)
 		{
+		case Tmpl8::Game::GameState::mainMenu:
 			StopMusic();
+
+			break;
+		case Tmpl8::Game::GameState::game:
+			PlayMusic();
+
+			break;
+		case Tmpl8::Game::GameState::paused:
+			StopMusic();
+
+			break;
+		case Tmpl8::Game::GameState::reset:
+			StopMusic();
+			fadeInOut.Init();
+			break;
+		default:
+
+			break;
 		}
+
 	}
 	const Tilemap& Game::getTilemap()
 	{
