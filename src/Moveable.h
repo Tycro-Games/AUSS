@@ -5,15 +5,15 @@
 class Moveable :public Updateable
 {
 public:
-	Moveable(Tmpl8::vec2* pos, Collider* col, float speed = 1.0f);
-	Moveable(Tmpl8::vec2* pos);
+	Moveable(Tmpl8::vec2* _pos, Collider* _collider, float _speed = 1.0f);
+	explicit Moveable(Tmpl8::vec2* _pos);
 	Moveable();
-	void Init(Tmpl8::vec2* pos, Collider* col, float speed = 1.0f);
+	void Init(Tmpl8::vec2* _pos, Collider* _col, float _speed = 1.0f);
 	void Init(Tmpl8::vec2* pos);
-	virtual ~Moveable() = default;
-	void Update(float deltaTime) = 0;
+	~Moveable() override = default;
+	void Update(float deltaTime) override;
 	void SetSpeed(const float);
-	const float GetSpeed();
+	float GetSpeed() const;
 	virtual void Translation(const Tmpl8::vec2);
 	Collider* getColl() const {
 		return collider;

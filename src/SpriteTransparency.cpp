@@ -2,31 +2,30 @@
 
 
 
-void SpriteTransparency::SetTransperency(Tmpl8::Sprite* sprit, Tmpl8::Surface* screen, int X, int Y, float alpha, unsigned int frame)
+void SpriteTransparency::SetTransparency(Tmpl8::Sprite* _sprite, Tmpl8::Surface* screen, int X, int Y, float alpha, unsigned int frame)
 {
-	for (int x = 0; x < sprit->GetWidth(); x++) {
-		for (int y = 0; y < sprit->GetHeight(); y++) {
-
-			Tmpl8::Pixel colorSrc = sprit->GetBuffer()[frame * sprit->GetWidth() + x + y * sprit->GetSurface()->GetPitch()];
-			Tmpl8::Pixel colorDst = screen->GetBuffer()[X + x + (y + Y) * screen->GetPitch()];
+	for (int x = 0; x < _sprite->GetWidth(); x++) {
+		for (int y = 0; y < _sprite->GetHeight(); y++) {
+			const Tmpl8::Pixel colorSrc = _sprite->GetBuffer()[frame * _sprite->GetWidth() + x + y * _sprite->GetSurface()->GetPitch()];
+			const Tmpl8::Pixel colorDst = screen->GetBuffer()[X + x + (y + Y) * screen->GetPitch()];
 			//get the alpha of the source
-			const float Asrc = static_cast<float>(colorSrc >> 24) / 255.0f * alpha;
+			const float aSrc = static_cast<float>(colorSrc >> 24) / 255.0f * alpha;
 			//channels of the source
-			unsigned char Rsrc = static_cast<unsigned char>(colorSrc >> 16);
-			unsigned char Gsrc = static_cast<unsigned char>(colorSrc >> 8);
-			unsigned char Bsrc = static_cast<unsigned char>(colorSrc);
+			const unsigned char rSrc = static_cast<unsigned char>(colorSrc >> 16);
+			const unsigned char gSrc = static_cast<unsigned char>(colorSrc >> 8);
+			const unsigned char bSrc = static_cast<unsigned char>(colorSrc);
 
 			//channels of the destination
-			unsigned char Rdst = static_cast<unsigned char>(colorDst >> 16);
-			unsigned char Gdst = static_cast<unsigned char>(colorDst >> 8);
-			unsigned char Bdst = static_cast<unsigned char>(colorDst);
+			unsigned char rDst = static_cast<unsigned char>(colorDst >> 16);
+			unsigned char gDst = static_cast<unsigned char>(colorDst >> 8);
+			unsigned char bDst = static_cast<unsigned char>(colorDst);
 			//alpha sub-blending
-			Rdst = static_cast<unsigned char>(static_cast<float>(Rsrc) * Asrc + (1 - Asrc) * static_cast<float>(Rdst));
-			Gdst = static_cast<unsigned char>(static_cast<float>(Gsrc) * Asrc + (1 - Asrc) * static_cast<float>(Gdst));
-			Bdst = static_cast<unsigned char>(static_cast<float>(Bsrc) * Asrc + (1 - Asrc) * static_cast<float>(Bdst));
+			rDst = static_cast<unsigned char>(static_cast<float>(rSrc) * aSrc + (1 - aSrc) * static_cast<float>(rDst));
+			gDst = static_cast<unsigned char>(static_cast<float>(gSrc) * aSrc + (1 - aSrc) * static_cast<float>(gDst));
+			bDst = static_cast<unsigned char>(static_cast<float>(bSrc) * aSrc + (1 - aSrc) * static_cast<float>(bDst));
 
 
-			Tmpl8::Pixel c = Rdst << 16 | Gdst << 8 | Bdst;
+			const Tmpl8::Pixel c = rDst << 16 | gDst << 8 | bDst;
 
 			screen->GetBuffer()[X + x + (y + Y) * screen->GetPitch()] = c;
 		}

@@ -66,10 +66,10 @@ bool Collider::Contains(const Collider& a, const Tmpl8::vec2& b)
 {
 	/*float xP = round(b.x);
 		float yP = round(b.y);
-		float Left = round(a.min.x + a.pos->x);
-		float Right = round(a.max.x + a.pos->x);
-		float Up = round(a.min.y + a.pos->y);
-		float Down = round(a.max.y + a.pos->y);
+		float Left = round(a.min.x + a.posObs->x);
+		float Right = round(a.max.x + a.posObs->x);
+		float Up = round(a.min.y + a.posObs->y);
+		float Down = round(a.max.y + a.posObs->y);
 		return xP >= Left && yP >= Up
 			&& xP <= Right - 1 && yP <= Down - 1;*/
 	return a.min.x + a.pos->x < b.x&& a.min.y + a.pos->y < b.y
@@ -172,7 +172,7 @@ bool Collider::LineRectangleIntersection(const Tmpl8::vec2& v0, const Tmpl8::vec
 	outputFraction = fLow;
 	return true;
 }
-//checks with the current pos
+//checks with the current posObs
 bool Collider::InGameBounds(const Collider& col) {
 	return col.Collides(Game::Get().getTilemap().GetGameBounds());
 }
@@ -189,7 +189,7 @@ vec2 Collider::GetNormalEdgeScreen(const vec2& pos, const Collider& col)
 	const Collider gameBounds = Game::Get().getTilemap().GetGameBounds();
 	if (pos.x + col.min.x < gameBounds.min.x || pos.x + col.max.x > gameBounds.max.x)
 		normal = vec2(1, 0);
-	else//if (pos.y + col.min.y < gameBounds.min.y || pos.y + col.max.y < gameBounds.max.y)
+	else//if (posObs.y + col.min.y < gameBounds.min.y || posObs.y + col.max.y < gameBounds.max.y)
 		normal = vec2(0, 1);
 	return normal;
 }

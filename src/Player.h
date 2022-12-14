@@ -5,18 +5,17 @@
 #include "RotationVar.h"
 #include "MoveablePlayer.h"
 #include "Tilemap.h"
-#include "ClippedSprite.h"
 #include "HealthBar.h"
 
 
-class Player :public Being, public Followable, public Observer, public Subject
+class Player final :public Being, public Followable, public Observer, public Subject
 {
 public:
 	Player();
-	void Init(const Collider& tilemapCollider, const Tmpl8::vec2& pos);
-	~Player() = default;
-	void Render(Tmpl8::Surface* screen);
-	void Update(float deltaTime);
+	void Init(const Collider& tileMapCollider, const Tmpl8::vec2& _pos);
+	~Player() override = default;
+	void Render(Tmpl8::Surface* screen) override;
+	void Update(float deltaTime) override;
 	void Shoot(bool fire);
 	void Rotate(int x, int y);
 	//callable
@@ -31,10 +30,10 @@ public:
 	//getters
 	MoveablePlayer* GetMoveable();
 	ProjectileSpawner* GetSpawner();
-	const Tmpl8::vec2 GetDir() const;
-	const Tmpl8::vec2 GetPos() const;
+	Tmpl8::vec2 GetDir() const;
+	Tmpl8::vec2 GetPos() const;
 	//just returns the x of the max part of the collider
-	const float GetHalfCollider() const;
+	float GetHalfCollider() const;
 private:
 	RotationVar rVar;
 	Tmpl8::vec2 dirToFace;
@@ -54,10 +53,10 @@ private:
 	Timer cooldownForDamage;
 	HealthBar hpBar;
 	// Inherited via Observer
-	void onNotify(int points, EventType event) override;
+	void onNotify(int points, EventType _event) override;
 
 };
-inline const float Player::GetHalfCollider()const {
+inline float Player::GetHalfCollider() const {
 	return COL_MAX.x;
 }
 inline const Tmpl8::vec2 Player::GetOffset() {

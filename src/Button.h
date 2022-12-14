@@ -17,16 +17,16 @@ enum class ButtonState {
 //writing that var name is equivalent to the boiler plate on the right side
 using ButtonPressEvent = std::function<void()>;
 
-class Button :public Renderable
+class Button final :public Renderable
 {
 public:
-	Button(const std::filesystem::path& defaultSprite, const std::filesystem::path& pressedSprite, const Tmpl8::vec2& centerPos, const ButtonPressEvent& ev);
+	Button(const std::filesystem::path& _defaultSprite, const std::filesystem::path& pressedSprite, const Tmpl8::vec2& centerPos, const ButtonPressEvent& ev);
 	//default the deconstructor means that it does not need implementation for the base class
-	virtual ~Button() = default;
+	~Button() override = default;
 	void Render(Tmpl8::Surface* screen) override;
 	//input functions
 	void OnMouseMoved(int x, int y);
-	void OnMouseUp(int button);
+	void OnMouseUp(int button) const;
 
 	ButtonState GetState()const {
 		return state;

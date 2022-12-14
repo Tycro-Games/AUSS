@@ -1,11 +1,10 @@
 #include "Timer.h"
 
-Timer::Timer(const Event& evt, float DesiredTime, bool loop) :
-	toCall(evt),
-
-	loop(loop)
+Timer::Timer(Event evt, const float _desiredTime, const bool loop) :
+	loop(loop),
+	toCall(std::move(evt))
 {
-	desiredTime = DesiredTime;
+	desiredTime = _desiredTime;
 	ResetVar();
 }
 
@@ -14,12 +13,12 @@ Timer::Timer()
 	toCall = nullptr;
 }
 
-void Timer::Init(const Event& evt, float DesiredTime, bool loop)
+void Timer::Init(const Event& evt, const float _desiredTime, const bool _loop)
 {
 	ResetVar();
 	toCall = evt;
-	desiredTime = DesiredTime;
-	this->loop = loop;
+	desiredTime = _desiredTime;
+	this->loop = _loop;
 }
 
 void Timer::ResetVar()
@@ -30,7 +29,7 @@ void Timer::ResetVar()
 
 
 
-void Timer::Update(float deltaTime)
+void Timer::Update(const float deltaTime)
 {
 
 	if (isFinished || !isUpdateable)

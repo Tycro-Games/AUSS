@@ -1,25 +1,29 @@
 #include "FadingOut.h"
 #include <algorithm>
-FadingOut::FadingOut(const Event& ev) :
+
+#include "SpriteTransparency.h"
+
+FadingOut::FadingOut(Event ev) :
 	sp(new Tmpl8::Surface(spritePath.string().c_str()), 1),
-	toCall(ev)
+	toCall(std::move(ev))
 {
 	currenT = 0;
 }
 
 
 
-void FadingOut::FadeOut()
+
+void FadingOut::FadeOut() const
 {
 	toCall();
 }
 
 void FadingOut::Draw(Tmpl8::Surface* screen)
 {
-	spriteTransparency.SetTransperency(&sp, screen, 0, 0, linerF, 0);
+	SpriteTransparency::SetTransparency(&sp, screen, 0, 0, linerF, 0);
 }
 
-void FadingOut::Update(float deltaTime)
+void FadingOut::Update(const float deltaTime)
 {
 	fadeOut.Update(deltaTime);
 	if (!fadeOut.isFinished) {

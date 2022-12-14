@@ -1,13 +1,13 @@
 #pragma once
 class Updateable {
 public:
-	Updateable() {  }
-	virtual ~Updateable() {}
+	Updateable() = default;
+	virtual ~Updateable() = default;
 	virtual void Update(float deltaTime) = 0;
 
 
-	inline bool getUpdateable() const { return isUpdateable; }
-	inline void setUpdateable(bool val) { isUpdateable = val; }
+	bool getUpdateable() const { return isUpdateable; }
+	void setUpdateable(const bool val) { isUpdateable = val; }
 protected:
 	bool isUpdateable = true;
 };

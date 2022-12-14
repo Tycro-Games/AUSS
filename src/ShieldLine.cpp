@@ -1,3 +1,4 @@
+// ReSharper disable CppClangTidyModernizeLoopConvert
 #include "ShieldLine.h"
 
 #include <vector>
@@ -15,13 +16,13 @@ void ShieldLine::UpdateLine(const Tmpl8::vec2& midPoint,const float angle,const 
 		midPoint.y + sin((angle + 90) * PI / 180) * size };
 }
 
-void ShieldLine::CheckCollisionProjectiles()
+void ShieldLine::CheckCollisionProjectiles() const
 {
 	const std::vector<Collider*> colliders = Game::Get().getColliders();
 	Tmpl8::vec2 positionOfIntersection;
 	float f_fractionOfIntersection;
-	for (int i = 0; i < colliders.size(); i++) {
-		if (colliders[i]->type == Collider::Type::Projectile)
+	for (size_t i = 0; i < colliders.size(); i++) {
+		if (colliders[i]->type == Collider::Type::projectile)
 			if (Collider::LineRectangleIntersection(v0, v1, colliders[i]->At(*colliders[i]->pos), positionOfIntersection, f_fractionOfIntersection))
 				colliders[i]->toDeactivate = true;
 	}

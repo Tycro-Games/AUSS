@@ -11,7 +11,7 @@ public:
 	static float GetDirInDegrees(Tmpl8::vec2 dir);
 	static Tmpl8::vec2 GetVec2FromRadians(float angle);
 	static Tmpl8::vec2 Reflect(Tmpl8::vec2 dir, Tmpl8::vec2 norm);
-	//x y coordonates, pos current postion, dir modified by reference
+	//x y coordonates, posObs current postion, dir modified by reference
 	static void RotateToDirection(const Tmpl8::vec2& newDir, const Tmpl8::vec2& pos, Tmpl8::vec2& dir);
 	//helper function for rotating sprites
 	static unsigned int  RotateToDirectionFrames(const RotationVar&, const Tmpl8::vec2&);

@@ -8,13 +8,13 @@
 #include "Rotator.h"
 
 class ProjectileSpawner;
-class Projectile : public Entity
+class Projectile final : public Entity
 {
 
 public:
-	Projectile(PosDir posDir, Tmpl8::Sprite* sprite, ProjectileSpawner* spawner);
+	Projectile(PosDir posDir, Tmpl8::Sprite* _sprite, ProjectileSpawner* spawner);
 
-	virtual ~Projectile();
+	~Projectile() override;
 	void RotateToDirection();
 
 	void Init(PosDir posDir);

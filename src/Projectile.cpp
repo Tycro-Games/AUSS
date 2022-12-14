@@ -4,11 +4,11 @@
 
 
 
-Projectile::Projectile(PosDir posDir, Tmpl8::Sprite* sprite, ProjectileSpawner* spawner)
-	:Entity(sprite, posDir.pos),
-	collider(COL_MIN, COL_MAX, &pos),
+Projectile::Projectile(const PosDir posDir, Tmpl8::Sprite* _sprite, ProjectileSpawner* spawner)
+	:Entity(_sprite, posDir.pos),
+	rVar(RotationVar(360 / (static_cast<const float>(_sprite->Frames() - 1)), 90.0f, 20.0f)),
 	spawner(spawner),
-	rVar(RotationVar(360 / (static_cast<const float>(sprite->Frames() - 1)), 90.0f, 20.0f)),
+	collider(COL_MIN, COL_MAX, &pos),
 	rot(&pos, &dir, &rVar, &frame, &mover)
 {
 	collider.type = Collider::Type::projectile;
@@ -18,7 +18,7 @@ Projectile::Projectile(PosDir posDir, Tmpl8::Sprite* sprite, ProjectileSpawner* 
 
 	Init(posDir);
 }
-void Projectile::Init(PosDir posDir)
+void Projectile::Init(const PosDir posDir)
 {
 	SetActive(true);
 	pos = posDir.pos;
@@ -72,7 +72,7 @@ void Projectile::Render(Tmpl8::Surface* screen)
 void Projectile::Reflect()
 {
 	if (mover.colToReflectFrom != nullptr) { //reflect on obstacle
-		Collider c = *mover.colToReflectFrom;
+		const Collider c = *mover.colToReflectFrom;
 		rot.Reflect(Collider::GetNormal(c, collider));
 
 		mover.colToReflectFrom = nullptr;

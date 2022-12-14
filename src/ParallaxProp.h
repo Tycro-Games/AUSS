@@ -8,7 +8,7 @@ public:
 	/// constructor
 	/// </summary>
 	/// <param name="sprite"></param>
-	/// <param name="pos"></param>
+	/// <param name="posObs"></param>
 	/// <param name="speed">speed of the parallax</param>
 	ParallaxProp(const std::filesystem::path& spritePath, float speed = 1.0f);
 	~ParallaxProp();

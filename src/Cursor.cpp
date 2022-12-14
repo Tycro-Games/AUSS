@@ -1,6 +1,6 @@
 #include "Cursor.h"
 using namespace Tmpl8;
-Cursor::Cursor(const std::filesystem::path& spritePath, Tmpl8::vec2 pos) :
+Cursor::Cursor(const std::filesystem::path& spritePath, const Tmpl8::vec2 _pos) :
 	Entity(spritePath, 1, pos),
 	col(Collider(vec2(12, 12), vec2(13, 13), &this->pos))
 {
@@ -12,9 +12,7 @@ void Cursor::AddOffset()
 	pos += offset;
 }
 
-Cursor::~Cursor()
-{
-}
+Cursor::~Cursor() = default;
 
 void Cursor::Update(float deltaTime)
 {

@@ -3,18 +3,17 @@
 class Obstacle :public Moveable
 {
 public:
-	Obstacle(const Tmpl8::vec2, const Collider& col);
+	Obstacle(Tmpl8::vec2, const Collider& _collider);
 	Obstacle();
-	~Obstacle() = default;
+	~Obstacle() override;
 	void Update(float deltaTime) override;
-	void Init(const Tmpl8::vec2, const Collider& col);
-	bool operator==(const Obstacle& ob) {
-		return static_cast<int>(ob.pos.x) == static_cast<int>(pos.x) && static_cast<int>(ob.pos.y) == static_cast<int>(ob.pos.y);
-	}bool operator!=(const Obstacle& ob) {
-		return ob.pos.x != pos.x || ob.pos.y != ob.pos.y;
-	}
+	void Init(Tmpl8::vec2, const Collider& col);
+	bool operator==(const Obstacle& ob) const;
+
+	bool operator!=(const Obstacle& ob) const;
+
 private:
-	Tmpl8::vec2 pos;
+	Tmpl8::vec2 posObs;
 	Collider obsCollider;
 };
 
