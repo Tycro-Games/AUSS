@@ -4,7 +4,6 @@
 #include "Collider.h"
 #include "Timer.h"
 #include "MoveToADirection.h"
-#include "Rotator.h"
 #include "Curve.h"
 
 
@@ -20,28 +19,28 @@ class MoveablePlayer :public Moveable
 	float EDGE_DISTANCE;
 public:
 	MoveablePlayer();
-	void Init(Tmpl8::vec2* pos, Collider* col, const Collider* tileMapCol);
-	~MoveablePlayer() = default;
+	void Init(Tmpl8::vec2* Pos, Collider* col, const Collider* _tileMapCol);
+	~MoveablePlayer() override = default;
 
 	void Update(float deltaTime) override;
 
-	void setUp(bool val = false)
+	void setUp(const bool val = false)
 	{
 		up = val;
 	}
-	void setDown(bool val = false)
+	void setDown(const bool val = false)
 	{
 		down = val;
 	}
-	void setRight(bool val = false)
+	void setRight(const bool val = false)
 	{
 		right = val;
 	}
-	void setLeft(bool val = false)
+	void setLeft(const bool val = false)
 	{
 		left = val;
 	}
-	void setDash(bool val = false)
+	void setDash(const bool val = false)
 	{
 		if (val && dashCurve.isAtEnd() && !cooldownTimer.getUpdateable()) {
 			dashCurve.reset();
@@ -50,37 +49,27 @@ public:
 			cooldownTimer.setUpdateable(true);
 		}
 	}
-	float GetEdgeBorderDistance() const {
-		return EDGE_DISTANCE;
-	}
-	float GetDashLinearTime() const
-	{
-		return dashCurve.getCurrentValue();
-	}
-	bool CanRotate()const
-	{
-		return canRotate;
-	}
-	bool IsDashing() const
-	{
-		return !dashCurve.isAtEnd();
-	}
-	bool ChangedPos() const
-	{
-		return tilemapMovesOnly;
-	}
+
+	float GetEdgeBorderDistance() const;
+	float GetDashLinearTime() const;
+
+	bool CanRotate() const;
+
+	bool IsDashing() const;
+
+	bool ChangedPos() const;
+
 private:
-	bool CheckVecForOneDir(const Tmpl8::vec2& nextPos) const
+	static bool CheckVecForOneDir(const Tmpl8::vec2& nextPos)
 	{
 		return nextPos.x == 0 || nextPos.y == 0;
 	}
-	void MoveTileOrPlayer(const Tmpl8::vec2& tilemapPos, const Collider& c, const Tmpl8::vec2& playerPos);
+	void MoveTileOrPlayer(const Tmpl8::vec2& tilemapPos, const Collider& c, const Tmpl8::vec2& playerPos) const;
 
 	void InitTimers();
 	bool tilemapMovesOnly = false;
-	bool diagonalMovement = false;
 	bool canRotate = false;
-	//wasd
+	//use for w a s d
 	bool up = false;
 	bool down = false;
 	bool right = false;
@@ -90,8 +79,6 @@ private:
 	//dash
 	Timer cooldownTimer;
 	bool dashing = false;
-	int dashes = 0;
-
 
 	//timers functions
 	void EndCooldown();

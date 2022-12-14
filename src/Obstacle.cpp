@@ -7,7 +7,7 @@ Obstacle::Obstacle(const Tmpl8::vec2 p, const Collider& _collider)
 	obsCollider(_collider.min, _collider.max, &pos)
 
 {
-	obsCollider.type = Collider::Type::Obstacle;
+	obsCollider.type = Collider::Type::obstacle;
 }
 
 Obstacle::Obstacle()
@@ -16,7 +16,7 @@ Obstacle::Obstacle()
 	Moveable(&pos, &obsCollider)
 
 {
-	obsCollider.type = Collider::Type::Obstacle;
+	obsCollider.type = Collider::Type::obstacle;
 }
 
 

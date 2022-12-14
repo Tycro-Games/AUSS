@@ -31,12 +31,12 @@ namespace Tmpl8 {
 		void RemoveAllUpdateables();
 		void AddInstancesToUpdates();
 
-		void AssignSubject(Subject& subject, Observer& observer);
-		void RemoveSubject(Subject& subject, Observer& observer);
+		static void AssignSubject(Subject& subject, Observer& observer);
+		static void RemoveSubject(Subject& subject, Observer& observer);
 
 
 		//SDL functions
-		void Shutdown();
+		static void Shutdown();
 		void Tick(float deltaTime);
 		void MouseUp(int button);
 		void MouseDown(int button);
@@ -45,10 +45,10 @@ namespace Tmpl8 {
 		void KeyUp(SDL_Scancode key);
 		void KeyDown(SDL_Scancode key);
 		//audio playing
-		void PlaySound(SoundID id);
-		void PlayMusic();
-		void StopMusic();
-		void ResetMusic();
+		void PlaySound(SoundID id) const;
+		void PlayMusic() const;
+		void StopMusic() const;
+		void ResetMusic() const;
 		bool isPressingLeftMouse = false;
 		//switching between game states
 		enum class GameState
@@ -67,7 +67,7 @@ namespace Tmpl8 {
 		void ChangeGameState(GameState state);
 		//getters
 		const Tilemap& getTilemap();
-		const GameState getCurrentState();
+		GameState getCurrentState() const;
 		const Player& getPlayer();
 		//this needs to be sorted for the collision checking so no const
 		std::vector<Collider*>& getColliders();
@@ -79,7 +79,7 @@ namespace Tmpl8 {
 		GameState currentState;
 		Tilemap tileMap;
 		void ResumeGame();
-		void ExitGame();
+		void ExitGame() const;
 		void MuteSound();
 		bool changedVolumeButtons = false;
 		std::vector<Collider*> colliders;

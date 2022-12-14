@@ -4,15 +4,15 @@
 
 
 namespace Tmpl8 {
-	class AudioPlayer
+	class AudioPlayer  // NOLINT(cppcoreguidelines-special-member-functions)
 	{
 	public:
 		AudioPlayer();
 		~AudioPlayer();
-		void PlaySound(SoundID id);
-		void PlayMusic();
-		void PauseMusic();
-		void StopMusic();
+		void PlaySound(SoundID id) const;
+		void PlayMusic() const;
+		void PauseMusic() const;
+		void StopMusic() const;
 		void SwitchMute();
 		bool IsMuted()const;
 
@@ -22,7 +22,7 @@ namespace Tmpl8 {
 			explosions,
 			spawnings,
 			misc,
-			UI,
+			ui,
 		};
 		bool mute = false;
 		//The music that will be played

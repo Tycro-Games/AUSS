@@ -1,7 +1,7 @@
 #include "EnemyRunner.h"
 using namespace Tmpl8;
-EnemyRunner::EnemyRunner(PosDir posDir, Sprite* sprite, EnemyWaveSpawner* _spawner)
-	:Enemy(posDir.pos, sprite, _spawner),
+EnemyRunner::EnemyRunner(const PosDir pos_dir, Sprite* sprite, EnemyWaveSpawner* _spawner)
+	:Enemy(pos_dir.pos, sprite, _spawner),
 	rVar(RotationVar(360 / (static_cast<const float>(sprite->Frames() - 1)), 90.0f, static_cast<const float>(sprite->GetHeight()))),
 	MAX_DISTANCE_SQUARED_TO_PLAYER(100.0f + _spawner->getMaxPlayerDistanceSquared())
 
@@ -14,9 +14,12 @@ EnemyRunner::EnemyRunner(PosDir posDir, Sprite* sprite, EnemyWaveSpawner* _spawn
 	rot.Init(&pos, &dir, &rVar, &frame, &mover);
 
 	InitEnemy(mover);
-	Init(posDir);
+	EnemyRunner::Init(pos_dir);
 }
 
+EnemyRunner::~EnemyRunner()
+{
+}
 
 
 void EnemyRunner::Render(Surface* screen)
@@ -31,14 +34,14 @@ void EnemyRunner::Render(Surface* screen)
 
 }
 
-void EnemyRunner::Update(float deltaTime)
+void EnemyRunner::Update(const float delta_time)
 {
 	if (!getUpdateable())
 		return;
-	deathTimer.Update(deltaTime);
+	deathTimer.Update(delta_time);
 	CheckForProjectileCollisions();
 
-	mover.Update(deltaTime);
+	mover.Update(delta_time);
 	if (InRangeToAtackPlayerSquared(MAX_DISTANCE_SQUARED_TO_PLAYER)) {
 		spawner->PlayerTakesDamage(this);
 		Die();
@@ -59,12 +62,12 @@ Enemy* EnemyRunner::clone()
 
 
 
-void EnemyRunner::Init(PosDir posDir)
+void EnemyRunner::Init(PosDir pos_dir)
 {
 	SetActive(true);
-	pos = posDir.pos;
-	if (posDir.dir.length() > 0)
-		dir = posDir.dir;
+	pos = pos_dir.pos;
+	if (pos_dir.dir.length() > 0)
+		dir = pos_dir.dir;
 	else {
 		dir = MathFunctions::GetRandomVec2(0.1f, 1.0f).normalized();
 	}

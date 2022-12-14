@@ -17,7 +17,7 @@ namespace Tmpl8 {
 
 		Mix_FreeChunk(playerShootingSound);
 	}
-	void AudioPlayer::PlaySound(SoundID id)
+	void AudioPlayer::PlaySound(const SoundID id) const
 	{
 		if (mute)
 			return;
@@ -26,7 +26,7 @@ namespace Tmpl8 {
 		case SoundID::playerShooting:
 			Mix_PlayChannel(static_cast<int>(channels::shootings), playerShootingSound, 0);
 			break;
-		case SoundID::playerDamage:
+		case SoundID::playerDamage:  // NOLINT(bugprone-branch-clone)
 			break;
 		case SoundID::playerDeath:
 			break;
@@ -48,12 +48,10 @@ namespace Tmpl8 {
 			break;
 		case SoundID::endWave:
 			break;
-		default:
-			break;
 		}
 
 	}
-	void AudioPlayer::PlayMusic()
+	void AudioPlayer::PlayMusic() const
 	{
 		if (mute)
 			return;
@@ -63,13 +61,13 @@ namespace Tmpl8 {
 			Mix_ResumeMusic();
 
 	}
-	void AudioPlayer::PauseMusic()
+	void AudioPlayer::PauseMusic() const
 	{
 		if (mute)
 			return;
 		Mix_PauseMusic();
 	}
-	void AudioPlayer::StopMusic()
+	void AudioPlayer::StopMusic() const
 	{
 		Mix_FadeOutMusic(FADE_OUT_MUSIC);
 	}

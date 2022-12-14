@@ -1,14 +1,14 @@
 #pragma once
 #include "Enemy.h"
 #include "Rotator.h"
-class EnemyRunner :public Enemy
+class EnemyRunner final :public Enemy
 {
 public:
-	EnemyRunner(PosDir posDir, Tmpl8::Sprite* sprite, EnemyWaveSpawner* spawner);
-	~EnemyRunner() = default;
+	EnemyRunner(PosDir pos_dir, Tmpl8::Sprite* sprite, EnemyWaveSpawner* spawner);
+	~EnemyRunner() override;
 
 	void Render(Tmpl8::Surface* screen) override;
-	void Update(float deltaTime) override;
+	void Update(float delta_time) override;
 
 
 	Enemy* clone() override;

@@ -2,7 +2,6 @@
 #include "MathFunctions.h"
 #include "game.h"
 
-#include <iostream>
 #include <fstream>
 #include "nlohmann_json/single_include/nlohmann/json.hpp"
 using namespace Tmpl8;
@@ -38,9 +37,9 @@ MoveablePlayer::MoveablePlayer()
 
 }
 
-void MoveablePlayer::Init(vec2* pos, Collider* col, const Collider* _tileMapCol)
+void MoveablePlayer::Init(vec2* Pos, Collider* col, const Collider* _tileMapCol)
 {
-	Moveable::Init(pos, col, SPEED);
+	Moveable::Init(Pos, col, SPEED);
 	tileMapCol = _tileMapCol;
 	InitTimers();
 	dashing = false;
@@ -49,7 +48,7 @@ void MoveablePlayer::EndCooldown()
 {
 	cooldownTimer.setUpdateable(false);
 }
-void MoveablePlayer::Update(float deltaTime)
+void MoveablePlayer::Update(const float deltaTime)
 {
 	cooldownTimer.Update(deltaTime);
 	vec2 nextPos = { 0 };
@@ -58,7 +57,7 @@ void MoveablePlayer::Update(float deltaTime)
 		speed += DASH_SPEED * dashCurve.evaluate(deltaTime);
 	}
 	if (up) {
-		nextPos.y = -speed;;
+		nextPos.y = -speed;
 	}
 	if (left) {
 		nextPos.x = -speed;
@@ -75,8 +74,9 @@ void MoveablePlayer::Update(float deltaTime)
 	const Tilemap& tilemap = Game::Get().getTilemap();
 
 
-	if (nextPos.x == 0 && nextPos.y == 0)
+	if (nextPos.x == 0 && nextPos.y == 0) {
 		return;
+	}
 	if (tilemap.IsFreeTile((*pos) + vec2(nextPos.x, 0), *collider)) {
 
 		MoveTileOrPlayer((*tileMapCol->pos) - vec2(nextPos.x, 0), *tileMapCol, (*pos) + vec2(nextPos.x, 0));
@@ -86,9 +86,35 @@ void MoveablePlayer::Update(float deltaTime)
 
 		MoveTileOrPlayer((*tileMapCol->pos) - vec2(0, nextPos.y), *tileMapCol, (*pos) + vec2(0, nextPos.y));
 	}
+
 }
 
-void MoveablePlayer::MoveTileOrPlayer(const vec2& tilemapPos, const Collider& c, const vec2& playerPos)
+float MoveablePlayer::GetEdgeBorderDistance() const
+{
+	return EDGE_DISTANCE;
+}
+
+float MoveablePlayer::GetDashLinearTime() const
+{
+	return dashCurve.getCurrentValue();
+}
+
+bool MoveablePlayer::CanRotate() const
+{
+	return canRotate;
+}
+
+bool MoveablePlayer::IsDashing() const
+{
+	return !dashCurve.isAtEnd();
+}
+
+bool MoveablePlayer::ChangedPos() const
+{
+	return tilemapMovesOnly;
+}
+
+void MoveablePlayer::MoveTileOrPlayer(const vec2& tilemapPos, const Collider& c, const vec2& playerPos) const
 {
 	//move if it does not hit the bounds
 	if (Collider::InGameScreen(tilemapPos, c)) {

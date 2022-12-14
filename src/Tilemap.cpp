@@ -1,20 +1,20 @@
+// ReSharper disable All
 #include "Tilemap.h"
 
 #include "game.h"
 
-#include <iostream>
 #include <string>
 #include <algorithm>
 #include <cassert>
 using namespace Tmpl8;
 Tilemap::Tilemap() :
-	tileSurface("assets/Spaceship-shooter#01/Wang tiles/02-Craters.png"),
 	pos(vec2(0)),
+	tileSurface("assets/Spaceship-shooter#01/Wang tiles/02-Craters.png"),
+	prop("assets/Spaceship-shooter#01/background/Space02.png"),
 	col(Collider(
 		vec2(0),
 		vec2(0),
-		&pos)),
-	prop("assets/Spaceship-shooter#01/background/Space02.png")
+		&pos))
 {
 
 }
@@ -23,34 +23,35 @@ void Tilemap::Init(const vec2& _pos)
 {
 	pos = _pos;
 	lastPos = pos;
-	prop.Init(vec2(pos.x - OFFSET_X, pos.y - OFFSET_Y), .5f);
+	prop.Init(vec2(pos.x - static_cast<float>(OFFSET_X), pos.y - static_cast<float>(OFFSET_Y)), .5f);
 	Game::Get().AddMoveable(prop.getMover());
-	//add obstacles
-	bool LastOneIsBlocking = false;
+	
 	ClearObstacles();
 
 	for (int y = 0; y < Y_TILES; y++)
 		for (int x = 0; x < X_TILES; x++) {
-			int index = x + y * X_TILES;
+			// ReSharper disable once CppTooWideScopeInitStatement
+			const int index = x + y * X_TILES;
 
-			if (tiles[index].IsBlocking && tiles[index].obs == nullptr) {
+			if (tiles[index].is_blocking && tiles[index].obs == nullptr) {
 
 				vec2 p = vec2(x * tiles[index].xd + pos.x - static_cast<float>(OFFSET_X),
-					y * tiles[index].yd + pos.y - static_cast<float>(OFFSET_Y));
-				vec2 offset = vec2(tiles[index].pivotX, tiles[index].pivotY);
+				              y * tiles[index].yd + pos.y - static_cast<float>(OFFSET_Y));
+				
+				const vec2 offset = vec2(tiles[index].pivotX, tiles[index].pivotY);
 				p += offset;
 				//add other obstacles
 				int i = x, j = y;
-				float xD = static_cast<float>(tiles[index].xd);
+				float xD = static_cast<float>(tiles[index].xd);  
 				float yD = static_cast<float>(tiles[index].yd);
 				vec2 dimensions = vec2(xD - tiles[index].dimensionsX, yD - tiles[index].dimensionsY);
-				while (tiles[++i + j * X_TILES].IsBlocking) {
+				while (tiles[++i + j * X_TILES].is_blocking) {
 					xD = static_cast<float>(tiles[i + j * X_TILES].xd);
 					yD = static_cast<float>(tiles[i + j * X_TILES].yd);
 					dimensions += vec2(xD - tiles[i + j * X_TILES].dimensionsX, 0);
 				}
 				i--;
-				while (tiles[i + (++j) * X_TILES].IsBlocking) {
+				while (tiles[i + (++j) * X_TILES].is_blocking) {
 					xD = static_cast<float>(tiles[i + j * X_TILES].xd);
 					yD = static_cast<float>(tiles[i + j * X_TILES].yd);
 					dimensions += vec2(0, yD - tiles[i + j * X_TILES].dimensionsY);
@@ -86,7 +87,7 @@ void Tilemap::ClearObstacles()
 {
 	//set the obstacles to null after delete
 	for (size_t i = 0; i < X_TILES * Y_TILES; i++)
-		if (tiles[i].IsBlocking)
+		if (tiles[i].is_blocking)
 			tiles[i].obs = nullptr;
 	for (auto p : blockingTiles)
 		delete p;
@@ -208,7 +209,7 @@ bool Tilemap::IsFreeTile(float x, float y) const
 	y += OFFSET_Y - (pos.y);
 	int tx = static_cast<int>(x / TILE_SIZE), ty = static_cast<int>(y / TILE_SIZE);
 	//verifies if the position is actually colliding with the obstacle
-	if (tiles[tx + ty * X_TILES].IsBlocking &&
+	if (tiles[tx + ty * X_TILES].is_blocking &&
 		Collider::Contains(*tiles[tx + ty * X_TILES].obs->getColl(), targetPos))
 		return false;
 	return true;
@@ -230,7 +231,7 @@ bool Tilemap::IsFreeTile(float x, float y, Collider& col) const
 	y += OFFSET_Y - (pos.y);
 	size_t tx = static_cast<size_t>(x / TILE_SIZE), ty = static_cast<size_t>(y / TILE_SIZE);
 	//verifies if the position is actually colliding with the obstacle
-	if (tiles[tx + ty * X_TILES].IsBlocking &&
+	if (tiles[tx + ty * X_TILES].is_blocking &&
 		Collider::Contains(*tiles[tx + ty * X_TILES].obs->getColl(), targetPos)) {
 		col = *tiles[tx + ty * X_TILES].obs->getColl();
 		return false;

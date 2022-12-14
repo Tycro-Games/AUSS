@@ -1,10 +1,8 @@
 #include "game.h"
-#include <iostream>
 #include <string>
 
 #include "template.h"
 
-#include "MathFunctions.h"
 
 #include <SDL_events.h>
 #include <filesystem>
@@ -13,30 +11,34 @@
 using namespace std;
 namespace Tmpl8
 {
-	static Game* gs_Game = nullptr;
+	static Game* gs_game = nullptr;
 
 	Game::Game() :
-		cursor("assets/OriginalAssets/target.tga", 1),
-		//passes functions as objects
-		playButton("assets/UI/Play_Idle.png", "assets/UI/Play_Pushed.png", vec2(ScreenWidth / 2, ScreenHeight / 2), bind(&Game::ResumeGame, this)),
-		exitButton("assets/UI/Cross_Idle.png", "assets/UI/Cross_Pushed.png", vec2(ScreenWidth / 2, ScreenHeight / 2 + 64), bind(&Game::ExitGame, this)),
-		muteButton("assets/UI/Mute_Idle.png", "assets/UI/Mute_Pushed.png", vec2(ScreenWidth / 2, ScreenHeight / 2 + 128), bind(&Game::MuteSound, this)),
-		volumeButton("assets/UI/Volume_2_Idle.png", "assets/UI/Volume_2_Pushed.png", vec2(ScreenWidth / 2, ScreenHeight / 2 + 128), bind(&Game::MuteSound, this)),
 		screen(nullptr),
+		//passes functions as objects
 		audioPlayer(nullptr),
 		currentState(GameState::mainMenu),
+		cursor("assets/OriginalAssets/target.tga", 1),
+		playButton("assets/UI/Play_Idle.png", "assets/UI/Play_Pushed.png", vec2(ScreenWidth / 2, ScreenHeight / 2),
+			bind(&Game::ResumeGame, this)),
+		exitButton("assets/UI/Cross_Idle.png", "assets/UI/Cross_Pushed.png",
+			vec2(ScreenWidth / 2, ScreenHeight / 2 + 64), bind(&Game::ExitGame, this)),
+		muteButton("assets/UI/Mute_Idle.png", "assets/UI/Mute_Pushed.png",
+			vec2(ScreenWidth / 2, ScreenHeight / 2 + 128), bind(&Game::MuteSound, this)),
+		volumeButton("assets/UI/Volume_2_Idle.png", "assets/UI/Volume_2_Pushed.png",
+			vec2(ScreenWidth / 2, ScreenHeight / 2 + 128), bind(&Game::MuteSound, this)),
 		fadeInOut(std::bind(&Game::ResetGame, this))
 
 	{
 		muteButton.Disable();
-		gs_Game = this;
+		gs_game = this;
 
 
 	}
 
 	Game& Game::Get()
 	{
-		return *gs_Game;
+		return *gs_game;
 	}
 
 	void Game::Init()
@@ -54,7 +56,7 @@ namespace Tmpl8
 	}
 	void Game::Initializations()
 	{
-		vec2 centerOfTheScreen = vec2(ScreenWidth / 2, ScreenHeight / 2);
+		const vec2 centerOfTheScreen = vec2(ScreenWidth / 2, ScreenHeight / 2);
 		//reset the score
 		score.Init();
 
@@ -77,7 +79,7 @@ namespace Tmpl8
 	{
 		RemoveSubject(waveSpawner, player);
 		RemoveSubject(waveSpawner, score);
-		//player can add a multipler to the score
+		//player can add a multiplier to the score
 		RemoveSubject(player, score);
 
 		colliders.clear();
@@ -100,7 +102,7 @@ namespace Tmpl8
 		//order is important because player has to also sent events to score
 		AssignSubject(waveSpawner, player);
 		AssignSubject(waveSpawner, score);
-		//player can add a multipler to the score
+		//player can add a multiplier to the score
 		AssignSubject(player, score);
 
 		updateables.push_back(&player);
@@ -135,11 +137,12 @@ namespace Tmpl8
 			projectileDetection.Update(deltaTime);
 
 			//movement offset
-			for (int i = 0; i < updateables.size(); i++)
-				updateables[i]->Update(deltaTime);
+			for (const auto& updateable : updateables)
+				updateable->Update(deltaTime);
 			//update the offset to the other entities
-			for (int i = 0; i < moveablesTile.size(); i++) {
-				moveablesTile[i]->Translation(tileMap.GetOffset());
+			for (const auto& i : moveablesTile)
+			{
+				i->Translation(tileMap.GetOffset());
 			}
 
 			//reset the offsets
@@ -150,8 +153,8 @@ namespace Tmpl8
 				player.Rotate(static_cast<int>(cursor.pos.x), static_cast<int>(cursor.pos.y));
 			player.Shoot(isPressingLeftMouse);
 			//rendering
-			for (int i = 0; i < renderables.size(); i++)
-				renderables[i]->Render(screen);
+			for (const auto& renderable : renderables)
+				renderable->Render(screen);
 
 			screen->Print(std::to_string(score.getTotal()).c_str(), ScreenWidth - 30, 20, 0x00FF00);
 			break;
@@ -166,8 +169,8 @@ namespace Tmpl8
 			break;
 		case GameState::reset:
 			//rendering
-			for (int i = 0; i < renderables.size(); i++)
-				renderables[i]->Render(screen);
+			for (const auto& renderable : renderables)
+				renderable->Render(screen);
 			//pause stuff menu
 			fadeInOut.Update(deltaTime);
 			fadeInOut.Draw(screen);
@@ -179,7 +182,7 @@ namespace Tmpl8
 	}
 
 
-	void Game::MouseUp(int button)
+	void Game::MouseUp(const int button)
 	{
 		switch (currentState)
 		{
@@ -190,6 +193,10 @@ namespace Tmpl8
 			muteButton.OnMouseUp(button);
 			volumeButton.OnMouseUp(button);
 			break;
+		case GameState::game:  // NOLINT(bugprone-branch-clone)
+			break;
+		case GameState::reset:
+			break;
 		}
 		isPressingLeftMouse = false;
 	}
@@ -198,7 +205,7 @@ namespace Tmpl8
 
 		isPressingLeftMouse = true;
 	}
-	void Game::MouseMove(int x, int y)
+	void Game::MouseMove(const int x, const int y)
 	{
 
 		switch (currentState)
@@ -215,10 +222,11 @@ namespace Tmpl8
 
 			CheckButtons(x, y);
 			break;
+		case GameState::reset: break;
 		}
 	}
 
-	void Game::CheckButtons(int x, int y)
+	void Game::CheckButtons(const int x, const int y)
 	{
 		playButton.OnMouseMoved(x, y);
 		exitButton.OnMouseMoved(x, y);
@@ -226,10 +234,10 @@ namespace Tmpl8
 		volumeButton.OnMouseMoved(x, y);
 	}
 
-	void Game::KeyUp(SDL_Scancode key)
+	void Game::KeyUp(const SDL_Scancode key)
 	{
 
-		switch (key)
+		switch (key)  // NOLINT(clang-diagnostic-switch-enum)
 		{
 		case SDL_SCANCODE_W:
 			player.GetMoveable()->setUp();
@@ -259,9 +267,9 @@ namespace Tmpl8
 			break;
 		}
 	}
-	void Game::KeyDown(SDL_Scancode key)
+	void Game::KeyDown(const SDL_Scancode key)
 	{
-		switch (key)
+		switch (key)  // NOLINT(clang-diagnostic-switch-enum)
 		{
 			//dash
 		case SDL_SCANCODE_SPACE:
@@ -307,23 +315,23 @@ namespace Tmpl8
 			break;
 		}
 	}
-	void Game::PlaySound(SoundID id)
+	void Game::PlaySound(SoundID id) const
 	{
 		audioPlayer->PlaySound(id);
 	}
-	void Game::PlayMusic()
+	void Game::PlayMusic() const
 	{
 		audioPlayer->PlayMusic();
 	}
-	void Game::StopMusic()
+	void Game::StopMusic() const
 	{
 		audioPlayer->PauseMusic();
 	}
-	void Game::ResetMusic()
+	void Game::ResetMusic() const
 	{
 		audioPlayer->StopMusic();
 	}
-	void Game::ChangeGameState(GameState state)
+	void Game::ChangeGameState(const GameState state)
 	{
 		currentState = state;
 		switch (state)
@@ -344,17 +352,17 @@ namespace Tmpl8
 			ResetMusic();
 			fadeInOut.Init();
 			break;
-		default:
 
-			break;
 		}
+
 
 	}
 	const Tilemap& Game::getTilemap()
 	{
 		return tileMap;
 	}
-	const Game::GameState Game::getCurrentState()
+
+	Game::GameState Game::getCurrentState() const
 	{
 		return currentState;
 	}
@@ -373,7 +381,7 @@ namespace Tmpl8
 		isPressingLeftMouse = false;
 		ChangeGameState(GameState::game);
 	}
-	void Game::ExitGame()
+	void Game::ExitGame() const
 	{
 		if (isPressingLeftMouse)
 		{

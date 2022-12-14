@@ -14,23 +14,23 @@ struct Tile
 	/// <summary>
 	/// is it blocking the player's path?
 	/// </summary>
-	bool IsBlocking;
+	bool is_blocking;
 	/// <summary>
 	/// x position on the tilemap
 	/// </summary>
-	int x;
+	int x = 0;
 	/// <summary>
 	/// y position on the tilemap
 	/// </summary>
-	int y;
+	int y = 0;
 	/// <summary>
 	/// dimensions of the tile on x
 	/// </summary>
-	unsigned int xd;
+	unsigned int xd = 0;
 	/// <summary>
 	/// dimension of the tile on y
 	/// </summary>
-	unsigned int yd;
+	unsigned int yd = 0;
 	/// <summary>
 	/// Offset for the collider obstacle
 	/// </summary>
@@ -51,12 +51,12 @@ struct Tile
 	Obstacle* obs = nullptr;
 };
 
-class Tilemap :public Renderable, public Updateable, public Followable
+class Tilemap final :public Renderable, public Updateable, public Followable  // NOLINT(cppcoreguidelines-special-member-functions)
 {
 public:
 	void Init(const Tmpl8::vec2& _pos);
 	Tilemap();
-	~Tilemap();
+	~Tilemap() override;
 	void ClearObstacles();
 	// Inherited via Renderable
 	void Render(Tmpl8::Surface* screen) override;
@@ -65,13 +65,9 @@ public:
 	// Inherited via Updateable
 	void Update(float deltaTime) override;
 	//Inherited via Followable
-	virtual void ResetOffset() override {
-		lastPos = pos;
-	}
+	void ResetOffset() override;
 
-	inline Collider& GetCol() {
-		return col;
-	}
+	inline Collider& GetCol();
 	/// <summary>
 	/// The bounds where an object is inside the map
 	/// </summary>
@@ -80,7 +76,7 @@ public:
 
 	bool IsFreeTile(float x, float y) const;
 	bool IsFreeTile(const Tmpl8::vec2&, const Collider& collider) const;
-	//returns the collider at the coordonates x and y in the col variable
+	//returns the collider at the coordinates x and y in the col variable
 	bool IsFreeTile(float x, float y, Collider& col) const;
 
 	const Obstacle* GetObstacle(float x, float y) const;
@@ -88,10 +84,10 @@ public:
 	const Obstacle* GetObstacle(size_t x, size_t  y) const;
 
 
-	void SetPos(const Tmpl8::vec2 p);
+	void SetPos(Tmpl8::vec2 p);
 
 	Tmpl8::vec2* GetPos();
-	virtual const Tmpl8::vec2 GetOffset() override;
+	const Tmpl8::vec2 GetOffset() override;
 
 private:
 	void DrawTile(Tmpl8::Surface* screen, int tx, int ty, int x, int y);
@@ -129,12 +125,11 @@ private:
 	const Tile OMB = { true, 504, 144, 72,72 ,0 , 0, 0, 24 };
 	const Tile ORB = { true, 576, 144, 72,72 , 0, 0, 25, 24 };
 
-	static const int X_TILES = 24;
-	static const int Y_TILES = 16;
+	static constexpr int X_TILES = 24;
+	static constexpr int Y_TILES = 16;
 
 	const int TILE_SIZE = 72;
 	const int EDGE_SIZE = TILE_SIZE * 3;//three tiles from the edge
-	const int TILEMAP_SIZE = 1940;
 	//center the tilemap so the entire map is two screens
 	const int OFFSET_X = TILE_SIZE * X_TILES / 2;
 	const int OFFSET_Y = TILE_SIZE * Y_TILES / 2;
@@ -162,6 +157,16 @@ private:
 	};
 };
 
+inline void Tilemap::ResetOffset()
+{
+	lastPos = pos;
+}
+
+inline Collider& Tilemap::GetCol()
+{
+	return col;
+}
+
 inline Tmpl8::vec2* Tilemap::GetPos() {
 	return &pos;
 }
@@ -169,9 +174,10 @@ inline const Tmpl8::vec2 Tilemap::GetOffset() {
 	return   pos - lastPos;
 }
 inline Collider Tilemap::GetGameBounds() const {
-	return Collider(
-		Tmpl8::vec2(-OFFSET_X + pos.x + EDGE_SIZE, -OFFSET_Y + pos.y + EDGE_SIZE),
-		Tmpl8::vec2(OFFSET_X + pos.x - EDGE_SIZE, OFFSET_Y + pos.y - EDGE_SIZE));
+	return {
+		Tmpl8::vec2(pos.x + static_cast<float>(-OFFSET_X + EDGE_SIZE), pos.y + static_cast<float>(-OFFSET_Y + EDGE_SIZE)),
+		Tmpl8::vec2(pos.x + static_cast<float>(OFFSET_X - EDGE_SIZE), pos.y + static_cast<float>(OFFSET_Y - EDGE_SIZE))
+	};
 }
 
 
