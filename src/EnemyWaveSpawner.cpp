@@ -52,9 +52,9 @@ void EnemyWaveSpawner::EnemyInit()
 
 void EnemyWaveSpawner::ClearVecOfPointers()
 {
-	for (const auto& updateObject : updateObjects)
-		if (updateObject->getUpdateable())
-			delete updateObject;
+	for (size_t i = 0; i < updateObjects.size(); i++)
+		if (updateObjects[i]->getUpdateable())
+			delete updateObjects[i];
 	updateObjects.clear();
 
 	activeColliders.clear();
@@ -66,17 +66,16 @@ void EnemyWaveSpawner::ClearVecOfPointers()
 
 	ResetExplosions();
 
-	for (const auto& enemyPrototype : enemyPrototypes)
-	{
-		delete enemyPrototype;
+	for (size_t i = 0; i < (NUMBER_OF_ENEMIES); i++) {
+		delete enemyPrototypes[i];
 	}
 }
 
 
 void EnemyWaveSpawner::ClearPoolOfEnemies(vector<Enemy*>& pool)
 {
-	for (const auto& i : pool)
-		delete i;
+	for (size_t i = 0; i < pool.size(); i++)
+		delete pool[i];
 	pool.clear();
 }
 
@@ -87,8 +86,8 @@ void EnemyWaveSpawner::InitializeSpawners()
 	const float xOffset = SPAWNERS_X_POS_MULTIPLIERS * ScreenWidth;
 	const float yOffset = SPAWNERS_Y_POS_MULTIPLIERS * ScreenHeight;
 
-	for (const auto p : enemySpawners)
-		delete p;
+	for (size_t i = 0; i < enemySpawners.size(); i++)
+		delete enemySpawners[i];
 	enemySpawners.clear();
 
 	enemySpawners.push_back(new EnemySpawner(center + vec2(xOffset, yOffset), explosionSprite));
@@ -159,7 +158,7 @@ void EnemyWaveSpawner::PlayerTakesDamage(const Enemy* enemy)
 }
 void EnemyWaveSpawner::GetEnemiesForCurrentWave() {
 	startedWave = true;
-	int weight = waves[indexWave].weight + bonusWeight;
+	unsigned int weight = waves[indexWave].weight + bonusWeight;
 	enemiesToSpawn.clear();
 	vector<EnemyTypes>possibleEnemies;
 
@@ -191,21 +190,20 @@ void EnemyWaveSpawner::GetEnemiesForCurrentWave() {
 void EnemyWaveSpawner::CheckThePossibleEnemies(const size_t weight, vector<EnemyTypes>& possibleEnemies) const
 {
 	possibleEnemies.clear();
-	for (auto& i : waves[indexWave].enemiesInWave)
+	for (size_t i = 0; i < waves[indexWave].enemiesInWave.size(); i++)
 	{
 		//checks if the enemy weight is bigger the the weight of the entire wave
-		if (enemyPrototypes[i]->getWeight() <= weight)
-			possibleEnemies.push_back(i);
+		if (enemyPrototypes[waves[indexWave].enemiesInWave[i]]->getWeight() <= weight)
+			possibleEnemies.push_back(waves[indexWave].enemiesInWave[i]);
 	}
 }
 
 void EnemyWaveSpawner::CheckTheOffscreenSpawners(vector<EnemySpawner*>& possibleSpawner) const
 {
 	possibleSpawner.clear();
-	for (auto& enemySpawner : enemySpawners)
-	{
-		if (!Collider::InGameScreen(enemySpawner->GetSpawnerPos()))
-			possibleSpawner.push_back(enemySpawner);
+	for (size_t i = 0; i < enemySpawners.size(); i++) {
+		if (!Collider::InGameScreen(enemySpawners[i]->GetSpawnerPos()))
+			possibleSpawner.push_back(enemySpawners[i]);
 	}
 }
 void EnemyWaveSpawner::SpawnEnemy(const PosDir posDir, const EnemyTypes enemy)
@@ -260,27 +258,24 @@ void EnemyWaveSpawner::SpawnEnemy(const PosDir posDir, const EnemyTypes enemy)
 
 void EnemyWaveSpawner::Render(Surface* screen)
 {
-	for (const auto& enemySpawner : enemySpawners)
-	{
-		enemySpawner->Render(screen);
+	for (int i = 0; i < enemySpawners.size(); i++) {
+		enemySpawners[i]->Render(screen);
 #ifdef _DEBUG
-		screen->Box(static_cast<int>(enemySpawner->GetSpawnerPos().x), static_cast<int>(enemySpawner->GetSpawnerPos().y), static_cast<int>(
-			enemySpawner->GetSpawnerPos().x) + 5, static_cast<int>(enemySpawner->GetSpawnerPos().y) + 5, 0xFF0000);
+		screen->Box(static_cast<int>(enemySpawners[i]->GetSpawnerPos().x), static_cast<int>(enemySpawners[i]->GetSpawnerPos().y), static_cast<int>(enemySpawners[i]->GetSpawnerPos().x) + 5, static_cast<int>(enemySpawners[i]->GetSpawnerPos().y) + 5, 0xFF0000);
 #endif
 	}
 
-	for (const auto& updateObject : updateObjects)
-		updateObject->Render(screen);
+	for (int i = 0; i < updateObjects.size(); i++)
+		updateObjects[i]->Render(screen);
 }
 
 void EnemyWaveSpawner::Update(const float deltaTime)
 {
 	timer.Update(deltaTime);
-	for (const auto& enemySpawner : enemySpawners)
-		enemySpawner->Update(deltaTime);
-
-	for (const auto& updateObject : updateObjects)
-		updateObject->Update(deltaTime);
+	for (size_t i = 0; i < enemySpawners.size(); i++)
+		enemySpawners[i]->Update(deltaTime);
+	for (size_t i = 0; i < updateObjects.size(); i++)
+		updateObjects[i]->Update(deltaTime);
 }
 
 
@@ -312,6 +307,8 @@ void EnemyWaveSpawner::AddEnemyToPool(Enemy* enemy, const bool getPoints)
 			minimumProjectiles = 0;
 
 		}
+
+		GetEnemiesForCurrentWave();
 		//loop back to the beginning and add to the bonus weight
 		indexWave++;
 		if (indexWave == wavesCount)
@@ -319,7 +316,6 @@ void EnemyWaveSpawner::AddEnemyToPool(Enemy* enemy, const bool getPoints)
 			indexWave = 0;
 			bonusWeight += stepWeight;
 		}
-		GetEnemiesForCurrentWave();
 	}
 	switch (enemy->getEnemyType())
 	{

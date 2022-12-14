@@ -11,7 +11,7 @@ enum EnemyTypes//ADD CLASS here
 struct Wave
 {
 
-	int weight = 0;
+	unsigned int weight = 0;
 	std::vector<EnemyTypes> enemiesInWave;
 
 

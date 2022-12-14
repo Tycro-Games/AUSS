@@ -135,13 +135,12 @@ namespace Tmpl8
 			projectileDetection.Update(deltaTime);
 
 			//movement offset
-			for (const auto& updateable : updateables)
-				updateable->Update(deltaTime);
+			for (size_t i = 0; i < updateables.size(); i++)
+				updateables[i]->Update(deltaTime);
 			//update the offset to the other entities
-			for (const auto& i : moveablesTile)
-			{
-				i->Translation(tileMap.GetOffset());
-			}
+			for (size_t i = 0; i < moveablesTile.size(); i++)
+				moveablesTile[i]->Translation(tileMap.GetOffset());
+
 
 			//reset the offsets
 			tileMap.ResetOffset();
@@ -151,8 +150,9 @@ namespace Tmpl8
 				player.Rotate(static_cast<int>(cursor.pos.x), static_cast<int>(cursor.pos.y));
 			player.Shoot(isPressingLeftMouse);
 			//rendering
-			for (const auto& renderable : renderables)
-				renderable->Render(screen);
+			for (size_t i = 0; i < renderables.size(); i++)
+				renderables[i]->Render(screen);
+
 
 			screen->Print(std::to_string(score.getTotal()).c_str(), ScreenWidth - 30, 20, 0x00FF00);
 			break;
@@ -167,8 +167,8 @@ namespace Tmpl8
 			break;
 		case GameState::reset:
 			//rendering
-			for (const auto& renderable : renderables)
-				renderable->Render(screen);
+			for (size_t i = 0; i < renderables.size(); i++)
+				renderables[i]->Render(screen);
 			//pause stuff menu
 			fadeInOut.Update(deltaTime);
 			fadeInOut.Draw(screen);
