@@ -8,7 +8,7 @@ public:
 	void addObserver(Observer* obs);
 	void removeObserver(Observer* obs);
 protected:
-	void notify(int points, EventType event);
+	void notify(int points, EventType event) const;
 private:
 	std::vector<Observer*> observers;
 };
