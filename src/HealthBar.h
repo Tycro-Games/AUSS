@@ -1,10 +1,13 @@
 #pragma once
+#include <filesystem>
+
 #include "surface.h"
 #include "ClippedSprite.h"
 #include "Observer.h"
-constexpr int SPRITE_OFFSETX = 42;
+#include "template.h"
+constexpr int SPRITE_OFFSET_X = 42;
 
-class HealthBar :public Observer
+class HealthBar final :public Observer
 {
 
 public:
@@ -18,7 +21,7 @@ private:
 	Tmpl8::Sprite bar;
 	Tmpl8::Sprite decoration;
 	ClippedSprite clipSprite;
-	float linearF;
+	float linearF{};
 	const Tmpl8::vec2 position = { 0,0 };
 };
 

@@ -7,7 +7,7 @@
 class EnemyHoarder :public Enemy
 {
 public:
-	EnemyHoarder(PosDir posDir, Tmpl8::Sprite* sprite, EnemyWaveSpawner* spawner);
+	EnemyHoarder(PosDir posDir, Tmpl8::Sprite* _sprite, EnemyWaveSpawner* _spawner);
 
 	~EnemyHoarder() = default;
 

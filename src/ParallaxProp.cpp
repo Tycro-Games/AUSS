@@ -3,7 +3,7 @@
 
 
 using namespace std;
-ParallaxProp::ParallaxProp(const filesystem::path& spritePath, float speed)
+ParallaxProp::ParallaxProp(const filesystem::path& spritePath, const float speed)
 	: Entity(spritePath, 1),
 	moveInstance(&pos, speed)
 {
@@ -14,7 +14,7 @@ ParallaxProp::~ParallaxProp()
 {
 }
 
-void ParallaxProp::Init(const Tmpl8::vec2 _pos, float speed)
+void ParallaxProp::Init(const Tmpl8::vec2 _pos, const float speed)
 {
 	Entity::Init(_pos);
 	moveInstance.Init(&pos, speed);

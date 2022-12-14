@@ -21,7 +21,7 @@ public:
 	//callable
 	void Call();
 	//being  override
-	void TakeDamage(int) override;
+	void TakeDamage(unsigned int) override;
 	void Die() override;
 	//followable override
 	const Tmpl8::vec2 GetOffset() override;

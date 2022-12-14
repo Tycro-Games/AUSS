@@ -1,7 +1,6 @@
 #pragma once
 #include "surface.h"
-#include "template.h"
-#include <filesystem>
+
 //draws a clipped sprite having the left part as a pivot
 class ClippedSprite
 {

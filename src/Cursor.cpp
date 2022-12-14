@@ -19,7 +19,7 @@ void Cursor::Update(float deltaTime)
 	//animation maybe?
 }
 
-void Cursor::ChangePosition(int x, int y)
+void Cursor::ChangePosition(const int x, const int y)
 {
 	pos.x = static_cast<float>(x);
 	pos.y = static_cast<float>(y);

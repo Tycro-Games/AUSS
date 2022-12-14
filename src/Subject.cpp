@@ -10,7 +10,7 @@ void Subject::removeObserver(Observer* obs)
 	observers.erase(remove(observers.begin(), observers.end(), obs), observers.end());
 }
 
-void Subject::notify(int points, EventType event)
+void Subject::notify(const int points, const EventType event)
 {
 	for (int i = 0; i < observers.size(); i++) {
 		observers[i]->onNotify(points, event);

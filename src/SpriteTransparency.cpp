@@ -2,7 +2,7 @@
 
 
 
-void SpriteTransparency::SetTransparency(Tmpl8::Sprite* _sprite, Tmpl8::Surface* screen, int X, int Y, float alpha, unsigned int frame)
+void SpriteTransparency::SetTransparency(Tmpl8::Sprite* _sprite, Tmpl8::Surface* screen, const int X, const int Y, const float alpha, const unsigned int frame)
 {
 	for (int x = 0; x < _sprite->GetWidth(); x++) {
 		for (int y = 0; y < _sprite->GetHeight(); y++) {

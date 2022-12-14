@@ -5,12 +5,12 @@ void RandomNumbers::SetSeed()
 	srand(static_cast<unsigned int>(time(0)));
 }
 
-void RandomNumbers::SetSeed(int seed)
+void RandomNumbers::SetSeed(const int seed)
 {
 	srand(seed);
 }
 //based on https://stackoverflow.com/questions/5289613/generate-random-float-between-two-floats
-float RandomNumbers::RandomBetweenFloats(float l, float h)
+float RandomNumbers::RandomBetweenFloats(const float l, const float h)
 {
 	return l + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (h - l)));
 }
@@ -20,7 +20,7 @@ float RandomNumbers::RandomBetweenFloats(float l, float h)
 /// <param name="l">inclusive</param>
 /// <param name="h">exclusive</param>
 /// <returns> </returns>
-int RandomNumbers::RandomBetweenInts(int l, int h)
+int RandomNumbers::RandomBetweenInts(const int l, const int h)
 {
 	return l + (rand()) % (h - l);
 }

@@ -11,7 +11,7 @@ namespace Tmpl8 {
 
 	typedef unsigned int Pixel; // unsigned int is assumed to be 32-bit, which seems a safe assumption.
 
-	inline Pixel AddBlend(Pixel a_Color1, Pixel a_Color2)
+	inline Pixel AddBlend(const Pixel a_Color1, const Pixel a_Color2)
 	{
 		const unsigned int r = (a_Color1 & RedMask) + (a_Color2 & RedMask);
 		const unsigned int g = (a_Color1 & GreenMask) + (a_Color2 & GreenMask);
@@ -23,7 +23,7 @@ namespace Tmpl8 {
 	}
 
 	// subtractive blending
-	inline Pixel SubBlend(Pixel a_Color1, Pixel a_Color2)
+	inline Pixel SubBlend(const Pixel a_Color1, const Pixel a_Color2)
 	{
 		int red = (a_Color1 & RedMask) - (a_Color2 & RedMask);
 		int green = (a_Color1 & GreenMask) - (a_Color2 & GreenMask);
@@ -49,7 +49,7 @@ namespace Tmpl8 {
 		int GetWidth() { return m_Width; }
 		int GetHeight() { return m_Height; }
 		int GetPitch() { return m_Pitch; }
-		void SetPitch(int a_Pitch) { m_Pitch = a_Pitch; }
+		void SetPitch(const int a_Pitch) { m_Pitch = a_Pitch; }
 		// Special operations
 		void InitCharset();
 		void SetChar(int c, const char* c1, const char* c2, const char* c3, const char* c4, const char* c5);
@@ -101,8 +101,8 @@ namespace Tmpl8 {
 		// Methods
 		void Draw(Surface* a_Target, int a_X, int a_Y);
 		void DrawScaled(int a_X, int a_Y, int a_Width, int a_Height, Surface* a_Target);
-		void SetFlags(unsigned int a_Flags) { m_Flags = a_Flags; }
-		void SetFrame(unsigned int a_Index) { m_CurrentFrame = a_Index; }
+		void SetFlags(const unsigned int a_Flags) { m_Flags = a_Flags; }
+		void SetFrame(const unsigned int a_Index) { m_CurrentFrame = a_Index; }
 		unsigned int GetFlags() const { return m_Flags; }
 		int GetWidth() { return m_Width; }
 		int GetHeight() { return m_Height; }
@@ -131,7 +131,7 @@ namespace Tmpl8 {
 		void Centre(Surface* a_Target, const char* a_Text, int a_Y);
 		int Width(const char* a_Text);
 		int Height() { return m_Surface->GetHeight(); }
-		void YClip(int y1, int y2) { m_CY1 = y1; m_CY2 = y2; }
+		void YClip(const int y1, const int y2) { m_CY1 = y1; m_CY2 = y2; }
 	private:
 		Surface* m_Surface;
 		int* m_Offset, * m_Width, * m_Trans, m_Height, m_CY1, m_CY2;

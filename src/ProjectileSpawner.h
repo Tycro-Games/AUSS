@@ -7,9 +7,9 @@ class Projectile;
 class ProjectileSpawner : public Spawner {
 
 public:
-	ProjectileSpawner(const Tmpl8::vec2 offset, const std::filesystem::path& _projectileSprite, const  std::filesystem::path& _explosionSprite);
+	ProjectileSpawner(Tmpl8::vec2 offset, const std::filesystem::path& _projectileSprite, const  std::filesystem::path& _explosionSprite);
 	void Init();
-	~ProjectileSpawner() = default;
+	~ProjectileSpawner() override = default;
 
 	void ChangeFireSpeed(float speed);
 	void AddProjectileToPool(Projectile* entity);
@@ -34,7 +34,6 @@ private:
 
 	std::vector<Projectile*> poolOfProjectiles;
 
-	bool poolsAreEmpty = true;
 	bool isSpawning = false;
 	//assets for projectiles
 	Tmpl8::Sprite projectileSprite;

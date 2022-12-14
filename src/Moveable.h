@@ -12,9 +12,9 @@ public:
 	void Init(Tmpl8::vec2* pos);
 	~Moveable() override = default;
 	void Update(float deltaTime) override;
-	void SetSpeed(const float);
+	void SetSpeed(float);
 	float GetSpeed() const;
-	virtual void Translation(const Tmpl8::vec2);
+	virtual void Translation(Tmpl8::vec2);
 	Collider* getColl() const {
 		return collider;
 	}

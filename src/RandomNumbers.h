@@ -1,8 +1,5 @@
 #pragma once
 //random numbers
-#include <cstdlib>
-#include <ctime>
-#include "template.h"
 class RandomNumbers
 {
 public:

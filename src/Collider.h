@@ -12,7 +12,7 @@ struct Collider
 	Collider(Tmpl8::vec2 min, Tmpl8::vec2 max);
 	Collider(Tmpl8::vec2 min, Tmpl8::vec2 max, Tmpl8::vec2* pos);
 	Collider();
-	Collider operator*(const float multiplier);
+	Collider operator*(float multiplier);
 
 	~Collider();
 	Type type;
@@ -72,7 +72,7 @@ struct Collider
 	/// <param name="outputFraction">is the fraction that defines the point of intersection between the two points of the line</param>
 	/// <returns></returns>
 	static bool LineRectangleIntersection(const Tmpl8::vec2& v0, const Tmpl8::vec2& v1, const Collider& rect,
-	                                      Tmpl8::vec2& outputIntersection, float& outputFraction);
+		Tmpl8::vec2& outputIntersection, float& outputFraction);
 
 	static bool CollidesX(const Collider& a, const Collider& b);
 

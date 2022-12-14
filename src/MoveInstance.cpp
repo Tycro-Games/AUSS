@@ -1,8 +1,8 @@
 #include "MoveInstance.h"
 
-MoveInstance::MoveInstance(Tmpl8::vec2* pos, float speed) :
-	Moveable(pos),
-	speedOfParallax(speed)
+MoveInstance::MoveInstance(Tmpl8::vec2* _pos, const float _speed) :
+	Moveable(_pos),
+	speedOfParallax(_speed)
 {
 
 }
@@ -12,15 +12,13 @@ MoveInstance::MoveInstance()
 	speedOfParallax = 1.0f;
 }
 
-void MoveInstance::Init(Tmpl8::vec2* pos, float speed)
+void MoveInstance::Init(Tmpl8::vec2* _pos, const float _speed)
 {
-	Moveable::Init(pos);
-	speedOfParallax = speed;
+	Moveable::Init(_pos);
+	speedOfParallax = _speed;
 }
 
-MoveInstance::~MoveInstance()
-{
-}
+
 
 void MoveInstance::Translation(const Tmpl8::vec2 translation)
 {

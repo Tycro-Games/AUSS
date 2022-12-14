@@ -13,9 +13,9 @@ Button::Button(const filesystem::path& _defaultSprite, const filesystem::path& _
 
 {
 	aabb.min = vec2(centerPos.x - static_cast<float>(defaultSprite.GetWidth()) / 2.0f,
-	                centerPos.y - static_cast<float>(defaultSprite.GetWidth()) / 2.0f);
+		centerPos.y - static_cast<float>(defaultSprite.GetWidth()) / 2.0f);
 	aabb.max = vec2(centerPos.x + static_cast<float>(defaultSprite.GetHeight()) / 2.0f,
-	                centerPos.y + static_cast<float>(defaultSprite.GetHeight()) / 2.0f);
+		centerPos.y + static_cast<float>(defaultSprite.GetHeight()) / 2.0f);
 
 	offsetX = static_cast<int>(centerPos.x - static_cast<float>(defaultSprite.GetWidth()) / 2.0f);
 	offsetY = static_cast<int>(centerPos.y - static_cast<float>(defaultSprite.GetHeight()) / 2.0f);
@@ -34,11 +34,11 @@ void Button::Render(Surface* screen)
 		pressedSprite.Draw(screen, offsetX, offsetY);
 		break;
 	case ButtonState::Disabled: break;
-	
+
 	}
 }
 
-void Button::OnMouseMoved(int x, int y)
+void Button::OnMouseMoved(const int x, const int y)
 {
 	if (ButtonState::Disabled == state)
 		return;
@@ -47,7 +47,7 @@ void Button::OnMouseMoved(int x, int y)
 
 	mousePos = vec2{ static_cast<float>(x),static_cast<float>(y) };
 
-	if (aabb.isColliding(mousePos)) {
+	if (aabb.IsColliding(mousePos)) {
 		state = ButtonState::Hover;
 		Tmpl8::Game::Get().PlaySound(SoundID::hoverUI);
 	}
@@ -68,6 +68,6 @@ void Button::OnMouseUp(int button) const
 		break;
 	case ButtonState::Default: break;
 	case ButtonState::Disabled: break;
-	
+
 	}
 }

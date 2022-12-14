@@ -1,8 +1,8 @@
 #include "EnemyRunner.h"
 using namespace Tmpl8;
-EnemyRunner::EnemyRunner(const PosDir pos_dir, Sprite* sprite, EnemyWaveSpawner* _spawner)
-	:Enemy(pos_dir.pos, sprite, _spawner),
-	rVar(RotationVar(360 / (static_cast<const float>(sprite->Frames() - 1)), 90.0f, static_cast<const float>(sprite->GetHeight()))),
+EnemyRunner::EnemyRunner(const PosDir posDir, Sprite* _sprite, EnemyWaveSpawner* _spawner)
+	:Enemy(posDir.pos, _sprite, _spawner),
+	rVar(RotationVar(360 / (static_cast<const float>(_sprite->Frames() - 1)), 90.0f, static_cast<const float>(_sprite->GetHeight()))),
 	MAX_DISTANCE_SQUARED_TO_PLAYER(100.0f + _spawner->getMaxPlayerDistanceSquared())
 
 
@@ -14,12 +14,9 @@ EnemyRunner::EnemyRunner(const PosDir pos_dir, Sprite* sprite, EnemyWaveSpawner*
 	rot.Init(&pos, &dir, &rVar, &frame, &mover);
 
 	InitEnemy(mover);
-	EnemyRunner::Init(pos_dir);
 }
 
-EnemyRunner::~EnemyRunner()
-{
-}
+
 
 
 void EnemyRunner::Render(Surface* screen)
@@ -71,9 +68,9 @@ void EnemyRunner::Init(PosDir pos_dir)
 	else {
 		dir = MathFunctions::GetRandomVec2(0.1f, 1.0f).normalized();
 	}
-	
+
 	deathTimer.Init(std::bind(&EnemyRunner::Die, this), TIME_ALIVE);
-	hp = maxHp;
+	hp = static_cast<int>(maxHp);
 	frame = MathFunctions::RotateToDirectionFrames(rVar, dir);
 
 }
@@ -88,16 +85,5 @@ void EnemyRunner::ResetEnemy()
 
 void EnemyRunner::Reflect()
 {
-	if (mover.colToReflectFrom != nullptr) {
-		Collider c = *mover.colToReflectFrom;
-
-
-		rot.Reflect(Collider::GetNormal(c, enemyCollider));
-
-		mover.colToReflectFrom = nullptr;
-	}
-	//out of bounds
-	else {
-		rot.Reflect(Collider::GetNormalEdgeScreen(mover.nextP, *mover.getColl()));
-	}
+	Enemy::Reflect(mover, rot, enemyCollider);
 }

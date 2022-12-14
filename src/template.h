@@ -22,8 +22,8 @@ static const char* TemplateVersion = "An Unrealistic Spaceship Simulator";
 //#include "emmintrin.h"
 //#include "immintrin.h"
 
-inline float Rand(float range) { return ((float)rand() / RAND_MAX) * range; }
-inline int IRand(int range) { return rand() % range; }
+inline float Rand(const float range) { return ((float)rand() / RAND_MAX) * range; }
+inline int IRand(const int range) { return rand() % range; }
 int filesize(FILE* f);
 #define MALLOC64(x) _aligned_malloc(x,64)
 #define FREE64(x) _aligned_free(x)
@@ -70,7 +70,7 @@ namespace Tmpl8 {
 		timer();
 		float elapsed() const;
 		static value_type get();
-		static double to_time(const value_type vt);
+		static double to_time(value_type vt);
 		void reset();
 		static void init();
 	};
@@ -81,22 +81,26 @@ namespace Tmpl8 {
 	public:
 		union { struct { float x, y; }; float cell[2]; };
 		vec2() {}
-		vec2(float v) : x(v), y(v) {}
-		vec2(float x, float y) : x(x), y(y) {}
+		vec2(const float v) : x(v), y(v) {}
+		vec2(const float x, const float y) : x(x), y(y) {}
 		vec2 operator - () const { return vec2(-x, -y); }
 		vec2 operator + (const vec2& addOperand) const { return vec2(x + addOperand.x, y + addOperand.y); }
 		vec2 operator - (const vec2& operand) const { return vec2(x - operand.x, y - operand.y); }
 		vec2 operator * (const vec2& operand) const { return vec2(x * operand.x, y * operand.y); }
-		vec2 operator * (float operand) const { return vec2(x * operand, y * operand); }
+		vec2 operator * (const float operand) const { return vec2(x * operand, y * operand); }
 		void operator -= (const vec2& a) { x -= a.x; y -= a.y; }
 		void operator += (const vec2& a) { x += a.x; y += a.y; }
 		void operator *= (const vec2& a) { x *= a.x; y *= a.y; }
-		void operator *= (float a) { x *= a; y *= a; }
+		void operator *= (const float a) { x *= a; y *= a; }
 		float& operator [] (const int idx) { return cell[idx]; }
 		float length() { return sqrtf(x * x + y * y); }
 		float sqrLentgh() { return x * x + y * y; }
-		vec2 normalized() { float r = 1.0f / length(); return vec2(x * r, y * r); }
-		void normalize() { float r = 1.0f / length(); x *= r; y *= r; }
+		vec2 normalized() {
+			const float r = 1.0f / length(); return vec2(x * r, y * r);
+		}
+		void normalize() {
+			const float r = 1.0f / length(); x *= r; y *= r;
+		}
 		static vec2 normalize(vec2 v) { return v.normalized(); }
 		float dot(const vec2& operand) const { return x * operand.x + y * operand.y; }
 	};
@@ -106,8 +110,8 @@ namespace Tmpl8 {
 	public:
 		union { struct { float x, y, z, dummy; }; float cell[4]; };
 		vec3() {}
-		vec3(float v) : x(v), y(v), z(v) {}
-		vec3(float x, float y, float z) : x(x), y(y), z(z) {}
+		vec3(const float v) : x(v), y(v), z(v) {}
+		vec3(const float x, const float y, const float z) : x(x), y(y), z(z) {}
 		vec3 operator - () const { return vec3(-x, -y, -z); }
 		vec3 operator + (const vec3& addOperand) const { return vec3(x + addOperand.x, y + addOperand.y, z + addOperand.z); }
 		vec3 operator - (const vec3& operand) const { return vec3(x - operand.x, y - operand.y, z - operand.z); }
@@ -120,8 +124,12 @@ namespace Tmpl8 {
 		float& operator [] (const uint& idx) { return cell[idx]; }
 		float length() const { return sqrtf(x * x + y * y + z * z); }
 		float sqrLentgh() const { return x * x + y * y + z * z; }
-		vec3 normalized() const { float r = 1.0f / length(); return vec3(x * r, y * r, z * r); }
-		void normalize() { float r = 1.0f / length(); x *= r; y *= r; z *= r; }
+		vec3 normalized() const {
+			const float r = 1.0f / length(); return vec3(x * r, y * r, z * r);
+		}
+		void normalize() {
+			const float r = 1.0f / length(); x *= r; y *= r; z *= r;
+		}
 		static vec3 normalize(const vec3 v) { return v.normalized(); }
 		vec3 cross(const vec3& operand) const
 		{
@@ -145,13 +153,17 @@ namespace Tmpl8 {
 		void operator -= (const vec4& a) { x -= a.x; y -= a.y; z -= a.z; w -= a.w; }
 		void operator += (const vec4& a) { x += a.x; y += a.y; z += a.z; w += a.w; }
 		void operator *= (const vec4& a) { x *= a.x; y *= a.y; z *= a.z; w *= a.w; }
-		void operator *= (float a) { x *= a; y *= a; z *= a; w *= a; }
+		void operator *= (const float a) { x *= a; y *= a; z *= a; w *= a; }
 		float& operator [] (const int idx) { return cell[idx]; }
 		float operator [] (const uint& idx) const { return cell[idx]; }
 		float length() { return sqrtf(x * x + y * y + z * z + w * w); }
 		float sqrLentgh() { return x * x + y * y + z * z + w * w; }
-		vec4 normalized() { float r = 1.0f / length(); return vec4(x * r, y * r, z * r, w * r); }
-		void normalize() { float r = 1.0f / length(); x *= r; y *= r; z *= r; w *= r; }
+		vec4 normalized() {
+			const float r = 1.0f / length(); return vec4(x * r, y * r, z * r, w * r);
+		}
+		void normalize() {
+			const float r = 1.0f / length(); x *= r; y *= r; z *= r; w *= r;
+		}
 		static vec4 normalize(vec4 v) { return v.normalized(); }
 		float dot(const vec4& operand) const { return x * operand.x + y * operand.y + z * operand.z + w * operand.w; }
 	};
@@ -169,16 +181,16 @@ namespace Tmpl8 {
 	public:
 		union { struct { uint x, y, z, w; }; uint cell[4]; };
 		uint4() {}
-		uint4(int v) : x(v), y(v), z(v), w(v) {}
-		uint4(int x, int y, int z, int w) : x(x), y(y), z(z), w(w) {}
+		uint4(const int v) : x(v), y(v), z(v), w(v) {}
+		uint4(const int x, const int y, const int z, const int w) : x(x), y(y), z(z), w(w) {}
 		uint4 operator + (const uint4& addOperand) const { return uint4(x + addOperand.x, y + addOperand.y, z + addOperand.z, w + addOperand.w); }
 		uint4 operator - (const uint4& operand) const { return uint4(x - operand.x, y - operand.y, z - operand.z, w - operand.w); }
 		uint4 operator * (const uint4& operand) const { return uint4(x * operand.x, y * operand.y, z * operand.z, w * operand.w); }
-		uint4 operator * (uint operand) const { return uint4(x * operand, y * operand, z * operand, w * operand); }
+		uint4 operator * (const uint operand) const { return uint4(x * operand, y * operand, z * operand, w * operand); }
 		void operator -= (const uint4& a) { x -= a.x; y -= a.y; z -= a.z; w -= a.w; }
 		void operator += (const uint4& a) { x += a.x; y += a.y; z += a.z; w += a.w; }
 		void operator *= (const uint4& a) { x *= a.x; y *= a.y; z *= a.z; w *= a.w; }
-		void operator *= (uint a) { x *= a; y *= a; z *= a; w *= a; }
+		void operator *= (const uint a) { x *= a; y *= a; z *= a; w *= a; }
 		uint& operator [] (const int idx) { return cell[idx]; }
 	};
 
@@ -187,17 +199,17 @@ namespace Tmpl8 {
 	public:
 		union { struct { int x, y, z, w; }; int cell[4]; };
 		int4() {}
-		int4(int v) : x(v), y(v), z(v), w(v) {}
-		int4(int x, int y, int z, int w) : x(x), y(y), z(z), w(w) {}
+		int4(const int v) : x(v), y(v), z(v), w(v) {}
+		int4(const int x, const int y, const int z, const int w) : x(x), y(y), z(z), w(w) {}
 		int4 operator - () const { return int4(-x, -y, -z, -w); }
 		int4 operator + (const int4& addOperand) const { return int4(x + addOperand.x, y + addOperand.y, z + addOperand.z, w + addOperand.w); }
 		int4 operator - (const int4& operand) const { return int4(x - operand.x, y - operand.y, z - operand.z, w - operand.w); }
 		int4 operator * (const int4& operand) const { return int4(x * operand.x, y * operand.y, z * operand.z, w * operand.w); }
-		int4 operator * (int operand) const { return int4(x * operand, y * operand, z * operand, w * operand); }
+		int4 operator * (const int operand) const { return int4(x * operand, y * operand, z * operand, w * operand); }
 		void operator -= (const int4& a) { x -= a.x; y -= a.y; z -= a.z; w -= a.w; }
 		void operator += (const int4& a) { x += a.x; y += a.y; z += a.z; w += a.w; }
 		void operator *= (const int4& a) { x *= a.x; y *= a.y; z *= a.z; w *= a.w; }
-		void operator *= (int a) { x *= a; y *= a; z *= a; w *= a; }
+		void operator *= (const int a) { x *= a; y *= a; z *= a; w *= a; }
 		int& operator [] (const int idx) { return cell[idx]; }
 	};
 
@@ -209,9 +221,9 @@ namespace Tmpl8 {
 		float& operator [] (const int idx) { return cell[idx]; }
 		static mat4 identity();
 		static mat4 rotate(vec3 v, float a);
-		static mat4 rotatex(const float a);
-		static mat4 rotatey(const float a);
-		static mat4 rotatez(const float a);
+		static mat4 rotatex(float a);
+		static mat4 rotatey(float a);
+		static mat4 rotatez(float a);
 		void invert()
 		{
 			// from MESA, via http://stackoverflow.com/questions/1148309/inverting-a-4x4-matrix

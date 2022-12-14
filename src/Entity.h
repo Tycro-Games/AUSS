@@ -23,13 +23,5 @@ public:
 
 protected:
 	unsigned int frame = 0;
-
-
-
-private:
-
-
-
-
 };
 

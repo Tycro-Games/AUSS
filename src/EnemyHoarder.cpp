@@ -1,11 +1,10 @@
 #include "EnemyHoarder.h"
-#include "MathFunctions.h"
 
 using namespace Tmpl8;
-EnemyHoarder::EnemyHoarder(PosDir posDir, Sprite* sprite, EnemyWaveSpawner* _spawner) :
-	Enemy(posDir.pos, sprite, _spawner),
-	rVar(RotationVar(360 / (static_cast<const float>(sprite->Frames() - 1)), 90.0f, static_cast<const float>(sprite->GetHeight()))),
-	MAX_DISTANCE_SQUARED_TO_PLAYER(100.0f + _spawner->getMaxPlayerDistanceSquared())
+EnemyHoarder::EnemyHoarder(const PosDir posDir, Sprite* _sprite, EnemyWaveSpawner* _spawner) :
+	Enemy(posDir.pos, _sprite, _spawner),
+	MAX_DISTANCE_SQUARED_TO_PLAYER(100.0f + _spawner->getMaxPlayerDistanceSquared()),
+	rVar(RotationVar(360 / (static_cast<const float>(_sprite->Frames() - 1)), 90.0f, static_cast<const float>(_sprite->GetHeight())))
 
 {
 	enemyType = Hoarder;
@@ -17,11 +16,10 @@ EnemyHoarder::EnemyHoarder(PosDir posDir, Sprite* sprite, EnemyWaveSpawner* _spa
 	rot.Init(&pos, &dir, &rVar, &frame, &mover);
 
 	InitEnemy(mover);
-	Init(posDir);
 }
 
 
-void EnemyHoarder::Update(float deltaTime)
+void EnemyHoarder::Update(const float deltaTime)
 {
 	if (!getUpdateable())
 		return;
@@ -55,13 +53,13 @@ void EnemyHoarder::Render(Surface* screen)
 
 
 
-void EnemyHoarder::Init(PosDir posDir)
+void EnemyHoarder::Init(const PosDir posDir)
 {
 
 	SetActive(true);
 	pos = posDir.pos;
 	dir = posDir.dir;
-	hp = maxHp;
+	hp = static_cast<int>(maxHp);
 	mover.SetSpeed(SPEED + randomNumbers.RandomBetweenFloats(50.0f, 100.0f));
 	rotate.Init(std::bind(&EnemyRotator::RotateToPlayer, &rot), randomNumbers.RandomBetweenFloats(0.1f, 0.9f), true);
 	rot.RotateToPlayer();
@@ -78,18 +76,7 @@ void EnemyHoarder::ResetEnemy()
 
 void EnemyHoarder::Reflect()
 {
-	if (mover.colToReflectFrom != nullptr) {
-		Collider c = *mover.colToReflectFrom;
-
-
-		rot.Reflect(Collider::GetNormal(c, enemyCollider));
-
-		mover.colToReflectFrom = nullptr;
-	}
-	//out of bounds
-	else {
-		rot.Reflect(Collider::GetNormalEdgeScreen(mover.nextP, *mover.getColl()));
-	}
+	Enemy::Reflect(mover, rot, enemyCollider);
 
 }
 

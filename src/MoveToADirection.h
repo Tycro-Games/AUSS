@@ -10,7 +10,7 @@ public:
 	void Init(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Collider* col, const Event& call, float speed = 2.0f);
 
 	void Update(float deltaTime)override;
-	void ReflectDirection(Tmpl8::vec2 normal) {
+	void ReflectDirection(const Tmpl8::vec2 normal) {
 		*dir = MathFunctions::Reflect(*dir, normal);
 
 	}

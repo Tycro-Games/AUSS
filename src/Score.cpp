@@ -4,7 +4,7 @@
 
 
 
-void Score::onNotify(int points, EventType eventt)
+void Score::onNotify(const int points, const EventType eventt)
 {
 	switch (eventt)
 	{

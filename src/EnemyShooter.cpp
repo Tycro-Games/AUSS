@@ -1,7 +1,7 @@
 #include "EnemyShooter.h"
 #include "game.h"
 using namespace Tmpl8;
-EnemyShooter::EnemyShooter(PosDir posDir, Sprite* _sprite, EnemyWaveSpawner* _spawner) :
+EnemyShooter::EnemyShooter(const PosDir posDir, Sprite* _sprite, EnemyWaveSpawner* _spawner) :
 	Enemy(posDir.pos, _sprite, _spawner),
 	rVar(RotationVar(360 / (static_cast<const float>(sprite->Frames() - 1)), 90.0f, static_cast<const float>(sprite->GetHeight())))
 
@@ -15,7 +15,7 @@ EnemyShooter::EnemyShooter(PosDir posDir, Sprite* _sprite, EnemyWaveSpawner* _sp
 	Init(posDir);
 }
 
-void EnemyShooter::Update(float deltaTime)
+void EnemyShooter::Update(const float deltaTime)
 {
 	if (!getUpdateable())
 		return;
@@ -58,14 +58,14 @@ Enemy* EnemyShooter::clone()
 	return enem;
 }
 
-void EnemyShooter::Init(PosDir posDir)
+void EnemyShooter::Init(const PosDir posDir)
 {
 	SetActive(true);
 	pos = posDir.pos;
 	dir = posDir.dir;
 
 	rot.Init(&pos, &dir, &rVar, &frame, &mover);
-	hp = maxHp;
+	hp = static_cast<int>(maxHp);
 	canMove = false;
 	timerToStop.Init(std::bind(&EnemyShooter::StartMovement, this), STOP_INTERVAL);
 	timerToMove.Init(std::bind(&EnemyShooter::StopMovement, this), MOVE_INTERVAL);
@@ -84,7 +84,7 @@ void EnemyShooter::StartMovement()
 {
 	canMove = true;
 
-	vec2 toCenter = (vec2{ ScreenWidth / 2,ScreenHeight / 2 } - pos);
+	const vec2 toCenter = (vec2{ ScreenWidth / 2.0f,ScreenHeight / 2.0f } - pos);
 
 	dir = (toCenter + MathFunctions::GetRandomVec2(MIN_DEVIATION, MAX_DEVIATION)).normalized();
 	timerToMove.ResetVar();
@@ -105,13 +105,5 @@ void EnemyShooter::StopMovement()
 
 void EnemyShooter::Reflect()
 {
-	//reflect on obstacle
-	if (mover.colToReflectFrom != nullptr) {
-		Collider c = *mover.colToReflectFrom;
-		rot.Reflect(Collider::GetNormal(c, enemyCollider));
-		mover.colToReflectFrom = nullptr;
-	}
-	else //or edge of the screen
-		rot.Reflect(Collider::GetNormalEdgeScreen(mover.nextP, *mover.getColl()));
-
+	Enemy::Reflect(mover, rot, enemyCollider);
 }

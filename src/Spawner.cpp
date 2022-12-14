@@ -2,7 +2,7 @@
 
 using namespace Tmpl8;
 
-Spawner::Spawner(const std::filesystem::path& explosion, unsigned int numberOfFrames) :
+Spawner::Spawner(const std::filesystem::path& explosion, const unsigned int numberOfFrames) :
 	explosionSprite(new Sprite(new Surface(explosion.string().c_str()), numberOfFrames))
 {
 }
@@ -49,7 +49,7 @@ void Spawner::CreateMoreExplosions()
 	AddExplosionToPool(bullet);
 }
 
-void Spawner::SpawnExplosions(Tmpl8::vec2 p)
+void Spawner::SpawnExplosions(const Tmpl8::vec2 p)
 {
 	if (poolOfExplosions.size() == 0)
 		CreateMoreExplosions();

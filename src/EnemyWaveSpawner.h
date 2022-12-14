@@ -17,7 +17,7 @@ public:
 	Enemy* CreateEnemy(EnemyTypes enemyType);
 	void SetJsonValues(Enemy* enemy, json& enemyJson);
 	void CreateMoreEnemies(EnemyTypes enemy);
-	void PlayerTakesDamage(Enemy* enemy);
+	void PlayerTakesDamage(const Enemy* enemy);
 	void GetEnemiesForCurrentWave();
 	void CheckThePossibleEnemies(size_t weight, std::vector<EnemyTypes>& possibleEnemies);
 	//add all the spawners that are offscreen
@@ -86,7 +86,7 @@ inline bool EnemyWaveSpawner::IsPoolEmpty(const std::vector<Enemy*>& pool) {
 }
 
 
-inline EnemyTypes EnemyWaveSpawner::ConvertToEnum(std::string str)
+inline EnemyTypes EnemyWaveSpawner::ConvertToEnum(const std::string str)
 {
 	EnemyTypes type = NUMBER_OF_ENEMIES;
 

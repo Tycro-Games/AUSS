@@ -24,7 +24,6 @@
 #include "AudioPlayer.h"
 #include "surface.h"
 #include <cstdio>
-#include <iostream>
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
@@ -35,7 +34,6 @@ extern "C"
 #include "glew.h" 
 }
 #include "gl.h"
-#include "wglext.h"
 #endif
 
 
@@ -88,10 +86,10 @@ namespace Tmpl8 {
 	vec4 operator * (const vec4& v, const float& s) { return vec4(v.x * s, v.y * s, v.z * s, v.w * s); }
 	vec4 operator * (const vec4& v, const mat4& M)
 	{
-		vec4 mx(M.cell[0], M.cell[4], M.cell[8], M.cell[12]);
-		vec4 my(M.cell[1], M.cell[5], M.cell[9], M.cell[13]);
-		vec4 mz(M.cell[2], M.cell[6], M.cell[10], M.cell[14]);
-		vec4 mw(M.cell[3], M.cell[7], M.cell[11], M.cell[15]);
+		const vec4 mx(M.cell[0], M.cell[4], M.cell[8], M.cell[12]);
+		const vec4 my(M.cell[1], M.cell[5], M.cell[9], M.cell[13]);
+		const vec4 mz(M.cell[2], M.cell[6], M.cell[10], M.cell[14]);
+		const vec4 mw(M.cell[3], M.cell[7], M.cell[11], M.cell[15]);
 		return v.x * mx + v.y * my + v.z * mz + v.w * mw;
 	}
 
@@ -149,7 +147,7 @@ namespace Tmpl8 {
 
 	void NotifyUser(const char* s)
 	{
-		HWND hApp = FindWindow(nullptr, TemplateVersion);
+		const HWND hApp = FindWindow(nullptr, TemplateVersion);
 		MessageBox(hApp, s, "ERROR", MB_OK);
 		exit(0);
 	}
@@ -193,7 +191,7 @@ bool redirectIO()
 	SetConsoleScreenBufferSize(GetStdHandle(STD_OUTPUT_HANDLE), coninfo.dwSize);
 	HANDLE h1 = GetStdHandle(STD_OUTPUT_HANDLE);
 	int h2 = _open_osfhandle((intptr_t)h1, _O_TEXT);
-	FILE* fp = _fdopen(h2, "w");
+	const FILE* fp = _fdopen(h2, "w");
 	*stdout = *fp;
 	setvbuf(stdout, NULL, _IONBF, 0);
 	h1 = GetStdHandle(STD_INPUT_HANDLE), h2 = _open_osfhandle((intptr_t)h1, _O_TEXT);
@@ -383,7 +381,7 @@ int main(int argc, char** argv)
 			firstframe = false;
 		}
 		// calculate frame time and pass it to game->Tick
-		float elapsedTime = t.elapsed();
+		const float elapsedTime = t.elapsed();
 		t.reset();
 
 		game->Tick(elapsedTime);

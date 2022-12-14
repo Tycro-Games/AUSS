@@ -1,11 +1,12 @@
 #pragma once
 #include "Enemy.h"
 #include "Rotator.h"
-class EnemyShooter : public Enemy
+
+class EnemyShooter final : public Enemy
 {
 public:
 	EnemyShooter(PosDir posDir, Tmpl8::Sprite* sprite, EnemyWaveSpawner* _spawner);
-	~EnemyShooter() = default;
+	~EnemyShooter() override = default;
 
 	void Update(float deltaTime) override;
 
@@ -26,7 +27,7 @@ private:
 	const float MOVE_INTERVAL = 0.5f;
 	const float STOP_INTERVAL = 1.0f;
 	const float SPAWN_INTERVAL = 0.5f;
-	//direction randomzation
+	//direction randomization
 	const float MIN_DEVIATION = 0.1f;
 	const float MAX_DEVIATION = 1.0f;
 

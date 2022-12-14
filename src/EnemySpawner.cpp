@@ -4,9 +4,8 @@
 #include "Enemy.h"
 using namespace Tmpl8;
 using namespace std;
-EnemySpawner::EnemySpawner(Tmpl8::vec2& _pos, EnemyWaveSpawner* enemyWave, Sprite* explosion) :
+EnemySpawner::EnemySpawner(const vec2 _pos, Sprite* explosion) :
 	Spawner(explosion),
-	enemyWave(enemyWave),
 	pos(_pos)
 
 {
@@ -15,9 +14,6 @@ EnemySpawner::EnemySpawner(Tmpl8::vec2& _pos, EnemyWaveSpawner* enemyWave, Sprit
 
 }
 
-EnemySpawner::~EnemySpawner()
-{
-}
 
 
 void EnemySpawner::Update(float deltaTime)
@@ -26,12 +22,12 @@ void EnemySpawner::Update(float deltaTime)
 }
 
 
-void EnemySpawner::SetEnemy(EnemyTypes enemy)
+void EnemySpawner::SetEnemy(const EnemyTypes enemy)
 {
 	enemyToSpawn = enemy;
 }
 
-void EnemySpawner::Render(Tmpl8::Surface* screen)
+void EnemySpawner::Render(Surface* screen)
 {
 	//render a sprite maybe
 }

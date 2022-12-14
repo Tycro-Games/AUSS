@@ -44,7 +44,7 @@ void Projectile::RotateToDirection()
 
 
 
-void Projectile::Update(float deltaTime)
+void Projectile::Update(const float deltaTime)
 {
 	if (!getUpdateable())
 		return;

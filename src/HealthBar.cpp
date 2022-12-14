@@ -15,13 +15,13 @@ void HealthBar::Init()
 
 void HealthBar::Draw(Tmpl8::Surface* screen)
 {
-	int x = static_cast<int>(position.x);
-	int y = static_cast<int>(position.y);
+	const int x = static_cast<int>(position.x);
+	const int y = static_cast<int>(position.y);
 	decoration.Draw(screen, x, y);
-	clipSprite.DrawSprite(screen, *bar.GetSurface(), linearF, x + SPRITE_OFFSETX, y);
+	clipSprite.DrawSprite(screen, *bar.GetSurface(), linearF, x + SPRITE_OFFSET_X, y);
 }
 
-void HealthBar::onNotify(int points, EventType eventt)
+void HealthBar::onNotify(const int points, const EventType eventt)
 {
 	switch (eventt)
 	{
@@ -29,7 +29,9 @@ void HealthBar::onNotify(int points, EventType eventt)
 		//minimum and max health of the player
 		linearF = MathFunctions::InverseLerp(0.0f, 100.0f, static_cast<float>(points));
 		break;
-	default:
-		break;
+	case EventType::EnemyDeath: break;
+	case EventType::BonusConditions: break;
+	case EventType::EndOfAWave: break;
+
 	}
 }

@@ -1,7 +1,7 @@
 #include "MoveToADirection.h"
 #include "game.h"
 using namespace Tmpl8;
-MoveToADirection::MoveToADirection(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Collider* col, const Event& call, float speed) :
+MoveToADirection::MoveToADirection(Tmpl8::vec2* pos, Tmpl8::vec2* dir, Collider* col, const Event& call, const float speed) :
 	Moveable(pos, col, speed),
 	dir(dir),
 	reflect(call)
@@ -16,14 +16,14 @@ MoveToADirection::MoveToADirection()
 {
 }
 
-void MoveToADirection::Init(Tmpl8::vec2* pos, Tmpl8::vec2* _dir, Collider* collider, const Event& _call, float speed)
+void MoveToADirection::Init(Tmpl8::vec2* pos, Tmpl8::vec2* _dir, Collider* collider, const Event& _call, const float speed)
 {
 	Moveable::Init(pos, collider, speed);
 	dir = _dir;
 	reflect = _call;
 }
 
-void MoveToADirection::Update(float deltaTime)
+void MoveToADirection::Update(const float deltaTime)
 {
 
 	Tmpl8::vec2 nextPos = { 0 };

@@ -1,10 +1,12 @@
 #include "EnemyShielder.h"
 #include "game.h"
 using namespace Tmpl8;
-EnemyShielder::EnemyShielder(PosDir posDir, Tmpl8::Sprite* sprite, EnemyWaveSpawner* _spawner) :
-	Enemy(posDir.pos, sprite, _spawner),
-	rVar(RotationVar(360 / (static_cast<const float>(sprite->Frames() - 1)), 90.0f, static_cast<const float>(sprite->GetHeight()))),
-	MAX_DISTANCE_SQUARED_TO_PLAYER(100.0f + _spawner->getMaxPlayerDistanceSquared())
+
+EnemyShielder::EnemyShielder(const PosDir posDir, Sprite* _sprite, EnemyWaveSpawner* _spawner) :
+	Enemy(posDir.pos, _sprite, _spawner),
+	MAX_DISTANCE_SQUARED_TO_PLAYER(100.0f + _spawner->getMaxPlayerDistanceSquared()),
+	rVar(RotationVar(360 / (static_cast<const float>(_sprite->Frames() - 1)), 90.0f,
+		static_cast<const float>(_sprite->GetHeight())))
 {
 	enemyType = Shielder;
 	enemyCollider = Collider(COL_MIN, COL_MAX, &pos);
@@ -16,10 +18,9 @@ EnemyShielder::EnemyShielder(PosDir posDir, Tmpl8::Sprite* sprite, EnemyWaveSpaw
 	rot.Init(&pos, &dir, &rVar, &frame, &mover);
 
 	InitEnemy(mover);
-	Init(posDir);
 }
 
-void EnemyShielder::Update(float deltaTime)
+void EnemyShielder::Update(const float deltaTime)
 {
 	if (!getUpdateable())
 		return;
@@ -29,8 +30,8 @@ void EnemyShielder::Update(float deltaTime)
 	CheckForProjectileCollisions();
 
 	mover.Update(deltaTime);
-	InRangeToAtack = InRangeToAtackPlayerSquared(MAX_DISTANCE_SQUARED_TO_PLAYER);
-	if (InRangeToAtack) {
+	inRangeToAtack_ = InRangeToAtackPlayerSquared(MAX_DISTANCE_SQUARED_TO_PLAYER);
+	if (inRangeToAtack_) {
 		attackTimer.Update(deltaTime);
 	}
 	shieldLine.UpdateLine(pos + dir * LINE_OFFSET, MathFunctions::GetDirInDegreesPositive(dir), LINE_SIZE);
@@ -51,7 +52,7 @@ void EnemyShielder::Reflect()
 {
 	//reflect on obstacle
 	if (mover.colToReflectFrom != nullptr) {
-		Collider c = *mover.colToReflectFrom;
+		const Collider c = *mover.colToReflectFrom;
 
 
 		rot.Reflect(Collider::GetNormal(c, enemyCollider));
@@ -66,7 +67,7 @@ void EnemyShielder::Reflect()
 }
 void EnemyShielder::AtackPlayer()
 {
-	if (InRangeToAtack) {
+	if (inRangeToAtack_) {
 		spawner->PlayerTakesDamage(this);
 		attackTimer.ResetVar();
 	}
@@ -84,7 +85,7 @@ void EnemyShielder::Render(Tmpl8::Surface* screen)
 		static_cast<int>(pos.x + rVar.SPRITE_OFFSET / 2),
 		static_cast<int>(pos.y + rVar.SPRITE_OFFSET / 2), 0xff00ff);
 #endif
-	float angle = MathFunctions::GetDirInDegreesPositive(dir);
+	//float angle = MathFunctions::GetDirInDegreesPositive(dir);
 
 
 	shieldLine.Render(screen);
@@ -102,12 +103,12 @@ Enemy* EnemyShielder::clone()
 	return enem;
 }
 
-void EnemyShielder::Init(PosDir posDir)
+void EnemyShielder::Init(const PosDir posDir)
 {
 	SetActive(true);
 	pos = posDir.pos;
 	dir = posDir.dir;
-	hp = maxHp;
+	hp = static_cast<int> (maxHp);
 
 
 	mover.SetSpeed(SPEED + randomNumbers.RandomBetweenFloats(-30, 100));

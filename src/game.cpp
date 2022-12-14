@@ -9,6 +9,7 @@
 #include <functional>
 #include "AudioPlayer.h"
 using namespace std;
+
 namespace Tmpl8
 {
 	static Game* gs_game = nullptr;
@@ -19,21 +20,20 @@ namespace Tmpl8
 		audioPlayer(nullptr),
 		currentState(GameState::mainMenu),
 		cursor("assets/OriginalAssets/target.tga", 1),
-		playButton("assets/UI/Play_Idle.png", "assets/UI/Play_Pushed.png", vec2(ScreenWidth / 2, ScreenHeight / 2),
+		playButton("assets/UI/Play_Idle.png", "assets/UI/Play_Pushed.png",
+			vec2(ScreenWidth / 2.0f, ScreenHeight / 2.0f),
 			bind(&Game::ResumeGame, this)),
 		exitButton("assets/UI/Cross_Idle.png", "assets/UI/Cross_Pushed.png",
-			vec2(ScreenWidth / 2, ScreenHeight / 2 + 64), bind(&Game::ExitGame, this)),
+			vec2(ScreenWidth / 2.0f, ScreenHeight / 2.0f + 64.0f), bind(&Game::ExitGame, this)),
 		muteButton("assets/UI/Mute_Idle.png", "assets/UI/Mute_Pushed.png",
-			vec2(ScreenWidth / 2, ScreenHeight / 2 + 128), bind(&Game::MuteSound, this)),
+			vec2(ScreenWidth / 2.0f, ScreenHeight / 2.0f + 128.0f), bind(&Game::MuteSound, this)),
 		volumeButton("assets/UI/Volume_2_Idle.png", "assets/UI/Volume_2_Pushed.png",
-			vec2(ScreenWidth / 2, ScreenHeight / 2 + 128), bind(&Game::MuteSound, this)),
+			vec2(ScreenWidth / 2.0f, ScreenHeight / 2.0f + 128.0f), bind(&Game::MuteSound, this)),
 		fadeInOut(std::bind(&Game::ResetGame, this))
 
 	{
 		muteButton.Disable();
 		gs_game = this;
-
-
 	}
 
 	Game& Game::Get()
@@ -54,20 +54,20 @@ namespace Tmpl8
 
 		AddInstancesToUpdates();
 	}
+
 	void Game::Initializations()
 	{
-		const vec2 centerOfTheScreen = vec2(ScreenWidth / 2, ScreenHeight / 2);
+		const vec2 centerOfTheScreen = vec2(ScreenWidth / 2.0f, ScreenHeight / 2.0f);
 		//reset the score
 		score.Init();
 
 		tileMap.Init(centerOfTheScreen);
 		player.Init(tileMap.GetCol(), centerOfTheScreen);
 		waveSpawner.Init();
-
 	}
+
 	void Game::ResetGame()
 	{
-
 		Shutdown();
 		RemoveAllUpdateables();
 		Initializations();
@@ -75,6 +75,7 @@ namespace Tmpl8
 		ChangeGameState(GameState::mainMenu);
 		CheckButtons(static_cast<int>(cursor.pos.x), static_cast<int>(cursor.pos.y));
 	}
+
 	void Game::RemoveAllUpdateables()
 	{
 		RemoveSubject(waveSpawner, player);
@@ -90,8 +91,6 @@ namespace Tmpl8
 
 	void Game::AddInstancesToUpdates()
 	{
-
-
 		updateables.push_back(&tileMap);
 		renderables.push_back(&tileMap);
 
@@ -107,21 +106,20 @@ namespace Tmpl8
 
 		updateables.push_back(&player);
 		renderables.push_back(&player);
-
-
 	}
+
 	void Game::AssignSubject(Subject& subject, Observer& observer)
 	{
 		subject.addObserver(&observer);
 	}
+
 	void Game::RemoveSubject(Subject& subject, Observer& observer)
 	{
 		subject.removeObserver(&observer);
-
 	}
+
 	void Game::Shutdown()
 	{
-
 	}
 
 
@@ -176,7 +174,6 @@ namespace Tmpl8
 			fadeInOut.Draw(screen);
 
 			break;
-
 		}
 		cursor.Render(screen);
 	}
@@ -193,21 +190,21 @@ namespace Tmpl8
 			muteButton.OnMouseUp(button);
 			volumeButton.OnMouseUp(button);
 			break;
-		case GameState::game:  // NOLINT(bugprone-branch-clone)
+		case GameState::game: // NOLINT(bugprone-branch-clone)
 			break;
 		case GameState::reset:
 			break;
 		}
 		isPressingLeftMouse = false;
 	}
+
 	void Game::MouseDown(int button)
 	{
-
 		isPressingLeftMouse = true;
 	}
+
 	void Game::MouseMove(const int x, const int y)
 	{
-
 		switch (currentState)
 		{
 		case GameState::game:
@@ -236,8 +233,7 @@ namespace Tmpl8
 
 	void Game::KeyUp(const SDL_Scancode key)
 	{
-
-		switch (key)  // NOLINT(clang-diagnostic-switch-enum)
+		switch (key) // NOLINT(clang-diagnostic-switch-enum)
 		{
 		case SDL_SCANCODE_W:
 			player.GetMoveable()->setUp();
@@ -267,9 +263,10 @@ namespace Tmpl8
 			break;
 		}
 	}
+
 	void Game::KeyDown(const SDL_Scancode key)
 	{
-		switch (key)  // NOLINT(clang-diagnostic-switch-enum)
+		switch (key) // NOLINT(clang-diagnostic-switch-enum)
 		{
 			//dash
 		case SDL_SCANCODE_SPACE:
@@ -302,7 +299,8 @@ namespace Tmpl8
 
 			break;
 		case SDL_SCANCODE_ESCAPE:
-			if (currentState == GameState::game) {
+			if (currentState == GameState::game)
+			{
 				ChangeGameState(GameState::paused);
 				//need update the cursor movement for the buttons
 				playButton.OnMouseMoved(static_cast<int>(cursor.pos.x), static_cast<int>(cursor.pos.y));
@@ -315,22 +313,27 @@ namespace Tmpl8
 			break;
 		}
 	}
-	void Game::PlaySound(SoundID id) const
+
+	void Game::PlaySound(const SoundID id) const
 	{
 		audioPlayer->PlaySound(id);
 	}
+
 	void Game::PlayMusic() const
 	{
 		audioPlayer->PlayMusic();
 	}
+
 	void Game::StopMusic() const
 	{
 		audioPlayer->PauseMusic();
 	}
+
 	void Game::ResetMusic() const
 	{
 		audioPlayer->StopMusic();
 	}
+
 	void Game::ChangeGameState(const GameState state)
 	{
 		currentState = state;
@@ -352,11 +355,9 @@ namespace Tmpl8
 			ResetMusic();
 			fadeInOut.Init();
 			break;
-
 		}
-
-
 	}
+
 	const Tilemap& Game::getTilemap()
 	{
 		return tileMap;
@@ -376,11 +377,13 @@ namespace Tmpl8
 	{
 		return colliders;
 	}
+
 	void Game::ResumeGame()
 	{
 		isPressingLeftMouse = false;
 		ChangeGameState(GameState::game);
 	}
+
 	void Game::ExitGame() const
 	{
 		if (isPressingLeftMouse)
@@ -390,40 +393,44 @@ namespace Tmpl8
 			SDL_PushEvent(&quit);
 		}
 	}
+
 	void Game::MuteSound()
 	{
 		if (changedVolumeButtons)
 			return;
-		if (audioPlayer->IsMuted()) {
+		if (audioPlayer->IsMuted())
+		{
 			muteButton.Disable();
 			volumeButton.Enable();
 			volumeButton.OnMouseMoved(static_cast<int>(cursor.pos.x), static_cast<int>(cursor.pos.y));
 		}
-		else {
+		else
+		{
 			volumeButton.Disable();
 			muteButton.Enable();
 			muteButton.OnMouseMoved(static_cast<int>(cursor.pos.x), static_cast<int>(cursor.pos.y));
 		}
 		changedVolumeButtons = true;
 		audioPlayer->SwitchMute();
-
 	}
 
 	void Game::AddCollider(Collider* col)
 	{
 		colliders.push_back(col);
 	}
+
 	void Game::AddMoveable(Moveable* col)
 	{
 		moveablesTile.push_back(col);
 	}
+
 	void Game::RemoveMoveable(Moveable* col)
 	{
 		moveablesTile.erase(remove(moveablesTile.begin(), moveablesTile.end(), col), moveablesTile.end());
 	}
+
 	void Game::RemoveCollider(Collider* col)
 	{
 		colliders.erase(remove(colliders.begin(), colliders.end(), col), colliders.end());
-
 	}
 };

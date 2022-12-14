@@ -66,7 +66,7 @@ void Player::Render(Tmpl8::Surface* screen)
 
 }
 
-void Player::Update(float deltaTime)
+void Player::Update(const float deltaTime)
 {
 
 	//tries to move tilemap
@@ -76,7 +76,7 @@ void Player::Update(float deltaTime)
 	spawner.Update(deltaTime);
 	cooldownForDamage.Update(deltaTime);
 }
-void Player::TakeDamage(const int dg) {
+void Player::TakeDamage(const unsigned int dg) {
 	if (cooldownForDamage.isFinished && !playerMover.IsDashing()) {
 		Being::TakeDamage(dg);
 		notify(hp, EventType::PlayerTakesDamage);

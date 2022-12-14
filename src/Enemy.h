@@ -1,18 +1,17 @@
 #pragma once
 #include "Being.h"
 
-#include "MoveToADirection.h"
 #include "PosDir.h"
 #include "Wave.h"
 #include "EnemyWaveSpawner.h"
+#include "Rotator.h"
 
-#include <filesystem>
 //based on https://gameprogrammingpatterns.com/prototype.html
 class Enemy : public Being
 {
 public:
 	Enemy(Tmpl8::vec2, Tmpl8::Sprite*, EnemyWaveSpawner*);
-	virtual ~Enemy();
+	~Enemy() override;
 	virtual Enemy* clone() = 0;
 	virtual void Init(PosDir) = 0;
 
@@ -23,8 +22,7 @@ public:
 	/// <param name="degreesToSpawn">degrees that make up the vec2</param>
 	/// <param name="enemy">The type of enemy to spawn</param>
 	/// <param name="stepDegrees">how much the degreesToSpawn will change when the method is finished</param>
-	void SpawnEnemy(const float sign, float& degreesToSpawn, EnemyTypes enemy, const float stepDegrees = 45.0f);
-
+	void SpawnEnemy(float sign, float& degreesToSpawn, EnemyTypes enemy, float stepDegrees = 45.0f) const;
 
 
 	void setDg(unsigned int);
@@ -42,54 +40,56 @@ public:
 	EnemyTypes getEnemyType() const;
 
 protected:
+	static void Reflect(MoveToADirection& mover, Rotator& rot, const Collider& enemyCollider);
 	void CheckForProjectileCollisions();
+
 	/// <summary>
-	/// range needs to be squaread
+	/// range needs to be squared
 	/// </summary>
 	/// <param name="range"></param>
 	/// <returns></returns>
-	bool InRangeToAtackPlayerSquared(float range);
+	bool InRangeToAtackPlayerSquared(float range) const;
 	void InitEnemy(Moveable& _move);
-	void Enemy::SetJsonValues(Enemy* enem);
+	void SetJsonValues(Enemy* enem);
 	EnemyTypes enemyType;
 	virtual void ResetEnemy() = 0;
 	EnemyWaveSpawner* spawner;
-	Moveable* move;//needs to be set by children of the enemy
+	Moveable* move{};//needs to be set by children of the enemy
 	Collider enemyCollider;
 	Tmpl8::vec2 dir = { 0 };
 
 	unsigned int dg;
-	unsigned int maxHp;
-	unsigned int weight;
-	unsigned int score;
-	unsigned int dgToTake;
+	unsigned int maxHp{};
+	unsigned int weight{};
+	unsigned int score{};
+	unsigned int dgToTake{};
 
 private:
 };
 //inlined functions
 
 
-inline void Enemy::setDg(unsigned int Dg)
+inline void Enemy::setDg(const unsigned int _dg)
 {
-	dg = Dg;
+	dg = _dg;
 }
 
-inline void Enemy::setHp(unsigned int Hp)
+inline void Enemy::setHp(const unsigned int _hp)
 {
-	maxHp = Hp;
+	maxHp = _hp;
 }
 
-inline void Enemy::setScore(unsigned int Score)
+inline void Enemy::setScore(const unsigned int _score)
 {
-	score = Score;
+	score = _score;
 }
 
-inline void Enemy::setWeight(unsigned int Weight)
+inline void Enemy::setWeight(const unsigned int _weight)
 {
-	weight = Weight;
+	weight = _weight;
 }
 
-inline void Enemy::setDgToTake(unsigned int dgTo)
+inline void Enemy::setDgToTake(const unsigned int dgTo)
 {
 	dgToTake = dgTo;
 }

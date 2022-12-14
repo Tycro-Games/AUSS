@@ -19,7 +19,7 @@ MoveablePlayer::MoveablePlayer()
 	Moveable(),
 	tileMapCol(nullptr),
 	//lambda expression here, assigns a copy of this function to the dash curve
-	dashCurve([](float x) {return MathFunctions::DashFunction(x); })
+	dashCurve([](const float x) {return MathFunctions::DashFunction(x); })
 
 {
 	//reading speed values

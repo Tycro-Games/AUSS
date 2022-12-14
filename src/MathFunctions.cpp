@@ -7,7 +7,7 @@ using namespace Tmpl8;
 /// </summary>
 /// <param name="dir"></param>
 /// <returns></returns>
-float MathFunctions::GetDirInDegreesPositive(vec2 dir)
+float MathFunctions::GetDirInDegreesPositive(const vec2 dir)
 {
 	float angle = atan2(dir.y, dir.x);//return angle in radians
 
@@ -19,11 +19,11 @@ float MathFunctions::GetDirInDegreesPositive(vec2 dir)
 	return angle;
 }
 /// <summary>
-/// unclamped direction to degrees
+/// not clamped direction to degrees
 /// </summary>
 /// <param name="dir"></param>
 /// <returns></returns>
-float MathFunctions::GetDirInDegrees(vec2 dir)
+float MathFunctions::GetDirInDegrees(const vec2 dir)
 {
 	float angle = atan2(dir.y, dir.x);//return angle in radians
 
@@ -35,21 +35,20 @@ float MathFunctions::GetDirInDegrees(vec2 dir)
 /// get a vec2 from an angle expressed in radians
 /// </summary>
 /// <param name="angle"></param>
-/// <param name="clockWise"></param>
 /// <returns></returns>
-vec2 MathFunctions::GetVec2FromRadians(float angle)
+vec2 MathFunctions::GetVec2FromRadians(const float angle)
 {
-	//the coordonate system has up as negative
+	//the coordinate system has up as negative
 	return vec2{ (cos(angle)) ,-(sin(angle)) };
 }
-float MathFunctions::GetDistance(vec2 pos1, vec2 pos2) {
-	float dx = pos2.x - pos1.x;
-	float dy = pos2.y - pos1.y;
+float MathFunctions::GetDistance(const vec2 pos1, const vec2 pos2) {
+	const float dx = pos2.x - pos1.x;
+	const float dy = pos2.y - pos1.y;
 	return sqrtf(dx * dx + dy * dy);
 }
-float MathFunctions::GetDistanceSqr(vec2 pos1, vec2 pos2) {
-	float dx = pos2.x - pos1.x;
-	float dy = pos2.y - pos1.y;
+float MathFunctions::GetDistanceSqr(const vec2 pos1, const vec2 pos2) {
+	const float dx = pos2.x - pos1.x;
+	const float dy = pos2.y - pos1.y;
 	return dx * dx + dy * dy;
 }
 /// <summary>
@@ -59,10 +58,10 @@ float MathFunctions::GetDistanceSqr(vec2 pos1, vec2 pos2) {
 /// <param name="dir">direction of the vector</param>
 /// <param name="norm">needs to be of length 1</param>
 /// <returns></returns>
-vec2 MathFunctions::Reflect(vec2 dir, vec2 norm)
+vec2 MathFunctions::Reflect(const vec2 dir, const vec2 norm)
 {
 	//this is double the projection of the direction onto the normal
-	float dn = 2 * dir.dot(norm);
+	const float dn = 2 * dir.dot(norm);
 	//substract from the original direction so we get the reflected vector
 	return dir - norm * dn;
 
@@ -86,7 +85,7 @@ void MathFunctions::RotateToDirection(const vec2& newDirection, const vec2& pos,
 unsigned int MathFunctions::RotateToDirectionFrames(const RotationVar& rVar, const vec2& dir)
 {
 	//return the corresponding frame
-	return static_cast<unsigned int>(fmod(MathFunctions::GetDirInDegreesPositive(dir) + rVar.OFFSET_SPRITE, 360) / rVar.ANGLE_SIZE);
+	return static_cast<unsigned int>(fmod(GetDirInDegreesPositive(dir) + rVar.OFFSET_SPRITE, 360.0f) / rVar.ANGLE_SIZE);
 }
 
 float MathFunctions::DashFunction(float x)
@@ -102,8 +101,8 @@ vec2 MathFunctions::GetRandomVec2(const float min, const float max, const float 
 	//random direction
 	RandomNumbers randomNumbers;
 	//random signs
-	bool xNegative = randomNumbers.RandomBetweenInts(0, 2) == 1;
-	bool yNegative = randomNumbers.RandomBetweenInts(0, 2) == 1;
+	const bool xNegative = randomNumbers.RandomBetweenInts(0, 2) == 1;
+	const bool yNegative = randomNumbers.RandomBetweenInts(0, 2) == 1;
 	//into floats that make the vec2
 	float x = randomNumbers.RandomBetweenFloats(min, max);
 	if (xNegative)
@@ -114,10 +113,10 @@ vec2 MathFunctions::GetRandomVec2(const float min, const float max, const float 
 	//adding multiplier
 	x *= deviationMultiplier;
 	y *= deviationMultiplier;
-	return vec2(x, y);
+	return { x, y };
 }
 
-float MathFunctions::InverseLerp(float a, float b, float f)
+float MathFunctions::InverseLerp(const float a, const float b, float f)
 {
 	f = std::clamp(f, a, b);
 

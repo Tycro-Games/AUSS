@@ -12,7 +12,7 @@ public:
 	/// <param name="speed">speed of the parallax</param>
 	ParallaxProp(const std::filesystem::path& spritePath, float speed = 1.0f);
 	~ParallaxProp();
-	void Init(const Tmpl8::vec2 pos, float speed = 1.0f);
+	void Init(Tmpl8::vec2 pos, float speed = 1.0f);
 	// Inherited via Entity
 	void Update(float deltaTime) override;
 

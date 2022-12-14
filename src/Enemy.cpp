@@ -5,10 +5,9 @@ using namespace Tmpl8;
 using namespace std;
 
 
-Enemy::Enemy(Tmpl8::vec2 pos, Tmpl8::Sprite* sprite, EnemyWaveSpawner* spawner) :
-	Being(sprite, pos),
+Enemy::Enemy(const vec2 _pos, Sprite* _sprite, EnemyWaveSpawner* spawner) :
+	Being(_sprite, _pos),
 	spawner(spawner),
-	enemyCollider(),
 	dg()
 {
 	enemyType = NUMBER_OF_ENEMIES;
@@ -23,9 +22,9 @@ Enemy::~Enemy()
 	sprite = nullptr;//this sprite is deleted by the spawner
 }
 
-void Enemy::SpawnEnemy(const float sign, float& degreesToSpawn, EnemyTypes enemy, const float stepDegrees)
+void Enemy::SpawnEnemy(const float sign, float& degreesToSpawn, const EnemyTypes enemy, const float stepDegrees) const
 {
-	vec2 direction = (MathFunctions::GetVec2FromRadians(degreesToSpawn * PI / 180 * sign)).normalized();
+	const vec2 direction = (MathFunctions::GetVec2FromRadians(degreesToSpawn * PI / 180 * sign)).normalized();
 	spawner->SpawnEnemy(PosDir{
 		pos ,
 		direction },
@@ -34,7 +33,22 @@ void Enemy::SpawnEnemy(const float sign, float& degreesToSpawn, EnemyTypes enemy
 }
 
 
+void Enemy::Reflect(MoveToADirection& mover, Rotator& rot, const Collider& enemyCollider)
+{
+	if (mover.colToReflectFrom != nullptr) {
+		const Collider c = *mover.colToReflectFrom;
 
+
+		rot.Reflect(Collider::GetNormal(c, enemyCollider));
+
+		mover.colToReflectFrom = nullptr;
+	}
+	//out of bounds
+	else {
+		rot.Reflect(Collider::GetNormalEdgeScreen(mover.nextP, *mover.getColl()));
+	}
+
+}
 void Enemy::SetJsonValues(Enemy* enem)
 {
 	enem->setDg(dg);
@@ -53,9 +67,9 @@ void Enemy::CheckForProjectileCollisions()
 	}
 }
 
-bool Enemy::InRangeToAtackPlayerSquared(float range)
+bool Enemy::InRangeToAtackPlayerSquared(const float range) const
 {
-	float dist = MathFunctions::GetDistanceSqr(pos, Game::Get().getPlayer().GetPos());
+	const float dist = MathFunctions::GetDistanceSqr(pos, Game::Get().getPlayer().GetPos());
 
 	if (dist < range) {
 		//in range to atack player
@@ -68,7 +82,7 @@ bool Enemy::InRangeToAtackPlayerSquared(float range)
 
 void Enemy::InitEnemy(Moveable& _move)
 {
-	enemyCollider.type = Collider::Type::Enemy;
+	enemyCollider.type = Collider::Type::enemy;
 	move = &_move;
 }
 

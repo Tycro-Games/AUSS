@@ -2,7 +2,7 @@
 
 #include "game.h"
 using namespace Tmpl8;
-ExplosionBullet::ExplosionBullet(Sprite* sprite, Spawner* spawner, vec2 pos) :
+ExplosionBullet::ExplosionBullet(Sprite* sprite, Spawner* spawner, const vec2 pos) :
 	Entity(sprite),
 	spawner(spawner),
 	move(&this->pos)
@@ -19,7 +19,7 @@ ExplosionBullet::~ExplosionBullet()
 	sprite = nullptr;//this sprite is deleted by the spawner
 }
 
-void ExplosionBullet::Init(vec2 pos)
+void ExplosionBullet::Init(const vec2 pos)
 {
 	SetActive(true);
 	frame = 0;
@@ -28,7 +28,7 @@ void ExplosionBullet::Init(vec2 pos)
 	Game::Get().AddMoveable(&move);
 }
 
-void ExplosionBullet::Update(float deltaTime)
+void ExplosionBullet::Update(const float deltaTime)
 {
 	if (!getUpdateable())
 		return;

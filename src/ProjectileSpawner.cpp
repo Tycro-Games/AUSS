@@ -1,7 +1,6 @@
 #include "ProjectileSpawner.h"
 
 #include <string>
-#include <iostream>
 
 #include "game.h"
 using namespace Tmpl8;
@@ -9,8 +8,8 @@ using namespace std;
 ProjectileSpawner::ProjectileSpawner(const Tmpl8::vec2 offset, const filesystem::path& _projectileSprite, const  filesystem::path& _explosionSprite)
 	:
 	Spawner(_explosionSprite),
-	projectileSprite(new Surface(_projectileSprite.string().c_str()), 16),
-	offset(offset)
+	offset(offset),
+	projectileSprite(new Surface(_projectileSprite.string().c_str()), 16)
 
 
 {
@@ -48,7 +47,7 @@ void ProjectileSpawner::Init()
 	totalProjectiles = 0;
 }
 
-void ProjectileSpawner::ChangeFireSpeed(float speed) {
+void ProjectileSpawner::ChangeFireSpeed(const float speed) {
 
 	fireRate += speed;
 	if (fireRate < MIN_RATE)
@@ -81,16 +80,16 @@ void ProjectileSpawner::CreateMoreProjectiles()
 
 void ProjectileSpawner::SpawnProjectiles()
 {
-	if (poolOfProjectiles.size() == 0)
+	if (poolOfProjectiles.empty())
 		CreateMoreProjectiles();
 
 	Projectile* projectile = poolOfProjectiles[poolOfProjectiles.size() - 1];
 	poolOfProjectiles.pop_back();
 
-	vec2 randomDir = MathFunctions::GetRandomVec2(MIN_DEVIATION, MAX_DEVIATION);
-	vec2 playerPos = Game::Get().getPlayer().pos;
-	vec2 playerDir = Game::Get().getPlayer().GetDir();
-	vec2 randomizedDir = (playerDir + randomDir).normalized();
+	const vec2 randomDir = MathFunctions::GetRandomVec2(MIN_DEVIATION, MAX_DEVIATION);
+	const vec2 playerPos = Game::Get().getPlayer().pos;
+	const vec2 playerDir = Game::Get().getPlayer().GetDir();
+	const vec2 randomizedDir = (playerDir + randomDir).normalized();
 	projectile->Init(PosDir{ playerPos + randomizedDir * OFFSET_MULTIPLIER,randomizedDir });
 	waveProjectiles++;
 	Game::Get().AddCollider(projectile->getColl());
@@ -98,12 +97,12 @@ void ProjectileSpawner::SpawnProjectiles()
 }
 
 
-void ProjectileSpawner::setFlag(bool fire)
+void ProjectileSpawner::setFlag(const bool fire)
 {
 	isSpawning = fire;
 }
 
-void ProjectileSpawner::Update(float deltaTime)
+void ProjectileSpawner::Update(const float deltaTime)
 {
 
 	if (currentTime >= desiredTime) {
@@ -116,33 +115,32 @@ void ProjectileSpawner::Update(float deltaTime)
 	else
 		currentTime += deltaTime;
 
-	for (int i = 0; i < updateObjects.size(); i++)
+	for (size_t i = 0; i < updateObjects.size(); i++)
 		updateObjects[i]->Update(deltaTime);
 
 }
 
 void ProjectileSpawner::Render(Tmpl8::Surface* screen)
 {
-
-	auto firerate = std::string("Firerate: " + std::to_string(fireRate));
+	const auto firerate = std::string("Firerate: " + std::to_string(fireRate));
 
 	screen->Print(firerate.c_str(), 10, 60, 0x00FF0000);
 
 	screen->Print("Use up arrow and down arrow to adjust the firerate", 10, 70, 0x00FF0000);
 	screen->Print("Use space bar to dash", 10, 80, 0x00FF0000);
 
-	for (int i = 0; i < updateObjects.size(); i++)
+	for (size_t i = 0; i < updateObjects.size(); i++)
 		updateObjects[i]->Render(screen);
 #ifdef _DEBUG
-	auto inactive = std::string("Bullets left:" + std::to_string(poolOfProjectiles.size()));
+	const auto inactive = std::string("Bullets left:" + std::to_string(poolOfProjectiles.size()));
 
 	screen->Print(inactive.c_str(), 10, 10, 0x00FF0000);
 
-	auto inactiveB = std::string("Explosions left:" + std::to_string(poolOfExplosions.size()));
+	const auto inactiveB = std::string("Explosions left:" + std::to_string(poolOfExplosions.size()));
 
 	screen->Print(inactiveB.c_str(), 10, 20, 0x00FF0000);
 
-	auto total = std::string("Objects active:" + std::to_string(updateObjects.size() - poolOfProjectiles.size() - poolOfExplosions.size()));
+	const auto total = std::string("Objects active:" + std::to_string(updateObjects.size() - poolOfProjectiles.size() - poolOfExplosions.size()));
 
 	screen->Print(total.c_str(), 10, 30, 0x00FF0000);
 #endif

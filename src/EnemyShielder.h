@@ -2,11 +2,11 @@
 #include "Enemy.h"
 #include "EnemyRotator.h"
 #include "ShieldLine.h"
-class EnemyShielder : public Enemy
+class EnemyShielder final : public Enemy
 {
 public:
-	EnemyShielder(PosDir posDir, Tmpl8::Sprite* sprite, EnemyWaveSpawner* _spawner);
-	~EnemyShielder() = default;
+	EnemyShielder(PosDir posDir, Tmpl8::Sprite* _sprite, EnemyWaveSpawner* _spawner);
+	~EnemyShielder() override = default;
 
 	void Update(float deltaTime) override;
 	void AtackPlayer();
@@ -19,7 +19,7 @@ private:
 	void ResetEnemy() override;
 	void Die() override;
 
-	bool InRangeToAtack = false;
+	bool inRangeToAtack_ = false;
 
 	//consts
 	const Tmpl8::vec2 COL_MIN = Tmpl8::vec2(-33, -33);

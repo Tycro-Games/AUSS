@@ -31,7 +31,7 @@ namespace Tmpl8 {
 
 		//sounds that will be played
 		Mix_Chunk* playerShootingSound = nullptr;
-		//in miliseconds
+		//in milliseconds
 		const int FADE_OUT_MUSIC = 500;
 	};
 }

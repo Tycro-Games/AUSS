@@ -1,7 +1,10 @@
+// ReSharper disable CppClangTidyModernizeLoopConvert
+// ReSharper disable CppTooWideScopeInitStatement
 #include "CollisionDetection.h"
 #include "game.h"
 using namespace std;
 using namespace Tmpl8;
+
 CollisionDetection::CollisionDetection()
 {
 	timer.Init(bind(&CollisionDetection::DetectCollisions, this), .05f, true);
@@ -14,21 +17,24 @@ CollisionDetection::CollisionDetection()
 //}
 void CollisionDetection::DetectCollisions()
 {
-
-	vector <Collider*> allPairs;
-	vector <Collider*> activeIntervals;
+	vector<Collider*> allPairs;
+	vector<Collider*> activeIntervals;
 	//add enemies and projectiles
 
 	//sort on x axis
-	if (Game::Get().getColliders().size() == 0)
+	if (Game::Get().getColliders().empty())
 		return;
-	sort(Game::Get().getColliders().begin(), Game::Get().getColliders().end(), [](const Collider* a, const Collider* b) { return a->pos->x < b->pos->x; });
+	sort(Game::Get().getColliders().begin(), Game::Get().getColliders().end(), [](const Collider* a, const Collider* b)
+		{
+			return a->pos->x < b->pos->x;
+		});
 
-	for (int i = 0; i < Game::Get().Tmpl8::Game::getColliders().size(); i++)
+	for (size_t i = 0; i < Game::Get().getColliders().size(); i++)
 	{
 		Collider* a = Game::Get().getColliders()[i];
 
-		for (int j = 0; j < activeIntervals.size(); j++) {
+		for (size_t j = 0; j < activeIntervals.size(); j++)
+		{
 			//possible collision
 			Collider* b = activeIntervals[j];
 
@@ -37,14 +43,15 @@ void CollisionDetection::DetectCollisions()
 			{
 				//check if there is a collision
 				if (Collider::CollidesY(a->At(*a->pos),
-					b->At(*b->pos))) {
+					b->At(*b->pos)))
+				{
 					allPairs.push_back(a);
 					allPairs.push_back(b);
 				}
 			}
-			else {
+			else
+			{
 				//update the interval if no collision
-
 				activeIntervals.erase(activeIntervals.begin() + j);
 
 				j--;
@@ -53,30 +60,28 @@ void CollisionDetection::DetectCollisions()
 		activeIntervals.push_back(a);
 	}
 
-	for (size_t i = 0; i < allPairs.size(); i += 2) {
+	for (size_t i = 0; i < allPairs.size(); i += 2)
+	{
 		//trigger the collision flags for the getColliders()
 		CheckPair(allPairs, i, i + 1);
 	}
-
 }
 
-void CollisionDetection::CheckPair(const vector<Collider*>& allPairs, size_t i, size_t  j)
+void CollisionDetection::CheckPair(const vector<Collider*>& allPairs, const size_t i, const size_t j)
 {
-	if (allPairs[i]->type == Collider::Type::Projectile) {
+	if (allPairs[i]->type == Collider::Type::projectile)
+	{
 		allPairs[i]->toDeactivate = true;
 		allPairs[i]->collision = allPairs[j];
 	}
-	if (allPairs[j]->type == Collider::Type::Projectile) {
+	if (allPairs[j]->type == Collider::Type::projectile)
+	{
 		allPairs[j]->toDeactivate = true;
 		allPairs[j]->collision = allPairs[i];
 	}
 }
 
-void CollisionDetection::Update(float deltaTime)
+void CollisionDetection::Update(const float deltaTime)
 {
 	timer.Update(deltaTime);
 }
-
-
-
-
