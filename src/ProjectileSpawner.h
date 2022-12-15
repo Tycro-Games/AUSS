@@ -11,7 +11,6 @@ public:
 	void Init();
 	~ProjectileSpawner() override = default;
 
-	void ChangeFireSpeed(float speed);
 	void AddProjectileToPool(Projectile* entity);
 
 	void CreateMoreProjectiles();
@@ -43,8 +42,6 @@ private:
 	unsigned int waveProjectiles = 0;
 	//consts
 	const float FIRE_RATE = 0.25f;
-	const float MIN_RATE = 0.2f;
-	const float MAX_RATE = 2.0f;
 	const float OFFSET_MULTIPLIER = 10.0f;
 	//direction random
 

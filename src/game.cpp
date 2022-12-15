@@ -303,12 +303,12 @@ namespace Tmpl8
 
 
 			//firerate
-		case SDL_SCANCODE_UP:
+		/*case SDL_SCANCODE_UP:
 			player.GetSpawner()->ChangeFireSpeed(FIRE_SPEED_CHANGE);
 			break;
 		case SDL_SCANCODE_DOWN:
 			player.GetSpawner()->ChangeFireSpeed(-FIRE_SPEED_CHANGE);
-			break;
+			break;*/
 		case SDL_SCANCODE_LSHIFT:
 			isPressingLeftMouse = true;
 

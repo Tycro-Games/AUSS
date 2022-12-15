@@ -47,14 +47,6 @@ void ProjectileSpawner::Init()
 	totalProjectiles = 0;
 }
 
-void ProjectileSpawner::ChangeFireSpeed(const float speed) {
-
-	fireRate += speed;
-	if (fireRate < MIN_RATE)
-		fireRate = MIN_RATE;
-	if (fireRate > MAX_RATE)
-		fireRate = MAX_RATE;
-}
 void ProjectileSpawner::AddProjectileToPool(Projectile* entity)
 {
 	Game::Get().RemoveMoveable(entity->getMoveable());
@@ -124,10 +116,7 @@ void ProjectileSpawner::Render(Tmpl8::Surface* screen)
 {
 	const auto firerate = std::string("Firerate: " + std::to_string(fireRate));
 
-	screen->Print(firerate.c_str(), 10, 60, 0x00FF0000);
 
-	screen->Print("Use up arrow and down arrow to adjust the firerate", 10, 70, 0x00FF0000);
-	screen->Print("Use space bar to dash", 10, 80, 0x00FF0000);
 
 	for (size_t i = 0; i < updateObjects.size(); i++)
 		updateObjects[i]->Render(screen);
