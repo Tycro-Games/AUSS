@@ -23,7 +23,7 @@ This library is used for parsing the json files:https://github.com/nlohmann/json
 - Shooter
   - tries to stay in the center of the screen, while shooting runners around it, it also reflects on obstacles
 - Shielder
-  - spawns runners and hoarders around it, tries to follow the player and has a shield that protects it from player's bullets, can be killed by having bullets bounce on obstacles and hit shielders fron a different angle
+  - spawns runners and hoarders around it, tries to stay in the center of the screen like the shooter and has a shield that protects it from player's bullets, can be killed by having bullets bounce on obstacles and hit shielders fron a different angle
 ## Score:
    Every enemy has a score attached to it(in the JSON files), in a wave, every killed enemy will grant the player the corresponding score. At the end of the wave, the multiplier is set to 1. If the player was not hit this wave, the multiplier is incremented, also if the accuracy of the player is high this will also increment the multiplier. For instance, if one has made 50 points at the end of the wave and was not hit at all, but had poor accuracy, his multiplier will be 2, thus the score will be set to 100. Had the accuracy been high, the score would have been 150.
    
