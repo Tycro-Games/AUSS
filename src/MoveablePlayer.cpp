@@ -89,6 +89,17 @@ void MoveablePlayer::Update(const float deltaTime)
 
 }
 
+void MoveablePlayer::setDash(const bool val)
+{
+	if (val && dashCurve.isAtEnd() && !cooldownTimer.getUpdateable()) {
+		Game::Get().PlaySound(SoundID::playerDash);
+		dashCurve.reset();
+		dashing = true;
+		cooldownTimer.ResetVar();
+		cooldownTimer.setUpdateable(true);
+	}
+}
+
 float MoveablePlayer::GetEdgeBorderDistance() const
 {
 	return EDGE_DISTANCE;

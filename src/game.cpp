@@ -8,6 +8,8 @@
 #include <filesystem>
 #include <functional>
 #include "AudioPlayer.h"
+//capping framerate
+//#include <SDL_timer.h>
 using namespace std;
 
 namespace Tmpl8
@@ -57,7 +59,7 @@ namespace Tmpl8
 
 	void Game::Initializations()
 	{
-		const vec2 centerOfTheScreen = vec2(ScreenWidth / 2.0f, ScreenHeight / 2.0f);
+		const auto centerOfTheScreen = vec2(ScreenWidth / 2.0f, ScreenHeight / 2.0f);
 		//reset the score
 		score.Init();
 
@@ -125,8 +127,21 @@ namespace Tmpl8
 
 	void Game::Tick(float deltaTime)
 	{
+		/*capping frame rate*/
+		//float fps = countedFrames / (currentTime / 1000.0f);
+		//const int frameTick = static_cast<int>(deltaTime);
+		//if (frameTick < SCREEN_TICKS_PER_FRAME)
+		//{
+		//	SDL_Delay(SCREEN_TICKS_PER_FRAME - frameTick);
+		//}
+		//countedFrames++;
+		//currentTime += deltaTime;
+		//std::cout << fps << "\n";
+
 		deltaTime /= 1000.0f; //make time into seconds
 		screen->Clear(0);
+
+
 		changedVolumeButtons = false;
 
 		switch (currentState)
@@ -339,19 +354,19 @@ namespace Tmpl8
 		currentState = state;
 		switch (state)
 		{
-		case Tmpl8::Game::GameState::mainMenu:
+		case GameState::mainMenu:
 			StopMusic();
 
 			break;
-		case Tmpl8::Game::GameState::game:
+		case GameState::game:
 			PlayMusic();
 
 			break;
-		case Tmpl8::Game::GameState::paused:
+		case GameState::paused:
 			StopMusic();
 
 			break;
-		case Tmpl8::Game::GameState::reset:
+		case GameState::reset:
 			ResetMusic();
 			fadeInOut.Init();
 			break;

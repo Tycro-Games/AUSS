@@ -62,6 +62,7 @@ void Enemy::CheckForProjectileCollisions()
 {
 	//marked by collision
 	if (enemyCollider.toDeactivate) {
+		Game::Get().PlaySound(SoundID::enemyHit);
 		TakeDamage(dgToTake);
 		enemyCollider.toDeactivate = false;
 	}

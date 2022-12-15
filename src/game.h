@@ -103,7 +103,11 @@ namespace Tmpl8 {
 		//consts
 		const float FIRE_SPEED_CHANGE = .1f;
 
-
+		//code for capping the frame rate
+		/*const int SCREEN_FPS = 100;
+		const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
+		int countedFrames = 0;
+		float currentTime = 0.0f;*/
 	};
 
 }; // namespace Tmpl8

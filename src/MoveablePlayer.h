@@ -40,15 +40,7 @@ public:
 	{
 		left = val;
 	}
-	void setDash(const bool val = false)
-	{
-		if (val && dashCurve.isAtEnd() && !cooldownTimer.getUpdateable()) {
-			dashCurve.reset();
-			dashing = true;
-			cooldownTimer.ResetVar();
-			cooldownTimer.setUpdateable(true);
-		}
-	}
+	void setDash(bool val = false);
 
 	float GetEdgeBorderDistance() const;
 	float GetDashLinearTime() const;

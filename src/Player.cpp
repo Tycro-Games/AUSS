@@ -35,7 +35,7 @@ void Player::Init(const Collider& tileMapCollider, const Tmpl8::vec2& _pos)
 
 
 
-void Player::Render(Tmpl8::Surface* screen)
+void Player::Render(Surface* screen)
 {
 	spawner.Render(screen);
 	hpBar.Draw(screen);
@@ -79,6 +79,7 @@ void Player::Update(const float deltaTime)
 void Player::TakeDamage(const unsigned int dg) {
 	if (cooldownForDamage.isFinished && !playerMover.IsDashing()) {
 		Being::TakeDamage(dg);
+		Game::Get().PlaySound(SoundID::playerDamage);
 		notify(hp, EventType::PlayerTakesDamage);
 		cooldownForDamage.ResetVar();
 	}
@@ -159,6 +160,7 @@ void Player::Call()
 
 void Player::Die()
 {
+	Game::Get().PlaySound(SoundID::playerDeath);
 	std::cout << "RESET GAME";
 	removeObserver(&hpBar);
 	Game::Get().ChangeGameState(Tmpl8::Game::GameState::reset);

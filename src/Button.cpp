@@ -48,8 +48,10 @@ void Button::OnMouseMoved(const int x, const int y)
 	mousePos = vec2{ static_cast<float>(x),static_cast<float>(y) };
 
 	if (aabb.IsColliding(mousePos)) {
-		state = ButtonState::Hover;
-		Tmpl8::Game::Get().PlaySound(SoundID::hoverUI);
+		if (state != ButtonState::Hover) {
+			Game::Get().PlaySound(SoundID::hoverUi);
+			state = ButtonState::Hover;
+		}
 	}
 	else {
 		state = ButtonState::Default;
@@ -63,7 +65,7 @@ void Button::OnMouseUp(int button) const
 
 	case ButtonState::Hover:
 		onPress();
-		Tmpl8::Game::Get().PlaySound(SoundID::clickUI);
+		Game::Get().PlaySound(SoundID::clickUi);
 
 		break;
 	case ButtonState::Default: break;

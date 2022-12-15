@@ -10,8 +10,6 @@
 #pragma warning (disable : 4311) // pointer truncation from HANDLE to long
 #endif
 
-//#define FULLSCREEN
-//#define ADVANCEDGL
 
 #include "game.h"
 
@@ -303,7 +301,7 @@ void swap()
 
 int main(int argc, char** argv)
 {
-	//vsyinc
+	//vsyinc disable
 	//SDL_SetHintWithPriority(SDL_HINT_RENDER_VSYNC, "0", SDL_HINT_OVERRIDE);
 #ifdef _MSC_VER
 #ifdef _DEBUG
@@ -351,6 +349,8 @@ int main(int argc, char** argv)
 	t.reset();
 	while (!exitapp)
 	{
+
+
 #ifdef ADVANCEDGL
 		swap();
 		surface->SetBuffer((Pixel*)framedata);

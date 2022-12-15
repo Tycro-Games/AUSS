@@ -8,8 +8,8 @@ enum class SoundID {
 	enemyMeleeAtack,
 	enemyShoot,
 	enemyDeath,
-	explosion,
-	hoverUI,
-	clickUI,
+	projectileExplosion,
+	hoverUi,
+	clickUi,
 	endWave
 };

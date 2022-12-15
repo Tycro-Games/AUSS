@@ -41,10 +41,11 @@ void EnemyShielder::SpawnEnemies()
 {
 	//call enemy spawn enemies
 	angleToSpawn = MathFunctions::GetDirInDegreesPositive(dir);
-	Enemy::SpawnEnemy(1, angleToSpawn, Hoarder, STEP_ANGLE);
-	Enemy::SpawnEnemy(1, angleToSpawn, Runner, STEP_ANGLE);
-	Enemy::SpawnEnemy(1, angleToSpawn, Runner, STEP_ANGLE);
-	Enemy::SpawnEnemy(1, angleToSpawn, Runner, STEP_ANGLE);
+	Game::Get().PlaySound(SoundID::enemyShoot);
+	SpawnEnemy(1, angleToSpawn, Hoarder, STEP_ANGLE);
+	SpawnEnemy(1, angleToSpawn, Runner, STEP_ANGLE);
+	SpawnEnemy(1, angleToSpawn, Runner, STEP_ANGLE);
+	SpawnEnemy(1, angleToSpawn, Runner, STEP_ANGLE);
 
 
 }
@@ -73,7 +74,7 @@ void EnemyShielder::AtackPlayer()
 	}
 }
 
-void EnemyShielder::Render(Tmpl8::Surface* screen)
+void EnemyShielder::Render(Surface* screen)
 {
 	if (!getRenderable())
 		return;
@@ -93,6 +94,8 @@ void EnemyShielder::Render(Tmpl8::Surface* screen)
 
 void EnemyShielder::Die()
 {
+	Game::Get().PlaySound(SoundID::enemyDeath);
+
 	ResetEnemy();
 }
 

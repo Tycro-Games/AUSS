@@ -1,4 +1,6 @@
 #include "Projectile.h"
+
+#include "game.h"
 #include "MathFunctions.h"
 #include "ProjectileSpawner.h"
 
@@ -90,6 +92,7 @@ void Projectile::ResetBullet()
 	if (collider.collision)
 		if (collider.collision->type == Collider::Type::enemy)
 			collider.collision->toDeactivate = true;
+	Tmpl8::Game::Get().PlaySound(SoundID::projectileExplosion);
 	collider.toDeactivate = false;
 	timer.isFinished = true;
 	spawner->AddProjectileToPool(this);

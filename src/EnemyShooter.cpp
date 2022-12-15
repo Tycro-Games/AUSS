@@ -48,6 +48,7 @@ void EnemyShooter::Render(Tmpl8::Surface* screen)
 
 void EnemyShooter::Die()
 {
+	Game::Get().PlaySound(SoundID::enemyDeath);
 	ResetEnemy();
 }
 
@@ -75,6 +76,7 @@ void EnemyShooter::Init(const PosDir posDir)
 
 void EnemyShooter::ResetEnemy()
 {
+
 	spawner->AddEnemyToPool(this, true);
 
 	spawner->SpawnExplosions(pos);
@@ -92,7 +94,8 @@ void EnemyShooter::StartMovement()
 
 void EnemyShooter::SpawnRunner()
 {
-	Enemy::SpawnEnemy(randomNumbers.RandomMinusPlusSign(), angleToSpawn, Runner, STEP_ANGLE);
+	Game::Get().PlaySound(SoundID::enemyShoot);
+	SpawnEnemy(randomNumbers.RandomMinusPlusSign(), angleToSpawn, Runner, STEP_ANGLE);
 }
 
 

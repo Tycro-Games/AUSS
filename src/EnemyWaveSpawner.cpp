@@ -305,7 +305,7 @@ void EnemyWaveSpawner::AddEnemyToPool(Enemy* enemy, const bool getPoints)
 			//number of minimum projectiles
 			notify(static_cast<int>(minimumProjectiles), EventType::EndOfAWave);
 			minimumProjectiles = 0;
-
+			Game::Get().PlaySound(SoundID::endWave);
 		}
 
 		GetEnemiesForCurrentWave();

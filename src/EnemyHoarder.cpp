@@ -1,5 +1,7 @@
 #include "EnemyHoarder.h"
 
+#include "game.h"
+
 using namespace Tmpl8;
 EnemyHoarder::EnemyHoarder(const PosDir posDir, Sprite* _sprite, EnemyWaveSpawner* _spawner) :
 	Enemy(posDir.pos, _sprite, _spawner),
@@ -43,7 +45,7 @@ void EnemyHoarder::Render(Surface* screen)
 	if (!getRenderable())
 		return;
 	sprite->SetFrame(frame);
-	sprite->Draw(screen, static_cast<int>(static_cast<int>(pos.x - rVar.SPRITE_OFFSET / 2)), static_cast<int>(pos.y - rVar.SPRITE_OFFSET / 2));
+	sprite->Draw(screen, static_cast<int>(pos.x - rVar.SPRITE_OFFSET / 2), static_cast<int>(pos.y - rVar.SPRITE_OFFSET / 2));
 #ifdef _DEBUG
 	screen->Box(static_cast<int>(pos.x + enemyCollider.min.x), static_cast<int>(pos.y + enemyCollider.min.y), static_cast<int>(pos.x + enemyCollider.max.x), static_cast<int>(pos.y + enemyCollider.max.y), 0xffff);
 
@@ -83,6 +85,7 @@ void EnemyHoarder::Reflect()
 void EnemyHoarder::AtackPlayer()
 {
 	if (InRangeToAtack) {
+		Game::Get().PlaySound(SoundID::enemyMeleeAtack);
 		spawner->PlayerTakesDamage(this);
 		attack.ResetVar();
 	}
@@ -90,6 +93,8 @@ void EnemyHoarder::AtackPlayer()
 
 void EnemyHoarder::Die()
 {
+	Game::Get().PlaySound(SoundID::enemyDeath);
+
 	ResetEnemy();
 }
 

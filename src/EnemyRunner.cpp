@@ -1,4 +1,7 @@
 #include "EnemyRunner.h"
+
+#include "AudioID.h"
+#include "game.h"
 using namespace Tmpl8;
 EnemyRunner::EnemyRunner(const PosDir posDir, Sprite* _sprite, EnemyWaveSpawner* _spawner)
 	:Enemy(posDir.pos, _sprite, _spawner),
@@ -47,6 +50,8 @@ void EnemyRunner::Update(const float delta_time)
 
 void EnemyRunner::Die()
 {
+	Game::Get().PlaySound(SoundID::enemyDeath);
+
 	ResetEnemy();
 }
 
