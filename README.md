@@ -10,10 +10,10 @@ This library is used for parsing the json files:https://github.com/nlohmann/json
 - every wave needs to have:
   - a weight that is a positive integer
   - array of enemy types from the [list](https://github.com/OneBogdan01/TopDownShooter/edit/master/README.md#enemy-types) below
-- one can also validate the [enemy waves](json/enemy_waves.json) using this [link](https://www.jsonschemavalidator.net/s/9zhf3M4W) or any other json schema validators, use the [schema](json/schema.json) from the project 
   - ***Note that this may still result in an invalid json file if the enemy types have typos***
   - ***If the game does not start and does not throw any error, there is most probably a problem parsing the json files into the game***
 - the code does not add duplicates to the current wave when it does the parsing, when it encounters a duplicate in the same wave it will skip over it
+- When the last wave it is completed, it starts from the beginning but increases the weight for every wave. This happens every time the player reaches the end
 
 ## Enemy Types:
 - Runner
@@ -26,6 +26,7 @@ This library is used for parsing the json files:https://github.com/nlohmann/json
   - spawns runners and hoarders around it, tries to follow the player and has a shield that protects it from player's bullets, can be killed by having bullets bounce on obstacles and hit shielders fron a different angle
 ## Score:
    Every enemy has a score attached to it(in the JSON files), in a wave, every killed enemy will grant the player the corresponding score. At the end of the wave, the multiplier is set to 1. If the player was not hit this wave, the multiplier is incremented, also if the accuracy of the player is high this will also increment the multiplier. For instance, if one has made 50 points at the end of the wave and was not hit at all, but had poor accuracy, his multiplier will be 2, thus the score will be set to 100. Had the accuracy been high, the score would have been 150.
+   
 ## Playable on [itch](https://tycro-games.itch.io/auss)
 
 # Diagram of the code
