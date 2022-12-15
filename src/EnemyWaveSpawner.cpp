@@ -20,9 +20,12 @@ EnemyWaveSpawner::EnemyWaveSpawner()
 	hoarderSprite(new Surface("assets/hoarder.png"), 32),
 	runnerSprite(new Surface("assets/runner.png"), 32),
 	shooterSprite(new Surface("assets/shooter.png"), 1),
-	shielderSprite(new Surface("assets/shielder.png"), 1)
+	shielderSprite(new Surface("assets/shielder.png"), 1),
+	indexWave(0),
+	wavesCount(0),
+	minimumProjectiles(0),
+	bonusWeight(0)
 {
-
 }
 
 void EnemyWaveSpawner::Init()
@@ -30,6 +33,8 @@ void EnemyWaveSpawner::Init()
 	minimumProjectiles = 0;
 	bonusWeight = 0;
 	indexOfEnemiesToSpawn = 0;
+	indexWave = 0;
+	wavesCount = 0;
 	firstWave = true;
 	timer.Init(bind(&EnemyWaveSpawner::SpawnCurrentWave, this), 1.0f);
 	playerDistanceSqr = Game::Get().getPlayer().GetHalfCollider();
@@ -258,14 +263,14 @@ void EnemyWaveSpawner::SpawnEnemy(const PosDir posDir, const EnemyTypes enemy)
 
 void EnemyWaveSpawner::Render(Surface* screen)
 {
-	for (int i = 0; i < enemySpawners.size(); i++) {
+	for (size_t i = 0; i < enemySpawners.size(); i++) {
 		enemySpawners[i]->Render(screen);
 #ifdef _DEBUG
 		screen->Box(static_cast<int>(enemySpawners[i]->GetSpawnerPos().x), static_cast<int>(enemySpawners[i]->GetSpawnerPos().y), static_cast<int>(enemySpawners[i]->GetSpawnerPos().x) + 5, static_cast<int>(enemySpawners[i]->GetSpawnerPos().y) + 5, 0xFF0000);
 #endif
 	}
 
-	for (int i = 0; i < updateObjects.size(); i++)
+	for (size_t i = 0; i < updateObjects.size(); i++)
 		updateObjects[i]->Render(screen);
 }
 

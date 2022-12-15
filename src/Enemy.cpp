@@ -35,6 +35,9 @@ void Enemy::SpawnEnemy(const float sign, float& degreesToSpawn, const EnemyTypes
 
 void Enemy::Reflect(MoveToADirection& mover, Rotator& rot, const Collider& enemyCollider)
 {
+	if (Collider::InGameScreen(*enemyCollider.pos))
+		Game::Get().PlaySound(SoundID::projectileExplosion);
+
 	if (mover.colToReflectFrom != nullptr) {
 		const Collider c = *mover.colToReflectFrom;
 
@@ -49,7 +52,7 @@ void Enemy::Reflect(MoveToADirection& mover, Rotator& rot, const Collider& enemy
 	}
 
 }
-void Enemy::SetJsonValues(Enemy* enem)
+void Enemy::SetJsonValues(Enemy* enem) const
 {
 	enem->setDg(dg);
 	enem->setHp(maxHp);
@@ -71,12 +74,10 @@ void Enemy::CheckForProjectileCollisions()
 bool Enemy::InRangeToAtackPlayerSquared(const float range) const
 {
 	const float dist = MathFunctions::GetDistanceSqr(pos, Game::Get().getPlayer().GetPos());
-
 	if (dist < range) {
 		//in range to atack player
 		return true;
 	}
-
 	return false;
 
 }

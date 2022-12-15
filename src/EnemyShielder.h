@@ -24,7 +24,7 @@ private:
 	//consts
 	const Tmpl8::vec2 COL_MIN = Tmpl8::vec2(-33, -33);
 	const Tmpl8::vec2 COL_MAX = Tmpl8::vec2(33, 33);
-	const float TIME_TO_ATTACK = 0.1f;
+	const float TIME_TO_ATTACK = 0.01f;
 	const float SPAWN_INTERVAL = 5.0f;
 	const float LINE_OFFSET = 47.0f;
 	const float LINE_SIZE = 30.0f;

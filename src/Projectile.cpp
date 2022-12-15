@@ -73,6 +73,8 @@ void Projectile::Render(Tmpl8::Surface* screen)
 
 void Projectile::Reflect()
 {
+	if (Collider::InGameScreen(pos))
+		Tmpl8::Game::Get().PlaySound(SoundID::projectileExplosion);
 	if (mover.colToReflectFrom != nullptr) { //reflect on obstacle
 		const Collider c = *mover.colToReflectFrom;
 		rot.Reflect(Collider::GetNormal(c, collider));

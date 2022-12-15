@@ -50,7 +50,7 @@ protected:
 	/// <returns></returns>
 	bool InRangeToAtackPlayerSquared(float range) const;
 	void InitEnemy(Moveable& _move);
-	void SetJsonValues(Enemy* enem);
+	void SetJsonValues(Enemy* enem) const;
 	EnemyTypes enemyType;
 	virtual void ResetEnemy() = 0;
 	EnemyWaveSpawner* spawner;

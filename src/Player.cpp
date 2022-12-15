@@ -120,7 +120,7 @@ vec2 Player::GetDir() const
 	return dirToFace;
 }
 
-Tmpl8::vec2 Player::GetPos() const
+vec2 Player::GetPos() const
 {
 	return pos;
 }

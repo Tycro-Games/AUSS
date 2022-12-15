@@ -4,7 +4,7 @@ using namespace Tmpl8;
 
 EnemyShielder::EnemyShielder(const PosDir posDir, Sprite* _sprite, EnemyWaveSpawner* _spawner) :
 	Enemy(posDir.pos, _sprite, _spawner),
-	MAX_DISTANCE_SQUARED_TO_PLAYER(100.0f + _spawner->getMaxPlayerDistanceSquared()),
+	MAX_DISTANCE_SQUARED_TO_PLAYER(2025.0f + _spawner->getMaxPlayerDistanceSquared()),//the square of 45
 	rVar(RotationVar(360 / (static_cast<const float>(_sprite->Frames() - 1)), 90.0f,
 		static_cast<const float>(_sprite->GetHeight())))
 {
@@ -51,24 +51,14 @@ void EnemyShielder::SpawnEnemies()
 }
 void EnemyShielder::Reflect()
 {
-	//reflect on obstacle
-	if (mover.colToReflectFrom != nullptr) {
-		const Collider c = *mover.colToReflectFrom;
-
-
-		rot.Reflect(Collider::GetNormal(c, enemyCollider));
-
-		mover.colToReflectFrom = nullptr;
-	}
-	//out of bounds
-	else
-		rot.Reflect(Collider::GetNormalEdgeScreen(mover.nextP, *mover.getColl()));
+	Enemy::Reflect(mover, rot, enemyCollider);
 
 
 }
 void EnemyShielder::AtackPlayer()
 {
 	if (inRangeToAtack_) {
+		Game::Get().PlaySound(SoundID::enemyMeleeAtack);
 		spawner->PlayerTakesDamage(this);
 		attackTimer.ResetVar();
 	}
@@ -79,12 +69,11 @@ void EnemyShielder::Render(Surface* screen)
 	if (!getRenderable())
 		return;
 	sprite->SetFrame(frame);
-	sprite->Draw(screen, static_cast<int>(static_cast<int>(pos.x - rVar.SPRITE_OFFSET / 2)), static_cast<int>(pos.y - rVar.SPRITE_OFFSET / 2));
+	sprite->Draw(screen, static_cast<int>(pos.x - rVar.SPRITE_OFFSET / 2), static_cast<int>(pos.y - rVar.SPRITE_OFFSET / 2));
 #ifdef _DEBUG
-	screen->Box(static_cast<int>(pos.x - rVar.SPRITE_OFFSET / 2),
-		static_cast<int>(pos.y - rVar.SPRITE_OFFSET / 2),
-		static_cast<int>(pos.x + rVar.SPRITE_OFFSET / 2),
-		static_cast<int>(pos.y + rVar.SPRITE_OFFSET / 2), 0xff00ff);
+	screen->Box(static_cast<int>(pos.x + enemyCollider.min.x), static_cast<int>(pos.y + enemyCollider.min.y),
+		static_cast<int>(pos.x + enemyCollider.max.x), static_cast<int>(pos.y + enemyCollider.max.y), 0xFF00FF);
+
 #endif
 	//float angle = MathFunctions::GetDirInDegreesPositive(dir);
 
