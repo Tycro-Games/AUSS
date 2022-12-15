@@ -28,10 +28,6 @@ This library is used for parsing the json files:https://github.com/nlohmann/json
    Every enemy has a score attached to it(in the JSON files), in a wave, every killed enemy will grant the player the corresponding score. At the end of the wave, the multiplier is set to 1. If the player was not hit this wave, the multiplier is incremented, also if the accuracy of the player is high this will also increment the multiplier. For instance, if one has made 50 points at the end of the wave and was not hit at all, but had poor accuracy, his multiplier will be 2, thus the score will be set to 100. Had the accuracy been high, the score would have been 150.
    
 ## Playable on [itch](https://tycro-games.itch.io/auss)
-
-# Diagram of the code
-![](https://github.com/OneBogdan01/TopDownShooter/blob/master/Diagram/Game.png)
-
 # License
 This work is licensed under a
 [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License][cc-by-nc-sa].
