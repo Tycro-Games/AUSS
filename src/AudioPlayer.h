@@ -46,6 +46,6 @@ namespace Tmpl8 {
 
 
 		//in milliseconds
-		const int FADE_OUT_MUSIC = 500;
+		const int FADE_OUT_MUSIC = 2100;
 	};
 }

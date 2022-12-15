@@ -14,7 +14,7 @@ public:
 	void Update(float deltaTime);
 	void Init();
 private:
-	const float FADE_OUT = 0.7f;
+	const float FADE_OUT = 2.5f;
 
 	const std::filesystem::path spritePath = "assets/UI/FadeSprite.png";
 	Tmpl8::Sprite sp;
