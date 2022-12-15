@@ -7,7 +7,7 @@ Spawner::Spawner(const std::filesystem::path& explosion, const unsigned int numb
 {
 }
 
-Spawner::Spawner(Tmpl8::Sprite* explosion) :
+Spawner::Spawner(Sprite* explosion) :
 	explosionSprite(explosion)
 {
 }
@@ -43,13 +43,13 @@ void Spawner::AddExplosionToPool(ExplosionBullet* entity)
 
 void Spawner::CreateMoreExplosions()
 {
-	ExplosionBullet* bullet = new ExplosionBullet(explosionSprite, this, Tmpl8::vec2(0));
+	ExplosionBullet* bullet = new ExplosionBullet(explosionSprite, this, vec2(0));
 	updateObjects.push_back(bullet);
 
 	AddExplosionToPool(bullet);
 }
 
-void Spawner::SpawnExplosions(const Tmpl8::vec2 p)
+void Spawner::SpawnExplosions(const vec2 p)
 {
 	if (poolOfExplosions.size() == 0)
 		CreateMoreExplosions();

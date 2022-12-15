@@ -12,10 +12,7 @@ EnemyShielder::EnemyShielder(const PosDir posDir, Sprite* _sprite, EnemyWaveSpaw
 	enemyCollider = Collider(COL_MIN, COL_MAX, &pos);
 	mover.Init(&pos, &dir, &enemyCollider, std::bind(&EnemyShielder::Reflect, this), SPEED);
 
-	attackTimer = Timer(std::bind(&EnemyShielder::AtackPlayer, this), TIME_TO_ATTACK, true);
-	spawnTimer = Timer();
-	rotateTimer = Timer();//random
-	rot.Init(&pos, &dir, &rVar, &frame, &mover);
+	rot.Init(&pos, &shieldDir, &rVar, &frame, &mover);
 
 	InitEnemy(mover);
 }
@@ -26,21 +23,28 @@ void EnemyShielder::Update(const float deltaTime)
 		return;
 
 	rotateTimer.Update(deltaTime);
-	spawnTimer.Update(deltaTime);
 	CheckForProjectileCollisions();
 
-	mover.Update(deltaTime);
+	if (canMove) {
+		mover.Update(deltaTime);
+		timerToMove.Update(deltaTime);
+	}
+	else {
+		//not moving, shoot
+		timerToStop.Update(deltaTime);
+		timerToSpawn.Update(deltaTime);
+	}
 	inRangeToAtack_ = InRangeToAtackPlayerSquared(MAX_DISTANCE_SQUARED_TO_PLAYER);
 	if (inRangeToAtack_) {
 		attackTimer.Update(deltaTime);
 	}
-	shieldLine.UpdateLine(pos + dir * LINE_OFFSET, MathFunctions::GetDirInDegreesPositive(dir), LINE_SIZE);
+	shieldLine.UpdateLine(pos + shieldDir * LINE_OFFSET, MathFunctions::GetDirInDegreesPositive(shieldDir), LINE_SIZE);
 	shieldLine.CheckCollisionProjectiles();
 }
 void EnemyShielder::SpawnEnemies()
 {
 	//call enemy spawn enemies
-	angleToSpawn = MathFunctions::GetDirInDegreesPositive(dir);
+	angleToSpawn = MathFunctions::GetDirInDegreesPositive(shieldDir);
 	Game::Get().PlaySound(SoundID::enemyShoot);
 	SpawnEnemy(1, angleToSpawn, Hoarder, STEP_ANGLE);
 	SpawnEnemy(1, angleToSpawn, Runner, STEP_ANGLE);
@@ -103,14 +107,30 @@ void EnemyShielder::Init(const PosDir posDir)
 	hp = static_cast<int> (maxHp);
 
 
-	mover.SetSpeed(SPEED + randomNumbers.RandomBetweenFloats(-30, 100));
-	rotateTimer.Init(std::bind(&EnemyRotator::RotateToPlayer, &rot), randomNumbers.RandomBetweenFloats(0.04f, 0.1f), true);
-	spawnTimer.Init(std::bind(&EnemyShielder::SpawnEnemies, this), SPAWN_INTERVAL, true);
+	mover.SetSpeed(SPEED + randomNumbers.RandomBetweenFloats(MIN_SPEED, MAX_SPEED));
 
+	rotateTimer.Init(std::bind(&EnemyRotator::RotateToPlayer, &rot), randomNumbers.RandomBetweenFloats(MIN_TIME_ROTATION, MAX_TIME_ROTATION), true);
+	timerToStop.Init(std::bind(&EnemyShielder::StartMovement, this), STOP_INTERVAL);
+	timerToMove.Init(std::bind(&EnemyShielder::StopMovement, this), MOVE_INTERVAL);
+	timerToSpawn.Init(std::bind(&EnemyShielder::SpawnEnemies, this), SPAWN_INTERVAL, true);
+	attackTimer.Init(std::bind(&EnemyShielder::AtackPlayer, this), TIME_TO_ATTACK, true);
 
 	rot.RotateToPlayer();
 }
+void EnemyShielder::StartMovement()
+{
+	canMove = true;
 
+	const vec2 toCenter = (vec2{ ScreenWidth / 2.0f,ScreenHeight / 2.0f } - pos);
+
+	dir = (toCenter + MathFunctions::GetRandomVec2(MIN_DEVIATION, MAX_DEVIATION)).normalized();
+	timerToMove.ResetVar();
+}
+void EnemyShielder::StopMovement()
+{
+	canMove = false;
+	timerToStop.ResetVar();
+}
 void EnemyShielder::ResetEnemy()
 {
 	spawner->AddEnemyToPool(this, true);

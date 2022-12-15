@@ -4,10 +4,10 @@
 class EnemyRotator :public Rotator
 {
 public:
-	EnemyRotator(Tmpl8::vec2* pos, Tmpl8::vec2* dir, RotationVar* rVar, unsigned int* frame, MoveToADirection* mover);
+	EnemyRotator(Tmpl8::vec2* _pos, Tmpl8::vec2* _dir, RotationVar* _rVar, unsigned int* _frame, MoveToADirection* _mover);
 	EnemyRotator();
-	void Init(Tmpl8::vec2* pos, Tmpl8::vec2* dir, RotationVar* rVar, unsigned int* frame, MoveToADirection* mover);
+	void Init(Tmpl8::vec2* _pos, Tmpl8::vec2* _dir, RotationVar* _rVar, unsigned int* _frame, MoveToADirection* _mover);
 	~EnemyRotator() = default;
-	void RotateToPlayer();
+	void RotateToPlayer() const;
 };
 

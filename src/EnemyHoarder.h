@@ -30,7 +30,9 @@ private:
 	const Tmpl8::vec2 COL_MAX = Tmpl8::vec2(16.5, 16.5);
 	const float TIME_TO_ATTACK = 0.25f;
 
-	const float SPEED = 50.0f;
+	const float SPEED = 80.0f;
+	const float MIN_SPEED = 50.0f;
+	const float MAX_SPEED = 100.0f;
 	const float MAX_DISTANCE_SQUARED_TO_PLAYER;
 	//timers
 	Timer attack;

@@ -41,7 +41,7 @@ private:
 	Timer timerToMove;
 	Timer timerToSpawn;
 
-	float angleToSpawn = 0;
+	float angleToSpawn = 180.0f;
 
 	void StartMovement();
 	void SpawnRunner();

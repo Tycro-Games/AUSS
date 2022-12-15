@@ -12,7 +12,6 @@ EnemyShooter::EnemyShooter(const PosDir posDir, Sprite* _sprite, EnemyWaveSpawne
 	mover.Init(&pos, &dir, &enemyCollider, std::bind(&EnemyShooter::Reflect, this), 300);
 
 	InitEnemy(mover);
-	Init(posDir);
 }
 
 void EnemyShooter::Update(const float deltaTime)
@@ -34,7 +33,7 @@ void EnemyShooter::Update(const float deltaTime)
 
 }
 
-void EnemyShooter::Render(Tmpl8::Surface* screen)
+void EnemyShooter::Render(Surface* screen)
 {
 	if (!getRenderable())
 		return;
@@ -64,7 +63,7 @@ void EnemyShooter::Init(const PosDir posDir)
 	SetActive(true);
 	pos = posDir.pos;
 	dir = posDir.dir;
-
+	angleToSpawn = randomNumbers.RandomBetweenFloats(0, 359);//random angle 
 	rot.Init(&pos, &dir, &rVar, &frame, &mover);
 	hp = static_cast<int>(maxHp);
 	canMove = false;
@@ -92,11 +91,6 @@ void EnemyShooter::StartMovement()
 	timerToMove.ResetVar();
 }
 
-void EnemyShooter::SpawnRunner()
-{
-	Game::Get().PlaySound(SoundID::enemyShoot);
-	SpawnEnemy(randomNumbers.RandomMinusPlusSign(), angleToSpawn, Runner, STEP_ANGLE);
-}
 
 
 
@@ -104,6 +98,11 @@ void EnemyShooter::StopMovement()
 {
 	canMove = false;
 	timerToStop.ResetVar();
+}
+void EnemyShooter::SpawnRunner()
+{
+	Game::Get().PlaySound(SoundID::enemyShoot);
+	SpawnEnemy(randomNumbers.RandomMinusPlusSign(), angleToSpawn, Runner, STEP_ANGLE);
 }
 
 void EnemyShooter::Reflect()

@@ -62,7 +62,7 @@ void EnemyHoarder::Init(const PosDir posDir)
 	pos = posDir.pos;
 	dir = posDir.dir;
 	hp = static_cast<int>(maxHp);
-	mover.SetSpeed(SPEED + randomNumbers.RandomBetweenFloats(50.0f, 100.0f));
+	mover.SetSpeed(SPEED + randomNumbers.RandomBetweenFloats(MIN_SPEED, MAX_SPEED));
 	rotate.Init(std::bind(&EnemyRotator::RotateToPlayer, &rot), randomNumbers.RandomBetweenFloats(0.1f, 0.9f), true);
 	rot.RotateToPlayer();
 }

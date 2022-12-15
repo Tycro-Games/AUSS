@@ -18,7 +18,7 @@ Entity::Entity(const filesystem::path& spritePath, const unsigned int numberOfFr
 {
 }
 
-void Entity::Init(const Tmpl8::vec2 _pos)
+void Entity::Init(const vec2 _pos)
 {
 	pos = _pos;
 }

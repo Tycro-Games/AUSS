@@ -1,6 +1,6 @@
 #include "Cursor.h"
 using namespace Tmpl8;
-Cursor::Cursor(const std::filesystem::path& spritePath, const Tmpl8::vec2 _pos) :
+Cursor::Cursor(const std::filesystem::path& spritePath, const vec2 _pos) :
 	Entity(spritePath, 1, pos),
 	col(Collider(vec2(12, 12), vec2(13, 13), &this->pos))
 {
@@ -26,7 +26,7 @@ void Cursor::ChangePosition(const int x, const int y)
 	AddOffset();
 }
 
-void Cursor::Render(Tmpl8::Surface* screen)
+void Cursor::Render(Surface* screen)
 {
 	sprite->Draw(screen, static_cast<int>(pos.x), static_cast<int>(pos.y));
 }

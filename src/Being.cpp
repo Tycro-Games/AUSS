@@ -2,12 +2,12 @@
 using namespace Tmpl8;
 using namespace std;
 
-Being::Being(const std::filesystem::path& spritePath, const unsigned int numberOfFrames, const Tmpl8::vec2 pos, const int hp)
+Being::Being(const std::filesystem::path& spritePath, const unsigned int numberOfFrames, const vec2 pos, const int hp)
 	: Entity(spritePath, numberOfFrames, pos),
 	hp(hp)
 {
 }
-Being::Being(Tmpl8::Sprite* sprite, const Tmpl8::vec2 pos, const int hp)
+Being::Being(Sprite* sprite, const vec2 pos, const int hp)
 	: Entity(sprite, pos),
 	hp(hp)
 {}

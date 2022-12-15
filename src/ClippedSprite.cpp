@@ -3,7 +3,7 @@
 using namespace Tmpl8;
 
 
-void ClippedSprite::DrawSprite(Tmpl8::Surface* screen, Tmpl8::Surface& sprite, const float linearF, const int posX, const int posY)
+void ClippedSprite::DrawSprite(Surface* screen, Surface& sprite, const float linearF, const int posX, const int posY)
 {
 	//code used for clipping when drawing tiles should be used here
 	const int sX = 0;

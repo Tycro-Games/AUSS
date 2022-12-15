@@ -7,14 +7,14 @@ using namespace Tmpl8;
 Player::Player() :
 	Being("assets/player.png", 32),
 	tilemapCollider(nullptr),
-	spawner(-Tmpl8::vec2(rVar.SPRITE_OFFSET / 2, rVar.SPRITE_OFFSET / 2),
+	spawner(-vec2(rVar.SPRITE_OFFSET / 2, rVar.SPRITE_OFFSET / 2),
 		spriteProjectilePath,
 		spriteExplosionPath)
 {
 
 }
 
-void Player::Init(const Collider& tileMapCollider, const Tmpl8::vec2& _pos)
+void Player::Init(const Collider& tileMapCollider, const vec2& _pos)
 {
 
 	Being::Init(_pos, 100);
@@ -163,6 +163,6 @@ void Player::Die()
 	Game::Get().PlaySound(SoundID::playerDeath);
 	std::cout << "RESET GAME";
 	removeObserver(&hpBar);
-	Game::Get().ChangeGameState(Tmpl8::Game::GameState::reset);
+	Game::Get().ChangeGameState(Game::GameState::reset);
 }
 

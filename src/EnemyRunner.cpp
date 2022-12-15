@@ -71,7 +71,7 @@ void EnemyRunner::Init(PosDir pos_dir)
 	if (pos_dir.dir.length() > 0)
 		dir = pos_dir.dir;
 	else {
-		dir = MathFunctions::GetRandomVec2(0.1f, 1.0f).normalized();
+		dir = MathFunctions::GetRandomVec2(0.1f, 1.0f).normalized();//random direction
 	}
 
 	deathTimer.Init(std::bind(&EnemyRunner::Die, this), TIME_ALIVE);

@@ -13,7 +13,7 @@ void HealthBar::Init()
 	linearF = 1;
 }
 
-void HealthBar::Draw(Tmpl8::Surface* screen)
+void HealthBar::Draw(Surface* screen)
 {
 	const int x = static_cast<int>(position.x);
 	const int y = static_cast<int>(position.y);

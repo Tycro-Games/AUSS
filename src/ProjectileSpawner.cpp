@@ -5,7 +5,7 @@
 #include "game.h"
 using namespace Tmpl8;
 using namespace std;
-ProjectileSpawner::ProjectileSpawner(const Tmpl8::vec2 offset, const filesystem::path& _projectileSprite, const  filesystem::path& _explosionSprite)
+ProjectileSpawner::ProjectileSpawner(const vec2 offset, const filesystem::path& _projectileSprite, const  filesystem::path& _explosionSprite)
 	:
 	Spawner(_explosionSprite),
 	offset(offset),
@@ -29,7 +29,7 @@ void ProjectileSpawner::Init()
 	}
 	poolOfProjectiles.clear();
 
-	Spawner::ResetExplosions();
+	ResetExplosions();
 	for (int i = 0; i < MAX_PROJECTILES; i++) {
 		CreateMoreProjectiles();
 	}
@@ -112,7 +112,7 @@ void ProjectileSpawner::Update(const float deltaTime)
 
 }
 
-void ProjectileSpawner::Render(Tmpl8::Surface* screen)
+void ProjectileSpawner::Render(Surface* screen)
 {
 	const auto firerate = std::string("Firerate: " + std::to_string(fireRate));
 

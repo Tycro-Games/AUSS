@@ -247,7 +247,7 @@ void EnemyWaveSpawner::SpawnEnemy(const PosDir posDir, const EnemyTypes enemy)
 	}
 
 	if (enemyToSpawn) {
-		if (enemyToSpawn->getEnemyType() != EnemyTypes::Runner) {//runner has a predefined lifetime
+		if (enemyToSpawn->getEnemyType() != Runner) {//runner has a predefined lifetime
 			minimumProjectiles += enemyToSpawn->getMaxHp() / enemyToSpawn->getDgToTake();
 			std::cout << "Perfect count for projectiles:" << minimumProjectiles << "\n";
 		}
