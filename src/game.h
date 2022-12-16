@@ -100,8 +100,6 @@ namespace Tmpl8 {
 		std::vector<Updateable*> updateables;
 		std::vector<Renderable*> renderables;
 
-		//consts
-		const float FIRE_SPEED_CHANGE = .1f;
 
 		//code for capping the frame rate
 		/*const int SCREEN_FPS = 100;
