@@ -36,7 +36,7 @@ void Score::Init()
 	multiplier = 1.0f;
 }
 
-unsigned int Score::getTotal()
+unsigned int Score::getTotal() const
 {
 	return totalScore + currentScore;
 

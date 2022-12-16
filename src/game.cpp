@@ -168,7 +168,7 @@ namespace Tmpl8
 			for (size_t i = 0; i < renderables.size(); i++)
 				renderables[i]->Render(screen);
 
-
+			//score on screen
 			screen->Print(std::to_string(score.getTotal()).c_str(), ScreenWidth - 30, 20, 0x00FF00);
 			break;
 		case GameState::mainMenu:

@@ -9,7 +9,7 @@ public:
 	// Inherited via Observer
 	void onNotify(int points, EventType event) override;
 	void Init();
-	unsigned int getTotal();
+	unsigned int getTotal() const;
 private:
 	unsigned int totalScore = 0;
 	unsigned int currentScore = 0;
