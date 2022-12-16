@@ -250,6 +250,24 @@ namespace Tmpl8
 	{
 		switch (key) // NOLINT(clang-diagnostic-switch-enum)
 		{
+			//arrows up down left right
+		case SDL_SCANCODE_UP:
+			player.GetMoveable()->setUp();
+
+			break;
+		case SDL_SCANCODE_DOWN:
+			player.GetMoveable()->setDown();
+
+			break;
+		case SDL_SCANCODE_RIGHT:
+			player.GetMoveable()->setRight();
+
+			break;
+		case SDL_SCANCODE_LEFT:
+			player.GetMoveable()->setLeft();
+
+			break;
+			//wasd
 		case SDL_SCANCODE_W:
 			player.GetMoveable()->setUp();
 
@@ -287,7 +305,24 @@ namespace Tmpl8
 		case SDL_SCANCODE_SPACE:
 			player.GetMoveable()->setDash(true);
 			break;
+			//arrows up down left right
+		case SDL_SCANCODE_UP:
+			player.GetMoveable()->setUp(true);
 
+			break;
+		case SDL_SCANCODE_DOWN:
+			player.GetMoveable()->setDown(true);
+
+			break;
+		case SDL_SCANCODE_RIGHT:
+			player.GetMoveable()->setRight(true);
+
+			break;
+		case SDL_SCANCODE_LEFT:
+			player.GetMoveable()->setLeft(true);
+
+			break;
+			//wasd
 		case SDL_SCANCODE_W:
 			player.GetMoveable()->setUp(true);
 			break;
