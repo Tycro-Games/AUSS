@@ -50,7 +50,7 @@ void EnemyWaveSpawner::EnemyInit()
 {
 	ClearVecOfPointers();
 
-	for (size_t i = 0; i < (NUMBER_OF_ENEMIES); i++) {
+	for (size_t i = 0; i < static_cast<size_t>(EnemyTypes::NUMBER_OF_ENEMIES); i++) {
 		enemyPrototypes[i] = CreateEnemy(static_cast<EnemyTypes>(i));
 	}
 }
@@ -71,7 +71,7 @@ void EnemyWaveSpawner::ClearVecOfPointers()
 
 	ResetExplosions();
 
-	for (size_t i = 0; i < (NUMBER_OF_ENEMIES); i++) {
+	for (size_t i = 0; i < static_cast<size_t>(EnemyTypes::NUMBER_OF_ENEMIES); i++) {
 		delete enemyPrototypes[i];
 	}
 }
@@ -181,7 +181,7 @@ void EnemyWaveSpawner::GetEnemiesForCurrentWave() {
 		EnemyTypes type = possibleEnemies[index];
 		enemiesToSpawn.push_back(type);
 
-		weight -= static_cast<int>(enemyPrototypes[type]->getWeight());
+		weight -= static_cast<int>(enemyPrototypes[static_cast<size_t>(type)]->getWeight());
 		//recheck the possible enemies
 		CheckThePossibleEnemies(weight, possibleEnemies);
 	}
@@ -198,7 +198,7 @@ void EnemyWaveSpawner::CheckThePossibleEnemies(const size_t weight, vector<Enemy
 	for (size_t i = 0; i < waves[indexWave].enemiesInWave.size(); i++)
 	{
 		//checks if the enemy weight is bigger the the weight of the entire wave
-		if (enemyPrototypes[waves[indexWave].enemiesInWave[i]]->getWeight() <= weight)
+		if (enemyPrototypes[static_cast<size_t>(waves[indexWave].enemiesInWave[i])]->getWeight() <= weight)
 			possibleEnemies.push_back(waves[indexWave].enemiesInWave[i]);
 	}
 }
@@ -216,38 +216,38 @@ void EnemyWaveSpawner::SpawnEnemy(const PosDir posDir, const EnemyTypes enemy)
 	Enemy* enemyToSpawn = nullptr;
 	switch (enemy)
 	{
-	case Hoarder:
+	case EnemyTypes::Hoarder:
 		if (IsPoolEmpty(poolOfHoarders))
 			CreateMoreEnemies(enemy);
 		enemyToSpawn = poolOfHoarders[poolOfHoarders.size() - 1];
 		poolOfHoarders.pop_back();
 		break;
-	case Runner:
+	case EnemyTypes::Runner:
 		if (IsPoolEmpty(poolOfRunners))
 			CreateMoreEnemies(enemy);
 		enemyToSpawn = poolOfRunners[poolOfRunners.size() - 1];
 		poolOfRunners.pop_back();
 		break;
-	case Shooter:
+	case EnemyTypes::Shooter:
 		if (IsPoolEmpty(poolOfShooters))
 			CreateMoreEnemies(enemy);
 		enemyToSpawn = poolOfShooters[poolOfShooters.size() - 1];
 		poolOfShooters.pop_back();
 		break;
-	case Shielder:
+	case EnemyTypes::Shielder:
 		if (IsPoolEmpty(poolOfShielders))
 			CreateMoreEnemies(enemy);
 		enemyToSpawn = poolOfShielders[poolOfShielders.size() - 1];
 		poolOfShielders.pop_back();
 		break;
-	case NUMBER_OF_ENEMIES:
+	case EnemyTypes::NUMBER_OF_ENEMIES:
 		ThrowError("could not spawn enemies");
 
 		break;
 	}
 
 	if (enemyToSpawn) {
-		if (enemyToSpawn->getEnemyType() != Runner) {//runner has a predefined lifetime
+		if (enemyToSpawn->getEnemyType() != EnemyTypes::Runner) {//runner has a predefined lifetime
 			minimumProjectiles += enemyToSpawn->getMaxHp() / enemyToSpawn->getDgToTake();
 			std::cout << "Perfect count for projectiles:" << minimumProjectiles << "\n";
 		}
@@ -324,19 +324,19 @@ void EnemyWaveSpawner::AddEnemyToPool(Enemy* enemy, const bool getPoints)
 	}
 	switch (enemy->getEnemyType())
 	{
-	case Hoarder:
+	case EnemyTypes::Hoarder:
 		poolOfHoarders.push_back(enemy);
 		break;
-	case Runner:
+	case EnemyTypes::Runner:
 		poolOfRunners.push_back(enemy);
 		break;
-	case Shooter:
+	case EnemyTypes::Shooter:
 		poolOfShooters.push_back(enemy);
 		break;
-	case Shielder:
+	case EnemyTypes::Shielder:
 		poolOfShielders.push_back(enemy);
 		break;
-	case NUMBER_OF_ENEMIES:
+	case EnemyTypes::NUMBER_OF_ENEMIES:
 		break;
 
 	}
@@ -352,7 +352,7 @@ Enemy* EnemyWaveSpawner::CreateEnemy(const EnemyTypes enemyType) {
 
 	switch (enemyType)
 	{
-	case Hoarder:
+	case EnemyTypes::Hoarder:
 		f.open("json/Hoarder.json");
 		enemy = new EnemyHoarder(PosDir(vec2(0), vec2(0)), &hoarderSprite, this);
 		enemyJson = json::parse(f);
@@ -360,7 +360,7 @@ Enemy* EnemyWaveSpawner::CreateEnemy(const EnemyTypes enemyType) {
 		SetJsonValues(enemy, enemyJson);
 
 		break;
-	case Runner:
+	case EnemyTypes::Runner:
 		f.open("json/Runner.json");
 
 		enemy = new EnemyRunner(PosDir(vec2(0), vec2(0)), &runnerSprite, this);
@@ -368,7 +368,7 @@ Enemy* EnemyWaveSpawner::CreateEnemy(const EnemyTypes enemyType) {
 
 		SetJsonValues(enemy, enemyJson);
 		break;
-	case Shooter:
+	case EnemyTypes::Shooter:
 		f.open("json/Shooter.json");
 
 		enemy = new EnemyShooter(PosDir(vec2(0), vec2(0)), &shooterSprite, this);
@@ -376,7 +376,7 @@ Enemy* EnemyWaveSpawner::CreateEnemy(const EnemyTypes enemyType) {
 
 		SetJsonValues(enemy, enemyJson);
 		break;
-	case Shielder:
+	case EnemyTypes::Shielder:
 		f.open("json/Shielder.json");
 
 		enemy = new EnemyShielder(PosDir(vec2(0), vec2(0)), &shielderSprite, this);
@@ -384,7 +384,7 @@ Enemy* EnemyWaveSpawner::CreateEnemy(const EnemyTypes enemyType) {
 
 		SetJsonValues(enemy, enemyJson);
 		break;
-	case NUMBER_OF_ENEMIES:
+	case EnemyTypes::NUMBER_OF_ENEMIES:
 		ThrowError("The creation of the enemy has failed");
 
 		break;
@@ -403,8 +403,8 @@ void EnemyWaveSpawner::CreateMoreEnemies(const EnemyTypes enemyType)
 {
 	Enemy* enemy = nullptr;
 
-	if (enemyType < NUMBER_OF_ENEMIES && enemyType >= Hoarder)
-		enemy = enemyPrototypes[enemyType]->clone();
+	if (enemyType < EnemyTypes::NUMBER_OF_ENEMIES && enemyType >= EnemyTypes::Hoarder)
+		enemy = enemyPrototypes[static_cast<size_t>(enemyType)]->clone();
 	else
 		ThrowError("The creation of the enemy has failed");
 	updateObjects.push_back(enemy);

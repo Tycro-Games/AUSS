@@ -20,7 +20,7 @@ public:
 private:
 	Tmpl8::vec2 pos;
 	//default the value of enemyToSpawn
-	EnemyTypes enemyToSpawn = NUMBER_OF_ENEMIES;
+	EnemyTypes enemyToSpawn = EnemyTypes::NUMBER_OF_ENEMIES;
 	MoveInstance move;
 
 

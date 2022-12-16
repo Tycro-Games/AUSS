@@ -10,7 +10,7 @@ Enemy::Enemy(const vec2 _pos, Sprite* _sprite, EnemyWaveSpawner* spawner) :
 	spawner(spawner),
 	dg()
 {
-	enemyType = NUMBER_OF_ENEMIES;
+	enemyType = EnemyTypes::NUMBER_OF_ENEMIES;
 	setDg(0);
 	setHp(0);
 	setScore(0);

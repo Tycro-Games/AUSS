@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-enum EnemyTypes//ADD CLASS here
+enum class EnemyTypes//ADD CLASS here
 {
 	Hoarder,
 	Runner,

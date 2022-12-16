@@ -6,7 +6,7 @@ EnemyShooter::EnemyShooter(const PosDir posDir, Sprite* _sprite, EnemyWaveSpawne
 	rVar(RotationVar(360 / (static_cast<const float>(sprite->Frames() - 1)), 90.0f, static_cast<const float>(sprite->GetHeight())))
 
 {
-	enemyType = Shooter;
+	enemyType = EnemyTypes::Shooter;
 	enemyCollider = Collider(COL_MIN, COL_MAX, &pos);
 
 	mover.Init(&pos, &dir, &enemyCollider, std::bind(&EnemyShooter::Reflect, this), 300);
@@ -102,7 +102,7 @@ void EnemyShooter::StopMovement()
 void EnemyShooter::SpawnRunner()
 {
 	Game::Get().PlaySound(SoundID::enemyShoot);
-	SpawnEnemy(randomNumbers.RandomMinusPlusSign(), angleToSpawn, Runner, STEP_ANGLE);
+	SpawnEnemy(randomNumbers.RandomMinusPlusSign(), angleToSpawn, EnemyTypes::Runner, STEP_ANGLE);
 }
 
 void EnemyShooter::Reflect()

@@ -10,7 +10,7 @@ EnemyRunner::EnemyRunner(const PosDir posDir, Sprite* _sprite, EnemyWaveSpawner*
 
 
 {
-	enemyType = Runner;
+	enemyType = EnemyTypes::Runner;
 	enemyCollider = Collider(COL_MIN, COL_MAX, &pos);
 
 	mover.Init(&pos, &dir, &enemyCollider, std::bind(&EnemyRunner::Reflect, this), SPEED);

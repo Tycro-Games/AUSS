@@ -70,7 +70,7 @@ private:
 	unsigned int bonusWeight;
 	unsigned int stepWeight = 1;
 	//prototypes
-	Enemy* enemyPrototypes[NUMBER_OF_ENEMIES] = {};
+	Enemy* enemyPrototypes[EnemyTypes::NUMBER_OF_ENEMIES] = {};
 	RandomNumbers rng;
 	//consts
 	const float SPAWNERS_X_POS_MULTIPLIERS = 0.7f;
@@ -89,17 +89,17 @@ inline bool EnemyWaveSpawner::IsPoolEmpty(const std::vector<Enemy*>& pool) {
 
 inline EnemyTypes EnemyWaveSpawner::ConvertToEnum(const std::string str)
 {
-	EnemyTypes type = NUMBER_OF_ENEMIES;
+	EnemyTypes type = EnemyTypes::NUMBER_OF_ENEMIES;
 
 	if (str == "Hoarder")
-		type = Hoarder;
+		type = EnemyTypes::Hoarder;
 	else if (str == "Runner")
-		type = Runner;
+		type = EnemyTypes::Runner;
 	else if (str == "Shooter")
-		type = Shooter;
+		type = EnemyTypes::Shooter;
 	else if (str == "Shielder")
-		type = Shielder;
-	if (type == NUMBER_OF_ENEMIES)
+		type = EnemyTypes::Shielder;
+	if (type == EnemyTypes::NUMBER_OF_ENEMIES)
 		ThrowError(str.c_str());
 	return type;
 }

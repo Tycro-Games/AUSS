@@ -8,7 +8,7 @@ EnemyShielder::EnemyShielder(const PosDir posDir, Sprite* _sprite, EnemyWaveSpaw
 	rVar(RotationVar(360 / (static_cast<const float>(_sprite->Frames() - 1)), 90.0f,
 		static_cast<const float>(_sprite->GetHeight())))
 {
-	enemyType = Shielder;
+	enemyType = EnemyTypes::Shielder;
 	enemyCollider = Collider(COL_MIN, COL_MAX, &pos);
 	mover.Init(&pos, &dir, &enemyCollider, std::bind(&EnemyShielder::Reflect, this), SPEED);
 
@@ -46,10 +46,10 @@ void EnemyShielder::SpawnEnemies()
 	//call enemy spawn enemies
 	angleToSpawn = MathFunctions::GetDirInDegreesPositive(shieldDir);
 	Game::Get().PlaySound(SoundID::enemyShoot);
-	SpawnEnemy(1, angleToSpawn, Hoarder, STEP_ANGLE);
-	SpawnEnemy(1, angleToSpawn, Runner, STEP_ANGLE);
-	SpawnEnemy(1, angleToSpawn, Runner, STEP_ANGLE);
-	SpawnEnemy(1, angleToSpawn, Runner, STEP_ANGLE);
+	SpawnEnemy(1, angleToSpawn, EnemyTypes::Hoarder, STEP_ANGLE);
+	SpawnEnemy(1, angleToSpawn, EnemyTypes::Runner, STEP_ANGLE);
+	SpawnEnemy(1, angleToSpawn, EnemyTypes::Runner, STEP_ANGLE);
+	SpawnEnemy(1, angleToSpawn, EnemyTypes::Runner, STEP_ANGLE);
 
 
 }

@@ -9,7 +9,7 @@ EnemyHoarder::EnemyHoarder(const PosDir posDir, Sprite* _sprite, EnemyWaveSpawne
 	rVar(RotationVar(360 / (static_cast<const float>(_sprite->Frames() - 1)), 90.0f, static_cast<const float>(_sprite->GetHeight())))
 
 {
-	enemyType = Hoarder;
+	enemyType = EnemyTypes::Hoarder;
 	enemyCollider = Collider(COL_MIN, COL_MAX, &pos);
 	mover.Init(&pos, &dir, &enemyCollider, std::bind(&EnemyHoarder::Reflect, this), SPEED);
 
