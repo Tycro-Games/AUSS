@@ -6,8 +6,8 @@ This project is a top-down shooter where bullets bounce off the edges of obstacl
 There are different types of enemies, the wave system uses weight and a list of possible enemies. Every enemy has a specific weight, so a wave could have many combinations of enemies depending on the list. This makes it flexible and gives spawning a little randomization.
 ## Players can change the waves of enemies by modifying [this](json/enemy_waves.json) json file.
 ## Libraries used:
-Sound is made implemented by using SDL_mixer:https://github.com/libsdl-org/SDL_mixer
-This library is used for parsing the json files:https://github.com/nlohmann/json
+- Sound is made implemented by using SDL_mixer:https://github.com/libsdl-org/SDL_mixer
+- This library is used for parsing the json files:https://github.com/nlohmann/json
 ### Guideline for modifying the enemy waves:
 - every wave needs to have:
   - a weight that is a positive integer
