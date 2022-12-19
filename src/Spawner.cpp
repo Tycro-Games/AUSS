@@ -17,7 +17,7 @@ Spawner::Spawner(Sprite* explosion) :
 
 Spawner::~Spawner()
 {
-	if (updateObjects.size() > 0)
+	if (!updateObjects.empty())
 		for (size_t i = 0; i < updateObjects.size() - 1; i++) {
 			updateObjects[i]->sprite = nullptr;//shares this with others
 			delete updateObjects[i];
