@@ -25,7 +25,7 @@ void Tilemap::Init(const vec2& _pos)
 	lastPos = pos;
 	prop.Init(vec2(pos.x - static_cast<float>(OFFSET_X), pos.y - static_cast<float>(OFFSET_Y)), .5f);
 	Game::Get().AddMoveable(prop.getMover());
-	
+
 	ClearObstacles();
 
 	for (int y = 0; y < Y_TILES; y++)
@@ -36,13 +36,13 @@ void Tilemap::Init(const vec2& _pos)
 			if (tiles[index].is_blocking && tiles[index].obs == nullptr) {
 
 				vec2 p = vec2(x * tiles[index].xd + pos.x - static_cast<float>(OFFSET_X),
-				              y * tiles[index].yd + pos.y - static_cast<float>(OFFSET_Y));
-				
+					y * tiles[index].yd + pos.y - static_cast<float>(OFFSET_Y));
+
 				const vec2 offset = vec2(tiles[index].pivotX, tiles[index].pivotY);
 				p += offset;
 				//add other obstacles
 				int i = x, j = y;
-				float xD = static_cast<float>(tiles[index].xd);  
+				float xD = static_cast<float>(tiles[index].xd);
 				float yD = static_cast<float>(tiles[index].yd);
 				vec2 dimensions = vec2(xD - tiles[index].dimensionsX, yD - tiles[index].dimensionsY);
 				while (tiles[++i + j * X_TILES].is_blocking) {
@@ -140,10 +140,7 @@ void Tilemap::Update(float deltaTime)
 
 
 
-void Tilemap::SetPos(const vec2 p)
-{
-	pos = p;
-}
+
 
 void Tilemap::DrawTile(Surface* screen, int tx, int ty, int x, int y)
 {
@@ -224,7 +221,7 @@ bool Tilemap::IsFreeTile(const Tmpl8::vec2& _pos, const Collider& collider) cons
 	return false;
 }
 
-bool Tilemap::IsFreeTile(float x, float y, Collider& col) const
+bool Tilemap::IsFreeTile(float x, float y, Collider& obsCollider) const
 {
 	vec2 targetPos = vec2(x, y);
 	x += OFFSET_X - (pos.x);
@@ -233,7 +230,7 @@ bool Tilemap::IsFreeTile(float x, float y, Collider& col) const
 	//verifies if the position is actually colliding with the obstacle
 	if (tiles[tx + ty * X_TILES].is_blocking &&
 		Collider::Contains(*tiles[tx + ty * X_TILES].obs->getColl(), targetPos)) {
-		col = *tiles[tx + ty * X_TILES].obs->getColl();
+		obsCollider = *tiles[tx + ty * X_TILES].obs->getColl();
 		return false;
 	}
 	return true;

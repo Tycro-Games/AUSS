@@ -22,15 +22,14 @@ namespace Tmpl8 {
 		Game();
 		//this is the singleton pattern from this and Jeremiah: https://gameprogrammingpatterns.com/singleton.html
 		static Game& Get();
-
+		//setters
 		void SetTarget(Surface* surface) { screen = surface; }
 		void SetAudio(AudioPlayer* audio) { audioPlayer = audio; }
+		//initializations
 		void Init();
-		void Initializations();
-		void ResetGame();
-		void RemoveAllUpdateables();
-		void AddInstancesToUpdates();
 
+
+		//observer functions
 		static void AssignSubject(Subject& subject, Observer& observer);
 		static void RemoveSubject(Subject& subject, Observer& observer);
 
@@ -44,12 +43,12 @@ namespace Tmpl8 {
 		void CheckButtons(int x, int y);
 		void KeyUp(SDL_Scancode key);
 		void KeyDown(SDL_Scancode key);
+		bool isPressingLeftMouse = false;
 		//audio playing
 		void PlaySound(SoundID id) const;
 		void PlayMusic() const;
 		void StopMusic() const;
 		void ResetMusic() const;
-		bool isPressingLeftMouse = false;
 		//switching between game states
 		enum class GameState
 		{
@@ -73,14 +72,25 @@ namespace Tmpl8 {
 		std::vector<Collider*>& getColliders();
 
 	private:
+		//auxialiary methods
+		/**
+		 * \brief resets the game to the initial state
+		 */
+		void ResetGame();
+		void Initializations();
+		/**
+		 * \brief removes the objects from the update lists
+		 */
+		void RemoveAllUpdateables();
+		/**
+		 * \brief adds objects to lists that update them
+		 */
+		void AddInstancesToUpdates();
 		Surface* screen;
 		AudioPlayer* audioPlayer;
 
 		GameState currentState;
 		Tilemap tileMap;
-		void ResumeGame();
-		void ExitGame() const;
-		void MuteSound();
 		bool changedVolumeButtons = false;
 		std::vector<Collider*> colliders;
 		std::vector<Moveable*> moveablesTile;
@@ -91,21 +101,18 @@ namespace Tmpl8 {
 		Button muteButton;
 		Button volumeButton;
 		FadingOut fadeInOut;
+		void ResumeGame();
+		void ExitGame() const;
+		void MuteSound();
 		//actual game
 		Player player;
 		Score score;
 		EnemyWaveSpawner waveSpawner;
 		CollisionDetection projectileDetection;
-		//update components
+		//update vectors
 		std::vector<Updateable*> updateables;
 		std::vector<Renderable*> renderables;
 
-
-		//code for capping the frame rate
-		/*const int SCREEN_FPS = 100;
-		const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
-		int countedFrames = 0;
-		float currentTime = 0.0f;*/
 	};
 
 }; // namespace Tmpl8

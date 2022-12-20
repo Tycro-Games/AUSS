@@ -11,28 +11,26 @@ MoveToADirection::MoveToADirection(vec2* pos, vec2* dir, Collider* col, const Ev
 
 MoveToADirection::MoveToADirection()
 	:Moveable(),
-	reflect(),
 	dir(nullptr)
 {
 }
 
-void MoveToADirection::Init(vec2* pos, vec2* _dir, Collider* collider, const Event& _call, const float speed)
+void MoveToADirection::Init(vec2* _pos, vec2* _dir, Collider* _collider, const Event& _call, const float _speed)
 {
-	Moveable::Init(pos, collider, speed);
+	Moveable::Init(_pos, _collider, _speed);
 	dir = _dir;
 	reflect = _call;
 }
 
 void MoveToADirection::Update(const float deltaTime)
 {
-	vec2 nextPos = { 0 };
 	nextP = *pos;
-	nextPos = (*dir) * speed * deltaTime;
+	const vec2 nextPos = (*dir) * speed * deltaTime;
 
 
 	nextP += nextPos;
 
-	if (collider->InGameBounds(nextP, (*collider))) {
+	if (Collider::InGameBounds(nextP, (*collider))) {
 		if (Game::Get().getTilemap().IsFreeTile(nextP.x, nextP.y))
 			(*pos) = nextP;
 		else {

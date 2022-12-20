@@ -54,43 +54,75 @@ struct Tile
 class Tilemap final :public Renderable, public Updateable, public Followable  // NOLINT(cppcoreguidelines-special-member-functions)
 {
 public:
+	/**
+	 * \brief The initialization method of the tilemap.
+	 * \param _pos The position that the tilemap will be set to.
+	 */
 	void Init(const Tmpl8::vec2& _pos);
 	Tilemap();
 	~Tilemap() override;
-	void ClearObstacles();
 	// Inherited via Renderable
 	void Render(Tmpl8::Surface* screen) override;
-
-
 	// Inherited via Updateable
 	void Update(float deltaTime) override;
 	//Inherited via Followable
 	void ResetOffset() override;
+	/**
+	 * \brief Getter for the collider of the tilemap.
+	 * \return The collider of the tilemap.
+	 */
+	Collider& GetCollider();
 
-	inline Collider& GetCol();
-	/// <summary>
-	/// The bounds where an object is inside the map
-	/// </summary>
-	/// <returns></returns>
+	/**
+	 * \brief Returns the playable area.
+	 * \return The bounds of the game area as a collider.
+	 */
 	inline Collider GetGameBounds() const;
-
+	/**
+	 * \brief	Checks if the tile at position (x,y) is free.
+	 * \param x coordonate of the vector.
+	 * \param y coordonate of the vector.
+	 * \return A boolean.
+	 */
 	bool IsFreeTile(float x, float y) const;
-	bool IsFreeTile(const Tmpl8::vec2&, const Collider& collider) const;
-	//returns the collider at the coordinates x and y in the col variable
-	bool IsFreeTile(float x, float y, Collider& col) const;
+	/**
+	 * \brief Check if the collider is not touching any obstacle with any of its corners.
+	 * \param _pos Position of the object to be checked.
+	 * \param collider Collider of the object to be checked.
+	 * \return A boolean
+	 */
+	bool IsFreeTile(const Tmpl8::vec2& _pos, const Collider& collider) const;
 
+	/**
+	 * \brief Gets the obstacle at the (x,y) position.
+	 * \param x X coordonate of the position of the obstacle.
+	 * \param y Y coordonate of the position of the obstacle.
+	 * \return A const pointer to the obstacle.
+	 */
 	const Obstacle* GetObstacle(float x, float y) const;
 
-	const Obstacle* GetObstacle(size_t x, size_t  y) const;
 
 
-	void SetPos(Tmpl8::vec2 p);
 
 	Tmpl8::vec2* GetPos();
 	const Tmpl8::vec2 GetOffset() override;
 
 private:
+	const Obstacle* GetObstacle(size_t x, size_t  y) const;
+
+	//returns the collider at the coordinates x and y in the col variable
+	bool IsFreeTile(float x, float y, Collider& obsCollider) const;
+	void ClearObstacles();
+	/**
+	 * \brief Draws a tile with clipping from the position of the source to the destination.
+	 * \param screen Surface to be drawn to.
+	 * \param tx X coordonate of the tilemap source.
+	 * \param ty Y cooordonate of the tilemap source.
+	 * \param x X coordonate of the destination position
+	 * \param y Y coordonate fo the destination position.
+	 */
 	void DrawTile(Tmpl8::Surface* screen, int tx, int ty, int x, int y);
+
 	Tmpl8::vec2 pos;
 	Tmpl8::Surface tileSurface;
 	ParallaxProp prop;
@@ -162,7 +194,7 @@ inline void Tilemap::ResetOffset()
 	lastPos = pos;
 }
 
-inline Collider& Tilemap::GetCol()
+inline Collider& Tilemap::GetCollider()
 {
 	return col;
 }

@@ -17,12 +17,12 @@ EnemyWaveSpawner::EnemyWaveSpawner()
 	:
 	Spawner("assets/OriginalAssets/smoke.tga"),
 	indexOfEnemiesToSpawn(0),
+	indexWave(0),
+	wavesCount(0),
 	hoarderSprite(new Surface("assets/hoarder.png"), 32),
 	runnerSprite(new Surface("assets/runner.png"), 32),
 	shooterSprite(new Surface("assets/shooter.png"), 1),
 	shielderSprite(new Surface("assets/shielder.png"), 1),
-	indexWave(0),
-	wavesCount(0),
 	minimumProjectiles(0),
 	bonusWeight(0)
 {
@@ -36,7 +36,7 @@ void EnemyWaveSpawner::Init()
 	indexWave = 0;
 	wavesCount = 0;
 	firstWave = true;
-	timer.Init(bind(&EnemyWaveSpawner::SpawnCurrentWave, this), 1.0f);
+	timeBetweenWaves.Init(bind(&EnemyWaveSpawner::SpawnCurrentWave, this), 1.0f);
 	playerDistanceSqr = Game::Get().getPlayer().GetHalfCollider();
 	//square it
 	playerDistanceSqr *= playerDistanceSqr;
@@ -145,7 +145,7 @@ void EnemyWaveSpawner::SpawnCurrentWave()
 
 			firstWave = false;
 
-			timer.isFinished = true;
+			timeBetweenWaves.isFinished = true;
 			startedWave = false;
 		}
 	}
@@ -186,7 +186,7 @@ void EnemyWaveSpawner::GetEnemiesForCurrentWave() {
 		CheckThePossibleEnemies(weight, possibleEnemies);
 	}
 	//interval for spawning
-	timer.Init(bind(&EnemyWaveSpawner::SpawnCurrentWave, this), SPAWNING_INTERVAL, true); //spawning interval could be fetched from the json per wave
+	timeBetweenWaves.Init(bind(&EnemyWaveSpawner::SpawnCurrentWave, this), SPAWNING_INTERVAL, true); //spawning interval could be fetched from the json per wave
 	//spawn enemies in the spawners' positions
 	indexOfEnemiesToSpawn = 0;
 
@@ -217,26 +217,26 @@ void EnemyWaveSpawner::SpawnEnemy(const PosDir posDir, const EnemyTypes enemy)
 	switch (enemy)
 	{
 	case EnemyTypes::Hoarder:
-		if (IsPoolEmpty(poolOfHoarders))
-			CreateMoreEnemies(enemy);
+		if (poolOfHoarders.empty())
+			CloneEnemy(enemy);
 		enemyToSpawn = poolOfHoarders[poolOfHoarders.size() - 1];
 		poolOfHoarders.pop_back();
 		break;
 	case EnemyTypes::Runner:
-		if (IsPoolEmpty(poolOfRunners))
-			CreateMoreEnemies(enemy);
+		if (poolOfRunners.empty())
+			CloneEnemy(enemy);
 		enemyToSpawn = poolOfRunners[poolOfRunners.size() - 1];
 		poolOfRunners.pop_back();
 		break;
 	case EnemyTypes::Shooter:
-		if (IsPoolEmpty(poolOfShooters))
-			CreateMoreEnemies(enemy);
+		if (poolOfShooters.empty())
+			CloneEnemy(enemy);
 		enemyToSpawn = poolOfShooters[poolOfShooters.size() - 1];
 		poolOfShooters.pop_back();
 		break;
 	case EnemyTypes::Shielder:
-		if (IsPoolEmpty(poolOfShielders))
-			CreateMoreEnemies(enemy);
+		if (poolOfShielders.empty())
+			CloneEnemy(enemy);
 		enemyToSpawn = poolOfShielders[poolOfShielders.size() - 1];
 		poolOfShielders.pop_back();
 		break;
@@ -276,7 +276,7 @@ void EnemyWaveSpawner::Render(Surface* screen)
 
 void EnemyWaveSpawner::Update(const float deltaTime)
 {
-	timer.Update(deltaTime);
+	timeBetweenWaves.Update(deltaTime);
 	for (size_t i = 0; i < enemySpawners.size(); i++)
 		enemySpawners[i]->Update(deltaTime);
 	for (size_t i = 0; i < updateObjects.size(); i++)
@@ -399,7 +399,7 @@ void EnemyWaveSpawner::SetJsonValues(Enemy* enemy, json& enemyJson)
 	enemy->setWeight(enemyJson["weight"]);
 	enemy->setDgToTake(enemyJson["dgTake"]);
 }
-void EnemyWaveSpawner::CreateMoreEnemies(const EnemyTypes enemyType)
+void EnemyWaveSpawner::CloneEnemy(const EnemyTypes enemyType)
 {
 	Enemy* enemy = nullptr;
 

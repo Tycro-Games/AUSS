@@ -8,8 +8,7 @@
 #include <filesystem>
 #include <functional>
 #include "AudioPlayer.h"
-//capping framerate
-//#include <SDL_timer.h>
+
 using namespace std;
 
 namespace Tmpl8
@@ -64,7 +63,7 @@ namespace Tmpl8
 		score.Init();
 
 		tileMap.Init(centerOfTheScreen);
-		player.Init(tileMap.GetCol(), centerOfTheScreen);
+		player.Init(tileMap.GetCollider(), centerOfTheScreen);
 		waveSpawner.Init();
 	}
 
@@ -127,16 +126,7 @@ namespace Tmpl8
 
 	void Game::Tick(float deltaTime)
 	{
-		/*capping frame rate*/
-		//float fps = countedFrames / (currentTime / 1000.0f);
-		//const int frameTick = static_cast<int>(deltaTime);
-		//if (frameTick < SCREEN_TICKS_PER_FRAME)
-		//{
-		//	SDL_Delay(SCREEN_TICKS_PER_FRAME - frameTick);
-		//}
-		//countedFrames++;
-		//currentTime += deltaTime;
-		//std::cout << fps << "\n";
+
 
 		deltaTime /= 1000.0f; //make time into seconds
 		screen->Clear(0);
