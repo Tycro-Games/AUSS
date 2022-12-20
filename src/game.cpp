@@ -483,4 +483,4 @@ namespace Tmpl8
 	{
 		colliders.erase(remove(colliders.begin(), colliders.end(), col), colliders.end());
 	}
-};
+}

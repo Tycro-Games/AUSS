@@ -10,9 +10,18 @@ using json = nlohmann::json;
 class EnemyWaveSpawner : public Spawner, public Subject
 {
 public:
+	//sort this in a logical way
+	//comment stuff in the header
+	//get into xmldocs
+	//hard to break the code
 	EnemyWaveSpawner();
-	void Init();
 	~EnemyWaveSpawner() override;
+	void Init();
+	/**
+	 * \brief
+	 * \param enemy The enemy to be added to the pool.
+	 * \param getPoints The score that should be added.
+	 */
 	void AddEnemyToPool(Enemy* enemy, bool getPoints = false);
 	Enemy* CreateEnemy(EnemyTypes enemyType);
 	static void SetJsonValues(Enemy* enemy, json& enemyJson);
@@ -28,8 +37,8 @@ public:
 	// Inherited via Updateable
 	void Update(float deltaTime) override;
 
-	bool IsPoolEmpty(const std::vector<Enemy*>& pool);
-	EnemyTypes ConvertToEnum(std::string str);
+	bool IsPoolEmpty(const std::vector<Enemy*>& pool) const;
+	EnemyTypes ConvertToEnum(const std::string& str) const;
 
 	//this is the minimum distance to the player added to half of the collider of the enemy using this
 	float getMaxPlayerDistanceSquared()const;
@@ -82,12 +91,12 @@ private:
 	void SpawnCurrentWave();
 
 };
-inline bool EnemyWaveSpawner::IsPoolEmpty(const std::vector<Enemy*>& pool) {
-	return pool.size() == 0;
+
+inline bool EnemyWaveSpawner::IsPoolEmpty(const std::vector<Enemy*>& pool) const {
+	return pool.empty();
 }
 
-
-inline EnemyTypes EnemyWaveSpawner::ConvertToEnum(const std::string str)
+inline EnemyTypes EnemyWaveSpawner::ConvertToEnum(const std::string& str) const
 {
 	EnemyTypes type = EnemyTypes::NUMBER_OF_ENEMIES;
 
