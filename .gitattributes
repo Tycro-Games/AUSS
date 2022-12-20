@@ -1,0 +1,4 @@
+# Remove lib dirs from the language stats in github
+lib/** linguist-vendored
+dlls_x64/** linguist-vendored
+dlls_x86/** linguist-vendored
