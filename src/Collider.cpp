@@ -5,7 +5,7 @@ using namespace Tmpl8;
 Collider::Collider(vec2 min, vec2 max) :
 	min(min),
 	max(max),
-	pos(0),
+	pos(nullptr),
 	collision()
 {
 	type = Type::nothing;
@@ -24,7 +24,7 @@ Collider::Collider(vec2 min, vec2 max, vec2* pos) :
 Collider::Collider() :
 	min(0),
 	max(0),
-	pos(0),
+	pos(nullptr),
 	collision()
 {
 	type = Type::nothing;
@@ -35,17 +35,17 @@ Collider Collider::operator*(const float multiplier)
 {
 	min *= multiplier;
 	max *= multiplier;
-	return {min, max};
+	return { min, max };
 }
 
 Collider Collider::At(const Tmpl8::vec2& offset) const
 {
-	return {min + offset, max + offset};
+	return { min + offset, max + offset };
 }
 
-bool Collider::Collides(const Collider& col) const
+bool Collider::Collides(const Collider& collider) const
 {
-	return Collides(this->At(*pos), col);
+	return Collides(this->At(*pos), collider);
 }
 
 bool Collider::Collides(const Collider& a, const Collider& b)
@@ -64,14 +64,7 @@ bool Collider::Overlaps(const Collider& a, const Collider& b)
 
 bool Collider::Contains(const Collider& a, const Tmpl8::vec2& b)
 {
-	/*float xP = round(b.x);
-		float yP = round(b.y);
-		float Left = round(a.min.x + a.posObs->x);
-		float Right = round(a.max.x + a.posObs->x);
-		float Up = round(a.min.y + a.posObs->y);
-		float Down = round(a.max.y + a.posObs->y);
-		return xP >= Left && yP >= Up
-			&& xP <= Right - 1 && yP <= Down - 1;*/
+
 	return a.min.x + a.pos->x < b.x&& a.min.y + a.pos->y < b.y
 		&& b.x < a.max.x + a.pos->x && b.y < a.max.y + a.pos->y;
 }
@@ -89,9 +82,7 @@ bool Collider::CollidesX(const Collider& a, const Collider& b)
 
 }
 
-Collider::~Collider()
-{
-}
+
 
 vec2 Collider::GetNormal(const Collider& obstacle, const Collider& source)
 {
@@ -172,14 +163,27 @@ bool Collider::LineRectangleIntersection(const Tmpl8::vec2& v0, const Tmpl8::vec
 	outputFraction = fLow;
 	return true;
 }
-//checks with the current posObs
-bool Collider::InGameBounds(const Collider& col) {
-	return col.Collides(Game::Get().getTilemap().GetGameBounds());
-}
-//checks with the position parameter
-bool Collider::InGameBounds(const vec2& pos, const Collider& col)
+
+bool Collider::InGameScreen(const Tmpl8::vec2& pos, const Collider& col)
 {
-	return Overlaps(col.At(pos), Game::Get().getTilemap().GetGameBounds());
+
+	return pos.x + col.min.x >= 0 && pos.y + col.min.y >= 0
+		&& pos.x + col.max.x <= ScreenWidth - 1 && pos.y + col.max.y <= ScreenHeight - 1;
+}
+
+bool Collider::InGameScreen(const Tmpl8::vec2& pos)
+{
+
+	return pos.x >= 0 && pos.y >= 0
+		&& pos.x <= ScreenWidth - 1 && pos.y <= ScreenHeight - 1;
+}
+
+bool Collider::InGameBounds(const Collider& collider) {
+	return collider.Collides(Game::Get().getTilemap().GetGameBounds());
+}
+bool Collider::InGameBounds(const vec2& position, const Collider& col)
+{
+	return Overlaps(col.At(position), Game::Get().getTilemap().GetGameBounds());
 
 }
 

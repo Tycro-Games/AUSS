@@ -9,22 +9,55 @@ struct Collider
 		obstacle,
 		nothing
 	};
+
+	Collider();
 	Collider(Tmpl8::vec2 min, Tmpl8::vec2 max);
 	Collider(Tmpl8::vec2 min, Tmpl8::vec2 max, Tmpl8::vec2* pos);
-	Collider();
+
+	~Collider() = default;
+
 	Collider operator*(float multiplier);
 
-	~Collider();
-	Type type;
 	Tmpl8::vec2 min, max;
 	Tmpl8::vec2* pos;
+	Type type;
+	//collider that had a collision with this one.
 	Collider* collision;
+	//collision flag
 	bool toDeactivate = false;
+	/**
+	 * \brief Offsets the collider with the offset vector.
+	 * \param offset
+	 * \return returns a copy of the collider at the specified offset.
+	 */
 	Collider At(const Tmpl8::vec2& offset) const;
-
-	bool Collides(const Collider& col) const;
-
+	/**
+	 * \brief Checks if the collider is colliding with this instance.
+	 * \param collider The collider to be checked if collides with this instance.
+	 * \return Whether a collision is present.
+	 */
+	bool Collides(const Collider& collider) const;
+	/**
+	 * \brief Checks if the 2 colliders are colliding.
+	 * \param a The first collider.
+	 * \param b The second collider.
+	 * \return Whether a collision is present.
+	 */
 	static bool Collides(const Collider& a, const Collider& b);
+	/**
+	 * \brief Checks collision on the y axis for the two colliders.
+	* \param a The first collider.
+	 * \param b The second collider.
+	 * \return Whether a collision is present on the y axis.
+	 */
+	static bool CollidesY(const Collider& a, const Collider& b);
+	/**
+	 * \brief Checks collision on the x axis for the two colliders.
+	* \param a The first collider.
+	 * \param b The second collider.
+	 * \return Whether a collision is present on the x axis.
+	 */
+	static bool CollidesX(const Collider& a, const Collider& b);
 	/// <summary>
 	/// Checks if a is completely inside b
 	/// </summary>
@@ -47,8 +80,6 @@ struct Collider
 	/// <param name="b">the point that may be inside the collider</param>
 	/// <returns></returns>
 	static bool Contains(const Collider& a, const Tmpl8::vec2& b);
-
-	static bool CollidesY(const Collider& a, const Collider& b);
 	//based on https://www.youtube.com/watch?v=3vONlLYtHUE&t=0s
 
 	/// <summary>
@@ -74,24 +105,40 @@ struct Collider
 	static bool LineRectangleIntersection(const Tmpl8::vec2& v0, const Tmpl8::vec2& v1, const Collider& rect,
 		Tmpl8::vec2& outputIntersection, float& outputFraction);
 
-	static bool CollidesX(const Collider& a, const Collider& b);
+	/**
+	 * \brief Checks if the collider is in the viewable screen at the position.
+	 * \param position Vector to offset the collider.
+	 * \param collider The collider that needs to be checked.
+	 * \return Whether the object is in game screen.
+	 */
+	static bool InGameScreen(const Tmpl8::vec2& position, const Collider& collider);
+	/**
+	 * \brief Checks if the position is in the viewable screen.
+	 * \param position Vector that needs to be checked.
+	 * \return Whether the object is in game screen.
+	 */
+	static bool InGameScreen(const Tmpl8::vec2& position);
+	/**
+	 * \brief Checks if the collider is in the playable area.
+	 * \param collider Collider that needs to be checked.
+	 * \return Whether the object is in playable area.
+	 */
+	static bool InGameBounds(const Collider& collider);
+	/**
+	 * \brief Checks if the collider is in the playable area.
+	 * \param position Vector that will act as an offset for the collider.
+	 * \param collider Collider that needs to be checked.
+	 * \return Whether the object is in playable area.
+	 */
+	static bool InGameBounds(const Tmpl8::vec2& position, const Collider& collider);
 
-	static bool InGameScreen(const Tmpl8::vec2& pos, const Collider& col)
-	{
-
-		return pos.x + col.min.x >= 0 && pos.y + col.min.y >= 0
-			&& pos.x + col.max.x <= ScreenWidth - 1 && pos.y + col.max.y <= ScreenHeight - 1;
-	}static bool InGameScreen(const Tmpl8::vec2& pos)
-	{
-
-		return pos.x >= 0 && pos.y >= 0
-			&& pos.x <= ScreenWidth - 1 && pos.y <= ScreenHeight - 1;
-	}
-	static bool InGameBounds(const Collider& col);
-	static bool InGameBounds(const Tmpl8::vec2& pos, const Collider& col);
-
-
-	static Tmpl8::vec2 GetNormalEdgeScreen(const Tmpl8::vec2& pos, const Collider& col);
+	/**
+	 * \brief Returns the normal vector for the edges of the screen.
+	 * \param position Vector that will act as an offset for the collider.
+	 * \param collider Collider of the object that needs to be checked.
+	 * \return The normal of the screen that is intersecting with the object.
+	 */
+	static Tmpl8::vec2 GetNormalEdgeScreen(const Tmpl8::vec2& position, const Collider& collider);
 
 };
 
