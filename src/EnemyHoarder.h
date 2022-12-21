@@ -22,9 +22,9 @@ private:
 	void Reflect();
 	void ResetEnemy() override;
 	void Die() override;
-	void AtackPlayer();
+	void AttackPlayer();
 
-	bool InRangeToAtack = false;
+	bool InRangeToAttack = false;
 	//consts
 	const Tmpl8::vec2 COL_MIN = Tmpl8::vec2(-16.5, -16.5);
 	const Tmpl8::vec2 COL_MAX = Tmpl8::vec2(16.5, 16.5);

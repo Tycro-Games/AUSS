@@ -22,11 +22,24 @@ namespace Tmpl8 {
 		Game();
 		//this is the singleton pattern from this and Jeremiah: https://gameprogrammingpatterns.com/singleton.html
 		static Game& Get();
+		//initializations
+		void Init();
+		//switching between game states
+		enum class GameState
+		{
+
+			mainMenu,
+			game,
+			paused,
+			reset
+		};
+		//getters
+		GameState getCurrentState() const;
+		const Tilemap& getTilemap();
+		const Player& getPlayer();
 		//setters
 		void SetTarget(Surface* surface) { screen = surface; }
 		void SetAudio(AudioPlayer* audio) { audioPlayer = audio; }
-		//initializations
-		void Init();
 
 
 		//observer functions
@@ -49,26 +62,29 @@ namespace Tmpl8 {
 		void PlayMusic() const;
 		void StopMusic() const;
 		void ResetMusic() const;
-		//switching between game states
-		enum class GameState
-		{
-
-			mainMenu,
-			game,
-			paused,
-			reset
-		};
 		//collision detection
+		/**
+		 * \brief Adds a collider to the detect collision list.
+		 */
 		void AddCollider(Collider* col);
-		void AddMoveable(Moveable* col);
+		/**
+		 * \brief Removes a collider to the detect collision list.
+		 */
 		void RemoveCollider(Collider* col);
+		/**
+		 * \brief Adds an instance that should be moved regardless of the screen.
+		 */
+		void AddMoveable(Moveable* col);
+		/**
+		 * \brief Removes an instance that should be moved regardless of the screen.
+		 */
 		void RemoveMoveable(Moveable* col);
+		/**
+		 * \brief Changes the current state to the parameter.
+		 * \param state To be changed into.
+		 */
 		void ChangeGameState(GameState state);
-		//getters
-		const Tilemap& getTilemap();
-		GameState getCurrentState() const;
-		const Player& getPlayer();
-		//this needs to be sorted for the collision checking so no const
+		//this needs to be sorted by the collision detection
 		std::vector<Collider*>& getColliders();
 
 	private:
@@ -91,25 +107,33 @@ namespace Tmpl8 {
 
 		GameState currentState;
 		Tilemap tileMap;
-		bool changedVolumeButtons = false;
 		std::vector<Collider*> colliders;
 		std::vector<Moveable*> moveablesTile;
 		//MainMenu
-		Cursor cursor;
 		Button playButton;
 		Button exitButton;
+		//Sound changing
 		Button muteButton;
 		Button volumeButton;
+		bool changedVolumeButtons = false;
+		void MuteSound();
+		//reset or pause game
 		FadingOut fadeInOut;
 		void ResumeGame();
 		void ExitGame() const;
-		void MuteSound();
 		//actual game
+		Cursor cursor;
 		Player player;
 		Score score;
+		/**
+		 * \brief Spawner of enemy waves.
+		 */
 		EnemyWaveSpawner waveSpawner;
+		/**
+		 * \brief Collision detection between player projectiles and enemies.
+		 */
 		CollisionDetection projectileDetection;
-		//update vectors
+		//update vectors for rendering and updates
 		std::vector<Updateable*> updateables;
 		std::vector<Renderable*> renderables;
 

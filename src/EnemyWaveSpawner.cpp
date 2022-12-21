@@ -24,7 +24,8 @@ EnemyWaveSpawner::EnemyWaveSpawner()
 	shooterSprite(new Surface("assets/shooter.png"), 1),
 	shielderSprite(new Surface("assets/shielder.png"), 1),
 	minimumProjectiles(0),
-	bonusWeight(0)
+	bonusWeight(0),
+	enemyPrototypes{}
 {
 }
 

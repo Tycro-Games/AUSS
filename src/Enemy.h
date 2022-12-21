@@ -48,7 +48,7 @@ protected:
 	/// </summary>
 	/// <param name="range"></param>
 	/// <returns></returns>
-	bool InRangeToAtackPlayerSquared(float range) const;
+	bool InRangeToAttackPlayerSquared(float range) const;
 	void InitEnemy(Moveable& _move);
 	void SetJsonValues(Enemy* enem) const;
 	EnemyTypes enemyType;

@@ -10,7 +10,7 @@ namespace Tmpl8 {
 		playerDeathSound = Mix_LoadWAV("assets/Sounds&Music/playerDeath.wav");
 		playerDashSound = Mix_LoadWAV("assets/Sounds&Music/playerDash.wav");
 		enemyHitSound = Mix_LoadWAV("assets/Sounds&Music/enemyHit.wav");
-		enemyMeleeAtackSound = Mix_LoadWAV("assets/Sounds&Music/enemyMelee.wav");
+		enemyMeleeAttackSound = Mix_LoadWAV("assets/Sounds&Music/enemyMelee.wav");
 		enemyShootSound = Mix_LoadWAV("assets/Sounds&Music/enemyShoot.wav");
 		enemyDeathSound = Mix_LoadWAV("assets/Sounds&Music/enemyDeath.wav");
 		projectileExplosionSound = Mix_LoadWAV("assets/Sounds&Music/projectileExplosion.wav");
@@ -29,7 +29,7 @@ namespace Tmpl8 {
 		Mix_FreeChunk(playerDeathSound);
 		Mix_FreeChunk(playerDashSound);
 		Mix_FreeChunk(enemyHitSound);
-		Mix_FreeChunk(enemyMeleeAtackSound);
+		Mix_FreeChunk(enemyMeleeAttackSound);
 		Mix_FreeChunk(enemyShootSound);
 		Mix_FreeChunk(enemyDeathSound);
 		Mix_FreeChunk(projectileExplosionSound);
@@ -45,18 +45,18 @@ namespace Tmpl8 {
 		switch (id)
 		{
 		case SoundID::playerShooting:
-			Mix_PlayChannel(static_cast<int>(channels::any), playerShootingSound, 0);
+			Mix_PlayChannel(static_cast<int>(channels::player), playerShootingSound, 0);
 			break;
 		case SoundID::playerDamage:  // NOLINT(bugprone-branch-clone)
-			Mix_PlayChannel(static_cast<int>(channels::any), playerDamageSound, 0);
+			Mix_PlayChannel(static_cast<int>(channels::misc), playerDamageSound, 0);
 
 			break;
 		case SoundID::playerDeath:
-			Mix_PlayChannel(static_cast<int>(channels::any), playerDeathSound, 0);
+			Mix_PlayChannel(static_cast<int>(channels::misc), playerDeathSound, 0);
 
 			break;
 		case SoundID::playerDash:
-			Mix_PlayChannel(static_cast<int>(channels::any), playerDashSound, 0);
+			Mix_PlayChannel(static_cast<int>(channels::player), playerDashSound, 0);
 
 			break;
 		case SoundID::enemyHit:
@@ -65,31 +65,33 @@ namespace Tmpl8 {
 				Mix_PlayChannel(static_cast<int>(channels::enemy_hit), enemyHitSound, 0);
 
 			break;
-		case SoundID::enemyMeleeAtack:
+		case SoundID::enemyMeleeAttack:
 			if (Mix_Playing(static_cast<int>(channels::enemy_melee)) == 0)
-				Mix_PlayChannel(static_cast<int>(channels::enemy_melee), enemyMeleeAtackSound, 0);
+				Mix_PlayChannel(static_cast<int>(channels::enemy_melee), enemyMeleeAttackSound, 0);
 			break;
 		case SoundID::enemyShoot:
-			if (Mix_Playing(static_cast<int>(channels::spawnings)) == 0)
-				Mix_PlayChannel(static_cast<int>(channels::spawnings), enemyShootSound, 0);
+			if (Mix_Playing(static_cast<int>(channels::enemyShoot)) == 0)
+				Mix_PlayChannel(static_cast<int>(channels::enemyShoot), enemyShootSound, 0);
 			break;
 		case SoundID::enemyDeath:
 			if (Mix_Playing(static_cast<int>(channels::enemy_deaths)) == 0)
 				Mix_PlayChannel(static_cast<int>(channels::enemy_deaths), enemyDeathSound, 0);
 			break;
 		case SoundID::projectileExplosion:
-			Mix_PlayChannel(static_cast<int>(channels::any), projectileExplosionSound, 0);
+			if (Mix_Playing(static_cast<int>(channels::projectiles)) == 0)
+
+				Mix_PlayChannel(static_cast<int>(channels::projectiles), projectileExplosionSound, 0);
 			break;
 		case SoundID::hoverUi:
-			Mix_PlayChannel(static_cast<int>(channels::any), hoverUi, 0);
+			Mix_PlayChannel(static_cast<int>(channels::ui), hoverUi, 0);
 
 			break;
 		case SoundID::clickUi:
-			Mix_PlayChannel(static_cast<int>(channels::any), clickUi, 0);
+			Mix_PlayChannel(static_cast<int>(channels::ui), clickUi, 0);
 
 			break;
 		case SoundID::endWave:
-			Mix_PlayChannel(static_cast<int>(channels::any), endWave, 0);
+			Mix_PlayChannel(static_cast<int>(channels::misc), endWave, 0);
 
 			break;
 		}

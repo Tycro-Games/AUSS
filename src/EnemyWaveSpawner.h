@@ -112,7 +112,7 @@ private:
 	unsigned int bonusWeight;
 	unsigned int stepWeight = 1;
 	//prototypes
-	Enemy* enemyPrototypes[EnemyTypes::NUMBER_OF_ENEMIES] = {};
+	Enemy* enemyPrototypes[EnemyTypes::NUMBER_OF_ENEMIES];
 	RandomNumbers rng;
 	//consts
 	const float SPAWNERS_X_POS_MULTIPLIERS = 0.7f;

@@ -9,7 +9,7 @@ public:
 	~EnemyShielder() override = default;
 
 	void Update(float deltaTime) override;
-	void AtackPlayer();
+	void attackPlayer();
 	void Render(Tmpl8::Surface* screen) override;
 	void Init(PosDir) override;
 	void StartMovement();
@@ -21,7 +21,7 @@ private:
 	void ResetEnemy() override;
 	void Die() override;
 
-	bool inRangeToAtack_ = false;
+	bool inRangeToAttack_ = false;
 	bool canMove = false;
 
 	//consts

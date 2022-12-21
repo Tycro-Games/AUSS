@@ -34,8 +34,8 @@ void EnemyShielder::Update(const float deltaTime)
 		timerToStop.Update(deltaTime);
 		timerToSpawn.Update(deltaTime);
 	}
-	inRangeToAtack_ = InRangeToAtackPlayerSquared(MAX_DISTANCE_SQUARED_TO_PLAYER);
-	if (inRangeToAtack_) {
+	inRangeToAttack_ = InRangeToAttackPlayerSquared(MAX_DISTANCE_SQUARED_TO_PLAYER);
+	if (inRangeToAttack_) {
 		attackTimer.Update(deltaTime);
 	}
 	shieldLine.UpdateLine(pos + shieldDir * LINE_OFFSET, MathFunctions::GetDirInDegreesPositive(shieldDir), LINE_SIZE);
@@ -59,10 +59,10 @@ void EnemyShielder::Reflect()
 
 
 }
-void EnemyShielder::AtackPlayer()
+void EnemyShielder::attackPlayer()
 {
-	if (inRangeToAtack_) {
-		Game::Get().PlaySound(SoundID::enemyMeleeAtack);
+	if (inRangeToAttack_) {
+		Game::Get().PlaySound(SoundID::enemyMeleeAttack);
 		spawner->PlayerTakesDamage(this);
 		attackTimer.ResetVar();
 	}
@@ -113,7 +113,7 @@ void EnemyShielder::Init(const PosDir posDir)
 	timerToStop.Init(std::bind(&EnemyShielder::StartMovement, this), STOP_INTERVAL);
 	timerToMove.Init(std::bind(&EnemyShielder::StopMovement, this), MOVE_INTERVAL);
 	timerToSpawn.Init(std::bind(&EnemyShielder::SpawnEnemies, this), SPAWN_INTERVAL, true);
-	attackTimer.Init(std::bind(&EnemyShielder::AtackPlayer, this), TIME_TO_ATTACK, true);
+	attackTimer.Init(std::bind(&EnemyShielder::attackPlayer, this), TIME_TO_ATTACK, true);
 
 	rot.RotateToPlayer();
 }

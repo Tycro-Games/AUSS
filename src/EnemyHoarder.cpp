@@ -13,7 +13,7 @@ EnemyHoarder::EnemyHoarder(const PosDir posDir, Sprite* _sprite, EnemyWaveSpawne
 	enemyCollider = Collider(COL_MIN, COL_MAX, &pos);
 	mover.Init(&pos, &dir, &enemyCollider, std::bind(&EnemyHoarder::Reflect, this), SPEED);
 
-	attack = Timer(std::bind(&EnemyHoarder::AtackPlayer, this), TIME_TO_ATTACK, true);
+	attack = Timer(std::bind(&EnemyHoarder::AttackPlayer, this), TIME_TO_ATTACK, true);
 	rotate = Timer();
 	rot.Init(&pos, &dir, &rVar, &frame, &mover);
 
@@ -30,8 +30,8 @@ void EnemyHoarder::Update(const float deltaTime)
 	CheckForProjectileCollisions();
 
 	mover.Update(deltaTime);
-	InRangeToAtack = InRangeToAtackPlayerSquared(MAX_DISTANCE_SQUARED_TO_PLAYER);
-	if (InRangeToAtack) {
+	InRangeToAttack = InRangeToAttackPlayerSquared(MAX_DISTANCE_SQUARED_TO_PLAYER);
+	if (InRangeToAttack) {
 		attack.Update(deltaTime);
 	}
 }
@@ -82,10 +82,10 @@ void EnemyHoarder::Reflect()
 
 }
 
-void EnemyHoarder::AtackPlayer()
+void EnemyHoarder::AttackPlayer()
 {
-	if (InRangeToAtack) {
-		Game::Get().PlaySound(SoundID::enemyMeleeAtack);
+	if (InRangeToAttack) {
+		Game::Get().PlaySound(SoundID::enemyMeleeAttack);
 		spawner->PlayerTakesDamage(this);
 		attack.ResetVar();
 	}

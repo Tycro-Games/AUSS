@@ -18,13 +18,14 @@ namespace Tmpl8 {
 
 	private:
 		enum class channels {
-			any = -1,
 			enemy_hit,
 			enemy_melee,
-			spawnings,
+			enemyShoot,
 			enemy_deaths,
 			misc,
 			ui,
+			projectiles,
+			player
 		};
 		bool mute = false;
 		//The music that will be played
@@ -36,7 +37,7 @@ namespace Tmpl8 {
 		Mix_Chunk* playerDeathSound = nullptr;
 		Mix_Chunk* playerDashSound = nullptr;
 		Mix_Chunk* enemyHitSound = nullptr;
-		Mix_Chunk* enemyMeleeAtackSound = nullptr;
+		Mix_Chunk* enemyMeleeAttackSound = nullptr;
 		Mix_Chunk* enemyShootSound = nullptr;
 		Mix_Chunk* enemyDeathSound = nullptr;
 		Mix_Chunk* projectileExplosionSound = nullptr;

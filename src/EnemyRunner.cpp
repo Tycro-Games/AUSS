@@ -42,7 +42,7 @@ void EnemyRunner::Update(const float delta_time)
 	CheckForProjectileCollisions();
 
 	mover.Update(delta_time);
-	if (InRangeToAtackPlayerSquared(MAX_DISTANCE_SQUARED_TO_PLAYER)) {
+	if (InRangeToAttackPlayerSquared(MAX_DISTANCE_SQUARED_TO_PLAYER)) {
 		spawner->PlayerTakesDamage(this);
 		Die();
 	}

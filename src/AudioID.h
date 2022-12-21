@@ -5,7 +5,7 @@ enum class SoundID {
 	playerDeath,
 	playerDash,
 	enemyHit,
-	enemyMeleeAtack,
+	enemyMeleeAttack,
 	enemyShoot,
 	enemyDeath,
 	projectileExplosion,

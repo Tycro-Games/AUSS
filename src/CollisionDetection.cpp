@@ -7,8 +7,10 @@ using namespace Tmpl8;
 
 CollisionDetection::CollisionDetection()
 {
-	timer.Init(bind(&CollisionDetection::DetectCollisions, this), .05f, true);
+	timeBetweenDetections.Init(bind(&CollisionDetection::DetectCollisions, this), TIME_BETWEEN_DETECTIONS, true);
 }
+
+
 
 
 //this is what the lambda function does below
@@ -52,7 +54,7 @@ void CollisionDetection::DetectCollisions()
 			else
 			{
 				//update the interval if no collision
-				activeIntervals.erase(activeIntervals.begin() + j);
+				activeIntervals.erase(activeIntervals.begin() + static_cast<unsigned long>(j));
 
 				j--;
 			}
@@ -62,26 +64,26 @@ void CollisionDetection::DetectCollisions()
 
 	for (size_t i = 0; i < allPairs.size(); i += 2)
 	{
-		//trigger the collision flags for the getColliders()
-		CheckPair(allPairs, i, i + 1);
+		//trigger the collision flags 
+		FlagPair(allPairs[i], allPairs[i + 1]);
 	}
 }
 
-void CollisionDetection::CheckPair(const vector<Collider*>& allPairs, const size_t i, const size_t j)
+void CollisionDetection::FlagPair(Collider* a, Collider* b)
 {
-	if (allPairs[i]->type == Collider::Type::projectile)
+	if (a->type == Collider::Type::projectile)
 	{
-		allPairs[i]->toDeactivate = true;
-		allPairs[i]->collision = allPairs[j];
+		a->toDeactivate = true;
+		a->collision = b;
 	}
-	if (allPairs[j]->type == Collider::Type::projectile)
+	if (b->type == Collider::Type::projectile)
 	{
-		allPairs[j]->toDeactivate = true;
-		allPairs[j]->collision = allPairs[i];
+		b->toDeactivate = true;
+		b->collision = a;
 	}
 }
 
 void CollisionDetection::Update(const float deltaTime)
 {
-	timer.Update(deltaTime);
+	timeBetweenDetections.Update(deltaTime);
 }

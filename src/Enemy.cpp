@@ -71,11 +71,11 @@ void Enemy::CheckForProjectileCollisions()
 	}
 }
 
-bool Enemy::InRangeToAtackPlayerSquared(const float range) const
+bool Enemy::InRangeToAttackPlayerSquared(const float range) const
 {
 	const float dist = MathFunctions::GetDistanceSqr(pos, Game::Get().getPlayer().GetPos());
 	if (dist < range) {
-		//in range to atack player
+		//in range to attack player
 		return true;
 	}
 	return false;
