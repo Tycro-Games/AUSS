@@ -22,8 +22,7 @@ namespace Tmpl8 {
 			enemy_melee,
 			enemyShoot,
 			enemy_deaths,
-			misc,
-			ui,
+			singular,
 			projectiles,
 			player
 		};

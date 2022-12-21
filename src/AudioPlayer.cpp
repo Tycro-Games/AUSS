@@ -48,11 +48,11 @@ namespace Tmpl8 {
 			Mix_PlayChannel(static_cast<int>(channels::player), playerShootingSound, 0);
 			break;
 		case SoundID::playerDamage:  // NOLINT(bugprone-branch-clone)
-			Mix_PlayChannel(static_cast<int>(channels::misc), playerDamageSound, 0);
+			Mix_PlayChannel(static_cast<int>(channels::singular), playerDamageSound, 0);
 
 			break;
 		case SoundID::playerDeath:
-			Mix_PlayChannel(static_cast<int>(channels::misc), playerDeathSound, 0);
+			Mix_PlayChannel(static_cast<int>(channels::singular), playerDeathSound, 0);
 
 			break;
 		case SoundID::playerDash:
@@ -79,19 +79,18 @@ namespace Tmpl8 {
 			break;
 		case SoundID::projectileExplosion:
 			if (Mix_Playing(static_cast<int>(channels::projectiles)) == 0)
-
 				Mix_PlayChannel(static_cast<int>(channels::projectiles), projectileExplosionSound, 0);
 			break;
 		case SoundID::hoverUi:
-			Mix_PlayChannel(static_cast<int>(channels::ui), hoverUi, 0);
+			Mix_PlayChannel(static_cast<int>(channels::singular), hoverUi, 0);
 
 			break;
 		case SoundID::clickUi:
-			Mix_PlayChannel(static_cast<int>(channels::ui), clickUi, 0);
+			Mix_PlayChannel(static_cast<int>(channels::singular), clickUi, 0);
 
 			break;
 		case SoundID::endWave:
-			Mix_PlayChannel(static_cast<int>(channels::misc), endWave, 0);
+			Mix_PlayChannel(static_cast<int>(channels::singular), endWave, 0);
 
 			break;
 		}
