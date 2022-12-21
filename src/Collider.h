@@ -27,7 +27,7 @@ struct Collider
 	bool toDeactivate = false;
 	/**
 	 * \brief Offsets the collider with the offset vector.
-	 * \param offset
+	 * \param offset A vector that will act the temporary position.
 	 * \return returns a copy of the collider at the specified offset.
 	 */
 	Collider At(const Tmpl8::vec2& offset) const;
@@ -107,11 +107,11 @@ struct Collider
 
 	/**
 	 * \brief Checks if the collider is in the viewable screen at the position.
-	 * \param position Vector to offset the collider.
+	 * \param _offset Vector to offset the collider.
 	 * \param collider The collider that needs to be checked.
 	 * \return Whether the object is in game screen.
 	 */
-	static bool InGameScreen(const Tmpl8::vec2& position, const Collider& collider);
+	static bool InGameScreen(const Tmpl8::vec2& _offset, const Collider& collider);
 	/**
 	 * \brief Checks if the position is in the viewable screen.
 	 * \param position Vector that needs to be checked.
@@ -126,19 +126,19 @@ struct Collider
 	static bool InGameBounds(const Collider& collider);
 	/**
 	 * \brief Checks if the collider is in the playable area.
-	 * \param position Vector that will act as an offset for the collider.
+	 * \param _offset Vector that will act as an offset for the collider.
 	 * \param collider Collider that needs to be checked.
 	 * \return Whether the object is in playable area.
 	 */
-	static bool InGameBounds(const Tmpl8::vec2& position, const Collider& collider);
+	static bool InGameBounds(const Tmpl8::vec2& _offset, const Collider& collider);
 
 	/**
 	 * \brief Returns the normal vector for the edges of the screen.
-	 * \param position Vector that will act as an offset for the collider.
+	 * \param _offset Vector that will act as an offset for the collider.
 	 * \param collider Collider of the object that needs to be checked.
 	 * \return The normal of the screen that is intersecting with the object.
 	 */
-	static Tmpl8::vec2 GetNormalEdgeScreen(const Tmpl8::vec2& position, const Collider& collider);
+	static Tmpl8::vec2 GetNormalEdgeScreen(const Tmpl8::vec2& _offset, const Collider& collider);
 
 };
 

@@ -164,36 +164,36 @@ bool Collider::LineRectangleIntersection(const Tmpl8::vec2& v0, const Tmpl8::vec
 	return true;
 }
 
-bool Collider::InGameScreen(const Tmpl8::vec2& pos, const Collider& col)
+bool Collider::InGameScreen(const Tmpl8::vec2& position, const Collider& collider)
 {
 
-	return pos.x + col.min.x >= 0 && pos.y + col.min.y >= 0
-		&& pos.x + col.max.x <= ScreenWidth - 1 && pos.y + col.max.y <= ScreenHeight - 1;
+	return position.x + collider.min.x >= 0 && position.y + collider.min.y >= 0
+		&& position.x + collider.max.x <= ScreenWidth - 1 && position.y + collider.max.y <= ScreenHeight - 1;
 }
 
-bool Collider::InGameScreen(const Tmpl8::vec2& pos)
+bool Collider::InGameScreen(const Tmpl8::vec2& position)
 {
 
-	return pos.x >= 0 && pos.y >= 0
-		&& pos.x <= ScreenWidth - 1 && pos.y <= ScreenHeight - 1;
+	return position.x >= 0 && position.y >= 0
+		&& position.x <= ScreenWidth - 1 && position.y <= ScreenHeight - 1;
 }
 
 bool Collider::InGameBounds(const Collider& collider) {
 	return collider.Collides(Game::Get().getTilemap().GetGameBounds());
 }
-bool Collider::InGameBounds(const vec2& position, const Collider& col)
+bool Collider::InGameBounds(const vec2& position, const Collider& collider)
 {
-	return Overlaps(col.At(position), Game::Get().getTilemap().GetGameBounds());
+	return Overlaps(collider.At(position), Game::Get().getTilemap().GetGameBounds());
 
 }
 
-vec2 Collider::GetNormalEdgeScreen(const vec2& pos, const Collider& col)
+vec2 Collider::GetNormalEdgeScreen(const vec2& position, const Collider& collider)
 {
 	vec2 normal;
 	const Collider gameBounds = Game::Get().getTilemap().GetGameBounds();
-	if (pos.x + col.min.x < gameBounds.min.x || pos.x + col.max.x > gameBounds.max.x)
+	if (position.x + collider.min.x < gameBounds.min.x || position.x + collider.max.x > gameBounds.max.x)
 		normal = vec2(1, 0);
-	else//if (posObs.y + col.min.y < gameBounds.min.y || posObs.y + col.max.y < gameBounds.max.y)
+	else//if (posObs.y + collider.min.y < gameBounds.min.y || posObs.y + collider.max.y < gameBounds.max.y)
 		normal = vec2(0, 1);
 	return normal;
 }
