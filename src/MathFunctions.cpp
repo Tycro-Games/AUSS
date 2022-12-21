@@ -2,11 +2,7 @@
 #include "RandomNumbers.h"
 #include <algorithm>
 using namespace Tmpl8;
-/// <summary>
-/// clamped direction to positive degrees
-/// </summary>
-/// <param name="dir"></param>
-/// <returns></returns>
+
 float MathFunctions::GetDirInDegreesPositive(const vec2 dir)
 {
 	float angle = atan2(dir.y, dir.x);//return angle in radians
@@ -18,11 +14,7 @@ float MathFunctions::GetDirInDegreesPositive(const vec2 dir)
 	}
 	return angle;
 }
-/// <summary>
-/// not clamped direction to degrees
-/// </summary>
-/// <param name="dir"></param>
-/// <returns></returns>
+
 float MathFunctions::GetDirInDegrees(const vec2 dir)
 {
 	float angle = atan2(dir.y, dir.x);//return angle in radians
@@ -51,27 +43,17 @@ float MathFunctions::GetDistanceSqr(const vec2 pos1, const vec2 pos2) {
 	const float dy = pos2.y - pos1.y;
 	return dx * dx + dy * dy;
 }
-/// <summary>
-/// gives the reflected vector
-///based on https://www.youtube.com/watch?v=naaeH1qbjdQ
-/// </summary>
-/// <param name="dir">direction of the vector</param>
-/// <param name="norm">needs to be of length 1</param>
-/// <returns></returns>
+
+
 vec2 MathFunctions::Reflect(const vec2 dir, const vec2 norm)
 {
 	//this is double the projection of the direction onto the normal
 	const float dn = 2 * dir.dot(norm);
-	//substract from the original direction so we get the reflected vector
+	//subtract from the original direction so we get the reflected vector
 	return dir - norm * dn;
 
 }
-/// <summary>
-/// changes the currentDirection to the new direction
-/// </summary>
-/// <param name="newDirection"></param>
-/// <param name="pos"></param>
-/// <param name="currentDirection"></param>
+
 void MathFunctions::RotateToDirection(const vec2& newDirection, const vec2& pos, vec2& currentDirection)
 {
 
@@ -114,6 +96,12 @@ vec2 MathFunctions::GetRandomVec2(const float min, const float max, const float 
 	x *= deviationMultiplier;
 	y *= deviationMultiplier;
 	return { x, y };
+}
+
+float MathFunctions::Lerp(const float a, const float b, const float f)
+{
+	assert(0.0f <= f && f <= 1.0f);
+	return (1.0f - f) * a + b * f;
 }
 
 float MathFunctions::InverseLerp(const float a, const float b, float f)

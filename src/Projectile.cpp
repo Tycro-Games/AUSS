@@ -42,10 +42,6 @@ void Projectile::RotateToDirection()
 	frame = MathFunctions::RotateToDirectionFrames(rVar, dir);
 }
 
-
-
-
-
 void Projectile::Update(const float deltaTime)
 {
 	if (!getUpdateable())
