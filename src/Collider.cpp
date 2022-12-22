@@ -164,11 +164,11 @@ bool Collider::LineRectangleIntersection(const Tmpl8::vec2& v0, const Tmpl8::vec
 	return true;
 }
 
-bool Collider::InGameScreen(const Tmpl8::vec2& position, const Collider& collider)
+bool Collider::InGameScreen(const Tmpl8::vec2& _offset, const Collider& collider)
 {
 
-	return position.x + collider.min.x >= 0 && position.y + collider.min.y >= 0
-		&& position.x + collider.max.x <= ScreenWidth - 1 && position.y + collider.max.y <= ScreenHeight - 1;
+	return _offset.x + collider.min.x >= 0 && _offset.y + collider.min.y >= 0
+		&& _offset.x + collider.max.x <= ScreenWidth - 1 && _offset.y + collider.max.y <= ScreenHeight - 1;
 }
 
 bool Collider::InGameScreen(const Tmpl8::vec2& position)
@@ -181,17 +181,17 @@ bool Collider::InGameScreen(const Tmpl8::vec2& position)
 bool Collider::InGameBounds(const Collider& collider) {
 	return collider.Collides(Game::Get().getTilemap().GetGameBounds());
 }
-bool Collider::InGameBounds(const vec2& position, const Collider& collider)
+bool Collider::InGameBounds(const vec2& _offset, const Collider& collider)
 {
-	return Overlaps(collider.At(position), Game::Get().getTilemap().GetGameBounds());
+	return Overlaps(collider.At(_offset), Game::Get().getTilemap().GetGameBounds());
 
 }
 
-vec2 Collider::GetNormalEdgeScreen(const vec2& position, const Collider& collider)
+vec2 Collider::GetNormalEdgeScreen(const vec2& _offset, const Collider& collider)
 {
 	vec2 normal;
 	const Collider gameBounds = Game::Get().getTilemap().GetGameBounds();
-	if (position.x + collider.min.x < gameBounds.min.x || position.x + collider.max.x > gameBounds.max.x)
+	if (_offset.x + collider.min.x < gameBounds.min.x || _offset.x + collider.max.x > gameBounds.max.x)
 		normal = vec2(1, 0);
 	else//if (posObs.y + collider.min.y < gameBounds.min.y || posObs.y + collider.max.y < gameBounds.max.y)
 		normal = vec2(0, 1);
