@@ -119,7 +119,7 @@ private:
 	const float SPAWNERS_X_POS_MULTIPLIERS = 0.7f;
 	const float SPAWNERS_Y_POS_MULTIPLIERS = 0.55f;
 	const float SPAWNING_INTERVAL = .3f;
-	float playerDistanceSqr = 0.0f;
+	float playerHalfRadiusSquared = 0.0f;
 	const std::filesystem::path spriteExplosionPath = "assets/OriginalAssets/smoke.tga";
 };
 
@@ -143,5 +143,5 @@ inline EnemyTypes EnemyWaveSpawner::ConvertToEnum(const std::string& str)
 
 inline float EnemyWaveSpawner::getMaxPlayerDistanceSquared() const
 {
-	return playerDistanceSqr;
+	return playerHalfRadiusSquared;
 }
