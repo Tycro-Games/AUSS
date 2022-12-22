@@ -1,7 +1,6 @@
 #include "AudioPlayer.h"
 
-namespace Tmpl8
-{
+namespace Tmpl8 {
 	AudioPlayer::AudioPlayer()
 	{
 		gameMusic = Mix_LoadMUS("assets/Sounds&Music/gameMusic.wav");
@@ -38,7 +37,6 @@ namespace Tmpl8
 		Mix_FreeChunk(clickUi);
 		Mix_FreeChunk(endWave);
 	}
-
 	void AudioPlayer::PlaySound(const SoundID id) const
 	{
 		if (mute)
@@ -49,7 +47,7 @@ namespace Tmpl8
 		case SoundID::playerShooting:
 			Mix_PlayChannel(static_cast<int>(channels::player), playerShootingSound, 0);
 			break;
-		case SoundID::playerDamage: // NOLINT(bugprone-branch-clone)
+		case SoundID::playerDamage:  // NOLINT(bugprone-branch-clone)
 			Mix_PlayChannel(static_cast<int>(channels::singular), playerDamageSound, 0);
 
 			break;
@@ -96,8 +94,8 @@ namespace Tmpl8
 
 			break;
 		}
-	}
 
+	}
 	void AudioPlayer::PlayMusic() const
 	{
 		if (mute)
@@ -106,25 +104,22 @@ namespace Tmpl8
 			Mix_PlayMusic(gameMusic, -1);
 		else
 			Mix_ResumeMusic();
-	}
 
+	}
 	void AudioPlayer::PauseMusic() const
 	{
 		if (mute)
 			return;
 		Mix_PauseMusic();
 	}
-
 	void AudioPlayer::StopMusic() const
 	{
 		Mix_FadeOutMusic(FADE_OUT_MUSIC);
 	}
-
 	void AudioPlayer::SwitchMute()
 	{
 		mute = !mute;
 	}
-
 	bool AudioPlayer::IsMuted() const
 	{
 		return mute;

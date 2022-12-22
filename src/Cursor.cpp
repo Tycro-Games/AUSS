@@ -1,6 +1,5 @@
 #include "Cursor.h"
 using namespace Tmpl8;
-
 Cursor::Cursor(const std::filesystem::path& spritePath, const vec2 _pos) :
 	Entity(spritePath, 1, pos),
 	col(Collider(vec2(12, 12), vec2(13, 13), &this->pos))

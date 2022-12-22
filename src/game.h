@@ -12,30 +12,27 @@
 #include "Score.h"
 #include "AudioID.h"
 #include "FadingOut.h"
-
-namespace Tmpl8
-{
+namespace Tmpl8 {
 	class Surface;
 	class AudioPlayer;
-
 	class Game
 	{
+
 	public:
 		Game();
 		//this is the singleton pattern from this and Jeremiah: https://gameprogrammingpatterns.com/singleton.html
 		static Game& Get();
 		//initializations
 		void Init();
-
 		//switching between game states
 		enum class GameState
 		{
+
 			mainMenu,
 			game,
 			paused,
 			reset
 		};
-
 		//getters
 		GameState getCurrentState() const;
 		const Tilemap& getTilemap();
@@ -139,5 +136,7 @@ namespace Tmpl8
 		//update vectors for rendering and updates
 		std::vector<Updateable*> updateables;
 		std::vector<Renderable*> renderables;
+
 	};
+
 }; // namespace Tmpl8

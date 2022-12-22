@@ -27,17 +27,16 @@
 
 #ifdef ADVANCEDGL
 #define GLEW_BUILD
-
-extern "C" {
-#include "glew.h"
+extern "C"
+{
+#include "glew.h" 
 }
-
 #include "gl.h"
 #endif
 
 
-namespace Tmpl8
-{
+namespace Tmpl8 {
+
 	double timer::inv_freq = 1;
 
 	timer::timer() : start(get())
@@ -47,7 +46,7 @@ namespace Tmpl8
 
 	float timer::elapsed() const
 	{
-		return static_cast<float>((get() - start) * inv_freq);
+		return (float)((get() - start) * inv_freq);
 	}
 
 	timer::value_type timer::get()
@@ -59,7 +58,7 @@ namespace Tmpl8
 
 	double timer::to_time(const value_type vt)
 	{
-		return static_cast<double>(vt) * inv_freq;
+		return double(vt) * inv_freq;
 	}
 
 	void timer::reset()
@@ -71,7 +70,7 @@ namespace Tmpl8
 	{
 		LARGE_INTEGER f;
 		QueryPerformanceFrequency(&f);
-		inv_freq = 1000. / static_cast<double>(f.QuadPart);
+		inv_freq = 1000. / double(f.QuadPart);
 	}
 
 	// Math Stuff
@@ -79,12 +78,11 @@ namespace Tmpl8
 	vec3 normalize(const vec3& v) { return v.normalized(); }
 	vec3 cross(const vec3& a, const vec3& b) { return a.cross(b); }
 	float dot(const vec3& a, const vec3& b) { return a.dot(b); }
-	vec3 operator *(const float& s, const vec3& v) { return vec3(v.x * s, v.y * s, v.z * s); }
-	vec3 operator *(const vec3& v, const float& s) { return vec3(v.x * s, v.y * s, v.z * s); }
-	vec4 operator *(const float& s, const vec4& v) { return vec4(v.x * s, v.y * s, v.z * s, v.w * s); }
-	vec4 operator *(const vec4& v, const float& s) { return vec4(v.x * s, v.y * s, v.z * s, v.w * s); }
-
-	vec4 operator *(const vec4& v, const mat4& M)
+	vec3 operator * (const float& s, const vec3& v) { return vec3(v.x * s, v.y * s, v.z * s); }
+	vec3 operator * (const vec3& v, const float& s) { return vec3(v.x * s, v.y * s, v.z * s); }
+	vec4 operator * (const float& s, const vec4& v) { return vec4(v.x * s, v.y * s, v.z * s, v.w * s); }
+	vec4 operator * (const vec4& v, const float& s) { return vec4(v.x * s, v.y * s, v.z * s, v.w * s); }
+	vec4 operator * (const vec4& v, const mat4& M)
 	{
 		const vec4 mx(M.cell[0], M.cell[4], M.cell[8], M.cell[12]);
 		const vec4 my(M.cell[1], M.cell[5], M.cell[9], M.cell[13]);
@@ -120,7 +118,6 @@ namespace Tmpl8
 		M.cell[3] = M.cell[7] = M.cell[11] = M.cell[12] = M.cell[13] = M.cell[14] = 0, M.cell[15] = 1;
 		return M;
 	}
-
 	mat4 mat4::rotatex(const float a)
 	{
 		mat4 M;
@@ -129,7 +126,6 @@ namespace Tmpl8
 		M.cell[9] = sa, M.cell[10] = ca;
 		return M;
 	}
-
 	mat4 mat4::rotatey(const float a)
 	{
 		mat4 M;
@@ -138,7 +134,6 @@ namespace Tmpl8
 		M.cell[8] = -sa, M.cell[10] = ca;
 		return M;
 	}
-
 	mat4 mat4::rotatez(const float a)
 	{
 		mat4 M;
@@ -154,6 +149,7 @@ namespace Tmpl8
 		MessageBox(hApp, s, "ERROR", MB_OK);
 		exit(0);
 	}
+
 }
 
 using namespace Tmpl8;
@@ -161,16 +157,16 @@ using namespace std;
 
 #ifdef ADVANCEDGL
 
-PFNGLGENBUFFERSPROC glGenBuffers = nullptr;
-PFNGLBINDBUFFERPROC glBindBuffer = nullptr;
-PFNGLBUFFERDATAPROC glBufferData = nullptr;
-PFNGLMAPBUFFERPROC glMapBuffer = nullptr;
-PFNGLUNMAPBUFFERPROC glUnmapBuffer = nullptr;
-using PFNWGLSWAPINTERVALFARPROC = BOOL(APIENTRY*)(int);
-PFNWGLSWAPINTERVALFARPROC wglSwapIntervalEXT = nullptr;
+PFNGLGENBUFFERSPROC glGenBuffers = 0;
+PFNGLBINDBUFFERPROC glBindBuffer = 0;
+PFNGLBUFFERDATAPROC glBufferData = 0;
+PFNGLMAPBUFFERPROC glMapBuffer = 0;
+PFNGLUNMAPBUFFERPROC glUnmapBuffer = 0;
+typedef BOOL(APIENTRY* PFNWGLSWAPINTERVALFARPROC)(int);
+PFNWGLSWAPINTERVALFARPROC wglSwapIntervalEXT = 0;
 unsigned int framebufferTexID[2];
 GLuint fbPBO[2];
-unsigned char* framedata = nullptr;
+unsigned char* framedata = 0;
 
 #endif
 
@@ -178,10 +174,10 @@ int ACTWIDTH, ACTHEIGHT;
 static bool firstframe = true;
 
 
-Surface* surface = nullptr;
-AudioPlayer* audioPlayer = nullptr;
-Game* game = nullptr;
-SDL_Window* window = nullptr;
+Surface* surface = 0;
+AudioPlayer* audioPlayer = 0;
+Game* game = 0;
+SDL_Window* window = 0;
 
 #ifdef _MSC_VER
 bool redirectIO()
@@ -195,18 +191,18 @@ bool redirectIO()
 	int h2 = _open_osfhandle((intptr_t)h1, _O_TEXT);
 	const FILE* fp = _fdopen(h2, "w");
 	*stdout = *fp;
-	setvbuf(stdout, nullptr, _IONBF, 0);
+	setvbuf(stdout, NULL, _IONBF, 0);
 	h1 = GetStdHandle(STD_INPUT_HANDLE), h2 = _open_osfhandle((intptr_t)h1, _O_TEXT);
-	fp = _fdopen(h2, "r"), *stdin = *fp;
-	setvbuf(stdin, nullptr, _IONBF, 0);
+	fp = _fdopen(h2, "r"), * stdin = *fp;
+	setvbuf(stdin, NULL, _IONBF, 0);
 	h1 = GetStdHandle(STD_ERROR_HANDLE), h2 = _open_osfhandle((intptr_t)h1, _O_TEXT);
-	fp = _fdopen(h2, "w"), *stderr = *fp;
-	setvbuf(stderr, nullptr, _IONBF, 0);
+	fp = _fdopen(h2, "w"), * stderr = *fp;
+	setvbuf(stderr, NULL, _IONBF, 0);
 	ios::sync_with_stdio();
 	FILE* stream;
-	if ((stream = freopen("CON", "w", stdout)) == nullptr)
+	if ((stream = freopen("CON", "w", stdout)) == NULL)
 		return false;
-	if ((stream = freopen("CON", "w", stderr)) == nullptr)
+	if ((stream = freopen("CON", "w", stderr)) == NULL)
 		return false;
 	return true;
 }
@@ -225,20 +221,20 @@ bool createFBtexture()
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, ScreenWidth, ScreenHeight, 0, GL_BGRA, GL_UNSIGNED_BYTE, nullptr);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, ScreenWidth, ScreenHeight, 0, GL_BGRA, GL_UNSIGNED_BYTE, NULL);
 		glBindTexture(GL_TEXTURE_2D, 0);
 		if (glGetError()) return false;
 	}
 	const int sizeMemory = 4 * ScreenWidth * ScreenHeight;
 	glGenBuffers(2, fbPBO);
 	glBindBuffer(GL_PIXEL_UNPACK_BUFFER_ARB, fbPBO[0]);
-	glBufferData(GL_PIXEL_UNPACK_BUFFER_ARB, sizeMemory, nullptr, GL_STREAM_DRAW_ARB);
+	glBufferData(GL_PIXEL_UNPACK_BUFFER_ARB, sizeMemory, NULL, GL_STREAM_DRAW_ARB);
 	glBindBuffer(GL_PIXEL_UNPACK_BUFFER_ARB, fbPBO[1]);
-	glBufferData(GL_PIXEL_UNPACK_BUFFER_ARB, sizeMemory, nullptr, GL_STREAM_DRAW_ARB);
+	glBufferData(GL_PIXEL_UNPACK_BUFFER_ARB, sizeMemory, NULL, GL_STREAM_DRAW_ARB);
 	glBindBuffer(GL_PIXEL_UNPACK_BUFFER_ARB, 0);
 	glBindTexture(GL_TEXTURE_2D, framebufferTexID[0]);
 	glBindBuffer(GL_PIXEL_UNPACK_BUFFER_ARB, fbPBO[0]);
-	framedata = static_cast<unsigned char*>(glMapBuffer(GL_PIXEL_UNPACK_BUFFER_ARB, GL_WRITE_ONLY_ARB));
+	framedata = (unsigned char*)glMapBuffer(GL_PIXEL_UNPACK_BUFFER_ARB, GL_WRITE_ONLY_ARB);
 	if (!framedata) return false;
 	memset(framedata, 0, ScreenWidth * ScreenHeight * 4);
 	return (glGetError() == 0);
@@ -269,7 +265,7 @@ bool init()
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 	if (wglSwapIntervalEXT) wglSwapIntervalEXT(0);
-	surface = new Surface(ScreenWidth, ScreenHeight, nullptr, ScreenWidth);
+	surface = new Surface(ScreenWidth, ScreenHeight, 0, ScreenWidth);
 	return true;
 }
 
@@ -280,11 +276,11 @@ void swap()
 	glUnmapBuffer(GL_PIXEL_UNPACK_BUFFER_ARB);
 	glBindTexture(GL_TEXTURE_2D, framebufferTexID[index]);
 	glBindBuffer(GL_PIXEL_UNPACK_BUFFER_ARB, fbPBO[index]);
-	glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, ScreenWidth, ScreenHeight, GL_BGRA, GL_UNSIGNED_BYTE, nullptr);
+	glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, ScreenWidth, ScreenHeight, GL_BGRA, GL_UNSIGNED_BYTE, 0);
 	nextindex = (index + 1) % 2;
 	index = (index + 1) % 2;
 	glBindBuffer(GL_PIXEL_UNPACK_BUFFER_ARB, fbPBO[nextindex]);
-	framedata = static_cast<unsigned char*>(glMapBuffer(GL_PIXEL_UNPACK_BUFFER_ARB, GL_WRITE_ONLY_ARB));
+	framedata = (unsigned char*)glMapBuffer(GL_PIXEL_UNPACK_BUFFER_ARB, GL_WRITE_ONLY_ARB);
 	glColor3f(1.0f, 1.0f, 1.0f);
 	glBegin(GL_QUADS);
 	glNormal3f(0, 0, 1);
@@ -353,6 +349,8 @@ int main(int argc, char** argv)
 	t.reset();
 	while (!exitapp)
 	{
+
+
 #ifdef ADVANCEDGL
 		swap();
 		surface->SetBuffer((Pixel*)framedata);

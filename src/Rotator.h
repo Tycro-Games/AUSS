@@ -12,11 +12,12 @@ public:
 	void RotateToDirection(const Tmpl8::vec2&) const;
 	void Reflect(Tmpl8::vec2 normal) const;
 	~Rotator() = default;
-
 protected:
 	unsigned int* frame;
 	Tmpl8::vec2* pos;
 	Tmpl8::vec2* dir;
 	RotationVar* rVar;
 	MoveToADirection* mover;
+
 };
+

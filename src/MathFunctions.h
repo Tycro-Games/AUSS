@@ -25,12 +25,12 @@ public:
 	static Tmpl8::vec2 GetVec2FromRadians(float angle);
 	///based on https://www.youtube.com/watch?v=naaeH1qbjdQ
 
-	/**
-	 * \brief Reflects the direction based on the normal.
-	 * \param dir Vector of magnitude of 1 to be reflected.
-	 * \param norm The normal vector from which the reflected vector will pivot.
-	 * \return The reflected vector.
-	 */
+   /**
+	* \brief Reflects the direction based on the normal.
+	* \param dir Vector of magnitude of 1 to be reflected.
+	* \param norm The normal vector from which the reflected vector will pivot.
+	* \return The reflected vector.
+	*/
 	static Tmpl8::vec2 Reflect(Tmpl8::vec2 dir, Tmpl8::vec2 norm);
 	/// <summary>
 	/// Changes the currentDirection to the new direction.
@@ -38,10 +38,9 @@ public:
 	/// <param name="newDirection"></param>
 	/// <param name="pos"></param>
 	/// <param name="currentDirection"></param>
-	static void RotateToDirection(const Tmpl8::vec2& newDirection, const Tmpl8::vec2& pos,
-		Tmpl8::vec2& currentDirection);
+	static void RotateToDirection(const Tmpl8::vec2& newDirection, const Tmpl8::vec2& pos, Tmpl8::vec2& currentDirection);
 	//helper function for rotating sprites
-	static unsigned int RotateToDirectionFrames(const RotationVar&, const Tmpl8::vec2&);
+	static unsigned int  RotateToDirectionFrames(const RotationVar&, const Tmpl8::vec2&);
 	//the distance between 2 points
 	static float GetDistance(Tmpl8::vec2 pos1, Tmpl8::vec2 pos2);
 	//the distance between 2 points without taking the square root
@@ -62,4 +61,7 @@ public:
 	static float Lerp(float a, float b, float f);
 	//returns a number from 0 (when f is a) to 1 (when f is b)
 	static float InverseLerp(float a, float b, float f);
+
+
+
 };

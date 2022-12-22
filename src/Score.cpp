@@ -2,6 +2,8 @@
 #include <iostream>
 
 
+
+
 void Score::onNotify(const int points, const EventType eventt)
 {
 	switch (eventt)
@@ -18,7 +20,7 @@ void Score::onNotify(const int points, const EventType eventt)
 		//this happens on the end of every wave
 		totalScore += static_cast<unsigned int>(currentScore * multiplier);
 		std::cout << "multiplier is :" << multiplier << "and score for this wave is:" << currentScore << '\n';
-	//reset values
+		//reset values
 		currentScore = 0;
 		multiplier = 1.0f;
 		break;
@@ -37,4 +39,6 @@ void Score::Init()
 unsigned int Score::getTotal() const
 {
 	return totalScore + currentScore;
+
 }
+

@@ -20,17 +20,17 @@ namespace Tmpl8
 		//passes functions as objects
 		audioPlayer(nullptr),
 		currentState(GameState::mainMenu),
+		cursor("assets/OriginalAssets/target.tga", 1),
 		playButton("assets/UI/Play_Idle.png", "assets/UI/Play_Pushed.png",
-		           vec2(ScreenWidth / 2.0f, ScreenHeight / 2.0f),
-		           bind(&Game::ResumeGame, this)),
+			vec2(ScreenWidth / 2.0f, ScreenHeight / 2.0f),
+			bind(&Game::ResumeGame, this)),
 		exitButton("assets/UI/Cross_Idle.png", "assets/UI/Cross_Pushed.png",
-		           vec2(ScreenWidth / 2.0f, ScreenHeight / 2.0f + 64.0f), bind(&Game::ExitGame, this)),
+			vec2(ScreenWidth / 2.0f, ScreenHeight / 2.0f + 64.0f), bind(&Game::ExitGame, this)),
 		muteButton("assets/UI/Mute_Idle.png", "assets/UI/Mute_Pushed.png",
-		           vec2(ScreenWidth / 2.0f, ScreenHeight / 2.0f + 128.0f), bind(&Game::MuteSound, this)),
+			vec2(ScreenWidth / 2.0f, ScreenHeight / 2.0f + 128.0f), bind(&Game::MuteSound, this)),
 		volumeButton("assets/UI/Volume_2_Idle.png", "assets/UI/Volume_2_Pushed.png",
-		             vec2(ScreenWidth / 2.0f, ScreenHeight / 2.0f + 128.0f), bind(&Game::MuteSound, this)),
-		fadeInOut(std::bind(&Game::ResetGame, this)),
-		cursor("assets/OriginalAssets/target.tga", 1)
+			vec2(ScreenWidth / 2.0f, ScreenHeight / 2.0f + 128.0f), bind(&Game::MuteSound, this)),
+		fadeInOut(std::bind(&Game::ResetGame, this))
 
 	{
 		muteButton.Disable();
@@ -126,6 +126,8 @@ namespace Tmpl8
 
 	void Game::Tick(float deltaTime)
 	{
+
+
 		deltaTime /= 1000.0f; //make time into seconds
 		screen->Clear(0);
 
@@ -137,30 +139,30 @@ namespace Tmpl8
 		case GameState::game:
 			projectileDetection.Update(deltaTime);
 
-		//movement offset
+			//movement offset
 			for (size_t i = 0; i < updateables.size(); i++)
 				updateables[i]->Update(deltaTime);
-		//update the offset to the other entities
+			//update the offset to the other entities
 			for (size_t i = 0; i < moveablesTile.size(); i++)
 				moveablesTile[i]->Translation(tileMap.GetOffset());
 
 
-		//reset the offsets
+			//reset the offsets
 			tileMap.ResetOffset();
 			player.ResetOffset();
-		//shooting
+			//shooting
 			if (player.GetMoveable()->CanRotate())
 				player.Rotate(static_cast<int>(cursor.pos.x), static_cast<int>(cursor.pos.y));
 			player.Shoot(isPressingLeftMouse);
-		//rendering
+			//rendering
 			for (size_t i = 0; i < renderables.size(); i++)
 				renderables[i]->Render(screen);
 
-		//score on screen
+			//score on screen
 			screen->Print(std::to_string(score.getTotal()).c_str(), ScreenWidth - 30, 20, 0x00FF00);
 			break;
 		case GameState::mainMenu:
-		//update main menu stuff;
+			//update main menu stuff;
 		case GameState::paused:
 			//pause stuff menu
 			playButton.Render(screen);
@@ -172,7 +174,7 @@ namespace Tmpl8
 			//rendering
 			for (size_t i = 0; i < renderables.size(); i++)
 				renderables[i]->Render(screen);
-		//pause stuff menu
+			//pause stuff menu
 			fadeInOut.Update(deltaTime);
 			fadeInOut.Draw(screen);
 
@@ -238,7 +240,7 @@ namespace Tmpl8
 	{
 		switch (key) // NOLINT(clang-diagnostic-switch-enum)
 		{
-		//arrows up down left right
+			//arrows up down left right
 		case SDL_SCANCODE_UP:
 			player.GetMoveable()->setUp();
 
@@ -255,7 +257,7 @@ namespace Tmpl8
 			player.GetMoveable()->setLeft();
 
 			break;
-		//wasd
+			//wasd
 		case SDL_SCANCODE_W:
 			player.GetMoveable()->setUp();
 
@@ -289,11 +291,11 @@ namespace Tmpl8
 	{
 		switch (key) // NOLINT(clang-diagnostic-switch-enum)
 		{
-		//dash
+			//dash
 		case SDL_SCANCODE_SPACE:
 			player.GetMoveable()->setDash(true);
 			break;
-		//arrows up down left right
+			//arrows up down left right
 		case SDL_SCANCODE_UP:
 			player.GetMoveable()->setUp(true);
 
@@ -310,7 +312,7 @@ namespace Tmpl8
 			player.GetMoveable()->setLeft(true);
 
 			break;
-		//wasd
+			//wasd
 		case SDL_SCANCODE_W:
 			player.GetMoveable()->setUp(true);
 			break;
@@ -325,7 +327,7 @@ namespace Tmpl8
 			break;
 
 
-		//firerate
+			//firerate
 		/*case SDL_SCANCODE_UP:
 			player.GetSpawner()->ChangeFireSpeed(FIRE_SPEED_CHANGE);
 			break;

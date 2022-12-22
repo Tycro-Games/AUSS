@@ -1,8 +1,6 @@
 #include "MoveToADirection.h"
 #include "game.h"
-#include "Physics.h"
 using namespace Tmpl8;
-
 MoveToADirection::MoveToADirection(vec2* pos, vec2* dir, Collider* col, const Event& call, const float speed) :
 	Moveable(pos, col, speed),
 	dir(dir),
@@ -12,7 +10,7 @@ MoveToADirection::MoveToADirection(vec2* pos, vec2* dir, Collider* col, const Ev
 }
 
 MoveToADirection::MoveToADirection()
-	: Moveable(),
+	:Moveable(),
 	dir(nullptr)
 {
 }
@@ -32,21 +30,22 @@ void MoveToADirection::Update(const float deltaTime)
 
 	nextP += nextPos;
 
-	if (Physics::InGameBounds(nextP, (*collider)))
-	{
+	if (Collider::InGameBounds(nextP, (*collider))) {
 		if (Game::Get().getTilemap().IsFreeTile(nextP.x, nextP.y))
 			(*pos) = nextP;
-		else
-		{
+		else {
 			//reflect on obstacle
 			colToReflectFrom = Game::Get().getTilemap().GetObstacle(nextP.x, nextP.y)->getColl();
 
 			reflect();
 		}
 	}
-	else
-	{
+	else {
 		//reflect on edge
 		reflect();
 	}
+
+
 }
+
+

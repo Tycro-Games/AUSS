@@ -27,7 +27,7 @@
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="src\MathFunctions.cpp">
-      <Filter>StaticClasses</Filter>
+      <Filter>Math</Filter>
     </ClCompile>
     <ClCompile Include="src\Cursor.cpp">
       <Filter>Components</Filter>
@@ -131,7 +131,6 @@
     <ClCompile Include="src\FadingOut.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="src\Physics.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\game.h" />
@@ -169,7 +168,7 @@
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="src\MathFunctions.h">
-      <Filter>StaticClasses</Filter>
+      <Filter>Math</Filter>
     </ClInclude>
     <ClInclude Include="src\Cursor.h">
       <Filter>Components</Filter>
@@ -288,7 +287,6 @@
     <ClInclude Include="src\FadingOut.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="src\Physics.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="template code">
@@ -309,6 +307,9 @@
     <Filter Include="Components">
       <UniqueIdentifier>{8a2983ce-e8a4-4a2c-823a-b371afc48388}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Math">
+      <UniqueIdentifier>{41cf4e31-443e-4079-804b-8c03abb47432}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Algorithms">
       <UniqueIdentifier>{f2ef26c0-b21c-44fd-adae-3d1955c36216}</UniqueIdentifier>
     </Filter>
@@ -326,9 +327,6 @@
     </Filter>
     <Filter Include="Tilemap">
       <UniqueIdentifier>{7ec9d464-a7f3-49b3-840d-19c386c938a3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="StaticClasses">
-      <UniqueIdentifier>{41cf4e31-443e-4079-804b-8c03abb47432}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

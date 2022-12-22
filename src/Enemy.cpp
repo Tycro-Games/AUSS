@@ -1,6 +1,5 @@
 #include "Enemy.h"
 #include "game.h"
-#include "Physics.h"
 
 using namespace Tmpl8;
 using namespace std;
@@ -18,19 +17,17 @@ Enemy::Enemy(const vec2 _pos, Sprite* _sprite, EnemyWaveSpawner* spawner) :
 	setWeight(0);
 	setDgToTake(0);
 }
-
 Enemy::~Enemy()
 {
-	sprite = nullptr; //this sprite is deleted by the spawner
+	sprite = nullptr;//this sprite is deleted by the spawner
 }
 
 void Enemy::SpawnEnemy(const float sign, float& degreesToSpawn, const EnemyTypes enemy, const float stepDegrees) const
 {
 	const vec2 direction = (MathFunctions::GetVec2FromRadians(degreesToSpawn * PI / 180 * sign)).normalized();
 	spawner->SpawnEnemy(PosDir{
-							pos,
-							direction
-		},
+		pos ,
+		direction },
 		enemy);
 	degreesToSpawn = fmodf(degreesToSpawn + stepDegrees * sign, 360);
 }
@@ -38,39 +35,36 @@ void Enemy::SpawnEnemy(const float sign, float& degreesToSpawn, const EnemyTypes
 
 void Enemy::Reflect(MoveToADirection& mover, Rotator& rot, const Collider& enemyCollider)
 {
-	if (Physics::InGameScreen(*enemyCollider.pos))
+	if (Collider::InGameScreen(*enemyCollider.pos))
 		Game::Get().PlaySound(SoundID::projectileExplosion);
 
-	if (mover.colToReflectFrom != nullptr)
-	{
+	if (mover.colToReflectFrom != nullptr) {
 		const Collider c = *mover.colToReflectFrom;
 
 
-		rot.Reflect(Physics::GetNormal(c, enemyCollider));
+		rot.Reflect(Collider::GetNormal(c, enemyCollider));
 
 		mover.colToReflectFrom = nullptr;
 	}
 	//out of bounds
-	else
-	{
-		rot.Reflect(Physics::GetNormalEdgeScreen(mover.nextP, *mover.getColl()));
+	else {
+		rot.Reflect(Collider::GetNormalEdgeScreen(mover.nextP, *mover.getColl()));
 	}
-}
 
-void Enemy::SetJsonValues(Enemy* _enemy) const
+}
+void Enemy::SetJsonValues(Enemy* enem) const
 {
-	_enemy->setDg(dg);
-	_enemy->setHp(maxHp);
-	_enemy->setScore(score);
-	_enemy->setWeight(weight);
-	_enemy->setDgToTake(dgToTake);
+	enem->setDg(dg);
+	enem->setHp(maxHp);
+	enem->setScore(score);
+	enem->setWeight(weight);
+	enem->setDgToTake(dgToTake);
 }
 
 void Enemy::CheckForProjectileCollisions()
 {
 	//marked by collision
-	if (enemyCollider.toDeactivate)
-	{
+	if (enemyCollider.toDeactivate) {
 		Game::Get().PlaySound(SoundID::enemyHit);
 		TakeDamage(dgToTake);
 		enemyCollider.toDeactivate = false;
@@ -80,12 +74,12 @@ void Enemy::CheckForProjectileCollisions()
 bool Enemy::InRangeToAttackPlayerSquared(const float range) const
 {
 	const float dist = MathFunctions::GetDistanceSqr(pos, Game::Get().getPlayer().GetPos());
-	if (dist < range)
-	{
+	if (dist < range) {
 		//in range to attack player
 		return true;
 	}
 	return false;
+
 }
 
 void Enemy::InitEnemy(Moveable& _move)
@@ -93,3 +87,4 @@ void Enemy::InitEnemy(Moveable& _move)
 	enemyCollider.type = Collider::Type::enemy;
 	move = &_move;
 }
+

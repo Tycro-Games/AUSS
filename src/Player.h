@@ -8,7 +8,7 @@
 #include "HealthBar.h"
 
 
-class Player final : public Being, public Followable, public Observer, public Subject
+class Player final :public Being, public Followable, public Observer, public Subject
 {
 public:
 	Player();
@@ -34,7 +34,6 @@ public:
 	Tmpl8::vec2 GetPos() const;
 	//just returns the x of the max part of the collider
 	float GetHalfCollider() const;
-
 private:
 	RotationVar rVar;
 	Tmpl8::vec2 dirToFace;
@@ -55,19 +54,23 @@ private:
 	HealthBar hpBar;
 	// Inherited via Observer
 	void onNotify(int points, EventType _event) override;
-};
 
-inline float Player::GetHalfCollider() const
-{
+};
+inline float Player::GetHalfCollider() const {
 	return COL_MAX.x;
 }
-
-inline const Tmpl8::vec2 Player::GetOffset()
-{
-	return -pos + lastPos;
+inline const Tmpl8::vec2 Player::GetOffset() {
+	return   -pos + lastPos;
 }
 
 inline void Player::ResetOffset()
 {
 	lastPos = pos;
+
 }
+
+
+
+
+
+

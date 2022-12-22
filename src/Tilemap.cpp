@@ -6,10 +6,7 @@
 #include <string>
 #include <algorithm>
 #include <cassert>
-
-#include "Physics.h"
 using namespace Tmpl8;
-
 Tilemap::Tilemap() :
 	pos(vec2(0)),
 	tileSurface("assets/Spaceship-shooter#01/Wang tiles/02-Craters.png"),
@@ -19,6 +16,7 @@ Tilemap::Tilemap() :
 		vec2(0),
 		&pos))
 {
+
 }
 
 void Tilemap::Init(const vec2& _pos)
@@ -31,13 +29,12 @@ void Tilemap::Init(const vec2& _pos)
 	ClearObstacles();
 
 	for (int y = 0; y < Y_TILES; y++)
-		for (int x = 0; x < X_TILES; x++)
-		{
+		for (int x = 0; x < X_TILES; x++) {
 			// ReSharper disable once CppTooWideScopeInitStatement
 			const int index = x + y * X_TILES;
 
-			if (tiles[index].is_blocking && tiles[index].obs == nullptr)
-			{
+			if (tiles[index].is_blocking && tiles[index].obs == nullptr) {
+
 				vec2 p = vec2(x * tiles[index].xd + pos.x - static_cast<float>(OFFSET_X),
 					y * tiles[index].yd + pos.y - static_cast<float>(OFFSET_Y));
 
@@ -48,27 +45,24 @@ void Tilemap::Init(const vec2& _pos)
 				float xD = static_cast<float>(tiles[index].xd);
 				float yD = static_cast<float>(tiles[index].yd);
 				vec2 dimensions = vec2(xD - tiles[index].dimensionsX, yD - tiles[index].dimensionsY);
-				while (tiles[++i + j * X_TILES].is_blocking)
-				{
+				while (tiles[++i + j * X_TILES].is_blocking) {
 					xD = static_cast<float>(tiles[i + j * X_TILES].xd);
 					yD = static_cast<float>(tiles[i + j * X_TILES].yd);
 					dimensions += vec2(xD - tiles[i + j * X_TILES].dimensionsX, 0);
 				}
 				i--;
-				while (tiles[i + (++j) * X_TILES].is_blocking)
-				{
+				while (tiles[i + (++j) * X_TILES].is_blocking) {
 					xD = static_cast<float>(tiles[i + j * X_TILES].xd);
 					yD = static_cast<float>(tiles[i + j * X_TILES].yd);
 					dimensions += vec2(0, yD - tiles[i + j * X_TILES].dimensionsY);
+
 				}
 				j--;
 
 
 				tiles[index].obs = new Obstacle(p, Collider(0, dimensions));
-				for (int l = x; l <= i; l++)
-				{
-					for (int m = y; m <= j; m++)
-					{
+				for (int l = x; l <= i; l++) {
+					for (int m = y; m <= j; m++) {
 						if (l + m * X_TILES == index)
 							continue;
 						tiles[l + m * X_TILES].obs = tiles[index].obs;
@@ -78,12 +72,14 @@ void Tilemap::Init(const vec2& _pos)
 				x = i + 1;
 				blockingTiles.push_back(tiles[index].obs);
 				Game::Get().AddMoveable(tiles[index].obs);
+
 			}
+
 		}
 }
-
 Tilemap::~Tilemap()
 {
+
 	ClearObstacles();
 }
 
@@ -101,15 +97,16 @@ void Tilemap::ClearObstacles()
 
 void Tilemap::Render(Surface* screen)
 {
+
 	prop.Render(screen);
 	//24x16 tiles
 	for (int y = 0; y < Y_TILES; y++)
 		for (int x = 0; x < X_TILES; x++)
 		{
+
 			int index = x + y * X_TILES;
 			//if the tile is blank skip it
-			if (!tiles[index].xd || !tiles[index].yd)
-			{
+			if (!tiles[index].xd || !tiles[index].yd) {
 				continue;
 			}
 			int tx = tiles[index].x;
@@ -122,11 +119,9 @@ void Tilemap::Render(Surface* screen)
 		}
 	//debug
 #ifdef _DEBUG
-	for (int i = 0; i < blockingTiles.size(); i++)
-	{
+	for (int i = 0; i < blockingTiles.size(); i++) {
 		Collider c = *blockingTiles[i]->getColl();
-		screen->Box(static_cast<int>(c.min.x + c.pos->x), static_cast<int>(c.min.y + c.pos->y),
-			static_cast<int>(c.max.x + c.pos->x), static_cast<int>(c.max.y + c.pos->y), 0xFF0000);
+		screen->Box(static_cast<int>(c.min.x + c.pos->x), static_cast<int>(c.min.y + c.pos->y), static_cast<int>(c.max.x + c.pos->x), static_cast<int>(c.max.y + c.pos->y), 0xFF0000);
 	}
 
 	auto posText = std::string(std::to_string(pos.x) + " " + std::to_string(pos.y));
@@ -137,11 +132,14 @@ void Tilemap::Render(Surface* screen)
 
 void Tilemap::Update(float deltaTime)
 {
-	for (int i = 0; i < blockingTiles.size(); i++)
-	{
+	for (int i = 0; i < blockingTiles.size(); i++) {
+
 		blockingTiles[i]->Update(deltaTime);
 	}
 }
+
+
+
 
 
 void Tilemap::DrawTile(Surface* screen, int tx, int ty, int x, int y)
@@ -186,20 +184,22 @@ void Tilemap::DrawTile(Surface* screen, int tx, int ty, int x, int y)
 
 	for (int i = 0; i < height; i++)
 	{
-		for (int j = 0; j < width; j++)
-		{
+		for (int j = 0; j < width; j++) {
+
 			//memcpy(dst, src, sizeof(Pixel) * width);
 			//check if the pixel we want to copy is opaque
 			if ((src[j] & 0xFF000000) >> 24 == 255)
 				dst[j] = src[j];
+
 		}
 		src += tileSurface.GetPitch();
 		dst += screen->GetPitch();
+
 	}
 }
-
 bool Tilemap::IsFreeTile(float x, float y) const
 {
+
 	vec2 targetPos = vec2(x, y);
 	//apply offset
 	x += OFFSET_X - (pos.x);
@@ -207,11 +207,10 @@ bool Tilemap::IsFreeTile(float x, float y) const
 	int tx = static_cast<int>(x / TILE_SIZE), ty = static_cast<int>(y / TILE_SIZE);
 	//verifies if the position is actually colliding with the obstacle
 	if (tiles[tx + ty * X_TILES].is_blocking &&
-		Physics::Contains(*tiles[tx + ty * X_TILES].obs->getColl(), targetPos))
+		Collider::Contains(*tiles[tx + ty * X_TILES].obs->getColl(), targetPos))
 		return false;
 	return true;
 }
-
 bool Tilemap::IsFreeTile(const Tmpl8::vec2& _pos, const Collider& collider) const
 {
 	if (IsFreeTile(_pos.x + collider.min.x, _pos.y + collider.min.y) &&
@@ -230,8 +229,7 @@ bool Tilemap::IsFreeTile(float x, float y, Collider& obsCollider) const
 	size_t tx = static_cast<size_t>(x / TILE_SIZE), ty = static_cast<size_t>(y / TILE_SIZE);
 	//verifies if the position is actually colliding with the obstacle
 	if (tiles[tx + ty * X_TILES].is_blocking &&
-		Physics::Contains(*tiles[tx + ty * X_TILES].obs->getColl(), targetPos))
-	{
+		Collider::Contains(*tiles[tx + ty * X_TILES].obs->getColl(), targetPos)) {
 		obsCollider = *tiles[tx + ty * X_TILES].obs->getColl();
 		return false;
 	}
@@ -240,6 +238,7 @@ bool Tilemap::IsFreeTile(float x, float y, Collider& obsCollider) const
 
 const Obstacle* Tilemap::GetObstacle(float x, float y) const
 {
+
 	x += OFFSET_X - (pos.x);
 	y += OFFSET_Y - (pos.y);
 	size_t tx = static_cast<size_t>(x / TILE_SIZE), ty = static_cast<size_t>(y / TILE_SIZE);

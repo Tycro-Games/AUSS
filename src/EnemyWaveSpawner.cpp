@@ -8,15 +8,11 @@
 #include "EnemyShielder.h"
 
 #include "game.h"
-#include "Physics.h"
 using namespace std;
 using namespace Tmpl8;
-
-namespace Tmpl8
-{
+namespace Tmpl8 {
 	void NotifyUser(const char* s);
 }
-
 EnemyWaveSpawner::EnemyWaveSpawner()
 	:
 	Spawner("assets/OriginalAssets/smoke.tga"),
@@ -55,8 +51,7 @@ void EnemyWaveSpawner::EnemyInit()
 {
 	ClearVecOfPointers();
 
-	for (size_t i = 0; i < static_cast<size_t>(EnemyTypes::NUMBER_OF_ENEMIES); i++)
-	{
+	for (size_t i = 0; i < static_cast<size_t>(EnemyTypes::NUMBER_OF_ENEMIES); i++) {
 		enemyPrototypes[i] = CreateEnemy(static_cast<EnemyTypes>(i));
 	}
 }
@@ -77,8 +72,7 @@ void EnemyWaveSpawner::ClearVecOfPointers()
 
 	ResetExplosions();
 
-	for (size_t i = 0; i < static_cast<size_t>(EnemyTypes::NUMBER_OF_ENEMIES); i++)
-	{
+	for (size_t i = 0; i < static_cast<size_t>(EnemyTypes::NUMBER_OF_ENEMIES); i++) {
 		delete enemyPrototypes[i];
 	}
 }
@@ -94,7 +88,7 @@ void EnemyWaveSpawner::ClearPoolOfEnemies(vector<Enemy*>& pool)
 void EnemyWaveSpawner::InitializeSpawners()
 {
 	//place the spawners in the four corners of the map
-	const auto center = vec2(ScreenWidth / 2.0f, ScreenHeight / 2.0f);
+	const vec2 center = vec2(ScreenWidth / 2.0f, ScreenHeight / 2.0f);
 	const float xOffset = SPAWNERS_X_POS_MULTIPLIERS * ScreenWidth;
 	const float yOffset = SPAWNERS_Y_POS_MULTIPLIERS * ScreenHeight;
 
@@ -107,53 +101,49 @@ void EnemyWaveSpawner::InitializeSpawners()
 	enemySpawners.push_back(new EnemySpawner(center + vec2(xOffset, -yOffset), explosionSprite));
 	enemySpawners.push_back(new EnemySpawner(center + vec2(-xOffset, -yOffset), explosionSprite));
 }
-
 void EnemyWaveSpawner::ReadWaves()
 {
 	std::ifstream f("json/enemy_waves.json");
-	json wavesInput = json::parse(f);
+	json  wavesInput = json::parse(f);
 	std::cout << "json parsed successfully\n";
 	wavesCount = wavesInput["waves"].size();
 
-	for (size_t i = 0; i < wavesCount; i++)
-	{
+	for (size_t i = 0; i < wavesCount; i++) {
 		waves[i].weight = wavesInput["waves"][i].at("weight");
 
 		//check if weight is valid
 		if (waves[i].weight <= 0)
 			ThrowError("weight must be a positive integer");
-		for (size_t j = 0; j < wavesInput["waves"][i].at("enemy_types").size(); j++)
-		{
+		for (size_t j = 0; j < wavesInput["waves"][i].at("enemy_types").size(); j++) {
 			//check if enum is valid and avoid duplicates
 			EnemyTypes t = ConvertToEnum(wavesInput["waves"][i].at("enemy_types")[j]);
 			if (find(waves[i].enemiesInWave.begin(), waves[i].enemiesInWave.end(), t) == waves[i].enemiesInWave.end())
 				waves[i].enemiesInWave.push_back(t);
 		}
 	}
-}
 
+}
 //spawns enemies at an interval for random numbers to use time as a seed
 void EnemyWaveSpawner::SpawnCurrentWave()
 {
 	if (!startedWave)
 		GetEnemiesForCurrentWave();
-	else
-	{
+	else {
 		//this must have a size that is bigger than 1
 		vector<EnemySpawner*> possibleSpawners;
 		CheckTheOffscreenSpawners(possibleSpawners);
-		const size_t indexOfSpawner = static_cast<size_t>(rng.RandomBetweenInts(
-			0, static_cast<int>(possibleSpawners.size())));
+		const size_t indexOfSpawner = static_cast<size_t>(rng.RandomBetweenInts(0, static_cast<int>(possibleSpawners.size())));
 		//error if the assumption about spawners is not right
 		assert(!possibleSpawners.empty() &&
 			indexOfSpawner < possibleSpawners.size());
 
-		SpawnEnemy(PosDir{ possibleSpawners[indexOfSpawner]->GetSpawnerPos(), 0 }, enemiesToSpawn[indexOfEnemiesToSpawn]);
+		SpawnEnemy(PosDir{ possibleSpawners[indexOfSpawner]->GetSpawnerPos() ,0 }, enemiesToSpawn[indexOfEnemiesToSpawn]);
 		std::cout << "Enemy count:" << enemiesToSpawn.size() << '\n';
 		indexOfEnemiesToSpawn++;
 		//spawned the last enemy of the wave
-		if (enemiesToSpawn.size() == indexOfEnemiesToSpawn)
-		{
+		if (enemiesToSpawn.size() == indexOfEnemiesToSpawn) {
+
+
 			firstWave = false;
 
 			timeBetweenWaves.isFinished = true;
@@ -165,26 +155,24 @@ void EnemyWaveSpawner::SpawnCurrentWave()
 EnemyWaveSpawner::~EnemyWaveSpawner()
 {
 	ClearVecOfPointers();
-}
 
+}
 void EnemyWaveSpawner::PlayerTakesDamage(const Enemy* enemy)
 {
 	notify(static_cast<int>(enemy->getDg()), EventType::PlayerTakesDamage);
 	playerHasTakenDamage = true;
 }
-
-void EnemyWaveSpawner::GetEnemiesForCurrentWave()
-{
+void EnemyWaveSpawner::GetEnemiesForCurrentWave() {
 	startedWave = true;
 	unsigned int weight = waves[indexWave].weight + bonusWeight;
 	enemiesToSpawn.clear();
-	vector<EnemyTypes> possibleEnemies;
+	vector<EnemyTypes>possibleEnemies;
 
 	CheckThePossibleEnemies(weight, possibleEnemies);
 	if (possibleEnemies.empty())
 		ThrowError("Too small weight for spawning any enemies");
-	while (weight != 0 && !possibleEnemies.empty())
-	{
+	while (weight != 0 && !possibleEnemies.empty()) {
+
 		size_t index;
 		//if there are more than one enemy
 		if (possibleEnemies.size() > 1)
@@ -199,12 +187,12 @@ void EnemyWaveSpawner::GetEnemiesForCurrentWave()
 		CheckThePossibleEnemies(weight, possibleEnemies);
 	}
 	//interval for spawning
-	timeBetweenWaves.Init(bind(&EnemyWaveSpawner::SpawnCurrentWave, this), SPAWNING_INTERVAL, true);
-	//spawning interval could be fetched from the json per wave
+	timeBetweenWaves.Init(bind(&EnemyWaveSpawner::SpawnCurrentWave, this), SPAWNING_INTERVAL, true); //spawning interval could be fetched from the json per wave
 	//spawn enemies in the spawners' positions
 	indexOfEnemiesToSpawn = 0;
-}
 
+
+}
 void EnemyWaveSpawner::CheckThePossibleEnemies(const size_t weight, vector<EnemyTypes>& possibleEnemies) const
 {
 	possibleEnemies.clear();
@@ -219,13 +207,11 @@ void EnemyWaveSpawner::CheckThePossibleEnemies(const size_t weight, vector<Enemy
 void EnemyWaveSpawner::CheckTheOffscreenSpawners(vector<EnemySpawner*>& possibleSpawner) const
 {
 	possibleSpawner.clear();
-	for (size_t i = 0; i < enemySpawners.size(); i++)
-	{
-		if (!Physics::InGameScreen(enemySpawners[i]->GetSpawnerPos()))
+	for (size_t i = 0; i < enemySpawners.size(); i++) {
+		if (!Collider::InGameScreen(enemySpawners[i]->GetSpawnerPos()))
 			possibleSpawner.push_back(enemySpawners[i]);
 	}
 }
-
 void EnemyWaveSpawner::SpawnEnemy(const PosDir posDir, const EnemyTypes enemy)
 {
 	Enemy* enemyToSpawn = nullptr;
@@ -261,11 +247,8 @@ void EnemyWaveSpawner::SpawnEnemy(const PosDir posDir, const EnemyTypes enemy)
 		break;
 	}
 
-	if (enemyToSpawn)
-	{
-		if (enemyToSpawn->getEnemyType() != EnemyTypes::Runner)
-		{
-			//runner has a predefined lifetime
+	if (enemyToSpawn) {
+		if (enemyToSpawn->getEnemyType() != EnemyTypes::Runner) {//runner has a predefined lifetime
 			minimumProjectiles += enemyToSpawn->getMaxHp() / enemyToSpawn->getDgToTake();
 			std::cout << "Perfect count for projectiles:" << minimumProjectiles << "\n";
 		}
@@ -275,19 +258,16 @@ void EnemyWaveSpawner::SpawnEnemy(const PosDir posDir, const EnemyTypes enemy)
 		enemyToSpawn->Init(posDir);
 		Game::Get().AddCollider(enemyToSpawn->getColl());
 		Game::Get().AddMoveable(enemyToSpawn->getMoveable());
+
 	}
 }
 
 void EnemyWaveSpawner::Render(Surface* screen)
 {
-	for (size_t i = 0; i < enemySpawners.size(); i++)
-	{
+	for (size_t i = 0; i < enemySpawners.size(); i++) {
 		enemySpawners[i]->Render(screen);
 #ifdef _DEBUG
-		screen->Box(static_cast<int>(enemySpawners[i]->GetSpawnerPos().x),
-			static_cast<int>(enemySpawners[i]->GetSpawnerPos().y),
-			static_cast<int>(enemySpawners[i]->GetSpawnerPos().x) + 5,
-			static_cast<int>(enemySpawners[i]->GetSpawnerPos().y) + 5, 0xFF0000);
+		screen->Box(static_cast<int>(enemySpawners[i]->GetSpawnerPos().x), static_cast<int>(enemySpawners[i]->GetSpawnerPos().y), static_cast<int>(enemySpawners[i]->GetSpawnerPos().x) + 5, static_cast<int>(enemySpawners[i]->GetSpawnerPos().y) + 5, 0xFF0000);
 #endif
 	}
 
@@ -314,23 +294,17 @@ void EnemyWaveSpawner::AddEnemyToPool(Enemy* enemy, const bool getPoints)
 		, activeColliders.end());
 
 
-	if (getPoints)
-	{
+	if (getPoints) {
 		notify(static_cast<int>(enemy->getScore()), EventType::EnemyDeath);
 	}
-	if (activeColliders.empty())
-	{
-		//signal ending of this wave
-		if (enemiesToSpawn.size() == indexOfEnemiesToSpawn)
-		{
+	if (activeColliders.empty()) {//signal ending of this wave
+		if (enemiesToSpawn.size() == indexOfEnemiesToSpawn) {
 			//multiply the score if the player was not hit the previous wave 
-			if (!playerHasTakenDamage)
-			{
+			if (!playerHasTakenDamage) {
 				notify(1, EventType::BonusConditions);
 				std::cout << "Double points for health\n";
 			}
-			else
-			{
+			else {
 				playerHasTakenDamage = false;
 			}
 			//notify the score 
@@ -365,14 +339,14 @@ void EnemyWaveSpawner::AddEnemyToPool(Enemy* enemy, const bool getPoints)
 		break;
 	case EnemyTypes::NUMBER_OF_ENEMIES:
 		break;
+
 	}
 	//game wiring
 	Game::Get().RemoveCollider(enemy->getColl());
 	Game::Get().RemoveMoveable(enemy->getMoveable());
 }
+Enemy* EnemyWaveSpawner::CreateEnemy(const EnemyTypes enemyType) {
 
-Enemy* EnemyWaveSpawner::CreateEnemy(const EnemyTypes enemyType)
-{
 	std::ifstream f;
 	json enemyJson;
 	Enemy* enemy = nullptr;
@@ -418,7 +392,6 @@ Enemy* EnemyWaveSpawner::CreateEnemy(const EnemyTypes enemyType)
 	}
 	return enemy;
 }
-
 void EnemyWaveSpawner::SetJsonValues(Enemy* enemy, json& enemyJson)
 {
 	enemy->setDg(enemyJson["dg"]);
@@ -427,7 +400,6 @@ void EnemyWaveSpawner::SetJsonValues(Enemy* enemy, json& enemyJson)
 	enemy->setWeight(enemyJson["weight"]);
 	enemy->setDgToTake(enemyJson["dgTake"]);
 }
-
 void EnemyWaveSpawner::CloneEnemy(const EnemyTypes enemyType)
 {
 	Enemy* enemy = nullptr;
@@ -441,9 +413,8 @@ void EnemyWaveSpawner::CloneEnemy(const EnemyTypes enemyType)
 	AddEnemyToPool(enemy);
 }
 
-void EnemyWaveSpawner::ThrowError(const char* place)
-{
+void EnemyWaveSpawner::ThrowError(const char* place) {
 	char t[128];
-	sprintf(t, "Invalid json: %s", place); // NOLINT(cert-err33-c)
+	sprintf(t, "Invalid json: %s", place);  // NOLINT(cert-err33-c)
 	NotifyUser(t);
 }
