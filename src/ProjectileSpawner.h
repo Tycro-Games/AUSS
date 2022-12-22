@@ -9,29 +9,34 @@ class ProjectileSpawner : public Spawner
 public:
 	ProjectileSpawner(Tmpl8::vec2 offset, const std::filesystem::path& _projectileSprite,
 		const std::filesystem::path& _explosionSprite);
-	void Init();
 	~ProjectileSpawner() override = default;
 
+	void Init();
+
 	void AddProjectileToPool(Projectile* entity);
-
-	void CreateMoreProjectiles();
-
 	void SpawnProjectiles();
-	void setFlag(bool fire);
+
+	void ResetWaveProjectiles();
+
+	//setters
+	void setShootingFlag(bool fire);
+	//getters
+	unsigned int getWaveProjectiles() const;
+	unsigned int getTotalProjectiles() const;
 
 
 	// Inherited via Entity
 	void Update(float deltaTime) override;
 	void Render(Tmpl8::Surface* screen) override;
-	float fireRate = 1.0f, currentTime, desiredTime;
+
 
 	const Tmpl8::vec2 offset;
 
-	unsigned int getWaveProjectiles() const;
-	unsigned int getTotalProjectiles() const;
-	void ResetWaveProjectiles();
-
 private:
+	void CreateMoreProjectiles();
+
+	//firerate related
+	float fireRate = 1.0f, currentTime, desiredTime;
 	std::vector<Projectile*> poolOfProjectiles;
 
 	bool isSpawning = false;
@@ -44,8 +49,7 @@ private:
 	//consts
 	const float FIRE_RATE = 0.25f;
 	const float OFFSET_MULTIPLIER = 10.0f;
-	//direction random
-
+	//pre-created projectiles and explosions
 	const int MAX_PROJECTILES = 50;
 	const int MAX_EXPLOSIONS = 5;
 };

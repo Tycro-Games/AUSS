@@ -19,5 +19,5 @@ void EnemyRotator::Init(vec2* _pos, vec2* _dir, RotationVar* _rVar, unsigned int
 
 void EnemyRotator::RotateToPlayer() const
 {
-	RotateToDirection(Game::Get().getPlayer().GetPos());
+	RotateToDirection(Game::Get().getPlayer().getPos());
 }

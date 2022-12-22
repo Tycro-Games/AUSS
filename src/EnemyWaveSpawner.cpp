@@ -28,8 +28,7 @@ EnemyWaveSpawner::EnemyWaveSpawner()
 	shooterSprite(new Surface("assets/shooter.png"), 1),
 	shielderSprite(new Surface("assets/shielder.png"), 1),
 	minimumProjectiles(0),
-	bonusWeight(0),
-	enemyPrototypes{}
+	bonusWeight(0)
 {
 }
 
@@ -42,7 +41,7 @@ void EnemyWaveSpawner::Init()
 	wavesCount = 0;
 	firstWave = true;
 	timeBetweenWaves.Init(bind(&EnemyWaveSpawner::SpawnCurrentWave, this), 1.0f);
-	playerDistanceSqr = Game::Get().getPlayer().GetHalfCollider();
+	playerDistanceSqr = Game::Get().getPlayer().getHalfCollider();
 	//square it
 	playerDistanceSqr *= playerDistanceSqr;
 	//enemy prototypes initializations
@@ -57,7 +56,7 @@ void EnemyWaveSpawner::EnemyInit()
 
 	for (size_t i = 0; i < static_cast<size_t>(EnemyTypes::NUMBER_OF_ENEMIES); i++)
 	{
-		enemyPrototypes[i] = CreateEnemy(static_cast<EnemyTypes>(i));
+		enemyPrototypes[i] = CreateEnemyPrototypes(static_cast<EnemyTypes>(i));
 	}
 }
 
@@ -371,7 +370,7 @@ void EnemyWaveSpawner::AddEnemyToPool(Enemy* enemy, const bool getPoints)
 	Game::Get().RemoveMoveable(enemy->getMoveable());
 }
 
-Enemy* EnemyWaveSpawner::CreateEnemy(const EnemyTypes enemyType)
+Enemy* EnemyWaveSpawner::CreateEnemyPrototypes(const EnemyTypes enemyType)
 {
 	std::ifstream f;
 	json enemyJson;

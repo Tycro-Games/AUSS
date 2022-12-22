@@ -11,11 +11,14 @@
 class Spawner : public Updateable, public Renderable
 {
 public:
-	Spawner(const std::filesystem::path& explosion, unsigned int numberOfFrames = 10);
-	Spawner(Tmpl8::Sprite* explosion);
+	explicit Spawner(const std::filesystem::path& explosion, unsigned int numberOfFrames = 10);
+	explicit Spawner(Tmpl8::Sprite* explosion);
 	~Spawner() override;
+	//Deactivates explosion and adds it to the pool.
 	void AddExplosionToPool(ExplosionBullet* entity);
+	//Creates new explosions that will be added to the pool.
 	void CreateMoreExplosions();
+	//Spawns an explosion at the pos vector.
 	void SpawnExplosions(Tmpl8::vec2 pos);
 
 protected:
@@ -32,6 +35,4 @@ protected:
 	const float OFFSET = 20.0f;
 	const float MIN_DEVIATION = -.05f;
 	const float MAX_DEVIATION = .05f;
-
-private:
 };

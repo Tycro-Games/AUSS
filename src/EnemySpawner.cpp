@@ -21,11 +21,6 @@ void EnemySpawner::Update(float deltaTime)
 }
 
 
-void EnemySpawner::SetEnemy(const EnemyTypes enemy)
-{
-	enemyToSpawn = enemy;
-}
-
 void EnemySpawner::Render(Surface* screen)
 {
 	//render a sprite maybe

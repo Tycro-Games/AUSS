@@ -27,7 +27,7 @@ Spawner::~Spawner()
 
 void Spawner::ResetExplosions()
 {
-	for (int i = 0; i < poolOfExplosions.size(); i++)
+	for (size_t i = 0; i < poolOfExplosions.size(); i++)
 		delete poolOfExplosions[i];
 	poolOfExplosions.clear();
 }
@@ -42,7 +42,7 @@ void Spawner::AddExplosionToPool(ExplosionBullet* entity)
 
 void Spawner::CreateMoreExplosions()
 {
-	auto bullet = new ExplosionBullet(explosionSprite, this, vec2(0));
+	const auto bullet = new ExplosionBullet(explosionSprite, this, vec2(0));
 	updateObjects.push_back(bullet);
 
 	AddExplosionToPool(bullet);

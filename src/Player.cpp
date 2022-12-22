@@ -93,7 +93,7 @@ void Player::TakeDamage(const unsigned int dg)
 
 void Player::Shoot(const bool fire)
 {
-	spawner.setFlag(fire);
+	spawner.setShootingFlag(fire);
 }
 
 void Player::Rotate(const int x, const int y)

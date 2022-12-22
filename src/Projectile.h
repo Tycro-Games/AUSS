@@ -29,8 +29,11 @@ public:
 		return &mover;
 	}
 
+	//Reflects the bullet based on the obstacle or the edges of the screen.
 	void Reflect();
+	//Deactivate and adds the projectile to the pool.
 	void ResetBullet();
+
 	void Update(float deltaTime) override;
 	void Render(Tmpl8::Surface* screen) override;
 

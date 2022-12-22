@@ -79,7 +79,7 @@ void ProjectileSpawner::SpawnProjectiles()
 
 	const vec2 randomDir = MathFunctions::GetRandomVec2(MIN_DEVIATION, MAX_DEVIATION);
 	const vec2 playerPos = Game::Get().getPlayer().pos;
-	const vec2 playerDir = Game::Get().getPlayer().GetDir();
+	const vec2 playerDir = Game::Get().getPlayer().getDir();
 	const vec2 randomizedDir = (playerDir + randomDir).normalized();
 	projectile->Init(PosDir{ playerPos + randomizedDir * OFFSET_MULTIPLIER, randomizedDir });
 	waveProjectiles++;
@@ -88,7 +88,7 @@ void ProjectileSpawner::SpawnProjectiles()
 }
 
 
-void ProjectileSpawner::setFlag(const bool fire)
+void ProjectileSpawner::setShootingFlag(const bool fire)
 {
 	isSpawning = fire;
 }

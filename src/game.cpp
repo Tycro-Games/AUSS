@@ -142,14 +142,14 @@ namespace Tmpl8
 				updateables[i]->Update(deltaTime);
 			//update the offset to the other entities
 			for (size_t i = 0; i < moveablesTile.size(); i++)
-				moveablesTile[i]->Translation(tileMap.GetOffset());
+				moveablesTile[i]->Translation(tileMap.getOffset());
 
 
 			//reset the offsets
 			tileMap.ResetOffset();
 			player.ResetOffset();
 			//shooting
-			if (player.GetMoveable()->getCanRotate())
+			if (player.getMoveable()->getCanRotate())
 				player.Rotate(static_cast<int>(cursor.pos.x), static_cast<int>(cursor.pos.y));
 			player.Shoot(isPressingLeftMouse);
 			//rendering
@@ -240,39 +240,39 @@ namespace Tmpl8
 		{
 			//arrows up down left right
 		case SDL_SCANCODE_UP:
-			player.GetMoveable()->setUp();
+			player.getMoveable()->setUp();
 
 			break;
 		case SDL_SCANCODE_DOWN:
-			player.GetMoveable()->setDown();
+			player.getMoveable()->setDown();
 
 			break;
 		case SDL_SCANCODE_RIGHT:
-			player.GetMoveable()->setRight();
+			player.getMoveable()->setRight();
 
 			break;
 		case SDL_SCANCODE_LEFT:
-			player.GetMoveable()->setLeft();
+			player.getMoveable()->setLeft();
 
 			break;
 		case SDL_SCANCODE_W:
-			player.GetMoveable()->setUp();
+			player.getMoveable()->setUp();
 
 			break;
 		case SDL_SCANCODE_S:
-			player.GetMoveable()->setDown();
+			player.getMoveable()->setDown();
 
 			break;
 		case SDL_SCANCODE_D:
-			player.GetMoveable()->setRight();
+			player.getMoveable()->setRight();
 
 			break;
 		case SDL_SCANCODE_A:
-			player.GetMoveable()->setLeft();
+			player.getMoveable()->setLeft();
 
 			break;
 		case SDL_SCANCODE_SPACE:
-			player.GetMoveable()->setDash();
+			player.getMoveable()->setDash();
 
 			break;
 		case SDL_SCANCODE_LSHIFT:
@@ -290,37 +290,37 @@ namespace Tmpl8
 		{
 			//dash
 		case SDL_SCANCODE_SPACE:
-			player.GetMoveable()->setDash(true);
+			player.getMoveable()->setDash(true);
 			break;
 			//arrows up down left right
 		case SDL_SCANCODE_UP:
-			player.GetMoveable()->setUp(true);
+			player.getMoveable()->setUp(true);
 
 			break;
 		case SDL_SCANCODE_DOWN:
-			player.GetMoveable()->setDown(true);
+			player.getMoveable()->setDown(true);
 
 			break;
 		case SDL_SCANCODE_RIGHT:
-			player.GetMoveable()->setRight(true);
+			player.getMoveable()->setRight(true);
 
 			break;
 		case SDL_SCANCODE_LEFT:
-			player.GetMoveable()->setLeft(true);
+			player.getMoveable()->setLeft(true);
 
 			break;
 
 		case SDL_SCANCODE_W:
-			player.GetMoveable()->setUp(true);
+			player.getMoveable()->setUp(true);
 			break;
 		case SDL_SCANCODE_S:
-			player.GetMoveable()->setDown(true);
+			player.getMoveable()->setDown(true);
 			break;
 		case SDL_SCANCODE_D:
-			player.GetMoveable()->setRight(true);
+			player.getMoveable()->setRight(true);
 			break;
 		case SDL_SCANCODE_A:
-			player.GetMoveable()->setLeft(true);
+			player.getMoveable()->setLeft(true);
 			break;
 		case SDL_SCANCODE_LSHIFT:
 			isPressingLeftMouse = true;

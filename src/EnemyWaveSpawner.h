@@ -26,7 +26,7 @@ public:
 	 * \param enemyType Type of enemy to be created.
 	 * \return A pointer to the new enemy created.
 	 */
-	Enemy* CreateEnemy(EnemyTypes enemyType);
+	Enemy* CreateEnemyPrototypes(EnemyTypes enemyType);
 	/**
 	 * \brief Initialize the prototypes to their values from their json file.
 	 * \param enemy Enemy prototype that needs to be initialized.
@@ -55,7 +55,7 @@ public:
 	float getMaxPlayerDistanceSquared() const;
 
 private:
-	EnemyTypes ConvertToEnum(const std::string& str) const;
+	static EnemyTypes ConvertToEnum(const std::string& str);
 	/**
 	 * \brief updates the list of the enemies that could be spawned with the remaining weight of the wave.
 	 */
@@ -113,7 +113,7 @@ private:
 	unsigned int bonusWeight;
 	unsigned int stepWeight = 1;
 	//prototypes
-	Enemy* enemyPrototypes[EnemyTypes::NUMBER_OF_ENEMIES];
+	Enemy* enemyPrototypes[EnemyTypes::NUMBER_OF_ENEMIES] = {}; // NOLINT(clang-diagnostic-unused-private-field)
 	RandomNumbers rng;
 	//consts
 	const float SPAWNERS_X_POS_MULTIPLIERS = 0.7f;
@@ -124,7 +124,7 @@ private:
 };
 
 
-inline EnemyTypes EnemyWaveSpawner::ConvertToEnum(const std::string& str) const
+inline EnemyTypes EnemyWaveSpawner::ConvertToEnum(const std::string& str)
 {
 	auto type = EnemyTypes::NUMBER_OF_ENEMIES;
 
