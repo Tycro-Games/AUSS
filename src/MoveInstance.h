@@ -4,11 +4,7 @@
 class MoveInstance : public Moveable
 {
 public:
-	/// <summary>
-	/// constructor
-	/// </summary>
-	/// <param name="">position</param>
-	/// <param name="_speed">the speed of the parallax</param>
+	
 	explicit MoveInstance(Tmpl8::vec2*, float _speed = 1.0f);
 	MoveInstance();
 

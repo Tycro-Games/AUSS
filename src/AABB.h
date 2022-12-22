@@ -20,7 +20,6 @@ struct AABB
 	{
 	}
 
-	//could also derive from an tile based on its position
 
 	bool IsColliding(const Tmpl8::vec2& pos) const;
 	Tmpl8::vec2 min;
