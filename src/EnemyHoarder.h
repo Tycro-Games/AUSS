@@ -3,13 +3,12 @@
 #include "Enemy.h"
 
 
-
-class EnemyHoarder :public Enemy
+class EnemyHoarder : public Enemy
 {
 public:
 	EnemyHoarder(PosDir posDir, Tmpl8::Sprite* _sprite, EnemyWaveSpawner* _spawner);
 
-	~EnemyHoarder() = default;
+	~EnemyHoarder() override = default;
 
 	void Init(PosDir posDir) override;
 	void Update(float deltaTime) override;
@@ -18,6 +17,7 @@ public:
 
 
 	Enemy* clone() override;
+
 private:
 	void Reflect();
 	void ResetEnemy() override;
@@ -45,4 +45,3 @@ private:
 
 	EnemyRotator rot;
 };
-

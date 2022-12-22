@@ -1,5 +1,6 @@
 #pragma once
-enum class SoundID {
+enum class SoundID
+{
 	playerShooting,
 	playerDamage,
 	playerDeath,

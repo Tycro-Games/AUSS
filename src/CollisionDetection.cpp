@@ -2,6 +2,7 @@
 // ReSharper disable CppTooWideScopeInitStatement
 #include "CollisionDetection.h"
 #include "game.h"
+#include "Physics.h"
 using namespace std;
 using namespace Tmpl8;
 
@@ -9,8 +10,6 @@ CollisionDetection::CollisionDetection()
 {
 	timeBetweenDetections.Init(bind(&CollisionDetection::DetectCollisions, this), TIME_BETWEEN_DETECTIONS, true);
 }
-
-
 
 
 //this is what the lambda function does below
@@ -40,11 +39,11 @@ void CollisionDetection::DetectCollisions()
 			//possible collision
 			Collider* b = activeIntervals[j];
 
-			if (Collider::CollidesX(a->At(*a->pos),
+			if (Physics::CollidesX(a->At(*a->pos),
 				b->At(*b->pos)))
 			{
 				//check if there is a collision
-				if (Collider::CollidesY(a->At(*a->pos),
+				if (Physics::CollidesY(a->At(*a->pos),
 					b->At(*b->pos)))
 				{
 					allPairs.push_back(a);

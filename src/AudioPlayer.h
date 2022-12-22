@@ -3,8 +3,9 @@
 #include "AudioID.h"
 
 
-namespace Tmpl8 {
-	class AudioPlayer  // NOLINT(cppcoreguidelines-special-member-functions)
+namespace Tmpl8
+{
+	class AudioPlayer // NOLINT(cppcoreguidelines-special-member-functions)
 	{
 	public:
 		AudioPlayer();
@@ -14,10 +15,11 @@ namespace Tmpl8 {
 		void PauseMusic() const;
 		void StopMusic() const;
 		void SwitchMute();
-		bool IsMuted()const;
+		bool IsMuted() const;
 
 	private:
-		enum class channels {
+		enum class channels
+		{
 			enemy_hit,
 			enemy_melee,
 			enemyShoot,
@@ -26,6 +28,7 @@ namespace Tmpl8 {
 			projectiles,
 			player
 		};
+
 		bool mute = false;
 		//The music that will be played
 		Mix_Music* gameMusic = nullptr;

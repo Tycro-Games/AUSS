@@ -1,6 +1,7 @@
 #include "HealthBar.h"
 #include "MathFunctions.h"
 using namespace Tmpl8;
+
 HealthBar::HealthBar() :
 	bar(new Surface(barPath.string().c_str()), 1),
 	decoration(new Surface(decorationPath.string().c_str()), 1)
@@ -32,6 +33,5 @@ void HealthBar::onNotify(const int points, const EventType eventt)
 	case EventType::EnemyDeath: break;
 	case EventType::BonusConditions: break;
 	case EventType::EndOfAWave: break;
-
 	}
 }

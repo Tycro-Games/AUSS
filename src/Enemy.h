@@ -50,11 +50,11 @@ protected:
 	/// <returns></returns>
 	bool InRangeToAttackPlayerSquared(float range) const;
 	void InitEnemy(Moveable& _move);
-	void SetJsonValues(Enemy* enem) const;
+	void SetJsonValues(Enemy* _enemy) const;
 	EnemyTypes enemyType;
 	virtual void ResetEnemy() = 0;
 	EnemyWaveSpawner* spawner;
-	Moveable* move{};//needs to be set by children of the enemy
+	Moveable* move{}; //needs to be set by children of the enemy
 	Collider enemyCollider;
 	Tmpl8::vec2 dir = { 0 };
 
@@ -66,6 +66,7 @@ protected:
 
 private:
 };
+
 //inlined functions
 
 
@@ -94,15 +95,18 @@ inline void Enemy::setDgToTake(const unsigned int dgTo)
 	dgToTake = dgTo;
 }
 
-inline Collider* Enemy::getColl() {
+inline Collider* Enemy::getColl()
+{
 	return &enemyCollider;
 }
 
-inline Moveable* Enemy::getMoveable()const {
+inline Moveable* Enemy::getMoveable() const
+{
 	return move;
 }
 
-inline unsigned int Enemy::getDg() const {
+inline unsigned int Enemy::getDg() const
+{
 	return dg;
 }
 
@@ -111,7 +115,8 @@ inline unsigned int Enemy::getMaxHp() const
 	return maxHp;
 }
 
-inline unsigned int Enemy::getScore() const {
+inline unsigned int Enemy::getScore() const
+{
 	return score;
 }
 
@@ -125,7 +130,7 @@ inline unsigned int Enemy::getDgToTake() const
 	return dgToTake;
 }
 
-inline EnemyTypes Enemy::getEnemyType() const {
+inline EnemyTypes Enemy::getEnemyType() const
+{
 	return enemyType;
 }
-

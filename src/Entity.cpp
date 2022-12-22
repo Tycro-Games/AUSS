@@ -1,15 +1,18 @@
-
 #include "Entity.h"
 using namespace Tmpl8;
 using namespace std;
+
 Entity::Entity(const filesystem::path& spritePath, const unsigned int numberOfFrames, const vec2 pos) :
 	sprite(new Sprite(new Surface(spritePath.string().c_str()), numberOfFrames)),
 	pos(pos)
-{}
+{
+}
+
 Entity::Entity(Sprite* sprite, const vec2 pos) :
 	sprite(sprite),
 	pos(pos)
-{}
+{
+}
 
 
 Entity::Entity(const filesystem::path& spritePath, const unsigned int numberOfFrames) :
@@ -24,15 +27,7 @@ void Entity::Init(const vec2 _pos)
 }
 
 
-
-
 Entity::~Entity()
 {
 	delete sprite;
 }
-
-
-
-
-
-

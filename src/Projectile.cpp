@@ -2,12 +2,12 @@
 
 #include "game.h"
 #include "MathFunctions.h"
+#include "Physics.h"
 #include "ProjectileSpawner.h"
 
 
-
 Projectile::Projectile(const PosDir posDir, Tmpl8::Sprite* _sprite, ProjectileSpawner* spawner)
-	:Entity(_sprite, posDir.pos),
+	: Entity(_sprite, posDir.pos),
 	rVar(RotationVar(360 / (static_cast<const float>(_sprite->Frames() - 1)), 90.0f, 20.0f)),
 	spawner(spawner),
 	collider(COL_MIN, COL_MAX, &pos),
@@ -20,6 +20,7 @@ Projectile::Projectile(const PosDir posDir, Tmpl8::Sprite* _sprite, ProjectileSp
 
 	Init(posDir);
 }
+
 void Projectile::Init(const PosDir posDir)
 {
 	SetActive(true);
@@ -32,8 +33,7 @@ void Projectile::Init(const PosDir posDir)
 
 Projectile::~Projectile()
 {
-	sprite = nullptr;//this sprite is deleted by the spawner
-
+	sprite = nullptr; //this sprite is deleted by the spawner
 }
 
 void Projectile::RotateToDirection()
@@ -51,37 +51,35 @@ void Projectile::Update(const float deltaTime)
 		ResetBullet();
 	mover.Update(deltaTime);
 	timer.Update(deltaTime);
-
-
 }
 
 void Projectile::Render(Tmpl8::Surface* screen)
 {
-
 	if (!getRenderable())
 		return;
 	sprite->SetFrame(frame);
 	sprite->Draw(screen, static_cast<int>(pos.x + collider.min.x), static_cast<int>(pos.y + collider.min.y));
 #ifdef _DEBUG
-	screen->Box(static_cast<int>(pos.x + collider.min.x), static_cast<int>(pos.y + collider.min.y), static_cast<int>(pos.x + collider.max.x), static_cast<int>(pos.y + collider.max.y), 0xff0000);
+	screen->Box(static_cast<int>(pos.x + collider.min.x), static_cast<int>(pos.y + collider.min.y),
+		static_cast<int>(pos.x + collider.max.x), static_cast<int>(pos.y + collider.max.y), 0xff0000);
 #endif
 }
 
 void Projectile::Reflect()
 {
-	if (Collider::InGameScreen(pos))
+	if (Physics::InGameScreen(pos))
 		Tmpl8::Game::Get().PlaySound(SoundID::projectileExplosion);
-	if (mover.colToReflectFrom != nullptr) { //reflect on obstacle
+	if (mover.colToReflectFrom != nullptr)
+	{
+		//reflect on obstacle
 		const Collider c = *mover.colToReflectFrom;
-		rot.Reflect(Collider::GetNormal(c, collider));
+		rot.Reflect(Physics::GetNormal(c, collider));
 
 		mover.colToReflectFrom = nullptr;
 	}
 	else //reflect on screen
-		rot.Reflect(Collider::GetNormalEdgeScreen(mover.nextP, collider));
+		rot.Reflect(Physics::GetNormalEdgeScreen(mover.nextP, collider));
 }
-
-
 
 
 void Projectile::ResetBullet()
@@ -95,5 +93,4 @@ void Projectile::ResetBullet()
 	timer.isFinished = true;
 	spawner->AddProjectileToPool(this);
 	spawner->SpawnExplosions(pos + collider.min);
-
 }

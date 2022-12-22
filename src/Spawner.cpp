@@ -13,13 +13,12 @@ Spawner::Spawner(Sprite* explosion) :
 }
 
 
-
-
 Spawner::~Spawner()
 {
 	if (!updateObjects.empty())
-		for (size_t i = 0; i < updateObjects.size() - 1; i++) {
-			updateObjects[i]->sprite = nullptr;//shares this with others
+		for (size_t i = 0; i < updateObjects.size() - 1; i++)
+		{
+			updateObjects[i]->sprite = nullptr; //shares this with others
 			delete updateObjects[i];
 		}
 	updateObjects.clear();
@@ -43,7 +42,7 @@ void Spawner::AddExplosionToPool(ExplosionBullet* entity)
 
 void Spawner::CreateMoreExplosions()
 {
-	ExplosionBullet* bullet = new ExplosionBullet(explosionSprite, this, vec2(0));
+	auto bullet = new ExplosionBullet(explosionSprite, this, vec2(0));
 	updateObjects.push_back(bullet);
 
 	AddExplosionToPool(bullet);
@@ -58,5 +57,3 @@ void Spawner::SpawnExplosions(const vec2 p)
 
 	bullet->Init(p);
 }
-
-

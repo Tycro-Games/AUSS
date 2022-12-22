@@ -3,6 +3,8 @@
 #include "game.h"
 
 #include <fstream>
+
+#include "Physics.h"
 #include "nlohmann_json/single_include/nlohmann/json.hpp"
 using namespace Tmpl8;
 
@@ -19,7 +21,7 @@ MoveablePlayer::MoveablePlayer()
 	Moveable(),
 	tileMapCol(nullptr),
 	//lambda expression here, assigns a copy of this function to the dash curve
-	dashCurve([](const float x) {return MathFunctions::DashFunction(x); })
+	dashCurve([](const float x) { return MathFunctions::DashFunction(x); })
 
 {
 	//reading speed values
@@ -33,8 +35,7 @@ MoveablePlayer::MoveablePlayer()
 	EDGE_DISTANCE = wavesInput["edgeDistance"];
 
 	dashCurve.setScale(DASH_DURATION);
-	dashCurve.evaluate(1);//set it at the end
-
+	dashCurve.evaluate(1); //set it at the end
 }
 
 void MoveablePlayer::Init(vec2* Pos, Collider* col, const Collider* _tileMapCol)
@@ -44,28 +45,35 @@ void MoveablePlayer::Init(vec2* Pos, Collider* col, const Collider* _tileMapCol)
 	InitTimers();
 	dashing = false;
 }
+
 void MoveablePlayer::EndCooldown()
 {
 	cooldownTimer.setUpdateable(false);
 }
+
 void MoveablePlayer::Update(const float deltaTime)
 {
 	cooldownTimer.Update(deltaTime);
 	vec2 nextPos = { 0 };
 	speed = SPEED;
-	if (!dashCurve.isAtEnd()) {
+	if (!dashCurve.isAtEnd())
+	{
 		speed += DASH_SPEED * dashCurve.evaluate(deltaTime);
 	}
-	if (up) {
+	if (up)
+	{
 		nextPos.y = -speed;
 	}
-	if (left) {
+	if (left)
+	{
 		nextPos.x = -speed;
 	}
-	if (down) {
+	if (down)
+	{
 		nextPos.y = speed;
 	}
-	if (right) {
+	if (right)
+	{
 		nextPos.x = speed;
 	}
 	nextPos *= deltaTime;
@@ -74,24 +82,24 @@ void MoveablePlayer::Update(const float deltaTime)
 	const Tilemap& tilemap = Game::Get().getTilemap();
 
 
-	if (nextPos.x == 0 && nextPos.y == 0) {
+	if (nextPos.x == 0 && nextPos.y == 0)
+	{
 		return;
 	}
-	if (tilemap.IsFreeTile((*pos) + vec2(nextPos.x, 0), *collider)) {
-
+	if (tilemap.IsFreeTile((*pos) + vec2(nextPos.x, 0), *collider))
+	{
 		MoveTileOrPlayer((*tileMapCol->pos) - vec2(nextPos.x, 0), *tileMapCol, (*pos) + vec2(nextPos.x, 0));
-
 	}
-	if (tilemap.IsFreeTile((*pos) + vec2(0, nextPos.y), *collider)) {
-
+	if (tilemap.IsFreeTile((*pos) + vec2(0, nextPos.y), *collider))
+	{
 		MoveTileOrPlayer((*tileMapCol->pos) - vec2(0, nextPos.y), *tileMapCol, (*pos) + vec2(0, nextPos.y));
 	}
-
 }
 
 void MoveablePlayer::setDash(const bool val)
 {
-	if (val && dashCurve.isAtEnd() && !cooldownTimer.getUpdateable()) {
+	if (val && dashCurve.isAtEnd() && !cooldownTimer.getUpdateable())
+	{
 		Game::Get().PlaySound(SoundID::playerDash);
 		dashCurve.reset();
 		dashing = true;
@@ -128,19 +136,16 @@ bool MoveablePlayer::ChangedPos() const
 void MoveablePlayer::MoveTileOrPlayer(const vec2& tilemapPos, const Collider& c, const vec2& playerPos) const
 {
 	//move if it does not hit the bounds
-	if (Collider::InGameScreen(tilemapPos, c)) {
+	if (Physics::InGameScreen(tilemapPos, c))
+	{
 		*tileMapCol->pos = tilemapPos;
 	}
 	else
 	{
 		Collider playerCollider = (*collider);
-		if (Collider::InGameScreen(playerPos, playerCollider * EDGE_DISTANCE)) {
-
+		if (Physics::InGameScreen(playerPos, playerCollider * EDGE_DISTANCE))
+		{
 			*pos = playerPos;
 		}
 	}
 }
-
-
-
-
