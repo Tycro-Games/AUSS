@@ -41,9 +41,9 @@ void EnemyWaveSpawner::Init()
 	wavesCount = 0;
 	firstWave = true;
 	timeBetweenWaves.Init(bind(&EnemyWaveSpawner::SpawnCurrentWave, this), 1.0f);
-	playerDistanceSqr = Game::Get().getPlayer().getHalfCollider();
-	//square it
-	playerDistanceSqr *= playerDistanceSqr;
+	//square distance to the player
+	playerHalfRadiusSquared = Game::Get().getPlayer().getHalfCollider();
+	playerHalfRadiusSquared *= playerHalfRadiusSquared;
 	//enemy prototypes initializations
 	EnemyInit();
 	InitializeSpawners();
