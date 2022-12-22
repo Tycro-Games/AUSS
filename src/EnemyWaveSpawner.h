@@ -7,10 +7,10 @@
 #include "PosDir.h"
 class Enemy;
 using json = nlohmann::json;
+
 class EnemyWaveSpawner : public Spawner, public Subject
 {
 public:
-
 	EnemyWaveSpawner();
 	~EnemyWaveSpawner() override;
 
@@ -52,7 +52,8 @@ public:
 
 
 	//this is the minimum distance to the player added to half of the collider of the enemy using this
-	float getMaxPlayerDistanceSquared()const;
+	float getMaxPlayerDistanceSquared() const;
+
 private:
 	EnemyTypes ConvertToEnum(const std::string& str) const;
 	/**
@@ -105,7 +106,7 @@ private:
 
 	std::vector<Collider*> activeColliders;
 	std::vector<EnemySpawner*> enemySpawners;
-	std::vector<EnemyTypes>enemiesToSpawn;
+	std::vector<EnemyTypes> enemiesToSpawn;
 
 	//score related variables
 	unsigned int minimumProjectiles;
@@ -120,15 +121,12 @@ private:
 	const float SPAWNING_INTERVAL = .3f;
 	float playerDistanceSqr = 0.0f;
 	const std::filesystem::path spriteExplosionPath = "assets/OriginalAssets/smoke.tga";
-
-
 };
-
 
 
 inline EnemyTypes EnemyWaveSpawner::ConvertToEnum(const std::string& str) const
 {
-	EnemyTypes type = EnemyTypes::NUMBER_OF_ENEMIES;
+	auto type = EnemyTypes::NUMBER_OF_ENEMIES;
 
 	if (str == "Hoarder")
 		type = EnemyTypes::Hoarder;

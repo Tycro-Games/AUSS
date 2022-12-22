@@ -1,13 +1,15 @@
 #include "MathFunctions.h"
 #include "RandomNumbers.h"
 #include <algorithm>
+#include <cassert>
+#include <cmath>
 using namespace Tmpl8;
 
 float MathFunctions::GetDirInDegreesPositive(const vec2 dir)
 {
-	float angle = atan2(dir.y, dir.x);//return angle in radians
+	float angle = atan2(dir.y, dir.x); //return angle in radians
 
-	angle *= (180 / PI);//convert to angles from radians
+	angle *= (180 / PI); //convert to angles from radians
 	if (angle < 0) //convert to positive angles
 	{
 		angle = 360 + angle;
@@ -17,12 +19,13 @@ float MathFunctions::GetDirInDegreesPositive(const vec2 dir)
 
 float MathFunctions::GetDirInDegrees(const vec2 dir)
 {
-	float angle = atan2(dir.y, dir.x);//return angle in radians
+	float angle = atan2(dir.y, dir.x); //return angle in radians
 
-	angle *= (180 / PI);//convert to angles from radians
+	angle *= (180 / PI); //convert to angles from radians
 
 	return angle;
 }
+
 /// <summary>
 /// get a vec2 from an angle expressed in radians
 /// </summary>
@@ -31,14 +34,18 @@ float MathFunctions::GetDirInDegrees(const vec2 dir)
 vec2 MathFunctions::GetVec2FromRadians(const float angle)
 {
 	//the coordinate system has up as negative
-	return vec2{ (cos(angle)) ,-(sin(angle)) };
+	return vec2{ (cos(angle)), -(sin(angle)) };
 }
-float MathFunctions::GetDistance(const vec2 pos1, const vec2 pos2) {
+
+float MathFunctions::GetDistance(const vec2 pos1, const vec2 pos2)
+{
 	const float dx = pos2.x - pos1.x;
 	const float dy = pos2.y - pos1.y;
 	return sqrtf(dx * dx + dy * dy);
 }
-float MathFunctions::GetDistanceSqr(const vec2 pos1, const vec2 pos2) {
+
+float MathFunctions::GetDistanceSqr(const vec2 pos1, const vec2 pos2)
+{
 	const float dx = pos2.x - pos1.x;
 	const float dy = pos2.y - pos1.y;
 	return dx * dx + dy * dy;
@@ -51,17 +58,14 @@ vec2 MathFunctions::Reflect(const vec2 dir, const vec2 norm)
 	const float dn = 2 * dir.dot(norm);
 	//subtract from the original direction so we get the reflected vector
 	return dir - norm * dn;
-
 }
 
 void MathFunctions::RotateToDirection(const vec2& newDirection, const vec2& pos, vec2& currentDirection)
 {
-
 	currentDirection.x = newDirection.x - pos.x;
 	currentDirection.y = newDirection.y - pos.y;
 
 	currentDirection.normalize();
-
 }
 
 unsigned int MathFunctions::RotateToDirectionFrames(const RotationVar& rVar, const vec2& dir)
@@ -73,9 +77,7 @@ unsigned int MathFunctions::RotateToDirectionFrames(const RotationVar& rVar, con
 float MathFunctions::DashFunction(float x)
 {
 	x = Clamp(x, 0.0f, 1.0f);
-	return -4 * ((x - .5f) * (x - .5f)) + x / 8 + .875f;//this look like a parabola 
-
-
+	return -4 * ((x - .5f) * (x - .5f)) + x / 8 + .875f; //this look like a parabola 
 }
 
 vec2 MathFunctions::GetRandomVec2(const float min, const float max, const float deviationMultiplier)
@@ -110,6 +112,3 @@ float MathFunctions::InverseLerp(const float a, const float b, float f)
 
 	return (f - a) / (b - a);
 }
-
-
-

@@ -1,9 +1,13 @@
 #include "Player.h"
+
+#include <iostream>
+
 #include "MathFunctions.h"
 #include "game.h"
 
 #include "SpriteTransparency.h"
 using namespace Tmpl8;
+
 Player::Player() :
 	Being("assets/player.png", 32),
 	tilemapCollider(nullptr),
@@ -11,12 +15,10 @@ Player::Player() :
 		spriteProjectilePath,
 		spriteExplosionPath)
 {
-
 }
 
 void Player::Init(const Collider& tileMapCollider, const vec2& _pos)
 {
-
 	Being::Init(_pos, 100);
 	addObserver(&hpBar);
 	hpBar.Init();
@@ -33,21 +35,21 @@ void Player::Init(const Collider& tileMapCollider, const vec2& _pos)
 }
 
 
-
-
 void Player::Render(Surface* screen)
 {
 	spawner.Render(screen);
 	hpBar.Draw(screen);
 	sprite->SetFrame(frame);
 	//when dashing fade the sprite based on the dash multiplier
-	if (playerMover.IsDashing()) {
+	if (playerMover.IsDashing())
+	{
 		SpriteTransparency::SetTransparency(sprite, screen,
 			static_cast<int>(pos.x - rVar.SPRITE_OFFSET / 2),
 			static_cast<int>(pos.y - rVar.SPRITE_OFFSET / 2),
 			playerMover.GetDashLinearTime(), frame);
 	}
-	else {
+	else
+	{
 		SpriteTransparency::SetTransparency(sprite, screen,
 			static_cast<int>(pos.x - rVar.SPRITE_OFFSET / 2),
 			static_cast<int>(pos.y - rVar.SPRITE_OFFSET / 2),
@@ -55,20 +57,21 @@ void Player::Render(Surface* screen)
 	}
 
 
-
 #ifdef _DEBUG
 	//debug for player's collider	
-	screen->Box(static_cast<int>(pos.x + playerCollider.min.x), static_cast<int>(pos.y + playerCollider.min.y), static_cast<int>(pos.x + playerCollider.max.x), static_cast<int>(pos.y + playerCollider.max.y), 0xffffff);
+	screen->Box(static_cast<int>(pos.x + playerCollider.min.x), static_cast<int>(pos.y + playerCollider.min.y),
+		static_cast<int>(pos.x + playerCollider.max.x), static_cast<int>(pos.y + playerCollider.max.y),
+		0xffffff);
 	//debug for collision with screen borders
-	screen->Box(static_cast<int>(pos.x + playerCollider.min.x * playerMover.GetEdgeBorderDistance()), static_cast<int>(pos.y + playerCollider.min.y * playerMover.GetEdgeBorderDistance()), static_cast<int>(pos.x + playerCollider.max.x * playerMover.GetEdgeBorderDistance()), static_cast<int>(pos.y + playerCollider.max.y * playerMover.GetEdgeBorderDistance()), 0xffffff);
+	screen->Box(static_cast<int>(pos.x + playerCollider.min.x * playerMover.GetEdgeBorderDistance()),
+		static_cast<int>(pos.y + playerCollider.min.y * playerMover.GetEdgeBorderDistance()),
+		static_cast<int>(pos.x + playerCollider.max.x * playerMover.GetEdgeBorderDistance()),
+		static_cast<int>(pos.y + playerCollider.max.y * playerMover.GetEdgeBorderDistance()), 0xffffff);
 #endif
-
-
 }
 
 void Player::Update(const float deltaTime)
 {
-
 	//tries to move tilemap
 	playerMover.Update(deltaTime);
 
@@ -76,24 +79,29 @@ void Player::Update(const float deltaTime)
 	spawner.Update(deltaTime);
 	cooldownForDamage.Update(deltaTime);
 }
-void Player::TakeDamage(const unsigned int dg) {
-	if (cooldownForDamage.isFinished && !playerMover.IsDashing()) {
+
+void Player::TakeDamage(const unsigned int dg)
+{
+	if (cooldownForDamage.isFinished && !playerMover.IsDashing())
+	{
 		Being::TakeDamage(dg);
 		Game::Get().PlaySound(SoundID::playerDamage);
 		notify(hp, EventType::PlayerTakesDamage);
 		cooldownForDamage.ResetVar();
 	}
-
 }
+
 void Player::Shoot(const bool fire)
 {
 	spawner.setFlag(fire);
 }
-void Player::Rotate(const int x, const int y) {
+
+void Player::Rotate(const int x, const int y)
+{
 	//replace with actual pos of player
 
 	MathFunctions::RotateToDirection(
-		vec2{ static_cast<float>(x),static_cast<float>(y) },
+		vec2{ static_cast<float>(x), static_cast<float>(y) },
 		pos,
 		dirToFace);
 
@@ -103,13 +111,13 @@ void Player::Rotate(const int x, const int y) {
 	angle += rVar.OFFSET_SPRITE;
 	angle = fmodf(angle, 360);
 	frame = static_cast<int>(angle / rVar.ANGLE_SIZE);
-
 }
 
 MoveablePlayer* Player::GetMoveable()
 {
 	return &playerMover;
 }
+
 ProjectileSpawner* Player::GetSpawner()
 {
 	return &spawner;
@@ -127,7 +135,6 @@ vec2 Player::GetPos() const
 
 void Player::onNotify(const int points, const EventType _event)
 {
-
 	const unsigned int maximumOfProjectiles = points * 4;
 
 	switch (_event)
@@ -135,8 +142,11 @@ void Player::onNotify(const int points, const EventType _event)
 	case EventType::EndOfAWave:
 		//points are the minimum number of projectiles
 		//gets a bonus if the accuracy is at least 25%
-		if (spawner.getWaveProjectiles() <= maximumOfProjectiles) {
-			const float accuracy = 1.0f - MathFunctions::InverseLerp(static_cast<float>(points), static_cast<float>(maximumOfProjectiles), static_cast<float>(spawner.getWaveProjectiles()));
+		if (spawner.getWaveProjectiles() <= maximumOfProjectiles)
+		{
+			const float accuracy = 1.0f - MathFunctions::InverseLerp(static_cast<float>(points),
+				static_cast<float>(maximumOfProjectiles),
+				static_cast<float>(spawner.getWaveProjectiles()));
 			//if there is a high accuracy get extra points
 			if (accuracy > 0.80f)
 				notify(1, EventType::BonusConditions);
@@ -149,7 +159,6 @@ void Player::onNotify(const int points, const EventType _event)
 		break;
 	case EventType::EnemyDeath: break;
 	case EventType::BonusConditions: break;
-
 	}
 }
 
@@ -165,4 +174,3 @@ void Player::Die()
 	removeObserver(&hpBar);
 	Game::Get().ChangeGameState(Game::GameState::reset);
 }
-

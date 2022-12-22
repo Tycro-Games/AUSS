@@ -5,7 +5,8 @@
 #include "Wave.h"
 
 class EnemyWaveSpawner;
-class EnemySpawner :public Spawner
+
+class EnemySpawner : public Spawner
 {
 public:
 	~EnemySpawner() override = default;
@@ -17,13 +18,10 @@ public:
 	void Render(Tmpl8::Surface* screen) override;
 	//getters
 	const Tmpl8::vec2& GetSpawnerPos() const;
+
 private:
 	Tmpl8::vec2 pos;
 	//default the value of enemyToSpawn
 	EnemyTypes enemyToSpawn = EnemyTypes::NUMBER_OF_ENEMIES;
 	MoveInstance move;
-
-
 };
-
-

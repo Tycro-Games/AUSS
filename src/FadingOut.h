@@ -13,6 +13,7 @@ public:
 	void Draw(Tmpl8::Surface* screen);
 	void Update(float deltaTime);
 	void Init();
+
 private:
 	const float FADE_OUT = 2.5f;
 
@@ -23,4 +24,3 @@ private:
 	float linerF = 0.0f;
 	float currenT = 0.0f;
 };
-
