@@ -4,14 +4,13 @@
 class Followable
 {
 public:
-	Followable()
-	{
-	}
+	Followable() = default;
+
 
 	virtual ~Followable() = default;
 
 protected:
-	virtual const Tmpl8::vec2 GetOffset() = 0;
+	virtual const Tmpl8::vec2 getOffset() = 0;
 	virtual void ResetOffset() = 0;
 	Tmpl8::vec2 lastPos;
 };

@@ -12,8 +12,27 @@ class Enemy : public Being
 public:
 	Enemy(Tmpl8::vec2, Tmpl8::Sprite*, EnemyWaveSpawner*);
 	~Enemy() override;
-	virtual Enemy* clone() = 0;
 	virtual void Init(PosDir) = 0;
+	/**
+	 * \brief Makes a new copied instance of one of the prototype enemies.
+	 * \return A new enemy that copied the stats of the prototype.
+	 */
+	virtual Enemy* clone() = 0;
+	//setters
+	void setDg(unsigned int);
+	void setHp(unsigned int);
+	void setScore(unsigned int);
+	void setWeight(unsigned int);
+	void setDgToTake(unsigned int);
+	//getters
+	Collider* getColl();
+	Moveable* getMoveable() const;
+	unsigned int getDg() const;
+	unsigned int getMaxHp() const;
+	unsigned int getScore() const;
+	unsigned int getWeight() const;
+	unsigned int getDgToTake() const;
+	EnemyTypes getEnemyType() const;
 
 	/// <summary>
 	/// Spawns an enemy around a vec2 made by the unit circle using the degrees and sign
@@ -24,35 +43,25 @@ public:
 	/// <param name="stepDegrees">how much the degreesToSpawn will change when the method is finished</param>
 	void SpawnEnemy(float sign, float& degreesToSpawn, EnemyTypes enemy, float stepDegrees = 45.0f) const;
 
-
-	void setDg(unsigned int);
-	void setHp(unsigned int);
-	void setScore(unsigned int);
-	void setWeight(unsigned int);
-	void setDgToTake(unsigned int);
-	Collider* getColl();
-	Moveable* getMoveable() const;
-	unsigned int getDg() const;
-	unsigned int getMaxHp() const;
-	unsigned int getScore() const;
-	unsigned int getWeight() const;
-	unsigned int getDgToTake() const;
-	EnemyTypes getEnemyType() const;
-
 protected:
-	static void Reflect(MoveToADirection& mover, Rotator& rot, const Collider& enemyCollider);
+	//Reflects an enemy using its components.
+	static void Reflect(MoveToADirection& mover, const Rotator& rot, const Collider& enemyCollider);
+	//Checks if the collision flags with the projectiles are true.
 	void CheckForProjectileCollisions();
 
 	/// <summary>
-	/// range needs to be squared
+	///	Checks if the enemy is in range to atack.
 	/// </summary>
-	/// <param name="range"></param>
+	/// <param name="range">Needs to be squared.</param>
 	/// <returns></returns>
 	bool InRangeToAttackPlayerSquared(float range) const;
+	//Initializes the parent pointers so they can be accessed from Enemy parent class.
 	void InitEnemy(Moveable& _move);
+	//Resets enemy and adds it to the enemy pool.
+	virtual void ResetEnemy() = 0;
+	//Sets the json values to the instance.
 	void SetJsonValues(Enemy* _enemy) const;
 	EnemyTypes enemyType;
-	virtual void ResetEnemy() = 0;
 	EnemyWaveSpawner* spawner;
 	Moveable* move{}; //needs to be set by children of the enemy
 	Collider enemyCollider;
@@ -63,8 +72,6 @@ protected:
 	unsigned int weight{};
 	unsigned int score{};
 	unsigned int dgToTake{};
-
-private:
 };
 
 //inlined functions

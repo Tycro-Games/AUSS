@@ -3,15 +3,10 @@
 using namespace Tmpl8;
 
 
-void ClippedSprite::DrawSprite(Surface* screen, Surface& sprite, const float linearF, const int posX, const int posY)
+void ClippedSprite::DrawSpriteClippedHorizontally(Surface* screen, Surface& sprite, const float linearF, const int x,
+	const int y)
 {
-	//code used for clipping when drawing tiles should be used here
-	const int sX = 0;
-	const int sY = 0;
-
-	const int x = posX;
-	const int y = posY;
-	Pixel* src = sprite.GetBuffer() + sX + sY * sprite.GetPitch();
+	Pixel* src = sprite.GetBuffer();
 	Pixel* dst = screen->GetBuffer() + x + y * screen->GetPitch();
 
 	const int height = sprite.GetHeight();

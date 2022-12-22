@@ -1,4 +1,6 @@
 #include "HealthBar.h"
+
+#include "ClippedSprite.h"
 #include "MathFunctions.h"
 using namespace Tmpl8;
 
@@ -19,7 +21,7 @@ void HealthBar::Draw(Surface* screen)
 	const int x = static_cast<int>(position.x);
 	const int y = static_cast<int>(position.y);
 	decoration.Draw(screen, x, y);
-	clipSprite.DrawSprite(screen, *bar.GetSurface(), linearF, x + SPRITE_OFFSET_X, y);
+	ClippedSprite::DrawSpriteClippedHorizontally(screen, *bar.GetSurface(), linearF, x + SPRITE_OFFSET_X, y);
 }
 
 void HealthBar::onNotify(const int points, const EventType eventt)

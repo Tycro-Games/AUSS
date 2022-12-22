@@ -104,7 +104,7 @@ public:
 
 
 	Tmpl8::vec2* GetPos();
-	const Tmpl8::vec2 GetOffset() override;
+	const Tmpl8::vec2 getOffset() override;
 
 private:
 	const Obstacle* GetObstacle(size_t x, size_t y) const;
@@ -126,35 +126,35 @@ private:
 	Tmpl8::Surface tileSurface;
 	ParallaxProp prop;
 	//consts
-	const Tile BLK = {false};
-	const Tile OOO = {false, 504, 72, 72, 72}; //outer part
+	const Tile BLK = { false };
+	const Tile OOO = { false, 504, 72, 72, 72 }; //outer part
 
 	//corners L=Left R=Right T=Top B=Bottom M=Mid
 	//top 
-	const Tile CLT = {false, 0, 0, 72, 72};
-	const Tile CMT = {false, 72, 0, 72, 72};
-	const Tile CRT = {false, 144, 0, 72, 72};
+	const Tile CLT = { false, 0, 0, 72, 72 };
+	const Tile CMT = { false, 72, 0, 72, 72 };
+	const Tile CRT = { false, 144, 0, 72, 72 };
 	//mid
-	const Tile CLM = {false, 0, 72, 72, 72};
-	const Tile CMM = {false, 74, 72, 72, 72};
-	const Tile CRM = {false, 144, 72, 72, 72};
+	const Tile CLM = { false, 0, 72, 72, 72 };
+	const Tile CMM = { false, 74, 72, 72, 72 };
+	const Tile CRM = { false, 144, 72, 72, 72 };
 	//bottom
-	const Tile CLB = {false, 0, 144, 72, 72};
-	const Tile CMB = {false, 74, 144, 72, 72};
-	const Tile CRB = {false, 144, 144, 72, 72};
+	const Tile CLB = { false, 0, 144, 72, 72 };
+	const Tile CMB = { false, 74, 144, 72, 72 };
+	const Tile CRB = { false, 144, 144, 72, 72 };
 
 	//obstacle
-	const Tile OLT = {true, 432, 0, 72, 72, 23, 24, 23, 24};
-	const Tile OMT = {true, 504, 0, 72, 72, 0, 24, 0, 24};
-	const Tile ORT = {true, 576, 0, 72, 72, 0, 24, 25, 24};
+	const Tile OLT = { true, 432, 0, 72, 72, 23, 24, 23, 24 };
+	const Tile OMT = { true, 504, 0, 72, 72, 0, 24, 0, 24 };
+	const Tile ORT = { true, 576, 0, 72, 72, 0, 24, 25, 24 };
 
-	const Tile OLM = {true, 432, 72, 72, 72, 23, 0, 25, 0};
-	const Tile OMM = {true, 504, 72, 72, 72}; //mid part
-	const Tile OMR = {true, 576, 72, 72, 72, 0, 0, 25, 0};
+	const Tile OLM = { true, 432, 72, 72, 72, 23, 0, 25, 0 };
+	const Tile OMM = { true, 504, 72, 72, 72 }; //mid part
+	const Tile OMR = { true, 576, 72, 72, 72, 0, 0, 25, 0 };
 
-	const Tile OLB = {true, 432, 144, 72, 72, 23, 0, 23, 24};
-	const Tile OMB = {true, 504, 144, 72, 72, 0, 0, 0, 24};
-	const Tile ORB = {true, 576, 144, 72, 72, 0, 0, 25, 24};
+	const Tile OLB = { true, 432, 144, 72, 72, 23, 0, 23, 24 };
+	const Tile OMB = { true, 504, 144, 72, 72, 0, 0, 0, 24 };
+	const Tile ORB = { true, 576, 144, 72, 72, 0, 0, 25, 24 };
 
 	static constexpr int X_TILES = 24;
 	static constexpr int Y_TILES = 16;
@@ -219,7 +219,7 @@ inline Tmpl8::vec2* Tilemap::GetPos()
 	return &pos;
 }
 
-inline const Tmpl8::vec2 Tilemap::GetOffset()
+inline const Tmpl8::vec2 Tilemap::getOffset()
 {
 	return pos - lastPos;
 }
@@ -228,7 +228,7 @@ inline Collider Tilemap::GetGameBounds() const
 {
 	return {
 		Tmpl8::vec2(pos.x + static_cast<float>(-OFFSET_X + EDGE_SIZE),
-		            pos.y + static_cast<float>(-OFFSET_Y + EDGE_SIZE)),
+					pos.y + static_cast<float>(-OFFSET_Y + EDGE_SIZE)),
 		Tmpl8::vec2(pos.x + static_cast<float>(OFFSET_X - EDGE_SIZE), pos.y + static_cast<float>(OFFSET_Y - EDGE_SIZE))
 	};
 }

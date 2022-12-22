@@ -41,12 +41,12 @@ void Player::Render(Surface* screen)
 	hpBar.Draw(screen);
 	sprite->SetFrame(frame);
 	//when dashing fade the sprite based on the dash multiplier
-	if (playerMover.IsDashing())
+	if (playerMover.getIsDashing())
 	{
 		SpriteTransparency::SetTransparency(sprite, screen,
 			static_cast<int>(pos.x - rVar.SPRITE_OFFSET / 2),
 			static_cast<int>(pos.y - rVar.SPRITE_OFFSET / 2),
-			playerMover.GetDashLinearTime(), frame);
+			playerMover.getDashLinearTime(), frame);
 	}
 	else
 	{
@@ -63,10 +63,10 @@ void Player::Render(Surface* screen)
 		static_cast<int>(pos.x + playerCollider.max.x), static_cast<int>(pos.y + playerCollider.max.y),
 		0xffffff);
 	//debug for collision with screen borders
-	screen->Box(static_cast<int>(pos.x + playerCollider.min.x * playerMover.GetEdgeBorderDistance()),
-		static_cast<int>(pos.y + playerCollider.min.y * playerMover.GetEdgeBorderDistance()),
-		static_cast<int>(pos.x + playerCollider.max.x * playerMover.GetEdgeBorderDistance()),
-		static_cast<int>(pos.y + playerCollider.max.y * playerMover.GetEdgeBorderDistance()), 0xffffff);
+	screen->Box(static_cast<int>(pos.x + playerCollider.min.x * playerMover.getEdgeBorderDistance()),
+		static_cast<int>(pos.y + playerCollider.min.y * playerMover.getEdgeBorderDistance()),
+		static_cast<int>(pos.x + playerCollider.max.x * playerMover.getEdgeBorderDistance()),
+		static_cast<int>(pos.y + playerCollider.max.y * playerMover.getEdgeBorderDistance()), 0xffffff);
 #endif
 }
 
@@ -82,7 +82,7 @@ void Player::Update(const float deltaTime)
 
 void Player::TakeDamage(const unsigned int dg)
 {
-	if (cooldownForDamage.isFinished && !playerMover.IsDashing())
+	if (cooldownForDamage.isFinished && !playerMover.getIsDashing())
 	{
 		Being::TakeDamage(dg);
 		Game::Get().PlaySound(SoundID::playerDamage);
@@ -113,22 +113,22 @@ void Player::Rotate(const int x, const int y)
 	frame = static_cast<int>(angle / rVar.ANGLE_SIZE);
 }
 
-MoveablePlayer* Player::GetMoveable()
+MoveablePlayer* Player::getMoveable()
 {
 	return &playerMover;
 }
 
-ProjectileSpawner* Player::GetSpawner()
+ProjectileSpawner* Player::getSpawner()
 {
 	return &spawner;
 }
 
-vec2 Player::GetDir() const
+vec2 Player::getDir() const
 {
 	return dirToFace;
 }
 
-vec2 Player::GetPos() const
+vec2 Player::getPos() const
 {
 	return pos;
 }
@@ -164,7 +164,7 @@ void Player::onNotify(const int points, const EventType _event)
 
 void Player::Call()
 {
-	//this gets called when the temporary invincibility ends
+	//This gets called when the temporary invincibility ends, it is necessary for the timer.
 }
 
 void Player::Die()

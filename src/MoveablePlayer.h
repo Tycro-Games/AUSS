@@ -7,10 +7,8 @@
 #include "Curve.h"
 
 
-class MoveablePlayer : public Moveable
+class MoveablePlayer final : public Moveable
 {
-	//consts
-
 	//json set
 	float DASH_SPEED;
 	float SPEED;
@@ -20,66 +18,44 @@ class MoveablePlayer : public Moveable
 
 public:
 	MoveablePlayer();
-	void Init(Tmpl8::vec2* Pos, Collider* col, const Collider* _tileMapCol);
+	void Init(Tmpl8::vec2* _pos, Collider* col, const Collider* _tileMapCol);
 	~MoveablePlayer() override = default;
 
 	void Update(float deltaTime) override;
-
-	void setUp(const bool val = false)
-	{
-		up = val;
-	}
-
-	void setDown(const bool val = false)
-	{
-		down = val;
-	}
-
-	void setRight(const bool val = false)
-	{
-		right = val;
-	}
-
-	void setLeft(const bool val = false)
-	{
-		left = val;
-	}
-
+	//setters
+	void setUp(bool val = false);
+	void setDown(bool val = false);
+	void setRight(bool val = false);
+	void setLeft(bool val = false);
 	void setDash(bool val = false);
-
-	float GetEdgeBorderDistance() const;
-	float GetDashLinearTime() const;
-
-	bool CanRotate() const;
-
-	bool IsDashing() const;
-
-	bool ChangedPos() const;
+	//getters
+	float getEdgeBorderDistance() const;
+	float getDashLinearTime() const;
+	bool getCanRotate() const;
+	bool getIsDashing() const;
+	bool getTilemapChangedPosition() const;
 
 private:
-	static bool CheckVecForOneDir(const Tmpl8::vec2& nextPos)
-	{
-		return nextPos.x == 0 || nextPos.y == 0;
-	}
-
+	//Checks if the vector has at least one component that is zero.
+	static bool CheckVecForOneDir(const Tmpl8::vec2& nextPos);
+	//Moves and sets the flags for the tilemap and player.
 	void MoveTileOrPlayer(const Tmpl8::vec2& tilemapPos, const Collider& c, const Tmpl8::vec2& playerPos) const;
 
-	void InitTimers();
-	bool tilemapMovesOnly = false;
+	void InitializeTimers();
+	//movement flags
 	bool canRotate = false;
-	//use for w a s d
 	bool up = false;
 	bool down = false;
 	bool right = false;
 	bool left = false;
-
+	//tilemap related
 	const Collider* tileMapCol;
+	bool tilemapMovesOnly = false;
 	//dash
 	Timer cooldownTimer;
 	bool dashing = false;
+	Curve dashCurve;
 
 	//timers functions
 	void EndCooldown();
-
-	Curve dashCurve;
 };

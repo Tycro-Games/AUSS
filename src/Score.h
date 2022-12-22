@@ -6,10 +6,10 @@ class Score : public Observer
 public:
 	Score() = default;
 	~Score() override = default;
-
+	//Resets the score
+	void Init();
 	// Inherited via Observer
 	void onNotify(int points, EventType event) override;
-	void Init();
 	unsigned int getTotal() const;
 
 private:

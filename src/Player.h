@@ -12,28 +12,30 @@ class Player final : public Being, public Followable, public Observer, public Su
 {
 public:
 	Player();
-	void Init(const Collider& tileMapCollider, const Tmpl8::vec2& _pos);
 	~Player() override = default;
+	void Init(const Collider& tileMapCollider, const Tmpl8::vec2& _pos);
+
 	void Render(Tmpl8::Surface* screen) override;
 	void Update(float deltaTime) override;
+	//input calls
 	void Shoot(bool fire);
 	void Rotate(int x, int y);
-	//callable
+	//timer calls
 	void Call();
 	//being  override
 	void TakeDamage(unsigned int) override;
 	void Die() override;
 	//followable override
-	const Tmpl8::vec2 GetOffset() override;
+	const Tmpl8::vec2 getOffset() override;
 	void ResetOffset() override;
 
 	//getters
-	MoveablePlayer* GetMoveable();
-	ProjectileSpawner* GetSpawner();
-	Tmpl8::vec2 GetDir() const;
-	Tmpl8::vec2 GetPos() const;
+	MoveablePlayer* getMoveable();
+	ProjectileSpawner* getSpawner();
+	Tmpl8::vec2 getDir() const;
+	Tmpl8::vec2 getPos() const;
 	//just returns the x of the max part of the collider
-	float GetHalfCollider() const;
+	float getHalfCollider() const;
 
 private:
 	RotationVar rVar;
@@ -57,12 +59,12 @@ private:
 	void onNotify(int points, EventType _event) override;
 };
 
-inline float Player::GetHalfCollider() const
+inline float Player::getHalfCollider() const
 {
 	return COL_MAX.x;
 }
 
-inline const Tmpl8::vec2 Player::GetOffset()
+inline const Tmpl8::vec2 Player::getOffset()
 {
 	return -pos + lastPos;
 }

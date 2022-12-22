@@ -13,12 +13,12 @@ class Projectile final : public Entity
 {
 public:
 	Projectile(PosDir posDir, Tmpl8::Sprite* _sprite, ProjectileSpawner* spawner);
-
 	~Projectile() override;
-	void RotateToDirection();
 
 	void Init(PosDir posDir);
 
+	void RotateToDirection();
+	//getters
 	Collider* getColl()
 	{
 		return &collider;

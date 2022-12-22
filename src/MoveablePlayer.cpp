@@ -9,7 +9,7 @@
 using namespace Tmpl8;
 
 
-void MoveablePlayer::InitTimers()
+void MoveablePlayer::InitializeTimers()
 {
 	//timer Init
 	cooldownTimer.Init(std::bind(&MoveablePlayer::EndCooldown, this), COOLDOWN_DURATION);
@@ -38,11 +38,11 @@ MoveablePlayer::MoveablePlayer()
 	dashCurve.evaluate(1); //set it at the end
 }
 
-void MoveablePlayer::Init(vec2* Pos, Collider* col, const Collider* _tileMapCol)
+void MoveablePlayer::Init(vec2* _pos, Collider* col, const Collider* _tileMapCol)
 {
-	Moveable::Init(Pos, col, SPEED);
+	Moveable::Init(_pos, col, SPEED);
 	tileMapCol = _tileMapCol;
-	InitTimers();
+	InitializeTimers();
 	dashing = false;
 }
 
@@ -96,6 +96,26 @@ void MoveablePlayer::Update(const float deltaTime)
 	}
 }
 
+void MoveablePlayer::setUp(const bool val)
+{
+	up = val;
+}
+
+void MoveablePlayer::setDown(const bool val)
+{
+	down = val;
+}
+
+void MoveablePlayer::setRight(const bool val)
+{
+	right = val;
+}
+
+void MoveablePlayer::setLeft(const bool val)
+{
+	left = val;
+}
+
 void MoveablePlayer::setDash(const bool val)
 {
 	if (val && dashCurve.isAtEnd() && !cooldownTimer.getUpdateable())
@@ -108,29 +128,34 @@ void MoveablePlayer::setDash(const bool val)
 	}
 }
 
-float MoveablePlayer::GetEdgeBorderDistance() const
+float MoveablePlayer::getEdgeBorderDistance() const
 {
 	return EDGE_DISTANCE;
 }
 
-float MoveablePlayer::GetDashLinearTime() const
+float MoveablePlayer::getDashLinearTime() const
 {
 	return dashCurve.getCurrentValue();
 }
 
-bool MoveablePlayer::CanRotate() const
+bool MoveablePlayer::getCanRotate() const
 {
 	return canRotate;
 }
 
-bool MoveablePlayer::IsDashing() const
+bool MoveablePlayer::getIsDashing() const
 {
 	return !dashCurve.isAtEnd();
 }
 
-bool MoveablePlayer::ChangedPos() const
+bool MoveablePlayer::getTilemapChangedPosition() const
 {
 	return tilemapMovesOnly;
+}
+
+bool MoveablePlayer::CheckVecForOneDir(const vec2& nextPos)
+{
+	return nextPos.x == 0 || nextPos.y == 0;
 }
 
 void MoveablePlayer::MoveTileOrPlayer(const vec2& tilemapPos, const Collider& c, const vec2& playerPos) const

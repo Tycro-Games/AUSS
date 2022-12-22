@@ -36,11 +36,8 @@ void Enemy::SpawnEnemy(const float sign, float& degreesToSpawn, const EnemyTypes
 }
 
 
-void Enemy::Reflect(MoveToADirection& mover, Rotator& rot, const Collider& enemyCollider)
+void Enemy::Reflect(MoveToADirection& mover, const Rotator& rot, const Collider& enemyCollider)
 {
-	if (Physics::InGameScreen(*enemyCollider.pos))
-		Game::Get().PlaySound(SoundID::projectileExplosion);
-
 	if (mover.colToReflectFrom != nullptr)
 	{
 		const Collider c = *mover.colToReflectFrom;

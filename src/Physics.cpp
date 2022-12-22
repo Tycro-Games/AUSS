@@ -58,7 +58,7 @@ vec2 Physics::GetNormal(const Collider& obstacle, const Collider& source)
 	return norm;
 }
 
-bool Physics::ClipLineOnOneAxis(bool clipX, const Collider& rectangle, const vec2& v0, const vec2& v1, float& low,
+bool Physics::ClipLineOnOneAxis(const bool clipX, const Collider& rectangle, const vec2& v0, const vec2& v1, float& low,
 	float& high)
 {
 	// low and high parts of the interval for this axis
