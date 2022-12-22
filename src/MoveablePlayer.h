@@ -7,7 +7,7 @@
 #include "Curve.h"
 
 
-class MoveablePlayer :public Moveable
+class MoveablePlayer : public Moveable
 {
 	//consts
 
@@ -17,6 +17,7 @@ class MoveablePlayer :public Moveable
 	float DASH_DURATION;
 	float COOLDOWN_DURATION;
 	float EDGE_DISTANCE;
+
 public:
 	MoveablePlayer();
 	void Init(Tmpl8::vec2* Pos, Collider* col, const Collider* _tileMapCol);
@@ -28,18 +29,22 @@ public:
 	{
 		up = val;
 	}
+
 	void setDown(const bool val = false)
 	{
 		down = val;
 	}
+
 	void setRight(const bool val = false)
 	{
 		right = val;
 	}
+
 	void setLeft(const bool val = false)
 	{
 		left = val;
 	}
+
 	void setDash(bool val = false);
 
 	float GetEdgeBorderDistance() const;
@@ -56,6 +61,7 @@ private:
 	{
 		return nextPos.x == 0 || nextPos.y == 0;
 	}
+
 	void MoveTileOrPlayer(const Tmpl8::vec2& tilemapPos, const Collider& c, const Tmpl8::vec2& playerPos) const;
 
 	void InitTimers();
@@ -77,4 +83,3 @@ private:
 
 	Curve dashCurve;
 };
-

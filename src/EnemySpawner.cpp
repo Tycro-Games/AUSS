@@ -4,6 +4,7 @@
 #include "Enemy.h"
 using namespace Tmpl8;
 using namespace std;
+
 EnemySpawner::EnemySpawner(const vec2 _pos, Sprite* explosion) :
 	Spawner(explosion),
 	pos(_pos)
@@ -11,9 +12,7 @@ EnemySpawner::EnemySpawner(const vec2 _pos, Sprite* explosion) :
 {
 	move.Init(&pos);
 	Game::Get().AddMoveable(&move);
-
 }
-
 
 
 void EnemySpawner::Update(float deltaTime)
@@ -37,4 +36,3 @@ const vec2& EnemySpawner::GetSpawnerPos() const
 {
 	return pos;
 }
-

@@ -5,11 +5,14 @@
 #include "Renderable.h"
 
 #include<filesystem>
-class Entity :public Updateable, public Renderable
+
+class Entity : public Updateable, public Renderable
 {
 public:
 	Entity(const std::filesystem::path& spritePath, unsigned int numberOfFrames, Tmpl8::vec2 pos);
-	void SetActive(const bool active) {
+
+	void SetActive(const bool active)
+	{
 		isUpdateable = active;
 		isRenderable = active;
 	}
@@ -24,4 +27,3 @@ public:
 protected:
 	unsigned int frame = 0;
 };
-

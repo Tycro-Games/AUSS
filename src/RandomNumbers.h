@@ -12,7 +12,4 @@ public:
 	~RandomNumbers() = default;
 
 private:
-
 };
-
-

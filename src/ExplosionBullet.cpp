@@ -2,6 +2,7 @@
 
 #include "game.h"
 using namespace Tmpl8;
+
 ExplosionBullet::ExplosionBullet(Sprite* sprite, Spawner* spawner, const vec2 pos) :
 	Entity(sprite),
 	spawner(spawner),
@@ -13,10 +14,9 @@ ExplosionBullet::ExplosionBullet(Sprite* sprite, Spawner* spawner, const vec2 po
 }
 
 
-
 ExplosionBullet::~ExplosionBullet()
 {
-	sprite = nullptr;//this sprite is deleted by the spawner
+	sprite = nullptr; //this sprite is deleted by the spawner
 }
 
 void ExplosionBullet::Init(const vec2 pos)
@@ -36,11 +36,11 @@ void ExplosionBullet::Update(const float deltaTime)
 	//animation
 	if (currenTime < desiredTime)
 		currenTime += deltaTime;
-	else {
+	else
+	{
 		currenTime = 0;
 		frame = (frame + 1) % sprite->Frames();
 	}
-
 }
 
 void ExplosionBullet::Render(Surface* screen)
@@ -50,8 +50,6 @@ void ExplosionBullet::Render(Surface* screen)
 
 	sprite->SetFrame(frame);
 	sprite->Draw(screen, static_cast<int>(pos.x), static_cast<int>(pos.y));
-
-
 }
 
 void ExplosionBullet::Call()

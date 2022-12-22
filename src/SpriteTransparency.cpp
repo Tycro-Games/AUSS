@@ -1,12 +1,15 @@
 #include "SpriteTransparency.h"
 
 
-
-void SpriteTransparency::SetTransparency(Tmpl8::Sprite* _sprite, Tmpl8::Surface* screen, const int X, const int Y, const float alpha, const unsigned int frame)
+void SpriteTransparency::SetTransparency(Tmpl8::Sprite* _sprite, Tmpl8::Surface* screen, const int X, const int Y,
+	const float alpha, const unsigned int frame)
 {
-	for (int x = 0; x < _sprite->GetWidth(); x++) {
-		for (int y = 0; y < _sprite->GetHeight(); y++) {
-			const Tmpl8::Pixel colorSrc = _sprite->GetBuffer()[frame * _sprite->GetWidth() + x + y * _sprite->GetSurface()->GetPitch()];
+	for (int x = 0; x < _sprite->GetWidth(); x++)
+	{
+		for (int y = 0; y < _sprite->GetHeight(); y++)
+		{
+			const Tmpl8::Pixel colorSrc = _sprite->GetBuffer()[frame * _sprite->GetWidth() + x + y * _sprite->
+				GetSurface()->GetPitch()];
 			const Tmpl8::Pixel colorDst = screen->GetBuffer()[X + x + (y + Y) * screen->GetPitch()];
 			//get the alpha of the source
 			const float aSrc = static_cast<float>(colorSrc >> 24) / 255.0f * alpha;

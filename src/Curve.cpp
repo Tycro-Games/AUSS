@@ -3,7 +3,8 @@
 Curve::Curve(std::function<float(float)> func)
 	: scaleValue{ 0 }
 	, parametricCurve{ std::move(func) }
-{}
+{
+}
 
 float Curve::evaluate(float x)
 {
@@ -13,4 +14,3 @@ float Curve::evaluate(float x)
 		currentValue = 1.0f;
 	return parametricCurve(currentValue);
 }
-

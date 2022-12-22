@@ -3,10 +3,12 @@
 #include "game.h"
 
 using namespace Tmpl8;
+
 EnemyHoarder::EnemyHoarder(const PosDir posDir, Sprite* _sprite, EnemyWaveSpawner* _spawner) :
 	Enemy(posDir.pos, _sprite, _spawner),
 	MAX_DISTANCE_SQUARED_TO_PLAYER(100.0f + _spawner->getMaxPlayerDistanceSquared()),
-	rVar(RotationVar(360 / (static_cast<const float>(_sprite->Frames() - 1)), 90.0f, static_cast<const float>(_sprite->GetHeight())))
+	rVar(RotationVar(360 / (static_cast<const float>(_sprite->Frames() - 1)), 90.0f,
+		static_cast<const float>(_sprite->GetHeight())))
 
 {
 	enemyType = EnemyTypes::Hoarder;
@@ -31,13 +33,11 @@ void EnemyHoarder::Update(const float deltaTime)
 
 	mover.Update(deltaTime);
 	InRangeToAttack = InRangeToAttackPlayerSquared(MAX_DISTANCE_SQUARED_TO_PLAYER);
-	if (InRangeToAttack) {
+	if (InRangeToAttack)
+	{
 		attack.Update(deltaTime);
 	}
 }
-
-
-
 
 
 void EnemyHoarder::Render(Surface* screen)
@@ -45,19 +45,19 @@ void EnemyHoarder::Render(Surface* screen)
 	if (!getRenderable())
 		return;
 	sprite->SetFrame(frame);
-	sprite->Draw(screen, static_cast<int>(pos.x - rVar.SPRITE_OFFSET / 2), static_cast<int>(pos.y - rVar.SPRITE_OFFSET / 2));
+	sprite->Draw(screen, static_cast<int>(pos.x - rVar.SPRITE_OFFSET / 2),
+		static_cast<int>(pos.y - rVar.SPRITE_OFFSET / 2));
 #ifdef _DEBUG
-	screen->Box(static_cast<int>(pos.x + enemyCollider.min.x), static_cast<int>(pos.y + enemyCollider.min.y), static_cast<int>(pos.x + enemyCollider.max.x), static_cast<int>(pos.y + enemyCollider.max.y), 0xffff);
+	screen->Box(static_cast<int>(pos.x + enemyCollider.min.x), static_cast<int>(pos.y + enemyCollider.min.y),
+		static_cast<int>(pos.x + enemyCollider.max.x), static_cast<int>(pos.y + enemyCollider.max.y), 0xffff);
 
 
 #endif
 }
 
 
-
 void EnemyHoarder::Init(const PosDir posDir)
 {
-
 	SetActive(true);
 	pos = posDir.pos;
 	dir = posDir.dir;
@@ -68,10 +68,8 @@ void EnemyHoarder::Init(const PosDir posDir)
 }
 
 
-
 void EnemyHoarder::ResetEnemy()
 {
-
 	spawner->AddEnemyToPool(this, true);
 	spawner->SpawnExplosions(pos);
 }
@@ -79,12 +77,12 @@ void EnemyHoarder::ResetEnemy()
 void EnemyHoarder::Reflect()
 {
 	Enemy::Reflect(mover, rot, enemyCollider);
-
 }
 
 void EnemyHoarder::AttackPlayer()
 {
-	if (InRangeToAttack) {
+	if (InRangeToAttack)
+	{
 		Game::Get().PlaySound(SoundID::enemyMeleeAttack);
 		spawner->PlayerTakesDamage(this);
 		attack.ResetVar();
@@ -100,7 +98,7 @@ void EnemyHoarder::Die()
 
 Enemy* EnemyHoarder::clone()
 {
-	Enemy* enem = new EnemyHoarder(PosDir{ pos,dir }, sprite, spawner);
+	Enemy* enem = new EnemyHoarder(PosDir{ pos, dir }, sprite, spawner);
 	SetJsonValues(enem);
 	return enem;
 }

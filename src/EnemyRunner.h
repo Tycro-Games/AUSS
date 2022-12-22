@@ -1,7 +1,8 @@
 #pragma once
 #include "Enemy.h"
 #include "Rotator.h"
-class EnemyRunner final :public Enemy
+
+class EnemyRunner final : public Enemy
 {
 public:
 	EnemyRunner(PosDir posDir, Tmpl8::Sprite* _sprite, EnemyWaveSpawner* spawner);
@@ -35,7 +36,4 @@ private:
 	const float TIME_ALIVE = 10.0f;
 
 	void Reflect();
-
 };
-
-

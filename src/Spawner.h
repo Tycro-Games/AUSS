@@ -13,7 +13,7 @@ class Spawner : public Updateable, public Renderable
 public:
 	Spawner(const std::filesystem::path& explosion, unsigned int numberOfFrames = 10);
 	Spawner(Tmpl8::Sprite* explosion);
-	virtual ~Spawner();
+	~Spawner() override;
 	void AddExplosionToPool(ExplosionBullet* entity);
 	void CreateMoreExplosions();
 	void SpawnExplosions(Tmpl8::vec2 pos);
@@ -32,7 +32,6 @@ protected:
 	const float OFFSET = 20.0f;
 	const float MIN_DEVIATION = -.05f;
 	const float MAX_DEVIATION = .05f;
+
 private:
-
 };
-

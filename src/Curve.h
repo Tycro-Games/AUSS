@@ -1,5 +1,6 @@
 #pragma once
 #include <functional>
+
 //made by Jeremiah!!
 class Curve final
 {
@@ -28,6 +29,7 @@ public:
 	{
 		return scaleValue;
 	}
+
 	float getCurrentValue() const
 	{
 		return currentValue;

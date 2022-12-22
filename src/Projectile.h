@@ -8,9 +8,9 @@
 #include "Rotator.h"
 
 class ProjectileSpawner;
+
 class Projectile final : public Entity
 {
-
 public:
 	Projectile(PosDir posDir, Tmpl8::Sprite* _sprite, ProjectileSpawner* spawner);
 
@@ -18,12 +18,17 @@ public:
 	void RotateToDirection();
 
 	void Init(PosDir posDir);
-	Collider* getColl() {
+
+	Collider* getColl()
+	{
 		return &collider;
 	}
-	Moveable* getMoveable() {
+
+	Moveable* getMoveable()
+	{
 		return &mover;
 	}
+
 	void Reflect();
 	void ResetBullet();
 	void Update(float deltaTime) override;
@@ -42,8 +47,4 @@ private:
 	Collider collider;
 	Timer timer;
 	Rotator rot;
-
-
-
 };
-

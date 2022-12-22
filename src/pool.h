@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+
 template <class T>
 class pool
 {
@@ -10,7 +11,7 @@ public:
 	//needs checking before
 	T& PopElement();
 	void AddElement(T element);
+
 private:
 	std::vector<T> poolOf;
 };
-

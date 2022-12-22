@@ -1,5 +1,6 @@
 #pragma once
-class Updateable {
+class Updateable
+{
 public:
 	Updateable() = default;
 	virtual ~Updateable() = default;
@@ -8,6 +9,7 @@ public:
 
 	bool getUpdateable() const { return isUpdateable; }
 	void setUpdateable(const bool val) { isUpdateable = val; }
+
 protected:
 	bool isUpdateable = true;
 };

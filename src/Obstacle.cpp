@@ -11,7 +11,7 @@ Obstacle::Obstacle(const Tmpl8::vec2 p, const Collider& _collider)
 }
 
 Obstacle::Obstacle()
-	:Moveable(&posObs, &obsCollider),
+	: Moveable(&posObs, &obsCollider),
 	posObs(Tmpl8::vec2(0)),
 	obsCollider(0, 0, &posObs)
 
@@ -23,7 +23,8 @@ Obstacle::~Obstacle() = default;
 
 bool Obstacle::operator==(const Obstacle& ob) const
 {
-	return static_cast<int>(ob.posObs.x) == static_cast<int>(posObs.x) && static_cast<int>(ob.posObs.y) == static_cast<int>(ob.posObs.y);
+	return static_cast<int>(ob.posObs.x) == static_cast<int>(posObs.x) && static_cast<int>(ob.posObs.y) == static_cast<
+		int>(ob.posObs.y);
 }
 
 bool Obstacle::operator!=(const Obstacle& ob) const
@@ -35,7 +36,6 @@ bool Obstacle::operator!=(const Obstacle& ob) const
 
 void Obstacle::Update(float deltaTime)
 {
-
 }
 
 void Obstacle::Init(const Tmpl8::vec2 _pos, const Collider& col)

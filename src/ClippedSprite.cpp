@@ -18,15 +18,13 @@ void ClippedSprite::DrawSprite(Surface* screen, Surface& sprite, const float lin
 	const int width = static_cast<int>(MathFunctions::Lerp(0.0f, static_cast<float>(sprite.GetWidth()), linearF));
 	for (int i = 0; i < height; i++)
 	{
-		for (int j = 0; j < width; j++) {
-
+		for (int j = 0; j < width; j++)
+		{
 			//check if the pixel we want to copy is opaque
 			if ((src[j] & 0xFF000000) >> 24 == 255)
 				dst[j] = src[j];
-
 		}
 		src += sprite.GetWidth();
 		dst += screen->GetPitch();
-
 	}
 }

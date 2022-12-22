@@ -8,7 +8,6 @@ public:
 	ClippedSprite() = default;
 	~ClippedSprite() = default;
 	void DrawSprite(Tmpl8::Surface* screen, Tmpl8::Surface& sprite, float linearF, int posX, int posY);
+
 private:
-
 };
-

@@ -11,8 +11,6 @@ FadingOut::FadingOut(Event ev) :
 }
 
 
-
-
 void FadingOut::FadeOut() const
 {
 	toCall();
@@ -26,12 +24,11 @@ void FadingOut::Draw(Tmpl8::Surface* screen)
 void FadingOut::Update(const float deltaTime)
 {
 	fadeOut.Update(deltaTime);
-	if (!fadeOut.isFinished) {
+	if (!fadeOut.isFinished)
+	{
 		currenT += deltaTime;
 		linerF = std::clamp(currenT / FADE_OUT, 0.0f, 1.0f);
 	}
-
-
 }
 
 void FadingOut::Init()

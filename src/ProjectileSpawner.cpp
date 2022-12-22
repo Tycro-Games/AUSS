@@ -5,7 +5,9 @@
 #include "game.h"
 using namespace Tmpl8;
 using namespace std;
-ProjectileSpawner::ProjectileSpawner(const vec2 offset, const filesystem::path& _projectileSprite, const  filesystem::path& _explosionSprite)
+
+ProjectileSpawner::ProjectileSpawner(const vec2 offset, const filesystem::path& _projectileSprite,
+	const filesystem::path& _explosionSprite)
 	:
 	Spawner(_explosionSprite),
 	offset(offset),
@@ -24,20 +26,21 @@ void ProjectileSpawner::Init()
 			delete updateObjects[i];
 	updateObjects.clear();
 
-	for (size_t i = 0; i < poolOfProjectiles.size(); i++) {
+	for (size_t i = 0; i < poolOfProjectiles.size(); i++)
+	{
 		delete poolOfProjectiles[i];
 	}
 	poolOfProjectiles.clear();
 
 	ResetExplosions();
-	for (int i = 0; i < MAX_PROJECTILES; i++) {
+	for (int i = 0; i < MAX_PROJECTILES; i++)
+	{
 		CreateMoreProjectiles();
 	}
-	for (int i = 0; i < MAX_EXPLOSIONS; i++) {
+	for (int i = 0; i < MAX_EXPLOSIONS; i++)
+	{
 		CreateMoreExplosions();
 	}
-
-
 
 
 	fireRate = FIRE_RATE;
@@ -54,19 +57,15 @@ void ProjectileSpawner::AddProjectileToPool(Projectile* entity)
 
 	entity->SetActive(false);
 	poolOfProjectiles.push_back(entity);
-
 }
-
-
 
 
 void ProjectileSpawner::CreateMoreProjectiles()
 {
-	Projectile* entity = new Projectile(PosDir(), &projectileSprite, this);
+	auto entity = new Projectile(PosDir(), &projectileSprite, this);
 	updateObjects.push_back(entity);
 
 	AddProjectileToPool(entity);
-
 }
 
 
@@ -82,7 +81,7 @@ void ProjectileSpawner::SpawnProjectiles()
 	const vec2 playerPos = Game::Get().getPlayer().pos;
 	const vec2 playerDir = Game::Get().getPlayer().GetDir();
 	const vec2 randomizedDir = (playerDir + randomDir).normalized();
-	projectile->Init(PosDir{ playerPos + randomizedDir * OFFSET_MULTIPLIER,randomizedDir });
+	projectile->Init(PosDir{ playerPos + randomizedDir * OFFSET_MULTIPLIER, randomizedDir });
 	waveProjectiles++;
 	Game::Get().AddCollider(projectile->getColl());
 	Game::Get().AddMoveable(projectile->getMoveable());
@@ -96,9 +95,10 @@ void ProjectileSpawner::setFlag(const bool fire)
 
 void ProjectileSpawner::Update(const float deltaTime)
 {
-
-	if (currentTime >= desiredTime) {
-		if (isSpawning) {
+	if (currentTime >= desiredTime)
+	{
+		if (isSpawning)
+		{
 			Game::Get().PlaySound(SoundID::playerShooting);
 			SpawnProjectiles();
 			desiredTime = currentTime + fireRate;
@@ -109,13 +109,11 @@ void ProjectileSpawner::Update(const float deltaTime)
 
 	for (size_t i = 0; i < updateObjects.size(); i++)
 		updateObjects[i]->Update(deltaTime);
-
 }
 
 void ProjectileSpawner::Render(Surface* screen)
 {
 	const auto firerate = std::string("Firerate: " + std::to_string(fireRate));
-
 
 
 	for (size_t i = 0; i < updateObjects.size(); i++)
@@ -129,7 +127,8 @@ void ProjectileSpawner::Render(Surface* screen)
 
 	screen->Print(inactiveB.c_str(), 10, 20, 0x00FF0000);
 
-	const auto total = std::string("Objects active:" + std::to_string(updateObjects.size() - poolOfProjectiles.size() - poolOfExplosions.size()));
+	const auto total = std::string(
+		"Objects active:" + std::to_string(updateObjects.size() - poolOfProjectiles.size() - poolOfExplosions.size()));
 
 	screen->Print(total.c_str(), 10, 30, 0x00FF0000);
 #endif
@@ -150,6 +149,3 @@ void ProjectileSpawner::ResetWaveProjectiles()
 	totalProjectiles += waveProjectiles;
 	waveProjectiles = 0;
 }
-
-
-

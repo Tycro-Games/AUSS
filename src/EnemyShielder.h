@@ -2,6 +2,7 @@
 #include "Enemy.h"
 #include "EnemyRotator.h"
 #include "ShieldLine.h"
+
 class EnemyShielder final : public Enemy
 {
 public:
@@ -15,6 +16,7 @@ public:
 	void StartMovement();
 	void StopMovement();
 	Enemy* clone() override;
+
 private:
 	void SpawnEnemies();
 	void Reflect();
@@ -60,6 +62,4 @@ private:
 
 	EnemyRotator rot;
 	Tmpl8::vec2 shieldDir = { 0 };
-
 };
-

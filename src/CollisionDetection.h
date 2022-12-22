@@ -4,6 +4,7 @@
 
 
 constexpr float TIME_BETWEEN_DETECTIONS = 0.05f;
+
 class CollisionDetection final : public Updateable
 {
 public:

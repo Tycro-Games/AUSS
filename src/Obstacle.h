@@ -1,6 +1,7 @@
 #pragma once
 #include "Moveable.h"
-class Obstacle :public Moveable
+
+class Obstacle : public Moveable
 {
 public:
 	Obstacle(Tmpl8::vec2, const Collider& _collider);
@@ -16,4 +17,3 @@ private:
 	Tmpl8::vec2 posObs;
 	Collider obsCollider;
 };
-

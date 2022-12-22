@@ -1,5 +1,6 @@
 #include "Subject.h"
 using namespace std;
+
 void Subject::addObserver(Observer* obs)
 {
 	observers.push_back(obs);
@@ -12,7 +13,8 @@ void Subject::removeObserver(Observer* obs)
 
 void Subject::notify(const int points, const EventType event) const
 {
-	for (size_t i = 0; i < observers.size(); i++) {
+	for (size_t i = 0; i < observers.size(); i++)
+	{
 		observers[i]->onNotify(points, event);
 	}
 }

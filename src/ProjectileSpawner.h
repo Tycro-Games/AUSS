@@ -4,10 +4,11 @@
 
 class Projectile;
 
-class ProjectileSpawner : public Spawner {
-
+class ProjectileSpawner : public Spawner
+{
 public:
-	ProjectileSpawner(Tmpl8::vec2 offset, const std::filesystem::path& _projectileSprite, const  std::filesystem::path& _explosionSprite);
+	ProjectileSpawner(Tmpl8::vec2 offset, const std::filesystem::path& _projectileSprite,
+		const std::filesystem::path& _explosionSprite);
 	void Init();
 	~ProjectileSpawner() override = default;
 
@@ -29,8 +30,8 @@ public:
 	unsigned int getWaveProjectiles() const;
 	unsigned int getTotalProjectiles() const;
 	void ResetWaveProjectiles();
-private:
 
+private:
 	std::vector<Projectile*> poolOfProjectiles;
 
 	bool isSpawning = false;
@@ -47,6 +48,4 @@ private:
 
 	const int MAX_PROJECTILES = 50;
 	const int MAX_EXPLOSIONS = 5;
-
-
 };

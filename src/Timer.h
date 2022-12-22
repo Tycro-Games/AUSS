@@ -4,7 +4,8 @@
 #include <functional>
 using Event = std::function<void()>;
 
-class Timer final :public Updateable {
+class Timer final : public Updateable
+{
 	// Inherited via Updateable
 public:
 	Timer(Event evt, float _desiredTime, bool loop = false);
@@ -22,5 +23,4 @@ private:
 	bool loop = false;
 
 	Event toCall;
-
 };

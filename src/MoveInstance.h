@@ -1,6 +1,7 @@
 #pragma once
 #include "Moveable.h"
-class MoveInstance :public Moveable
+
+class MoveInstance : public Moveable
 {
 public:
 	/// <summary>
@@ -15,15 +16,9 @@ public:
 	~MoveInstance() override = default;
 	void Translation(Tmpl8::vec2) override;
 
-
 private:
 	float speedOfParallax;
 
 	// Inherited via Moveable
 	void Update(float deltaTime) override;
-
 };
-
-
-
-

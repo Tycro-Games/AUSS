@@ -28,16 +28,14 @@ void Timer::ResetVar()
 }
 
 
-
 void Timer::Update(const float deltaTime)
 {
-
 	if (isFinished || !isUpdateable)
 		return;
 	if (currentTime < desiredTime)
 		currentTime += deltaTime;
-	else {
-
+	else
+	{
 		if (loop)
 			currentTime = 0;
 		else

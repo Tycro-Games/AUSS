@@ -6,8 +6,8 @@ enum class EventType
 	BonusConditions,
 	EndOfAWave,
 	PlayerTakesDamage
-
 };
+
 class Observer
 {
 public:

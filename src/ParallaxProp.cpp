@@ -1,8 +1,8 @@
 #include "ParallaxProp.h"
 
 
-
 using namespace std;
+
 ParallaxProp::ParallaxProp(const filesystem::path& spritePath, const float speed)
 	: Entity(spritePath, 1),
 	moveInstance(&pos, speed)
@@ -18,12 +18,10 @@ void ParallaxProp::Init(const Tmpl8::vec2 _pos, const float speed)
 {
 	Entity::Init(_pos);
 	moveInstance.Init(&pos, speed);
-
 }
 
 void ParallaxProp::Update(float deltaTime)
 {
-
 }
 
 void ParallaxProp::Render(Tmpl8::Surface* screen)
