@@ -84,9 +84,10 @@ void Player::TakeDamage(const unsigned int dg)
 {
 	if (cooldownForDamage.isFinished && !playerMover.getIsDashing())
 	{
+		//Health bar needs to be notified before the player dies.
+		notify(static_cast<int>(hp - dg), EventType::PlayerTakesDamage);
 		Being::TakeDamage(dg);
 		Game::Get().PlaySound(SoundID::playerDamage);
-		notify(hp, EventType::PlayerTakesDamage);
 		cooldownForDamage.ResetVar();
 	}
 }
