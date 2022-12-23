@@ -25,7 +25,7 @@ class Button final : public Renderable
 public:
 	Button(const std::filesystem::path& _defaultSprite, const std::filesystem::path& pressedSprite,
 		const Tmpl8::vec2& centerPos, const ButtonPressEvent& ev);
-	//default the deconstructor means that it does not need implementation for the base class
+	//default the destructor means that it does not need implementation for the base class
 	~Button() override = default;
 	void Render(Tmpl8::Surface* screen) override;
 	//input functions
