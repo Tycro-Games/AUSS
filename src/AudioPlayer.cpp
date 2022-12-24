@@ -58,7 +58,7 @@ namespace Tmpl8
 
 			break;
 		case SoundID::playerDash:
-			Mix_PlayChannel(static_cast<int>(channels::player), playerDashSound, 0);
+			Mix_PlayChannel(static_cast<int>(channels::dash), playerDashSound, 0);
 
 			break;
 		case SoundID::enemyHit:

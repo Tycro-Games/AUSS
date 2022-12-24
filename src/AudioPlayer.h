@@ -26,7 +26,8 @@ namespace Tmpl8
 			enemy_deaths,
 			singular,
 			projectiles,
-			player
+			player,
+			dash
 		};
 
 		bool mute = false;
