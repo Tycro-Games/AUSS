@@ -3,25 +3,23 @@
 using namespace Tmpl8;
 
 Spawner::Spawner(const std::filesystem::path& explosion, const unsigned int numberOfFrames) :
-	explosionSprite(new Sprite(new Surface(explosion.string().c_str()), numberOfFrames))
+	explosionSprite(new Surface(explosion.string().c_str()), numberOfFrames)
 {
 }
 
-Spawner::Spawner(Sprite* explosion) :
-	explosionSprite(explosion)
-{
-}
+
 
 
 Spawner::~Spawner()
 {
 	if (!updateObjects.empty())
-		for (size_t i = 0; i < updateObjects.size() - 1; i++)
+		for (size_t i = 0; i < updateObjects.size(); i++)
 		{
 			updateObjects[i]->sprite = nullptr; //shares this with others
 			delete updateObjects[i];
 		}
 	updateObjects.clear();
+
 }
 
 
@@ -42,7 +40,7 @@ void Spawner::AddExplosionToPool(ExplosionBullet* entity)
 
 void Spawner::CreateMoreExplosions()
 {
-	const auto bullet = new ExplosionBullet(explosionSprite, this, vec2(0));
+	const auto bullet = new ExplosionBullet(&explosionSprite, this, vec2(0));
 	updateObjects.push_back(bullet);
 
 	AddExplosionToPool(bullet);
@@ -50,7 +48,7 @@ void Spawner::CreateMoreExplosions()
 
 void Spawner::SpawnExplosions(const vec2 p)
 {
-	if (poolOfExplosions.size() == 0)
+	if (poolOfExplosions.empty())
 		CreateMoreExplosions();
 	ExplosionBullet* bullet = poolOfExplosions[poolOfExplosions.size() - 1];
 	poolOfExplosions.pop_back();

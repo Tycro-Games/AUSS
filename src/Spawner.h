@@ -12,7 +12,6 @@ class Spawner : public Updateable, public Renderable
 {
 public:
 	explicit Spawner(const std::filesystem::path& explosion, unsigned int numberOfFrames = 10);
-	explicit Spawner(Tmpl8::Sprite* explosion);
 	~Spawner() override;
 	//Deactivates explosion and adds it to the pool.
 	void AddExplosionToPool(ExplosionBullet* entity);
@@ -28,7 +27,7 @@ protected:
 	std::vector<Entity*> updateObjects;
 	std::vector<ExplosionBullet*> poolOfExplosions;
 	//assets 
-	Tmpl8::Sprite* explosionSprite;
+	Tmpl8::Sprite explosionSprite;
 
 
 	//consts

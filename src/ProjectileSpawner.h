@@ -9,7 +9,8 @@ class ProjectileSpawner : public Spawner
 public:
 	ProjectileSpawner(Tmpl8::vec2 offset, const std::filesystem::path& _projectileSprite,
 		const std::filesystem::path& _explosionSprite);
-	~ProjectileSpawner() override = default;
+	~ProjectileSpawner() override;
+	void DeleteVectors();
 
 	void Init();
 

@@ -76,6 +76,9 @@ void EnemyWaveSpawner::ClearVecOfPointers()
 
 	ResetExplosions();
 
+	for (size_t i = 0; i < enemySpawners.size(); i++)
+		delete enemySpawners[i];
+	enemySpawners.clear();
 	for (size_t i = 0; i < static_cast<size_t>(EnemyTypes::NUMBER_OF_ENEMIES); i++)
 	{
 		delete enemyPrototypes[i];
@@ -97,14 +100,11 @@ void EnemyWaveSpawner::InitializeSpawners()
 	const float xOffset = SPAWNERS_X_POS_MULTIPLIERS * ScreenWidth;
 	const float yOffset = SPAWNERS_Y_POS_MULTIPLIERS * ScreenHeight;
 
-	for (size_t i = 0; i < enemySpawners.size(); i++)
-		delete enemySpawners[i];
-	enemySpawners.clear();
 
-	enemySpawners.push_back(new EnemySpawner(center + vec2(xOffset, yOffset), explosionSprite));
-	enemySpawners.push_back(new EnemySpawner(center + vec2(-xOffset, yOffset), explosionSprite));
-	enemySpawners.push_back(new EnemySpawner(center + vec2(xOffset, -yOffset), explosionSprite));
-	enemySpawners.push_back(new EnemySpawner(center + vec2(-xOffset, -yOffset), explosionSprite));
+	enemySpawners.push_back(new EnemySpawner(center + vec2(xOffset, yOffset)));
+	enemySpawners.push_back(new EnemySpawner(center + vec2(-xOffset, yOffset)));
+	enemySpawners.push_back(new EnemySpawner(center + vec2(xOffset, -yOffset)));
+	enemySpawners.push_back(new EnemySpawner(center + vec2(-xOffset, -yOffset)));
 }
 
 void EnemyWaveSpawner::ReadWaves()
@@ -279,16 +279,16 @@ void EnemyWaveSpawner::SpawnEnemy(const PosDir posDir, const EnemyTypes enemy)
 
 void EnemyWaveSpawner::Render(Surface* screen)
 {
+#ifdef _DEBUG
 	for (size_t i = 0; i < enemySpawners.size(); i++)
 	{
-		enemySpawners[i]->Render(screen);
-#ifdef _DEBUG
+
 		screen->Box(static_cast<int>(enemySpawners[i]->GetSpawnerPos().x),
 			static_cast<int>(enemySpawners[i]->GetSpawnerPos().y),
 			static_cast<int>(enemySpawners[i]->GetSpawnerPos().x) + 5,
 			static_cast<int>(enemySpawners[i]->GetSpawnerPos().y) + 5, 0xFF0000);
-#endif
 	}
+#endif
 
 	for (size_t i = 0; i < updateObjects.size(); i++)
 		updateObjects[i]->Render(screen);
@@ -297,8 +297,7 @@ void EnemyWaveSpawner::Render(Surface* screen)
 void EnemyWaveSpawner::Update(const float deltaTime)
 {
 	timeBetweenWaves.Update(deltaTime);
-	for (size_t i = 0; i < enemySpawners.size(); i++)
-		enemySpawners[i]->Update(deltaTime);
+
 	for (size_t i = 0; i < updateObjects.size(); i++)
 		updateObjects[i]->Update(deltaTime);
 }

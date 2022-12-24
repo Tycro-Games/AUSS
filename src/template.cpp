@@ -9,7 +9,10 @@
 #pragma warning (disable : 4530) // complaint about exception handler
 #pragma warning (disable : 4311) // pointer truncation from HANDLE to long
 #endif
-
+//memory leak detection
+#define _CRTDBG_MAP_ALLOC
+#include <cstdlib>
+#include <crtdbg.h>
 
 #include "game.h"
 
@@ -421,9 +424,13 @@ int main(int argc, char** argv)
 			}
 		}
 	}
-	game->Shutdown();
+	delete surface;
 	delete audioPlayer;
+	delete game;
 	Mix_Quit();
 	SDL_Quit();
+	//memory leaks check
+	_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
+	_CrtDumpMemoryLeaks();
 	return 0;
 }

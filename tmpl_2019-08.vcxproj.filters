@@ -131,7 +131,9 @@
     <ClCompile Include="src\FadingOut.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="src\Physics.cpp" />
+    <ClCompile Include="src\Physics.cpp">
+      <Filter>StaticClasses</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\game.h" />
@@ -288,7 +290,9 @@
     <ClInclude Include="src\FadingOut.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="src\Physics.h" />
+    <ClInclude Include="src\Physics.h">
+      <Filter>StaticClasses</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="template code">

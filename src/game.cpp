@@ -37,6 +37,12 @@ namespace Tmpl8
 		gs_game = this;
 	}
 
+	Game::~Game()
+	{
+		RemoveAllUpdateables();
+
+	}
+
 	Game& Game::Get()
 	{
 		return *gs_game;
@@ -69,7 +75,6 @@ namespace Tmpl8
 
 	void Game::ResetGame()
 	{
-		Shutdown();
 		RemoveAllUpdateables();
 		Initializations();
 		AddInstancesToUpdates();
@@ -118,11 +123,6 @@ namespace Tmpl8
 	{
 		subject.removeObserver(&observer);
 	}
-
-	void Game::Shutdown()
-	{
-	}
-
 
 	void Game::Tick(float deltaTime)
 	{

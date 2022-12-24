@@ -5,25 +5,12 @@
 using namespace Tmpl8;
 using namespace std;
 
-EnemySpawner::EnemySpawner(const vec2 _pos, Sprite* explosion) :
-	Spawner(explosion),
+EnemySpawner::EnemySpawner(const vec2 _pos) :
 	pos(_pos)
 
 {
 	move.Init(&pos);
 	Game::Get().AddMoveable(&move);
-}
-
-
-void EnemySpawner::Update(float deltaTime)
-{
-	//animation maybe?
-}
-
-
-void EnemySpawner::Render(Surface* screen)
-{
-	//render a sprite maybe
 }
 
 

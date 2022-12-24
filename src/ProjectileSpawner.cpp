@@ -19,7 +19,12 @@ ProjectileSpawner::ProjectileSpawner(const vec2 offset, const filesystem::path& 
 	currentTime = 0;
 }
 
-void ProjectileSpawner::Init()
+ProjectileSpawner::~ProjectileSpawner()
+{
+	DeleteVectors();
+}
+
+void ProjectileSpawner::DeleteVectors()
 {
 	for (size_t i = 0; i < updateObjects.size(); i++)
 		if (updateObjects[i]->getUpdateable())
@@ -33,6 +38,11 @@ void ProjectileSpawner::Init()
 	poolOfProjectiles.clear();
 
 	ResetExplosions();
+}
+
+void ProjectileSpawner::Init()
+{
+	DeleteVectors();
 	for (int i = 0; i < MAX_PROJECTILES; i++)
 	{
 		CreateMoreProjectiles();

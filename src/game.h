@@ -22,6 +22,7 @@ namespace Tmpl8
 	{
 	public:
 		Game();
+		~Game();
 		//this is the singleton pattern from this and Jeremiah: https://gameprogrammingpatterns.com/singleton.html
 		static Game& Get();
 		//initializations
@@ -51,7 +52,6 @@ namespace Tmpl8
 
 
 		//SDL functions
-		static void Shutdown();
 		void Tick(float deltaTime);
 		void MouseUp(int button);
 		void MouseDown(int button);
