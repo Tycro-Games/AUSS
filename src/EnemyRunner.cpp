@@ -2,13 +2,14 @@
 
 #include "AudioID.h"
 #include "game.h"
+#include "Physics.h"
 using namespace Tmpl8;
 
 EnemyRunner::EnemyRunner(const PosDir posDir, Sprite* _sprite, EnemyWaveSpawner* _spawner)
 	: Enemy(posDir.pos, _sprite, _spawner),
-	  rVar(RotationVar(360 / (static_cast<const float>(_sprite->Frames() - 1)), 90.0f,
-	                   static_cast<const float>(_sprite->GetHeight()))),
-	  MAX_DISTANCE_SQUARED_TO_PLAYER(100.0f + _spawner->getMaxPlayerDistanceSquared())
+	rVar(RotationVar(360 / (static_cast<const float>(_sprite->Frames() - 1)), 90.0f,
+		static_cast<const float>(_sprite->GetHeight()))),
+	MAX_DISTANCE_SQUARED_TO_PLAYER(100.0f + _spawner->getMaxPlayerDistanceSquared())
 
 
 {
@@ -30,7 +31,7 @@ void EnemyRunner::Render(Surface* screen)
 	sprite->Draw(screen, static_cast<int>(pos.x + enemyCollider.min.x), static_cast<int>(pos.y + enemyCollider.min.y));
 #ifdef _DEBUG
 	screen->Box(static_cast<int>(pos.x + enemyCollider.min.x), static_cast<int>(pos.y + enemyCollider.min.y),
-	            static_cast<int>(pos.x + enemyCollider.max.x), static_cast<int>(pos.y + enemyCollider.max.y), 0x00FF00);
+		static_cast<int>(pos.x + enemyCollider.max.x), static_cast<int>(pos.y + enemyCollider.max.y), 0x00FF00);
 #endif
 }
 
@@ -51,14 +52,15 @@ void EnemyRunner::Update(const float delta_time)
 
 void EnemyRunner::Die()
 {
-	Game::Get().PlaySound(SoundID::enemyDeath);
+	if (Physics::InGameScreen(pos))
+		Game::Get().PlaySound(SoundID::enemyDeath);
 
 	ResetEnemy();
 }
 
 Enemy* EnemyRunner::clone()
 {
-	Enemy* enem = new EnemyRunner(PosDir{pos, dir}, sprite, spawner);
+	Enemy* enem = new EnemyRunner(PosDir{ pos, dir }, sprite, spawner);
 	SetJsonValues(enem);
 	return enem;
 }
