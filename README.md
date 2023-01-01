@@ -8,6 +8,16 @@ There are different types of enemies, the wave system uses weight and a list of 
 ## Libraries used:
 - Sound is made implemented by using SDL_mixer:https://github.com/libsdl-org/SDL_mixer
 - This library is used for parsing the json files:https://github.com/nlohmann/json
+## Graphics used:
+
+- https://www.kenney.nl/assets/simple-space,
+
+- https://arcadeisland.itch.io/space-shooter-wang-tiles
+
+- https://fliflifly.itch.io/hearts-and-health-bar
+
+- https://www.bfxr.net (sounds)
+
 ### Guideline for modifying the enemy waves:
 - every wave needs to have:
   - a weight that is a positive integer
