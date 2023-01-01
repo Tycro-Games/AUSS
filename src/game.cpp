@@ -290,7 +290,8 @@ namespace Tmpl8
 		{
 			//dash
 		case SDL_SCANCODE_SPACE:
-			player.getMoveable()->setDash(true);
+			if (currentState == GameState::game)
+				player.getMoveable()->setDash(true);
 			break;
 			//arrows up down left right
 		case SDL_SCANCODE_UP:
