@@ -118,6 +118,7 @@ namespace Tmpl8
 	void AudioPlayer::StopMusic() const
 	{
 		Mix_FadeOutMusic(FADE_OUT_MUSIC);
+
 	}
 
 	void AudioPlayer::SwitchMute()

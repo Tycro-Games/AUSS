@@ -50,11 +50,14 @@ namespace Tmpl8
 
 	void Game::Init()
 	{
-		ChangeGameState(GameState::mainMenu);
 
 #ifdef _DEBUG
 		ChangeGameState(GameState::game);
+#else
+		ChangeGameState(GameState::mainMenu);
 #endif
+
+
 
 		Initializations();
 
@@ -75,6 +78,7 @@ namespace Tmpl8
 
 	void Game::ResetGame()
 	{
+		Mix_HaltMusic();
 		RemoveAllUpdateables();
 		Initializations();
 		AddInstancesToUpdates();
