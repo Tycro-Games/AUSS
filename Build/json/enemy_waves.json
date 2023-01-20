@@ -1,0 +1,32 @@
+{
+	"waves": [
+    {
+      "weight":3,
+      "enemy_types":["Hoarder"]
+    },
+		{
+      "weight":7,
+      "enemy_types":["Hoarder","Shooter"]
+    },
+    {
+      "weight":10,
+      "enemy_types":["Hoarder"]
+    },
+    {
+      "weight":7,
+      "enemy_types":["Shooter"]
+    },
+    {
+      "weight":15,
+      "enemy_types":["Hoarder","Shooter"]
+    },
+    {
+      "weight":7,
+      "enemy_types":["Shielder"]
+    },
+    {
+      "weight":15,
+      "enemy_types":["Shielder","Shooter"]
+    }
+	]
+}
