@@ -8,23 +8,23 @@ using namespace Tmpl8;
 bool Physics::Overlaps(const Collider& a, const Collider& b)
 {
 	return a.min.x > b.min.x && a.min.y > b.min.y
-		&& a.max.x < b.max.x&& a.max.y < b.max.y;
+		&& a.max.x < b.max.x && a.max.y < b.max.y;
 }
 
 bool Physics::Contains(const Collider& a, const vec2& b)
 {
-	return a.min.x + a.pos->x < b.x&& a.min.y + a.pos->y < b.y
+	return a.min.x + a.pos->x < b.x && a.min.y + a.pos->y < b.y
 		&& b.x < a.max.x + a.pos->x && b.y < a.max.y + a.pos->y;
 }
 
 bool Physics::CollidesY(const Collider& a, const Collider& b)
 {
-	return a.min.y < b.max.y&& a.max.y > b.min.y;
+	return a.min.y < b.max.y && a.max.y > b.min.y;
 }
 
 bool Physics::CollidesX(const Collider& a, const Collider& b)
 {
-	return a.min.x < b.max.x&& a.max.x > b.min.x;
+	return a.min.x < b.max.x && a.max.x > b.min.x;
 }
 
 
