@@ -35,7 +35,7 @@ void Tilemap::Init(const vec2& _pos)
 		{
 			// ReSharper disable once CppTooWideScopeInitStatement
 			const int index = x + y * X_TILES;
-
+			//this merges obstacles
 			if (tiles[index].is_blocking && tiles[index].obs == nullptr)
 			{
 				vec2 p = vec2(x * tiles[index].xd + pos.x - static_cast<float>(OFFSET_X),
